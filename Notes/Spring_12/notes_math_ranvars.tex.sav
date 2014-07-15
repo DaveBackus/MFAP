@@ -1,0 +1,599 @@
+\documentclass[11pt]{article}
+
+\oddsidemargin=0.25truein \evensidemargin=0.25truein
+\topmargin=-0.5truein \textwidth=6.0truein \textheight=8.75truein
+
+%\RequirePackage{graphicx}
+\usepackage{comment}
+\usepackage[dvipdfm]{hyperref}
+\urlstyle{rm}   % change fonts for url's (from Chad Jones)
+\hypersetup{
+    colorlinks=true,        % kills boxes
+%    allcolors=blue,
+    pdfsubject={ECON-UB233, Macroeconomic foundations for asset pricing},
+    pdfauthor={Dave Backus @ NYU},
+%    pdfnewwindow=true,      % links in new window
+%    linkcolor=blue,         % color of internal links
+%    citecolor=blue,         % color of links to bibliography
+%    filecolor=blue,         % color of file links
+%    urlcolor=blue           % color of external links
+% see:  http://www.tug.org/applications/hyperref/manual.html
+}
+
+\usepackage{verbatim}
+%\usepackage{booktabs}
+
+\renewcommand{\thefootnote}{\fnsymbol{footnote}}
+\newcommand{\var}{\mbox{\it Var\/}}
+
+% document starts here
+\begin{document}
+\parskip=\bigskipamount
+\parindent=0.0in
+\thispagestyle{empty}
+{\large ECON-UB 233 \hfill Dave Backus @ NYU}
+
+\bigskip\bigskip
+\centerline{\Large \bf Math Tools:  Random Variables}
+\centerline{(Started: July 19, 2011; Revised: \today)}
+
+\bigskip
+Our first set  of math tools concerns randomness:
+how we think about it, how we quantify it, and so on.
+It's an essential concept in macroeconomics and finance.
+You can find more formal versions elsewhere.
+The idea here is to put the tools to work,
+and not worry too much about theoretical niceties.
+
+Remember:  tools make life easier.
+If they don't, get another tool.
+
+
+\subsection*{Random variables and their probability distributions}
+
+Random variables are used to describe things that are random,
+typically in the sense that we don't know their outcomes ahead of time.
+You might think of the weather (rain or shine?),
+the economy (boom, bust, or somewhere in between?),
+the stock market (ditto),
+or sports (will the Steelers win?).
+
+To make this precise, it's helpful to build the definition
+from components.
+This will start off abstract, but turn concrete quickly --- and stay that way.
+The components are:
+%
+\begin{itemize}
+\item {\it States.\/}  Let's start with we'll call a {\it state\/},
+one of the possible outcomes of a random process.
+You may see the term event used instead of state,
+but state serves our purposes better.
+We denote a state by the letter $z$
+and the set of all possible states --- the {\it state space\/} --- by $Z$.
+Sometimes state $z=1$ occurs, sometimes state $z=2$, and so on.
+Part of the art of applied work is to come with
+a useful practical definition of $Z$.
+If we're talking about the weather, the states might be
+$z = \mbox{rain}$ and $z = \mbox{shine}$.
+If the stock market, we might assign different states to every possible value
+of the S\&P 500 on (say) the last day of the year.
+
+\item {\it Probabilities.\/}
+For each state $z$, we assign a number $p(z)$
+that we refer to as the {\it probability\/} of $z$.
+We call the complete collection of $p(z)$s
+the {\it probability distribution\/}.
+Not every set of numbers works.
+Legimate probabilities must be nonnegative and sum to one.
+
+
+\item {\it Random variables.\/}
+A {\it random variable\/} is a function that
+assigns a real number to every state:  $x(z)$.
+Note that $x$ inherits randomness from $z$ so it is, precisely,
+a random variable.
+Sometimes people distinguish between the random variable
+and the value the random variable takes,
+but we'll use $x$ for both.
+\end{itemize}
+%
+In practice we often ignore $z$
+and define probabilities directly over $x$.
+Nevertheless, there are times when the distinction
+between states and random variables is helpful.
+
+Some common examples of probability distributions of random variables:
+%
+\begin{itemize}
+\item {\it Bernoulli.\/}
+The state space $Z$ has two elements:  $Z = \{z_1, z_2\}$.
+If we're flipping a coin, $z_1$ might represent heads and $z_2$ tails.
+A random variable assigns numbers to these two states.
+The simplest version uses zero and one:
+$x(z_1) = 0$, $x(z_2) = 1$.
+The probabilities $p(z_1)$ and $p(z_2)$ are nonnegative numbers that sum to one.
+
+
+\item {\it Poisson.\/}
+This is a little more complicated, but it's a beautiful example
+that's often used in finance.
+Suppose $Z$ consists of the nonnegative integers:  $\{ 0, 1, 2, \ldots \}$.
+The probability of any particular $z$ is
+\begin{eqnarray*}
+    p(z) &=& e^{-\omega} \omega^z/z! ,
+\end{eqnarray*}
+for some parameter $\omega > 0$.
+
+
+Are they legitimate probabilities?
+Well, they're all positive, so we're good there.
+Do they sum to one?
+That's more complicated.
+The exponential function has the power series expansion
+\begin{eqnarray}
+    e^x &=& 1 + x + x^2/2 + x^3/3! + x^4/4! + \cdots
+            \;\;=\;\; \sum_{j=0}^\infty x^j/j!.
+    \label{eq:eofx-powerseries}
+\end{eqnarray}
+Our probabilities have  a similar form:
+\begin{eqnarray*}
+    \sum_{z=0}^\infty p(z) &=& e^{-\omega} \sum_{z=0}^\infty \omega^z/z!
+                \;\;=\;\; e^{-\omega} e^{\omega}
+                \;\;=\;\; 1.
+\end{eqnarray*}
+So these are, in fact, legitimate probabilities for the state space $Z$.
+
+\item {\it Normal (Gaussian).\/}
+Here we'll let the state space be the real line
+and set $x=z$, which allows us to ignore $z$ from now on.
+We refer to such random variables as continuous,
+to distinguish them from random variables that
+based on a discrete set of states, such as the two we just looked at.
+
+For continuous random variables,
+we describe probabilities
+with what's called a {\it probability density function\/} $p(x)$.
+Probabilities over an interval $[a,b]$ are integrals,
+\begin{eqnarray*}
+    \mbox{Prob} ( a\leq x \leq b ) &=& \int_{a}^b p(x) dx .
+\end{eqnarray*}
+The function $p(x)$ must be nonnegative for all values of $x$
+and integrate to one,
+\begin{eqnarray*}
+    \int_{-\infty}^\infty p(x) dx &=& 1 ,
+\end{eqnarray*}
+the analog of the sum we used earlier.
+(The integral sign is, in fact, a stylized S for sum.)
+
+The {\it normal\/} or Gaussian random variable has the density
+function
+\begin{eqnarray*}
+    p(x) &=& (2 \pi \sigma^2)^{-1/2} \exp[-(x-\mu)^2/(2\sigma^2)] ,
+\end{eqnarray*}
+the infamous bell-shaped curve.
+It's positive for all $x$ and integrates to one,
+although we'll take the latter as a fact rather than demonstrate it.
+If you plot it, you'll see that $p$ is symmetric around $x=\mu$,
+which I guess is obvious from the formula.
+The so-called {\it standard normal\/} refers to the case 
+$\mu = 0$ and $\sigma = 1$.  
+\end{itemize}
+
+There are lots of other common distributions of random variables,
+many of which are summarized in Wikipedia.  (I know Wikipedia
+has a bad rep, but the math content is often pretty good.)
+
+
+\subsection*{Expectations and moments}
+
+The behavior of a random variable is described completely
+by (i)~the set of values it can take
+and (ii)~their probabilities.
+Sometimes that's too much information:  we'd like a smaller number
+of properties that capture some salient features.
+I kind of like looking at the whole distribution,
+or even better a picture of it,
+but summary numbers can be useful, too.
+
+We start with the concept of an {\it expectation\/},
+defined this way:
+if $x$ is a random variable with probabilities $p$,
+its expectation is the weighted average value of $x$
+using probabilities as weights:
+\begin{eqnarray*}
+    E (x) &=& \sum_z x(z) p[x(z)]  .
+\end{eqnarray*}
+For a continuous random variable,
+%one for which the state space $Z$ is a part of the real line --- % ??
+we replace the sum with an integral.
+The notation on the right is a little cumbersome, which is why
+we'll simply write $E(x)$ most of the time.
+
+We can extend this concept to any function of $x$:
+\begin{eqnarray*}
+    E [f(x)] &=& \sum_z  f[x(z)] p[x(z)] .
+\end{eqnarray*}
+There may be cases where the sum (or integral) doesn't converge,
+but we won't worry about that now --- or ever, really.
+
+
+A {\it moment\/} is the expectation of a power of $x$:
+\begin{eqnarray*}
+    \mu_j^\prime &=& E (x^j)
+\end{eqnarray*}
+for $j$ a positive integer.
+The first one ($\mu_1^\prime$) is known as the {\it mean\/}.
+It's a measure of the ``location'' of the probability distribution.
+If we change the mean,  the probability distribution shifts left and right.
+[Think about graphing the probability distribution
+of $x+a$ for different values of $a$.
+If the mean of $x$ is $\mu^\prime_1$, then the mean of $x+a$ is
+$\mu^\prime_1 + a$.]
+
+We often use {\it central moments\/} instead, meaning we look at powers
+of $x$ minus its mean:
+\begin{eqnarray*}
+    \mu_j &=& E [(x-\mu_1^\prime)^j]
+\end{eqnarray*}
+The first central moment is zero by construction:
+\begin{eqnarray*}
+    \mu_1 &=& E (x-\mu_1^\prime)
+            \;\;=\;\;  E(x) - \mu_1^\prime
+            \;\;=\;\;  \mu_1^\prime - \mu_1^\prime  \;\;=\;\; 0.
+\end{eqnarray*}
+If any of these steps seems mysterious, write out the calculation of the expectation
+for the discrete case.
+%What we see here is an example of a more general feature of expectations:
+%expectations of linear functions of $x$ are the same linear functions of expectations.
+%In equations,
+%\begin{eqnarray*}
+%    E(a + b x) &=& a + b E(x) .
+%\end{eqnarray*}
+
+
+The second central moment is called the {\it variance\/},
+a measure of ``dispersion'':  how spread out the distribution is.
+The {\it standard deviation\/} is the (positive) square root of the variance
+and is often used the same way.
+The standard deviation measures the ``scale'' of a random variable 
+in the following sense:  
+if the standard deviation of $x$ is $\sigma$, 
+then the standard deviation of $ax$ is $| a | \sigma$.  
+%[Think about graphing the probability distribution
+%of $ax$ for different values of $a$.]
+If we write out the definition of the variance, 
+we see it can be expressed in terms of (noncentral or raw) moments:
+\begin{eqnarray*}
+    E [(x-\mu_1^\prime)^2]  &=&  E [x^2 - 2 x\mu_1^\prime + (\mu_1^\prime)^2]
+            \;\;=\;\; \mu_2^\prime - 2 (\mu_1^\prime)^2 + (\mu_1^\prime)^2
+            \;\;=\;\; \mu_2^\prime -  (\mu_1^\prime)^2 .
+\end{eqnarray*}
+If we wanted to, we could compute the variance this way.
+That's pretty common, but we'll see shortly there's a
+better (by which I mean easier) way.
+
+Let's try to compute the mean and variance for the distributions 
+we looked at earlier:
+%
+\begin{itemize}
+\item {\it Bernoulli.\/}
+Let the probability that $x=1$ be $\omega$ and the probability that $x=0$ be $1-\omega$.
+How do we find the mean and variance?
+The easiest way is to look them up in Wikipedia (search ``Bernoulli distribution''),
+but let's see if we can find them on our own.
+The mean is (apply the definition)
+\begin{eqnarray*}
+    E(x) &=&  (1-\omega) \cdot 0 + \omega \cdot 1
+            \;\;=\;\; p.
+\end{eqnarray*}
+We find the variance from the second moment:
+\begin{eqnarray*}
+    E(x^2) &=&  (1-\omega) \cdot 0^2 + \omega \cdot 1^2
+            \;\;=\;\; p.
+\end{eqnarray*}
+The variance is therefore
+\begin{eqnarray*}
+    \mbox{Var}(x) &=& E(x^2) - [E(x)]^2
+            \;\;=\;\;  \omega - \omega^2
+            \;\;=\;\; \omega (1-\omega) .
+\end{eqnarray*}
+The standard deviation is the square root of this.
+%You might ask:  for what value of $\omega$ is the variance highest?
+%The answer:  $\omega=1/2$.
+
+
+\item {\it Poisson.\/}
+The first moment (the mean) is
+\begin{eqnarray*}
+    E(x) &=& e^{-\omega} \sum_{j=0}^\infty j \omega^j/j!
+            \;\;=\;\; e^{-\omega} \omega \sum_{j=1}^\infty (j-1) \omega^{j-1}/(j-1)!
+            \;\;=\;\; \omega .
+\end{eqnarray*}
+[You'll have to think about this a little -- or better yet, wait a few minutes and
+we'll come up with a better approach.]
+The second moment is
+\begin{eqnarray*}
+    E(x^2) &=& e^{-\omega} \sum_{j=0}^\infty j^2 \omega^j/j!
+            \;\;=\;\;  ??.
+\end{eqnarray*}
+We could fight our way through this,
+but since an easier way is just around the corner,
+it's easier to surrender now and come back to fight another day.  
+
+
+\item {\it Normal.\/}
+Later --- for the same reason.  
+\end{itemize}
+
+
+Our last topic here is {\it sample moments\/}:
+moments computed from data.
+The idea is to use sample weights rather than probabilities.
+Given a sample of $x_t$s for $t=1,2,\ldots,T$,
+the sample mean is
+\begin{eqnarray*}
+         \bar{x} &=& T^{-1} \sum_{t=1}^T x_t
+\end{eqnarray*}
+and the $j$th sample moment is
+\begin{eqnarray*}
+         T^{-1} \sum_{t=1}^T x_t^j .
+\end{eqnarray*}
+Sample central moments are the same, but we subtract the sample mean
+from $x_t$ first:
+\begin{eqnarray*}
+         T^{-1} \sum_{t=1}^T (x_t-\bar{x})^j .
+\end{eqnarray*}
+If the $x_t$s are produced by a specific distribution,
+then with enough data the sample moments will be ``close''
+to the moments of the distribution.
+That's worth showing, 
+but we need to leave a few things for other courses.  
+
+
+\subsection*{Generating functions}
+
+
+Next up is a great tool:  generating functions.
+It's a tool with a wide range of uses,
+but we're interested in one:  
+as a short-cut in computing moments.
+If you've run across {\it Fourier} and $z$-transforms, 
+they're related.
+
+
+The {\it moment generating function\/} (mgf) is defined by
+\begin{eqnarray}
+    h(s) &=& E \left( e^{s x} \right) ,
+    \label{eq:def-mgf} 
+\end{eqnarray}
+a function of the real number $s$.
+By construction we have $h(0) = 1$.  
+It's a tool, like a hammer, and we can hammer things with it.
+If we hammer probability distributions, we get moments as a byproduct.
+
+
+Recall the power series expansion (\ref{eq:eofx-powerseries}) of the exponential function.
+If we expand $e^{sx}$ the same way and take expectations,
+the moments pop out:
+\begin{eqnarray*}
+    h(s) &=& E \left( 1 + (sx) + (sx)^2/2 + (sx)^3/3! + \cdots \right) \\
+            &=&  1 + \mu_1^\prime s + \mu_3^\prime (s^2/2)  + \mu_3^\prime (s^3/3!)  + \cdots .
+\end{eqnarray*}
+With a little more insight, we see that we can recover the moments by differentiating
+$h$ and setting $s=0$.
+The first derivative is the mean:
+\begin{eqnarray*}
+    h^{(1)} (0)  &=& \left. \frac{ d h(s)}{d s} \right|_{s=0}
+            \;\;=\;\;  \mu_1^\prime .
+\end{eqnarray*}
+Here $h^{(1)}(0)$ means the first derivative of the function $h(s)$ evaluated at
+$s=0$.
+Similarly, high-order moments follow from high-order derivatives:
+\begin{eqnarray*}
+    h^{(j)} (s)  &=& \left. \frac{d^j h(s)}{d s^j} \right|_{s=0}
+            \;\;=\;\;  \mu_j^\prime
+\end{eqnarray*}
+This looks horrible, but it just says that the $j$th moment is the $j$th derivative.
+Bottom line:  if we know the mgf, we can find moments by differentiating it.
+
+
+Let's go back to our examples:  
+%
+\begin{itemize}
+\item {\it Bernoulli.\/}
+The mgf is
+\begin{eqnarray*}
+    h(s) &=& (1-\omega) e^{s \cdot 0} + \omega e^{s \cdot 1} 
+        \;\;=\;\; (1-\omega) + \omega e^{s} .
+\end{eqnarray*} 
+Use this to verify the mean and variance we derived earlier.  
+
+
+\item {\it Poisson.\/}  The mgf is 
+\begin{eqnarray*}
+    h(s) &=& \sum_{z=0}^\infty e^{sz} e^{-\omega} \omega^z/z! 
+            \;\;=\;\; e^{-\omega} \sum_{z=0}^\infty \left( e^{s} \omega\right)^z /z! 
+            \;\;=\;\; e^{-\omega} e^{e^{s} \omega} 
+            \;\;=\;\; e^{\omega (e^{s}-1)}  .
+\end{eqnarray*}
+The first two derivatives are 
+\begin{eqnarray*}
+    h^{(1)}(0) &=& \omega  \\
+    h^{(2)}(0) &=& \omega + \omega^2,
+\end{eqnarray*}
+giving us a mean and variance of $\omega$ (they're the same).  
+
+\item {\it Normal.\/}
+We find the mgf by completing the square:  
+\begin{eqnarray*}
+        h(s) &=& (2\pi \sigma^2)^{-1/2} \int_{-\infty}^\infty e^{sx} e^{-(x-\mu)^2/2\sigma^2} dx .
+\end{eqnarray*}
+The exponents are 
+\begin{eqnarray*}
+        sx - (x-\mu)^2/2\sigma^2 &=& 
+                -(1/2\sigma^2) \left[ -2 s \sigma^2 x + x^2 - 2 \mu x + \mu^2  \right] \\
+            &=& \mu s + \sigma^2 s^2/2 - [x-(\mu+s \sigma^2)]^2/2\sigma^2 .
+\end{eqnarray*}
+[This may take you a couple minutes,  but try expanding both expressions and lining up terms.]
+When we plug this into the integral, we see the last term gives us a normal density function,
+which integrates to one, leaving us with the other terms: 
+\begin{eqnarray*}
+        h(s) &=& e^{\mu s + \sigma^2 s^2/2}  .
+\end{eqnarray*}
+If you differentiate, you can show that this implies 
+a mean of $\mu$ and a variance of $\sigma^2$.
+\end{itemize}
+
+
+The moment generating function gives us, in these and many other cases, 
+an easier route to finding moments.  
+I like the {\it cumulant generating function\/} (cgf) even more,  
+the logarithm of the moment generating function:  
+\begin{eqnarray}
+    k(s) &=& \log h(s) .
+    \label{eq:def-cgf}
+\end{eqnarray}
+(In this class and in Matlab, $\log$ means the natural or base $e$ logarithm.)
+It has the expansion 
+\begin{eqnarray*}
+    k(s) &=& \left( \kappa_1 s + \kappa_2 (s^2/2) + \kappa_3 (s^3/3!) + \cdots \right) .
+\end{eqnarray*}
+Its derivatives give us what are called {\it cumulants\/} $\kappa_j$, 
+defined by 
+\begin{eqnarray*}
+    \kappa_j &=& k^{(j)}(0) .
+\end{eqnarray*}
+We can connect cumulants to moments by linking derivatives of $k$
+to those of $h$ using (\ref{eq:def-cgf}).  
+For example, the first two derivatives are 
+\begin{eqnarray*}
+    k^{(1)}(0) &=& h^{(1)}(0) / h(0) \;\;=\;\; h^{(1)}(0) \\
+    k^{(2)}(0) &=& h^{(2)}(0) - h^{(1)}(0)^2 ,
+\end{eqnarray*}
+the mean and variance.  
+
+
+Unlike the mgf, the derivatives of the cgf ``centralize'' moments.  
+We see that in the second derivative above 
+(we get the variance directly, rather than the second noncentral moment), 
+but that's an example of a more general property:
+the cgf of $y = a+bx$ is (apply the definition)
+\begin{eqnarray*}
+    k(s; y) &=& a s + k(sb; x) .
+\end{eqnarray*}
+We refer to $a$ as changing the location of the random variable and $b$ the scale.
+The cumulants of $y$ are connected to those of $x$ by 
+\begin{eqnarray*}
+    \kappa_1 (y) &=& a + b \kappa_1 (x) \\
+    \kappa_j (y) &=& b^j \kappa_j (x) \;\;\; \mbox{ for } j=2,3,\ldots 
+\end{eqnarray*}
+That is:  after the first one, cumulants aren't affected by location.
+
+After the mean and variance, the most useful moments/cumulants
+are the third and fourth measuring, respectively,
+skewness and kurtosis.  
+Skewness refers to the asymmetry of the distribution:
+odd cumulants (and central moments) are zero after the first
+for any symmetric distribution.  
+Kurtosis refers to how much weight i
+
+Our examples again:  
+%
+\begin{itemize}
+\item {\it Bernoulli.\/}
+The cgf is
+\begin{eqnarray*}
+    k(s) &=& \log \left[ (1-\omega) + \omega e^{s} \right] .
+\end{eqnarray*}
+
+\item {\it Poisson.\/}  The cgf is
+\begin{eqnarray*}
+    k(s) &=& \omega (e^{s}-1)  .
+\end{eqnarray*}
+Its derivatives are all the same:  
+The first two derivatives are
+\begin{eqnarray*}
+    h^{(1)}(0) &=& \omega  \\
+    h^{(2)}(0) &=& \omega + \omega^2,
+\end{eqnarray*}
+giving us a mean and variance of $\omega$ (they're the same).
+
+\item {\it Normal.\/}
+We find the mgf by completing the square:
+\begin{eqnarray*}
+        h(s) &=& (2\pi \sigma^2)^{-1/2} \int_{-\infty}^\infty e^{sx} e^{-(x-\mu)^2/2\sigma^2} dx .
+\end{eqnarray*}
+The exponents are
+\begin{eqnarray*}
+        sx - (x-\mu)^2/2\sigma^2 &=&
+                -(1/2\sigma^2) \left[ -2 s \sigma^2 x + x^2 - 2 \mu x + \mu^2  \right] \\
+            &=& \mu s + \sigma^2 s^2/2 - [x-(\mu+s \sigma^2)]^2/2\sigma^2 .
+\end{eqnarray*}
+[This may take you a couple minutes,  but try expanding both expressions and lining up terms.]
+When we plug this into the integral, we see the last term gives us a normal density function,
+which integrates to one, leaving us with the other terms:
+\begin{eqnarray*}
+        h(s) &=& e^{\mu s + \sigma^2 s^2/2}  .
+\end{eqnarray*}
+If you differentiate, you can show that this implies
+a mean of $\mu$ and a variance of $\sigma^2$.
+\end{itemize}
+
+
+Two of the most common 
+
+Cumulant generating function: show connection...
+
+Linear functions...  \\
+Symmetry
+
+Examples:  ...
+
+
+\subsection*{Independent random variables}
+
+Independent:  prob equals product
+
+Show mgf, cgf
+
+N period cgf...  Divisibility goes the other way, doesn't always work
+
+
+\subsection*{Relations between random variables}
+
+Consider the relation between two random variables $x_1$ and $x_2$.
+Let the pdf be $p(x_1,x_2)$.
+Conditional...  Marginal...
+
+Independence.  We say $x_1$ and $x_2$ are independent (of each other)
+if $p(x_1,x_2) = p(x_1) p(x_2) $.
+
+covariance and correlation...
+
+Examples. \\
+Bernoulli... \\
+Nonlinear relation...  $z \sim U(0,1)$, $x_1(z) = z$, $x_2(z) = (z-1/2)^2$   \\
+Normal...  \\
+
+
+%\verbatiminput{../Matlab/datainputexample.m}
+
+\subsection*{If you'd like to know more}
+
+The general theory of what we've done here is referred to as ``probability theory.''
+It's never a bad idea to take a course with a title similar to that.
+The concepts are developed further in ``measure theory,''
+also a good idea if you have time for some moderately advanced math courses.
+
+For properties of particular distributions, I find Wikipedia helpful.
+Search for (say) ``Poisson distribution'' and you'll find everything we've done here
+and more.
+Wikipedia's also ok on the underlying mathematics, but you're never sure what
+level you'll get:  too high, too low, or just right.
+
+Software
+
+Measure theory...
+
+
+\end{document}

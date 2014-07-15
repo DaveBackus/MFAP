@@ -1,0 +1,279 @@
+\documentclass[11pt]{exam}
+
+\oddsidemargin=0.25truein \evensidemargin=0.25truein
+\topmargin=-0.5truein \textwidth=6.0truein \textheight=8.75truein
+
+%\RequirePackage{graphicx}
+\usepackage{verbatim}
+\usepackage{booktabs}
+\usepackage{comment}
+\usepackage{hyperref}
+\urlstyle{rm}   % change fonts for url's (from Chad Jones)
+\hypersetup{
+    colorlinks=true,        % kills boxes
+    allcolors=blue,
+    pdfsubject={ECON-UB233, Macroeconomic foundations for asset pricing},
+    pdfauthor={Dave Backus @ NYU},
+    pdfstartview={FitH},
+    pdfpagemode={UseNone},
+%    pdfnewwindow=true,      % links in new window
+%    linkcolor=blue,         % color of internal links
+%    citecolor=blue,         % color of links to bibliography
+%    filecolor=blue,         % color of file links
+%    urlcolor=blue           % color of external links
+% see:  http://www.tug.org/applications/hyperref/manual.html
+}
+
+\renewcommand{\thefootnote}{\fnsymbol{footnote}}
+\newcommand{\var}{\mbox{\it Var\/}}
+
+%\printanswers
+
+% document starts here
+\begin{document}
+\parskip=\bigskipamount
+\parindent=0.0in
+\thispagestyle{empty}
+{\large ECON-UB 233 \hfill Dave Backus @ NYU}
+
+\bigskip\bigskip
+\centerline{\Large \bf Quiz \#2}
+\centerline{(Revised: \today)}
+
+\bigskip
+{\it Please write your name below.
+Then complete the exam in the space provided.
+There are THREE questions.
+You may refer to one page of notes:
+standard paper, both sides, any content you wish.}
+
+\bigskip
+\begin{flushleft}
+\rule{4in}{0.5pt} \\ (Name and signature)
+\end{flushleft}
+
+
+\begin{questions}
+%-----------------------------------------------------------------------
+\question (Sharpe ratios) (40~points)
+We'll look at Sharpe ratios in a two-period representative agent economy.
+Endowment growth $g$ is Bernoulli:
+\begin{eqnarray*}
+    g &=&
+        \left\{
+        \begin{array}{ll}
+            1.00    &  \mbox{with probability } 1-\omega \\
+            1.10    &  \mbox{with probability } \omega
+        \end{array}
+        \right.
+\end{eqnarray*}
+with $\omega = 0.3$.
+The representative agent has power utility with discount factor $\beta = 0.98$
+and risk aversion $\alpha = 5$.
+Equity is a claim to $g$.
+
+\begin{parts}
+\part What is the pricing kernel for this economy?
+What are the state prices?
+(10~points)
+\part What are the price and return of a one-period riskfree bond?
+(10~points)
+\part What is the price of equity?
+What are the mean and standard deviation of its excess return?
+What is its Sharpe ratio?
+(10~points)
+\part What is the maximum Sharpe ratio for this economy?
+(10~points)
+\end{parts}
+
+\begin{solution}
+\begin{parts}
+\part The pricing kernel is $m(z) = \beta g(z)^{-\alpha} $.
+Here we get $ m = [0.9800, 0.6085] $.
+State prices are $q(z) = p(z) m(z) $ or
+$ q = [ 0.6860, 0.1826]$.
+\part The price of the bond is
+\begin{eqnarray*}
+    q^1 &=& \sum p(z) m(z) \;\;=\;\; 0.8686,
+\end{eqnarray*}
+which implies $r^1 = 1/q^1 = 1.1513$.
+\part The price of equity is
+\begin{eqnarray*}
+    q^1 &=& \sum p(z) m(z) g(z) \;\;=\;\; 0.8868 .
+\end{eqnarray*}
+The returns are $r^e = [1.1276, 1.2404]$.
+The mean and standard deviation follow either from
+a brute-force calculation [$ \var(x) = E(x^2) = E(x)^2$]
+or related formulas for Bernoulli random variables.
+The mean and standard deviation of the excess return are
+0.0102 and 0.0517.
+The Sharpe ratio is the ratio of the two:  $0.0102/0.0517 = 0.1960$.
+\part This is an application of the Hansen-Jagannathan bound.
+The maximum Sharpe ratio for this pricing kernel is the ratio
+of the standard deviation of the pricing kernel to its mean.
+Here we get $0.1702/0.8686 = 0.1960$.
+Our asset therefore hits the bound.
+That's something of an accident, it works because of the two-state structure,
+which means all returns are linear functions of the pricing kernel.
+Don't worry if that seems obscure to you.
+\end{parts}
+Matlab program:
+\verbatiminput{../Matlab/quiz2_s12.m}
+\end{solution}
+
+
+%\pagebreak \phantom{xx} \pagebreak
+%-----------------------------------------------------------------------
+\question (entropy bound revisited) (30~points)
+The idea here is to derive the entropy bound from a maximization problem.
+We'll do this in an arbitrary two-period economy with a finite set of states.
+Each state $z$ has probability $p(z)$
+and pricing kernel $m(z)$.
+An asset has returns $r(z)$ that satisfy the pricing relation
+\begin{eqnarray}
+    \sum_z p(z) m(z) r(z) &=& 1.
+    \label{eq:pricing-relation}
+\end{eqnarray}
+Our mission is to characterize the asset with the highest expected log return,
+\begin{eqnarray*}
+    \sum_z p(z) \log r(z) .
+\end{eqnarray*}
+We'll refer to this as the ``high-return asset.''
+
+\begin{parts}
+\part What is the entropy of the pricing kernel?
+Express it in terms of $m(z)$ and $p(z)$.
+(10~points)
+
+\part Use Lagrangian methods to find the returns $r(z)$ (one number for each state)
+that maximize the expected log return while satisfying the pricing relation (\ref{eq:pricing-relation}).
+How is the return on the high-return asset related to the pricing kernel?
+(10~points)
+
+\part Show that the high-return asset attains the entropy bound.
+(10~points)
+\end{parts}
+
+\begin{solution}
+\begin{parts}
+\part Entropy is defined by
+\begin{eqnarray*}
+    H(m) &=& \log E(m) - E \log m
+            \;\;=\;\; \log \sum_z p(z) m(z) - \sum_z p(z) \log m(z) .
+\end{eqnarray*}
+
+\part The idea is to maximize the expected log return with the pricing
+relation as a constraint.
+The Lagrangian is
+\begin{eqnarray*}
+    \mathcal{L} &=&     \sum_z p(z) \log r(z)
+            + \lambda \left( 1 - \sum_z p(z) m(z) r(z) \right) .
+\end{eqnarray*}
+The first-order condition for $r(z)$ is
+\begin{eqnarray*}
+     p(z) / r(z) &=&  \lambda  p(z) m(z) .
+\end{eqnarray*}
+You can see here that there's an inverse relation between $r(z)$ and $m(z)$,
+but we need to eliminate the multiplier $\lambda$.
+If we multiply both sides by $r(z)$ and sum over $z$,
+we see that the left side is one and the right side is $\lambda$,
+so we must have $\lambda = 1$.
+That gives us the maximizing return
+\begin{eqnarray*}
+      r(z) &=&  1/ m(z) .
+\end{eqnarray*}
+We did this in class using Jensen's inequality,
+but this is more constructive.
+
+\part The entropy bound says
+\begin{eqnarray*}
+    E (\log r - \log r^1) &\leq& H(m) \;\;=\;\; \log E(m) - E \log m .
+\end{eqnarray*}
+All we need to do is substitute.
+We have $r = 1/m$, so
+$ E \log r = - E \log m$.
+The one-period rate is $ r^1 = 1/ E(m)$, so
+$ \log r^1 = - \log E(m)$.
+That gives us
+\begin{eqnarray*}
+    E (\log r - \log r^1) &=& - E \log m + \log E(m) \;\;=\;\; H(m) .
+\end{eqnarray*}
+(The $E$ in front of $r^1$ is irrelevant here, because $r^1$ is a constant.)
+
+
+\end{parts}
+\end{solution}
+
+
+%\pagebreak \phantom{xx} \pagebreak
+%-----------------------------------------------------------------------
+\question (put and call options)
+(30~points)
+We'll look, once again, at the prices of one-year options when
+the risk-neutral distribution of the underlying is lognormal.
+If the future value of the underlying is $s_{t+1}$,
+then $\log s_{t+1} \sim \mathcal{N}(\kappa_1,\kappa_2)$.
+We've seen, in this case, that the price of a European put option
+with strike price $k$ is
+\begin{eqnarray*}
+    q^p_t &=& q^1_t k N(d) - q^1_t e^{\kappa_1 + \kappa_2/2}
+            N(d-\kappa_2^{1/2}) \\
+            d&=& (\log k - \kappa_1)/\kappa_2^{1/2} .
+\end{eqnarray*}
+
+\begin{parts}
+\part What is the price of a call option with the same strike price?
+(15~points)
+\part What is the no-arbitrage condition for this environment?
+Use it to derive the BSM formula for call options from your answer to (a).
+(15~points)
+\end{parts}
+
+\begin{solution}
+Axelle says there's a sign error here somewhere,
+but I haven't had the time to fix it yet.
+\begin{parts}
+\part The key input here is put-call parity, solved for the call price:
+\begin{eqnarray*}
+    {q^c_t}
+    &=&
+    {s_t} -
+    {q^1_t k} +
+    {q^p_t}
+\end{eqnarray*}
+That gives us a call price of
+\begin{eqnarray*}
+    q^c_t &=& q^1_t k [1-N(d)] + s_t - q^1_t e^{\kappa_1 + \kappa_2/2}
+            N(d-\kappa_2^{1/2}) \\
+          &=& q^1_t k N(-d) + s_t - q^1_t e^{\kappa_1 + \kappa_2/2}
+            N(d-\kappa_2^{1/2}) .
+\end{eqnarray*}
+The second line follows from the symmetry of the normal distribution:
+$1-N(d) = N(-d)$.
+
+\part The no-arb condition here is $ s_t = q^1_t e^{\kappa_1 + \kappa_2/2} $ or
+\begin{eqnarray*}
+    \kappa_1 &=& \log (s_t/q^1_t) - \kappa_2/2 .
+\end{eqnarray*}
+That allows us to simplify the call price to
+\begin{eqnarray*}
+    q^c_t &=& q^1_t k N(-d) + s_t N(-d+\kappa_2^{1/2}) ,
+\end{eqnarray*}
+with
+\begin{eqnarray*}
+    d &=& \frac{\log (q^1_t k/s_t) - \kappa_2/2 }{\kappa_2^{1/2}} .
+\end{eqnarray*}
+If we change the sign, we end up with the BSM formula.
+\end{parts}
+\end{solution}
+
+\pagebreak
+\end{questions}
+
+\phantom{xx}
+\vfill \centerline{\it \copyright \ \number\year \
+NYU Stern School of Business}
+\end{document}
+
+
+

@@ -1,0 +1,76 @@
+\documentclass[11pt]{article}
+
+\oddsidemargin=0.25truein \evensidemargin=0.25truein
+\topmargin=-0.5truein \textwidth=6.0truein \textheight=8.75truein
+
+%\RequirePackage{graphicx}
+\RequirePackage[hypertex]{hyperref}
+\RequirePackage{comment}
+\usepackage{amssymb}
+\usepackage{amsfonts}
+\usepackage{booktabs}
+
+%\renewcommand{\thefootnote}{\fnsymbol{footnote}}
+
+% document starts here
+\begin{document}
+\parskip=\bigskipamount
+\parindent=0.0in
+\thispagestyle{empty}
+{\large ECON-UB 233 \hfill Dave Backus @ NYU}
+
+\bigskip\bigskip
+\centerline{\Large \bf Syllabus:  Macroeconomic Foundations for Asset Prices}
+%\bigskip\bigskip
+%\centerline{\Large \bf Syllabus}
+\centerline{(Started: July 12, 2011; Revised: \today)}
+
+\bigskip
+This course is about links between business cycles
+and asset prices ---
+between the ups and downs of the economy as a whole
+and prices of bonds, equity indexes, and related assets.
+It's also about the tools used to study these links,
+tools that include modern software for manipulating data (Matlab), 
+analytical frameworks for thinking about business cycles and asset 
+
+tools  used in universities and financial firms alike.
+I expect it to be a demanding course, but a useful one,
+whether your plans call for graduate school or a job on Wall Street.
+
+Topics will include:
+random variables,
+autocorrelations and cross-correlations,
+properties of business cycles,
+properties of bond and equity returns,
+asset pricing,
+no-arbitrage conditions,
+theories of bond and equity returns,
+affine models,
+HJ and entropy bounds,
+representative agents and the equity premium,
+and equity index options and economic disasters.
+
+The course is part of our ``frontiers of macroeconomics''
+sequence.
+Some knowledge of calculus, probability theory, and linear algebra is
+expected, but more important is a willingness to engage in quantitative thinking.
+
+
+
+\subsubsection*{Important dates}
+
+Midterm ...
+
+
+\subsubsection*{Information about the course}
+
+As a rule, everything will be posted on the course website.
+The primary purpose of this document is to point you there.
+
+
+
+
+
+
+\end{document}

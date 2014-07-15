@@ -1,0 +1,416 @@
+\documentclass[11pt]{exam}
+
+\oddsidemargin=0.25truein \evensidemargin=0.25truein
+\topmargin=-0.5truein \textwidth=6.0truein \textheight=8.75truein
+
+%\RequirePackage{graphicx}
+\usepackage{comment}
+\usepackage{verbatim}
+\usepackage{booktabs}
+\usepackage[dvipdfm]{hyperref}
+\urlstyle{rm}   % change fonts for url's (from Chad Jones)
+\hypersetup{
+    colorlinks=true,        % kills boxes
+    allcolors=blue,
+    pdfsubject={ECON-UB233, Macroeconomic foundations for asset pricing},
+    pdfauthor={Dave Backus @ NYU},
+    pdfstartview={FitH},
+    pdfpagemode={UseNone},
+%    pdfnewwindow=true,      % links in new window
+%    linkcolor=blue,         % color of internal links
+%    citecolor=blue,         % color of links to bibliography
+%    filecolor=blue,         % color of file links
+%    urlcolor=blue           % color of external links
+% see:  http://www.tug.org/applications/hyperref/manual.html
+}
+
+\renewcommand{\thefootnote}{\fnsymbol{footnote}}
+\newcommand{\var}{\mbox{\it Var\/}}
+
+\printanswers
+
+% document starts here
+\begin{document}
+\parskip=\bigskipamount
+\parindent=0.0in
+\thispagestyle{empty}
+{\large ECON-UB 233 \hfill Dave Backus @ NYU}
+
+\bigskip\bigskip
+\centerline{\Large \bf Lab Report \#3: Two-Period Macro Models}
+\centerline{(Started: February 2, 2012; Revised: \today)}
+
+\bigskip
+{\it Due at the start of class.
+You may speak to others, but whatever you hand in should be your own work.}
+
+\begin{questions}
+
+%\begin{solution}
+%Most of the answers are computed in the Matlab
+%program listed at the end and posted
+%\href{http://pages.stern.nyu.edu/~dbackus/233/hw2_s12.m}{here}.
+%\end{solution}
+
+%-----------------------------------------------------------------------
+\question (consumption, investment, and state prices)
+Consider a two-period economy with a linear technology.
+What is equilibrium consumption growth?
+What are the state prices?
+What is a claim to one unit of capital worth?
+
+To address these questions,
+we use a variant of our two-period economy,
+with dates 0 and 1 and states $z$ at date 1 that occur with probability $p(z)$.
+The representative agent has utility function
+\begin{eqnarray*}
+    u(c_0) + \beta \sum_z p(z) u[c_1(z)] ,
+\end{eqnarray*}
+with $u(c) = c^{1-\alpha}/(1-\alpha)$ for $\alpha > 0$
+(power utility).
+She is endowed with $y_0$ units of the date-0 good, nothing at date 1.
+The technology is linear:  $k$ units of the date-0 good invested in capital
+generate $z k$ units of the good in state $z$ at date 1.
+The resource constraints are therefore
+\begin{eqnarray*}
+    c_0 + k &=& y_0  \\
+    c_1(z) &=& z k ,
+\end{eqnarray*}
+with one of the latter for each state $z$.
+Think of the productivity factor $z$ as $a(z)$ with $a(z) = z$.
+
+\begin{parts}
+\part What are the classical ``ingredients'' of this economy?
+\part What is the associated Pareto problem?
+What are its first-order conditions?
+\part Suppose $z$ is lognormal:  that is,
+$\log z \sim \mathcal{N}(\kappa_1,\kappa_2)$.
+Use the properties of lognormal random variables to show
+that $E(z^a) = \exp( a \kappa_1 + a^2 \kappa_2/2)$
+for any real number $a$.
+\part Use this result to find the optimal values of $c_0$ and $k$.
+Given these values, what is saving?
+\part  (extra credit) What is $c_1(z)$?
+% ?? next part a little tough
+What are the state prices?
+\part (extra credit) What is the value of one unit of capital,
+that is, a claim to $z$ units of output in each state $z$?
+%What are the effects of the parameters $(\alpha, \kappa_1,\kappa_2)$?
+\end{parts}
+
+\begin{solution}
+\begin{parts}
+\part Commodities:  the good at date 0 plus the good in all states at date 1 \\
+Agents:  one \\
+Preferences, endowment, and technologies:  given above \\
+Resource constraints:  ditto
+\part Pareto problem based on the Lagrangean:
+\begin{eqnarray*}
+    \mathcal{L}  &=&  \log c_0  + \beta \sum_z p(z) \log c_1(z) \\
+         && + \; q_0 (y_0 - c_0 - k)
+            + \sum_z q_1(z) [z k - c_1(z)] .
+\end{eqnarray*}
+We choose $c_0$, $k$, and $c_1(z)$ to maximize this.
+The first-order conditions are
+\begin{eqnarray*}
+    c_0: &&  c_0^{-\alpha} \;\;=\;\; q_0 \\
+    k:   &&  q_0 \;\;=\;\; \sum_z q_1(z) z \\
+    c_1(z): &&  \beta p(z) c_1(z)^{-\alpha} \;\;=\;\; q_1(z)
+\end{eqnarray*}
+
+\part Define $x=\log z$.
+Its mgf is $e^{sx} = E(e^{s\log z}) = E(z^s) = e^{s\kappa_1 + s^2 \kappa_2/2}$.
+Setting $s=a$ gives us the answer.
+
+\part This is moderately demanding, but here's how it works.
+With apologies for mixing sums and integrals,
+we use the first and third first-order conditions to substitute
+for $q_0$ and $q_1(z)$ in the second:
+\begin{eqnarray*}
+        1 &=& \sum_z \frac{q_1(z)}{q_0} z
+            \;\;=\;\; \sum_z \frac{\beta p(z) c_1(z)^{-\alpha}}{c_0^{-\alpha}} \; z
+            \;\;=\;\; \sum_z \beta p(z) \frac{(zk)^{-\alpha}}{(y_0-k)^{-\alpha}} \; z \\
+          &=& \beta (y_0-k)^\alpha k^{-\alpha} \sum_z  p(z)  z^{1-\alpha}
+             \;\;=\;\;  \beta (y_0-k)^\alpha k^{-\alpha} E (z^{1-\alpha} ) .
+\end{eqnarray*}
+To simplify, denote $ E(z^{1-\alpha}) = Z$.
+Then consumption and capital are
+\begin{eqnarray*}
+    k &=& \frac{(\beta Z)^{1/\alpha}}{1+ (\beta Z)^{1/\alpha}} \; y_0,
+        \;\;\;  c_0 \;\;=\;\; \frac{1}{1+ (\beta Z)^{1/\alpha}} \; y_0
+\end{eqnarray*}
+Using the lognormal result, we have
+\begin{eqnarray*}
+    Z &=& E(z^{1-\alpha}) \;\;=\;\; e^{(1-\alpha)\kappa_1 + (1-\alpha)^2 \kappa_2/2}
+\end{eqnarray*}
+
+\part Evidently
+\begin{eqnarray*}
+    c_1(z) &=& z k \;\;=\;\; z y_0 \frac{(\beta Z)^{1/\alpha}}{1+ (\beta Z)^{1/\alpha}} .
+\end{eqnarray*}
+The big part at the end is a constant, so it's ugly but innocuous.
+The state prices are (more tedious substitution)
+\begin{eqnarray*}
+    q(z) &=& p(z) \beta [c_1(z)/c_0]^{-\alpha}
+            \;\;=\;\; p(z) z^{-\alpha}/Z .
+\end{eqnarray*}
+As usual, the state price is the product of
+a pricing kernel [here $m(z) = z^{-\alpha}/Z$]
+and a probability [the normal density for $\log z$,
+which we haven't bothered to write out].
+
+\part
+This is claim to $z$ next period,
+with value at date 0 of
+\begin{eqnarray*}
+    q^e &=& E (z^{1-\alpha}/Z \;\;=\;\; 1.
+\end{eqnarray*}
+Hmmmm...
+Why does this make sense?
+Because one unit of capital is one unit of the good
+at date 0, whose price is one since we're valuing
+assets in units of the date-0 good.
+
+
+\end{parts}
+\end{solution}
+
+
+%-----------------------------------------------------------------------
+\question (pricing state-contingent claims)
+Consider a two-period exchange economy with power utility
+and endowment growth
+and $\log c_1 - \log c_0 = \log y_1 - \log y_0 = z \sim \mathcal{N}(\kappa_1,\kappa_2)$
+and $y_0 = 1$.
+We'll compute the prices of equity and two equity derivatives
+using a representative agent's marginal rate of substitution
+as a pricing kernel.
+
+\begin{parts}
+\part What is the marginal rate of substitution for this economy?
+\part What is the price $q^1$ of a bond
+that pays one in each state?
+Express it as a function of $\alpha$, $\beta$, $\kappa_1$, and $\kappa_2$.
+\part What is the price $q^e$ of ``equity,''
+a claim to the date-1 endowment $y_1(z) = e^z$?
+What is its return? Expected return?
+\part Consider an ``upside'' derivative that pays
+$y_1 $ if $y_1 \geq b$
+and a ``downside'' derivative that pays
+$y_1 $ if $y_1 \leq b$.
+Show that the prices (call them $q^u$ and $q^d$)
+sum to the price of equity.
+
+\part (extra credit) What is the price of the downside derivative
+for the lognormal case?
+Hint:  this involves integrating the normal distribution
+as we did when we computed the normal mgf.
+The difference is that we only integrate over the region in
+which the dividend is positive.
+\end{parts}
+
+\begin{solution}
+\begin{parts}
+\part The mrs is
+\begin{eqnarray*}
+    m(z) &=& \beta [c_1(z)/c_0]^{-\alpha}
+        \;\;=\;\; \beta e^{-\alpha z} ,
+\end{eqnarray*}
+so $\log m \sim \mathcal{N}(\log \beta - \alpha \kappa_1, \alpha^2 \kappa_2) $.
+\part The lognormal result again:
+\begin{eqnarray*}
+    q^1 &=& E(m) \;\;=\;\; \beta e^{-\alpha \kappa_1 + \alpha^2 \kappa_2/2} .
+\end{eqnarray*}
+The return is $r^1 = 1/q^1 $.
+
+\part With our distributional assumptions, we have
+\begin{eqnarray*}
+    q^e  &=& E(m y_1) \;\;=\;\; \beta E ( e^{-\alpha z} e^z )
+        \;\;=\;\; \beta E( e^{(1-\alpha) z}) \\
+             &=&
+             \beta e^{(1-\alpha)\kappa_1 + (1-\alpha)^2 \kappa_2/2 }.
+\end{eqnarray*}
+This should look familiar.
+
+\part We're splitting the dividends in two --- upside and downside ---
+so a claim to one unit of each is equivalent to a claim to equity.
+
+\part This is moderately demanding, too,
+but it's exactly the kind of math we'll use later to price options.
+The price of the downside derivative is
+\begin{eqnarray*}
+    q^d &=&  \int_{-\infty}^{z^*} m(z) y_1(z) p(z) dz
+\end{eqnarray*}
+with $z^* = \log b$ the upper bound on $z$ corresponding to
+$y_1 = b$.
+Now we're back to the same math we used to compute the mgf for a normal
+random variable:
+\begin{eqnarray*}
+     m(z) y_1(z) p(z)  &=& \beta e^{-\alpha z} e^z (2 \pi \kappa_2)^{-1/2}
+        e^{-(z-\kappa_1)^2/2\kappa_2} \\
+            &=& \beta e^{ (1-\alpha) \kappa_1 + (1-\alpha)^2 \kappa_2/2}
+                (2 \pi \kappa_2)^{-1/2}
+        e^{-(z + (1-\alpha) \kappa_2-\kappa_1)^2/2\kappa_2}  \\
+        &=& q^e  (2 \pi \kappa_2)^{-1/2}
+        \exp[-(w-\kappa_1)^2/2\kappa_2] ,
+\end{eqnarray*}
+where $ w = z + (1-\alpha)\kappa_2$.
+The integral is therefore
+\begin{eqnarray*}
+    (2 \pi \kappa_2)^{-1/2} \int_{-\infty}^{\log b + (1-\alpha) \kappa_2}
+            \exp[-(w-\kappa_1)^2/2\kappa_2] dw .
+\end{eqnarray*}
+More on this another time.
+
+\end{parts}
+\end{solution}
+
+
+%-----------------------------------------------------------------------
+\question (risk-neutral probabilities)
+Consider yet another two-period exchange economy with power utility
+and Bernoulli endowment growth:
+\begin{eqnarray*}
+    \log (c_1/c_0)  &=&  \left\{
+                    \begin{array}{lll}
+                    0   & \mbox{with probability } 1-\omega & \mbox{(state } z=1)\\
+                    g>0 & \mbox{with probability } \omega   & \mbox{(state } z=2)
+                    \end{array}
+                    \right.
+\end{eqnarray*}
+
+\begin{parts}
+\part What is the pricing kernel for this economy?
+Is the pricing kernel higher in state 1 or state 2?  Why?
+\part What are the state prices?
+Which is more valuable, a claim to one in state 1
+or a claim to one in state 2?  Why?
+\part What is the price $q^1$ of a bond paying one in each state?
+\part What are the risk-neutral probabilities?
+Why are they different from the true probabilities?
+\end{parts}
+
+\begin{solution}
+\begin{parts}
+\part Same pricing kernel as before, but in a two-state setting.
+In logs:
+\begin{eqnarray*}
+    \log m   &=&  \left\{
+                    \begin{array}{ll}
+                    \log \beta              & \mbox{in state } z=1\\
+                    \log \beta - \alpha g   & \mbox{in state } z=2 .
+                    \end{array}
+                    \right.
+\end{eqnarray*}
+Evidently $m$ is lower in state 2.  Why?
+There's more consumption in state 2, so its
+marginal utility is lower.
+\part State prices are connected to the pricing kernel by $ q(z) = p(z) m(z) $:
+\begin{eqnarray*}
+    q(z) \;\;=\;\; p(z) m(z)   &=&  \left\{
+                    \begin{array}{ll}
+                    (1-\omega) \beta               & \mbox{in state } z=1 \\
+                    \omega \beta e^{- \alpha g}   & \mbox{in state } z=2 .
+                    \end{array}
+                    \right.
+\end{eqnarray*}
+\part The sum of state prices:
+\begin{eqnarray*}
+    q^1 \;\;=\;\; q(1) + q(2)  &=&
+                    \beta \left[ (1-\omega) + \omega e^{- \alpha g} \right].
+\end{eqnarray*}
+\part Risk-neutral probabilities are defined by
+$ q^1 p^*(z) = p(z) m(z)$.
+Here we have
+\begin{eqnarray*}
+    p^*(2)    &=&  \frac{ \omega e^{-\alpha g}}{ 1 -\omega + \omega e^{-\alpha g} }
+\end{eqnarray*}
+and $p^*(1) = 1-p^*(2)$.
+These ``probabilities'' are adjusted for risk.
+If there's no risk aversion ($\alpha = 0$), $p^*(z) = p(z)$.
+Otherwise, $p^*(2) < p(2)$:  we put less weight
+on the good state (and more on the bad state),
+which is a way of taking into account the risk.
+Note, too, that $\beta$ drops out:  it affects
+discounting but not risk adjustment.
+
+
+
+\end{parts}
+\end{solution}
+
+\end{questions}
+
+
+\vfill \centerline{\it \copyright \ \number\year \
+NYU Stern School of Business}
+
+\end{document}
+
+
+
+%  EXTRA STUFF
+%-----------------------------------------------------------------------
+\question (labor supply and demand)
+One of the central variables in macroeconomics is employment, so it's helpful
+to have something like that in our models.
+We do that here with a modest extension of our two-period economy,
+with dates 0 and 1 and date-1 states $z$ that occur with probability $p(z)$.
+
+Suppose the representative agent has one unit of labor each period,
+which she can use to work or enjoy as leisure (everything but work).
+Her utility function might be written
+\begin{eqnarray*}
+    u(c_0,1-n_0) + \beta \sum_z p(z) u[c_1(z),1-n_1(z)] ,
+\end{eqnarray*}
+with $n$ being the quantity of time spent working and $1-n$ the quantity of leisure.
+There are no endowments other than the one unit of labor in each period.
+
+Production uses labor as follows.  At date-0, each unit of labor used in production
+generates on unit of consumption.
+The resource constraint for date-0 consumption is therefore
+\begin{eqnarray*}
+    c_0 + k &=& n_0 .
+\end{eqnarray*}
+Production at date 1 in state $z$ uses both capital and labor,
+giving us the date-1 resource constraints
+\begin{eqnarray*}
+    c_1(z) &=& z f[k,n(z)] ,
+\end{eqnarray*}
+one for each state $z$.
+There are a finite number of states $z$,
+each occurring with probability $p(z)$.
+Productivity is also $z$.
+
+\begin{parts}
+\part What are the classical ``ingredients'' of this economy?
+\part What is the associated Pareto problem?
+\part Solve the Pareto problem for the special case
+$u(c,1-n) = \log c + \lambda \log (1-n)$ and $f(k,n) = k^\theta n^{1-\theta} $.
+Comment:  If you get stuck, try the deterministic version.
+\part How does $c_1$ vary with $z$?  Why?  Does that seem realistic to you?
+\part How does $n$ vary with $z$?  Why?  Does that seem realistic to you?
+\part Wage = mpn ...  How does that vary with $z$?
+%\part Equity:  claim to mpk times k.
+\end{parts}
+
+\begin{solution}
+\begin{parts}
+\part Commodities:  the good at date 0, labor/leisure at date 0,
+and the same in all states at date 1  \\
+Agents:  one \\
+Preferences, endowment, and technologies:  given above \\
+Resource constraints:  ditto
+\part Pareto problem based on the Lagrangean:
+\begin{eqnarray*}
+    \mathcal{L}  &=&  \left[ \log c_0 + \lambda \log (1-n_0) \right]
+            + \beta \sum_z p(z) \left[ \log c_1(z) + \lambda \log [1-n_1(z)] \right]  \\
+         && + \; q_0 (n_0 - c_0 - k)
+            + \sum_z q_1(z) [z k^\theta n_1(z)^{1-\theta} - c_1(z)] .
+\end{eqnarray*}
+We choose consumption, leisure, and capital to maximize this.
+\part The first-order conditions are
+
+\end{parts}
+\end{solution}
+

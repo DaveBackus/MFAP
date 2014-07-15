@@ -1,0 +1,348 @@
+\documentclass[11pt]{exam}
+
+\oddsidemargin=0.25truein \evensidemargin=0.25truein
+\topmargin=-0.5truein \textwidth=6.0truein \textheight=8.75truein
+
+%\RequirePackage{graphicx}
+\usepackage{comment}
+\usepackage{verbatim}
+\usepackage{booktabs}
+\usepackage{hyperref}
+\urlstyle{rm}   % change fonts for url's (from Chad Jones)
+\hypersetup{
+    colorlinks=true,        % kills boxes
+    allcolors=blue,
+    pdfsubject={ECON-UB233, Macroeconomic foundations for asset pricing},
+    pdfauthor={Dave Backus @ NYU},
+    pdfstartview={FitH},
+    pdfpagemode={UseNone},
+%    pdfnewwindow=true,      % links in new window
+%    linkcolor=blue,         % color of internal links
+%    citecolor=blue,         % color of links to bibliography
+%    filecolor=blue,         % color of file links
+%    urlcolor=blue           % color of external links
+% see:  http://www.tug.org/applications/hyperref/manual.html
+}
+
+\renewcommand{\thefootnote}{\fnsymbol{footnote}}
+\newcommand{\var}{\mbox{\it Var\/}}
+
+%\printanswers
+
+% document starts here
+\begin{document}
+\parskip=\bigskipamount
+\parindent=0.0in
+\thispagestyle{empty}
+{\large ECON-UB 233 \hfill Dave Backus @ NYU}
+
+\bigskip\bigskip
+\centerline{\Large \bf Lab Report \#2: Certainty Equivalents \& Portfolio Choice}
+\centerline{Revised: \today}
+
+\bigskip
+{\it Due at the start of class.
+You may speak to others, but whatever you hand in should be your own work.
+Please include your Matlab code.}
+
+\begin{questions}
+
+\begin{solution}
+Most of the answers are computed in the Matlab
+program listed at the end and posted
+\href{http://pages.stern.nyu.edu/~dbackus/233/hw2_s12.m}{here}.
+\end{solution}
+
+%-----------------------------------------------------------------------
+\question {\it The sum of normals is normal.\/}
+The idea here is to use cumulant generating functions (cgfs)
+to show that the sum of independent normal random variables is also normal.
+It's helpful to break the problem into manageable pieces, like this:
+\begin{parts}
+\part Consider two independent random variables $x_1$ and $x_2$,
+    not necessarily normal.
+    Show that the cgf of the sum $y = x_1 + x_2$ is the sum of their cgfs:
+\begin{eqnarray*}
+	k(s; y) &=& k(s; x_1) + k(s;x_2) .
+\end{eqnarray*}
+Hint:  note the form of the pdf and apply the definition of the cgf.
+
+\part Suppose $x_i \sim \mathcal{N}(\kappa_{i1}, \kappa_{i2})$.
+[This bit of notation means:   $x_i$ is normally distributed with
+mean $\kappa_{i1}$ and variance $\kappa_{i2}$.]
+What is $x_i$'s cgf?
+Hint:  we did this in class.
+
+\part Use (a) to find the cgf of $y = x_1 + x_2$,
+with $(x_1,x_2)$ as described in (b) (namely, normal with given means and variances).
+How do you know that $y$ is also normal?  What are its mean and variance?
+
+\part Extend this result to $y = a x_1 + b x_2$ for any real numbers $(a,b)$.
+\end{parts}
+
+\begin{solution}
+\begin{parts}
+\part If $x_1$ and $x_2$ are independent, they're pdf factors:
+$ p_{12}(x_1,x_2) = p_1(x_1) p_2(x_2) $.
+That means the mgf of $x_1+x_2$ is the product of their individual mgf's
+and their cgf is the sum.
+\part $  k(s; x_i) = s \kappa_{1i} + s^2 \kappa_{2i}/2 $.
+(If this isn't burned into your memory, please burn it now.)
+\part Sum the cgf's:
+\begin{eqnarray*}
+    k(s; y) &=& k(s,x_1) + k(s,x_2) \\
+            &=& (s \kappa_{11} + s^2 \kappa_{21}/2) + (s\kappa_{12} + s^2 \kappa_{22}/2) \\
+            &=& s (\kappa_{11} + \kappa_{12} )
+                + s^2 (\kappa_{21} + \kappa_{22}) .
+\end{eqnarray*}
+It's normal because it's mgf has the form of a normal random variable.
+\part Still normal, but with a slight change in mean and variance:
+\begin{eqnarray*}
+    k(s; y) &=& s (a \kappa_{11} + b \kappa_{12} )
+                + s^2 (a^2 \kappa_{21} + b^2 \kappa_{22})/2  .
+\end{eqnarray*}
+\end{parts}
+\end{solution}
+
+%-----------------------------------------------------------------------
+\question {\it Lognormal risks.\/}
+Our mission is to compute the {\it risk penalty\/}
+associated with lognormal risks and power utility.
+What risks matter?  What role does the risk aversion parameter play?
+
+To be concrete, let $x = \log c \sim \mathcal{N}(\kappa_1, \kappa_2)$
+and $u(c) = c^{1-\alpha}/(1-\alpha)$ for $\alpha> 0$.
+The risk penalty is
+\begin{eqnarray*}
+    \mbox{\it rp\/} &=& \log (\bar{c}/\mu)
+                \;\;=\;\; \log \bar{c} - \log \mu ,
+\end{eqnarray*}
+where $\bar{c} = E (c) = E( e^{x})$ and $\mu$ is the certainty equivalent.
+We'll compute the terms one by one.
+
+\begin{parts}
+\part What is the cumulant generating function (cgf) of $x = \log c$?
+\part Use the cgf to compute $\bar{c}$.
+\part Use the cgf to compute the certainty equivalent $\mu$.
+\part What is the risk penalty?  How does it depend on risk?  Risk aversion?
+\part Suppose $\kappa_2 = 0.02^2$.  What is the risk penalty if $\alpha = 2$?
+$\alpha = 10$?  $\alpha = 20$?
+\end{parts}
+
+\begin{solution}
+Here risk is the variance $\kappa_2$ and risk aversion is the preference
+parameter $\alpha$.
+The risk penalty is $\alpha\kappa_2/2$, so both risk and risk aversion matter.
+The cgf is used to compute all of the components:
+$\bar{c}$, $\mu$, and $\mbox{\it rp\/}$.
+See the Matlab program for details.
+\end{solution}
+
+%-----------------------------------------------------------------------
+\question {\it Exponential risks.\/}
+Now consider the same problem when $x = - \log c $ is exponential,
+a tractable nonnormal distribution.
+The connection between $c$ and $x$ implies $c = e^{\log c} = e^{-x}$.
+The pdf is
+\begin{eqnarray*}
+    p(x)  &=& \lambda e^{-\lambda x}
+\end{eqnarray*}
+for $x \geq 0$ and $\lambda > 0$.
+The cgf is
+\begin{eqnarray*}
+    k(s)  &=& - \log \left( 1 - s/\lambda \right) .
+\end{eqnarray*}
+In terms of $x$, the mean of $c$ is $\bar{c} = E(c) = E (e^{-x})$.
+
+\begin{parts}
+\part Use the cgf to compute the variance, skewness, and excess kurtosis
+of $x$.  How do they compare to those of the normal distribution?
+\part Use the cgf to compute $\bar{c}$.
+\part Choose the value of $\lambda$ that sets
+the variance equal to $0.02^2$, the number we used earlier.
+\part
+What is the risk penalty if $\alpha = 2$? $\alpha = 10$?
+$\alpha = 20$?
+How does your answer differ from the previous one?  Why?
+\end{parts}
+
+\begin{solution}
+Same approach as the previous problem.
+\begin{parts}
+\part The first four cumulants are
+$\kappa_1 = 1/\lambda$,
+$\kappa_2 = 1/\lambda^2$,
+$\kappa_3 = 2/\lambda^3$,
+and $\kappa_4 = 6/\lambda^4$.
+Skewness and excess kurtosis are therefore
+$\gamma_1 = 2$ and $\gamma_2 6$.
+
+\part If $k(s)$ is the cgf of $x$,
+then $\log \bar{c} = k(-1)$ ($k$ evaluated at $s=-1$):
+$k(-1) = - \log (1 + 1/\lambda)$.
+
+\part We solve $0.02^2 = 1/\lambda^2$ or $\lambda = 1/0.02 = 50$.
+
+
+\part The risk penalties are
+%
+\begin{center}
+\begin{tabular}{lccc}
+        & $\alpha=2$  & $\alpha=10$  & $\alpha=20$ \\
+\midrule
+lognormal    &  0.0004 & 0.0020 & 0.0040 \\
+exponential  &  0.0004 & 0.0022 & 0.0054
+\end{tabular}
+\end{center}
+%
+The point is that departures from normality matter, although they're not
+especially large here.
+The numbers suggest that the impact increases with risk aversion $\alpha$.
+We could elaborate on this using the power series expansion of the cgf,
+which would show you that the $j$th cumulant is multiplied
+by $(-\alpha)^j/j!$, so as we increase $\alpha$ some of these terms can increase
+dramatically.
+Amir Yaron (Wharton prof) refers to this as a ``bazooka,''
+since it allows you to take a little nonnormality
+and generate enormous risk premiums.
+More on this kind of thing later in the course.
+\end{parts}
+\end{solution}
+
+
+%-----------------------------------------------------------------------
+\question {\it Two-state portfolio choice.\/}
+Portfolio choice problems are notoriously unfriendly,
+but we can get a sense of their properties with an example.
+The agent's consumption-saving-portfolio-choice problem is
+\begin{eqnarray*}
+   \max_{c_0, a} &&  u(c_0) + \beta \sum_z p(z) u[c_1(z)] \\
+        s.t. &&  c_1(z)\;\;=\;\; (y_0-c_0)[(1-a) r^1 + a r^e(z)] .
+\end{eqnarray*}
+The idea is that we have two assets,
+a riskfree asset with gross return $r^1$ (``$1$'' for one-period bond)
+and a risky asset with gross return $r^e$  (``$e$'' for equity).
+We invest a fraction $a$ of our saving in equity and the complementary
+fraction $1-a$ in the riskfree bond.
+If $a>1$, the agent has a levered position.
+Note that this is slightly different from the version we used in class.
+
+For most of this question, we'll deal with a special case:
+two states, $z=1$ and $z=2$;
+equally likely, $p(1) = p(2) = 1/2$;
+and power utility, $u(c) = c^{1-\alpha}/(1-\alpha)$.
+Parameter values include
+$\beta = 1/1.1$,
+$r^1 = 1.1$,
+$r^e(1) = 1.0$, $r^e(2) = 1.4$,
+$ y_0 = 1$.
+
+\begin{parts}
+\part What are the mean and variance of the return on equity?
+\part What are the implied prices of Arrow securities?
+Hint:  Recall that Arrow securities pay off in one state only.
+Our assets are combinations of Arrow securities,
+so it's a question of unbundling them.
+\part What are the first-order conditions for $c_0$ and $a$?
+Show that with power utility,
+the latter can be determined without knowing $c_0$.
+\part Solve these conditions for $\alpha = 5$.
+What values do you get for $a$, $c_0$, $c_1(1)$, and $c_1(2)$?
+Comment:  You can do this by hand, but I did it numerically
+by varying $a$ until its first-order condition was satisfied.
+\part How does your answer change if you use $\alpha = 2$?
+Does the difference make sense to you?
+\end{parts}
+
+\begin{solution}
+\begin{parts}
+\part The mean is 1.2 (the average of 1.0 and 1.4)
+and the variance is $0.2^2 = 0.04$.
+
+\part
+Let $q^A(z)$ be the price of the Arrow security that pays one
+in state $z$.
+A one-period bond pays one in each state, so its price is the sum:
+\begin{eqnarray*}
+    q^1 \; (=1/r^1)  &=&  q^A(1) + q^A(2)  .
+\end{eqnarray*}
+Equity is a little more complicated, because we have to agree on
+units.  Let's choose units to that the price of a share is one
+unit of date-0 consumption.
+Then it pays off 1.0 units of date-1 consumption in state $z=1$
+and 1.4 units in state $z=2$:
+\begin{eqnarray*}
+    q^e \; (=1)  &=&  1.0 q^A(1) + 1.4 q^A(2)  .
+\end{eqnarray*}
+Now it's a matter of algebra to find
+$q^A(1) = 0.6818$ and $q^A(2) = 0.2273$.
+
+
+\part The first-order conditions are
+\begin{eqnarray*}
+    c_0:  &&  u'(c_0) \;\;=\;\; \beta \sum_z p(z)
+%            u' \left\{  (y_0-c_0) [ (1-a)r^1 + a r^e(z)] \right\}
+            u'[c_1(z)] [ (1-a)r^1 + a r^e(z)] \\
+    a:    && 0 \;\;=\;\; \beta \sum_z p(z) u'[c_1(z)] [r^e(z) - r^1 ]  .
+\end{eqnarray*}
+Written out more completely, the latter becomes
+\begin{eqnarray*}
+    0 &=& \beta \sum_z p(z) (y_0-c_0)^{1-\alpha} [ (1-a)r^1 + a r^e(z)]^{-\alpha} [r^e(z) - r^1 ] \\ &=&  \sum_z p(z) [ (1-a)r^1 + a r^e(z)]^{-\alpha} [r^e(z) - r^1 ] .
+\end{eqnarray*}
+which depends on $a$ but not $c_0$.
+
+\part I did this numerically.
+We'll talk about numerical methods for solving equations shortly (``root-finding''),
+but the simplest way is to compute the right side of the previous equation
+for a grid of values for $a$.
+We take the value that produces the first-order condition closest to zero.
+A grid of 0.01 gives us $a=1.70$ when $\alpha=2$.
+
+Now that we know $a$, we can find $c_0$ from the first first-order condition:
+\begin{eqnarray*}
+    c_0^{-\alpha}  &=&  \beta (y_0-c_0)^{-\alpha}
+            \sum_z p(z) [ (1-a)r^1 + a r^e(z)]^{1-\alpha}  .
+\end{eqnarray*}
+We compute the sum on the rhs first --- denote it by $S$ (for sum).
+Then we solve for $c_0$:
+\begin{eqnarray*}
+    (y_0-c_0)/c_0 &=& (\beta S)^{-1/\alpha}
+        \;\;\Rightarrow\;\;
+        c_0  \;\;=\;\; y_0 /[ 1 + (\beta S)^{-1/\alpha}] .
+\end{eqnarray*}
+Second-period consumption follows from the budget constraint:
+$c_1(z)=  (y_0-c_0)[(1-a) r^1 + a r^e(z)] $.
+
+The numbers are listed below:
+\begin{center}
+\begin{tabular}{lccccc}
+                &  $a$  &  $S$    & $c_0$   &  $c_1(1)$ &  $c_1(2)$  \\
+\midrule
+$\alpha = 2$    & 1.702 & 0.8482  & 0.4676  & 0.4951    & 0.8576 \\
+$\alpha = 5$    & 0.637 & 0.6135  & 0.4708  & 0.5484    & 0.6832
+\end{tabular}
+\end{center}
+
+
+\part When $\alpha=5$, we get $a=0.64$ by the same method.
+The punchline:  when we increase risk aversion, we hold less of the risky asset
+and less risky second-period consumption as a result.
+
+\end{parts}
+\end{solution}
+\end{questions}
+
+\vfill \centerline{\it \copyright \ \number\year \
+NYU Stern School of Business}
+
+\end{document}
+
+
+\pagebreak
+Matlab program:
+\verbatiminput{../Matlab/hw2_s12.m}
+
+\end{document}
+
+
+

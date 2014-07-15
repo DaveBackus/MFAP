@@ -1,0 +1,297 @@
+\documentclass[11pt]{exam}
+
+\oddsidemargin=0.25truein \evensidemargin=0.25truein
+\topmargin=-0.5truein \textwidth=6.0truein \textheight=8.75truein
+
+%\RequirePackage{graphicx}
+\usepackage{comment}
+\usepackage{verbatim}
+\usepackage{hyperref}
+\urlstyle{rm}   % change fonts for url's (from Chad Jones)
+\hypersetup{
+    colorlinks=true,        % kills boxes
+    allcolors=blue,
+    pdfsubject={ECON-UB233, Macroeconomic foundations for asset pricing},
+    pdfauthor={Dave Backus @ NYU},
+    pdfstartview={FitH},
+    pdfpagemode={UseNone},
+%    pdfnewwindow=true,      % links in new window
+%    linkcolor=blue,         % color of internal links
+%    citecolor=blue,         % color of links to bibliography
+%    filecolor=blue,         % color of file links
+%    urlcolor=blue           % color of external links
+% see:  http://www.tug.org/applications/hyperref/manual.html
+}
+
+\renewcommand{\thefootnote}{\fnsymbol{footnote}}
+\newcommand{\var}{\mbox{\it Var\/}}
+
+%\printanswers
+
+% document starts here
+\begin{document}
+\parskip=\bigskipamount
+\parindent=0.0in
+\thispagestyle{empty}
+{\large ECON-UB 233 \hfill Dave Backus @ NYU}
+
+\bigskip\bigskip
+\centerline{\Large \bf Lab Report \#1: Moments \& Cumulants}
+\centerline{Revised: \today}
+
+\bigskip
+{\it Due at the start of class.
+You may speak to others, but whatever you hand in should be your own work.
+Please include your Matlab code.}
+
+\begin{questions}
+
+\begin{solution}
+The solutions to this assignment are computed in the Matlab
+program listed at the end and posted
+\href{http://pages.stern.nyu.edu/~dbackus/233/hw1_s13.m}{here}.
+If you run the program yourself,
+the output will give you most of what's asked for.
+The answers below go beyond this.
+\end{solution}
+
+%-----------------------------------------------------------------------
+\question {\it Cumulants of Bernoulli random variables.\/}
+Consider a random variable $x$ that equals
+$\delta$ (an arbitrary number) with probability $\omega$ (a number between zero and one)
+and $0$ with probability $1-\omega$.
+We'll use its cumulant generating function (cgf)
+to find its first four cumulants, representing,
+respectively, its mean, variance, skewness, and kurtosis.
+Feel free to use Matlab --- I would, it's easier.
+%
+\begin{parts}
+\part Verify that this is a legitimate probability distribution.
+
+\part What is the mean?  The variance?  The standard deviation?
+
+\part Derive the moment generating function.
+(If you're confused about this, apply the definition.)
+What is the cumulant generating function?
+
+\part Differentiate the cgf to find the
+first four cumulants, labelled $\kappa_1$ through $\kappa_4$.
+What are the mean and variance?
+
+\part Derive the standard measures of skewness and excess kurtosis:
+\begin{eqnarray*}
+    \gamma_1 &=&  \kappa_3 /(\kappa_2)^{3/2}  \;\; \mbox{(skewness)} \\
+    \gamma_2 &=&  \kappa_4 /(\kappa_2)^{2}    \;\;\;\;\; \mbox{(excess kurtosis)}
+\end{eqnarray*}
+How do they depend on $\omega$?  $\delta$?
+What is excess kurtosis when $\omega=1/2$?
+\end{parts}
+
+\begin{solution}
+This the Bernoulli multiplied by $\delta$, so it illustrates the
+impact (or lack thereof) of scaling.
+\begin{parts}
+\part Since $\omega$ and $1-\omega$ are nonnegative and sum to one, we're ok.
+\part Mean:  $\delta \omega$.  Variance:  $\delta^2 \omega (1-\omega)$.
+Standard deviation:  square root of variance.
+\part The mgf is $ h(s) = 1-\omega + \omega e^{s\delta}$.
+The cgf is $ k(s) = \log h(s)$.
+Everything so far should look familiar from class.
+\part The cumulants are
+\begin{eqnarray*}
+    \kappa_1 &=& \delta \omega \\
+    \kappa_2 &=& \delta^2 \omega (1-\omega) \\
+    \kappa_3 &=& \delta^3 \omega (1-\omega) (1-2\omega) \\
+    \kappa_4 &=& \delta^4 \omega (1-\omega) [ 1 - 6 \omega (1-\omega)] .
+\end{eqnarray*}
+Note the scaling:  $\kappa_j$ includes $\delta^j$.
+Other than scaling, we've seen the first two before.
+The third one tells us that skewness depends on the sign of $\delta$
+and whether $\omega$ is greater or less than one half
+(graph the probabilities against $x$ if this isn't clear).
+The fourth one depends on $\omega(1-\omega)$.
+At $\omega=1/2$, this terms reaches its max of 1/4,
+so the overall term is negative, which generates negative excess kurtosis.
+As $\omega$ moves toward zero or one, this term shrinks.
+\part
+You'll note that Matlab doesn't do the obvious cancellation of $\delta$'s.
+Once you do, you have
+\begin{eqnarray*}
+    \gamma_1 &=& \mbox{sgn} (\delta) (1-2\omega)/[ \omega (1-\omega)]^{1/2} \\
+    \gamma_2 &=& 1/[\omega (1-\omega)] - 6 .
+\end{eqnarray*}
+There's a subtle issue with $\gamma_1$:
+the magnitude of $\delta$ doesn't matter, but its sign (``sgn'') does.
+That shows up in the ratio of $[\delta^2]^{3/2}$ to $\delta^3$
+(think about this a minute).
+What about excess kurtosis?
+At $\omega = 1/2$, $\gamma_2=-2$, so there's excess kurtosis.
+Loosely speaking, the Bernoulli has thinner tails than the normal.
+As $\omega$ approaches zero or one, we reverse that.
+As we increase/decrease $\omega$, we get a distribution with increasing skewness
+and excess kurtosis.
+\end{parts}
+\end{solution}
+
+%-----------------------------------------------------------------------
+\question {\it Sample moments.\/}
+It's often helpful to experiment with artificial test problems,
+so that we know when we make a mistake.
+Here we compute sample moments of data generated by the computer
+and verify what we think they are.
+
+We'll start by generating some artificial data:
+\begin{verbatim}
+format compact
+mu = 0;
+sigma = 1;
+nobs = 1000;
+rng('default');     % sets "seed" so you can replicate the output
+x = randn(nobs,1);
+\end{verbatim}
+These commands generate ``pseudo-random'' numbers from a
+standard normal distribution and put them in the vector $x$.
+(Standard normal means normal with mean equal to zero and variance equal to one.)
+They serve as data for what follows.
+
+\begin{parts}
+
+\part Our first check is to see if the sample moments
+correspond, at least approximately,
+to our knowledge of normal random variables.
+For example, use the commands:
+\begin{verbatim}
+xbar = mean(x)
+moments = mean([(x-xbar).^2 (x-xbar).^3 (x-xbar).^4])
+\end{verbatim}
+What do you get?
+What are the first four sample moments?
+How do they compare to the mean and variance of the specified distribution?
+
+\part Our second check is on the Matlab commands
+{\tt mean(x)}, {\tt std(x)}, {\tt skewness(x)}, and {\tt kurtosis(x)}.
+How do they compare to the sample moments you computed earlier?
+Are they exactly the same, almost the same, or completely different?
+\end{parts}
+
+\begin{solution}
+\begin{parts}
+\part The moments are close to what the distribution implies:
+mean one, variance (and standard deviation) one,
+skewness zero, and kurtosis three.
+The small differences reflect sampling variability.
+You can see this by increasing the sample size,
+which typically makes the sample moments closer
+to the ``population'' moments.
+The one difference is in the variance and standard
+deviation, which are computed by dividing the
+sum of squared deviations by the number of observations minus one,
+rather than just the number of observations.
+It's a small difference, to be sure.
+
+\item The {\tt skewness} and {\tt kurtosis} commands
+give exactly the same answers as our own calculations,
+which assures us that they do what we want them to do.
+\end{parts}
+\end{solution}
+
+%-----------------------------------------------------------------------
+\question {\it Volatility and correlation in business cycles.\/}
+We're going to use macroeconomic data from FRED,
+the St Louis Fed's convenient online data repository,
+to get a summary picture of US business cycles.
+(Search ``FRED St Louis''.)
+%
+Data preparation should follow these steps or the equivalent:
+\begin{itemize}
+\item The idea.  Download monthly data, 1960 to the present,
+for the following series:
+Industrial Production (series INDPRO),
+Employment (All Employees: Total Nonfarm, series PAYEMS),
+and the S\&P 500 Index (SP500).
+The first two series serve as monthly measures of economic activity.
+Variation in their growth rates reflects the business cycle.
+The last one is an important asset price,
+and its growth rate is the (approximate) return on equity overall.
+
+\item The mechanics.
+It's probably easier to use FRED's Excel add-in,
+but here's what I do.
+(i)~Go to FRED:  \url{http://research.stlouisfed.org/fred2/}.
+(ii)~Type INDPRO in the search box in the upper right corner.
+A graph will appear.
+(iii)~Click on Edit Graph below the left side of the figure.
+(iv)~Click on Add Data Series below the figure.
+(v)~Enter PAYEMS in the search box.
+(vi)~Repeat (iv,v) with SP500.  Once you have it, you'll notice
+a drop-down menu indicating the frequency.  Choose Monthly.
+To its right, choose Average as the Aggregation Method.
+(vii)~Click on Download Data in Graph above the left side of the figure
+to create an Excel Spreadsheet.
+(viii)~Open the spreadsheet, delete everything before 1960, including the headings,
+and save it in a directory that's convenient for Matlab to read from.
+
+\item Read your data into Matlab and construct year-on-year growth rates
+using the formula
+\begin{eqnarray*}
+    g_{t} &=& \log x_t - \log x_{t-12} .
+\end{eqnarray*}
+[The function {\tt log} here is the natural log.
+We refer to growth rates computed this way as continuously-compounded.
+Take that as given for now,
+but ask me in class if you'd like an explanation.]
+If the data are in an array called {\tt data}, with each column a different variable,
+you can compute growth rates with
+\begin{verbatim}
+diffdata = log(data(13:end,:)) - log(data(1:end-12,:))
+\end{verbatim}
+[The expressions {\tt data(i,j)} have two forms here.
+The first index is a range (eg, {\tt x:y}), where
+{\tt end} means the last one.
+The second index ({\tt :}) means use all the available columns.]
+\end{itemize}
+%
+%
+\begin{parts}
+\part For each variable (that is, its growth rate),
+compute the standard deviation,
+skewness, and excess kurtosis.
+(The commands {\tt std}, {\tt skewness}, and {\tt kurtosis}
+are helpful here.)
+Which variables have the highest ``volatility'' (standard deviation)?
+Do any of them seem ``nonnormal'' (non-Gaussian) to you?
+
+\part For the same variables, compute correlations with employment growth.
+(The command {\tt corrcoef} may come in handy.)
+Which variable has the highest correlation?
+\end{parts}
+
+\begin{solution}
+See the Matlab program.
+Note that there's negative skewness and positive excess kurtosis
+in all of these series.
+Industrial production and employment are highly correlated (0.8137), the S\&P 500 less so
+(correlation 0.3390 with IP, 0.1674 with employment).
+Part of this is timing.  If we shifted the S\&P 500 back six months,
+the correlations would be larger.
+
+I recommend, in addition, that you look at their
+histograms, which is a more direct indication of their distribution.
+See the Matlab program.
+\end{solution}
+
+\end{questions}
+
+\vfill \centerline{\it \copyright \ \number\year \ NYU Stern School of Business}
+
+\end{document}
+
+\pagebreak
+{\bf Matlab program}
+%
+\verbatiminput{../Matlab/hw1_s13.m}
+
+\end{document}
+
+
+

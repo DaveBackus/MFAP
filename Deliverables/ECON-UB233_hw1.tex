@@ -1,0 +1,319 @@
+\documentclass[11pt]{exam}
+
+\oddsidemargin=0.25truein \evensidemargin=0.25truein
+\topmargin=-0.5truein \textwidth=6.0truein \textheight=8.75truein
+
+%\RequirePackage{graphicx}
+\usepackage{comment}
+\usepackage{verbatim}
+\usepackage{hyperref}
+\urlstyle{rm}   % change fonts for url's (from Chad Jones)
+\hypersetup{
+    colorlinks=true,        % kills boxes
+    allcolors=blue,
+    pdfsubject={ECON-UB233, Macroeconomic foundations for asset pricing},
+    pdfauthor={Dave Backus @ NYU},
+    pdfstartview={FitH},
+    pdfpagemode={UseNone},
+%    pdfnewwindow=true,      % links in new window
+%    linkcolor=blue,         % color of internal links
+%    citecolor=blue,         % color of links to bibliography
+%    filecolor=blue,         % color of file links
+%    urlcolor=blue           % color of external links
+% see:  http://www.tug.org/applications/hyperref/manual.html
+}
+
+\usepackage{attachfile}
+    \attachfilesetup{color=0.5 0 0.5}
+\usepackage{needspace}
+% example:  \needspace{4\baselineskip} makes sure we have four lines available before pagebreak
+
+\renewcommand{\thefootnote}{\fnsymbol{footnote}}
+\newcommand{\var}{\mbox{\it Var\/}}
+
+\printanswers
+
+% document starts here
+\begin{document}
+\parskip=\bigskipamount
+\parindent=0.0in
+\thispagestyle{empty}
+{\large ECON-UB 233 \hfill Dave Backus @ NYU}
+
+\bigskip\bigskip
+\centerline{\Large \bf Lab Report \#1: Moments \& Cumulants}
+\centerline{Revised: \today}
+
+\bigskip
+{\it Due at the start of class.
+You may speak to others, but whatever you hand in should be your own work.
+Please include your Matlab code.}
+
+\begin{questions}
+
+\begin{solution}
+Brief answers follow,
+but see also the attached Matlab program;
+download pdf, open, click on pushpin:
+\attachfile{../Matlab/hw/hw1_f13.m}
+\end{solution}
+
+%-----------------------------------------------------------------------
+\question {\it Moments of the standard normal.\/}
+*** ?? uniform: u[0,1], a + bu, calibrate to some specified mean and variance.
+
+sum of two uniforms...  n uniforms?  
+
+
+
+%-----------------------------------------------------------------------
+\question {\it Moments of the standard normal.\/}
+This should be review, but will get you started with
+moments and moment generating functions.
+%
+\begin{parts}
+\part What is the probability density function of the standard normal?
+\part What is its moment generating function (mgf)?
+(Don't derive it, just write it down.)
+\part Use Matlab to differentiate the mgf and find the first two moments.
+Are they raw or central moments ($\mu_j^\prime$ or $\mu_j$)?
+\part Find the third and fourth moments the same way.
+What are they?
+\end{parts}
+
+\begin{solution}
+\begin{parts}
+\item The word ``standard'' here means $\mu = 0$ and $\sigma = 1$, so we have
+$p(x) = (2\pi)^{-1/2} \exp(-x^2/2) $.
+\item $ h(s) = \exp( s^2/2) $.
+\item The first two moments are zero and one.
+They're both raw and central moments, because the mean is zero.
+\item The third and fourth moments are zero and three.
+\end{parts}
+\end{solution}
+
+%-----------------------------------------------------------------------
+\question {\it Sample moments of the standard normal.\/}
+It's often helpful to experiment with artificial test problems,
+just to remind ourselves how the code works.
+Here we compute sample moments of artificial data generated in Matlab
+and verify that calculations of various moments do what we think they do.
+
+This generates the data we'll use:
+\begin{verbatim}
+format compact      % single-spacing of output
+nobs = 1000;        % number of observations
+rng('default');     % sets "seed" so you can replicate the output
+x = randn(nobs,1);  % generates a vector of standard normals
+\end{verbatim}
+These commands generate ``pseudo-random'' numbers from a
+standard normal distribution and put them in the vector $x$.
+(Standard normal means normal with mean equal to zero and variance equal to one.)
+As always, you can find out what Matlab commands do by typing
+{\tt help command} at the prompt;
+for example, {\tt help rng} or {\tt help randn}.
+
+\begin{parts}
+\part Our first check is to see if the sample moments
+correspond, at least approximately,
+to our knowledge of normal random variables.
+For example, use the commands:
+\begin{verbatim}
+xbar = mean(x)
+moments = mean([(x-xbar).^2 (x-xbar).^3 (x-xbar).^4])
+\end{verbatim}
+What do you get?
+How do your calculations compare to the analogous moments of the standard normal distribution?
+What are the sample analogs of our measures of skewness and excess kurtosis?
+
+\part Our second check is on the Matlab commands
+{\tt mean(x)}, {\tt std(x)}, {\tt skewness(x)}, and {\tt kurtosis(x)}.
+How do they compare to the calculations you did above?
+%Are they exactly the same, almost the same, or completely different?
+%Do you know why?
+\end{parts}
+
+\begin{solution}
+\begin{parts}
+\part The moments are close to what the distribution implies:
+mean one, variance (and standard deviation) one,
+skewness zero, and kurtosis three.
+The small differences reflect sampling variability.
+You can see this by increasing the sample size,
+which typically makes the sample moments closer
+to the ``population'' moments.
+The one difference is in the variance and standard
+deviation:  the Matlab functions divide the
+sum of squared deviations by the number of observations {\bf minus one},
+rather than just the number of observations.
+It's a small difference, to be sure.
+
+\item The {\tt skewness} and {\tt kurtosis} commands
+give exactly the same answers as our own calculations,
+which assures us that they do what we want them to do.
+\end{parts}
+\end{solution}
+
+%-----------------------------------------------------------------------
+\question {\it Cumulants of Bernoulli random variables.\/}
+Consider a random variable $x$ that equals
+$\delta$ (an arbitrary number) with probability $\omega$ (a number between zero and one)
+and $0$ with probability $1-\omega$.
+We'll use its cumulant generating function (cgf)
+to find its first four cumulants, representing,
+respectively, its mean, variance, skewness, and kurtosis.
+Do the calculations in Matlab and submit your code with your answer.
+%
+\begin{parts}
+\part Verify that this is a legitimate probability distribution.
+
+\part What is the mean?  The variance?  The standard deviation?
+
+\part Derive the moment generating function.
+(If you're confused about this, apply the definition.)
+What is the cumulant generating function?
+
+\part Differentiate the cgf to find the
+first four cumulants, labelled $\kappa_1$ through $\kappa_4$.
+What are the mean and variance?
+
+\part Derive the standard measures of skewness and excess kurtosis:
+\begin{eqnarray*}
+    \gamma_1 &=&  \kappa_3 /(\kappa_2)^{3/2}  \;\; \mbox{(skewness)} \\
+    \gamma_2 &=&  \kappa_4 /(\kappa_2)^{2}    \;\;\;\;\; \mbox{(excess kurtosis)}
+\end{eqnarray*}
+How do they depend on $\omega$?  $\delta$?
+What is excess kurtosis when $\omega=1/2$?
+\end{parts}
+
+\begin{solution}
+This the Bernoulli multiplied by $\delta$, so it illustrates the
+impact of scaling.
+\begin{parts}
+\part Since $\omega$ and $1-\omega$ are nonnegative and sum to one, we're ok.
+\part Mean:  $\delta \omega$.  Variance:  $\delta^2 \omega (1-\omega)$.
+Standard deviation:  square root of variance.
+\part The mgf is $ h(s) = 1-\omega + \omega e^{s\delta}$.
+The cgf is $ k(s) = \log h(s)$.
+Everything so far should look familiar from class.
+\part The cumulants are
+\begin{eqnarray*}
+    \kappa_1 &=& \delta \omega \\
+    \kappa_2 &=& \delta^2 \omega (1-\omega) \\
+    \kappa_3 &=& \delta^3 \omega (1-\omega) (1-2\omega) \\
+    \kappa_4 &=& \delta^4 \omega (1-\omega) [ 1 - 6 \omega (1-\omega)] .
+\end{eqnarray*}
+Note the scaling:  $\kappa_j$ includes $\delta^j$.
+Other than scaling, we've seen the first two before.
+The third one tells us that skewness depends on the sign of $\delta$
+and whether $\omega$ is greater or less than one half
+(graph the probabilities against $x$ if this isn't clear).
+The fourth one depends on $\omega(1-\omega)$.
+At $\omega=1/2$, this terms reaches its max of 1/4,
+so the overall term is negative, which generates negative excess kurtosis.
+As $\omega$ moves toward zero or one, this term shrinks
+and excess kurtosis rises.
+\part
+You'll note that Matlab doesn't do the obvious cancellation of $\delta$'s.
+Once you do, you have
+\begin{eqnarray*}
+    \gamma_1 &=& \mbox{sgn} (\delta) (1-2\omega)/[ \omega (1-\omega)]^{1/2} \\
+    \gamma_2 &=& 1/[\omega (1-\omega)] - 6 .
+\end{eqnarray*}
+There's a subtle issue with $\gamma_1$:
+the magnitude of $\delta$ doesn't matter, but its sign (``sgn'') does.
+That shows up in the ratio of $(\delta^2)^{3/2}$ to $\delta^3$
+(think about this a minute).
+What about excess kurtosis?
+At $\omega = 1/2$, $\gamma_2=-2$, so there's negative excess kurtosis.
+Loosely speaking, it has thinner tails than the normal.
+As $\omega$ approaches zero or one, we reverse that.
+As we increase/decrease $\omega$, we get a distribution with increasing skewness
+and excess kurtosis.
+\end{parts}
+\end{solution}
+
+%-----------------------------------------------------------------------
+\question {\it Exponential and gamma random variables.\/}
+Two common distributions for positive random variables are the
+exponential and the gamma.
+We say $x$ is exponential and $y$ is gamma if their pdf's are
+\begin{eqnarray*}
+    p(x) &=& \lambda e^{-\lambda x} \\
+    p(y) &=& y^{\alpha-1} e^{-\beta y} [\beta^\alpha / \Gamma(\alpha)]
+\end{eqnarray*}
+for $x,y \geq 0$.
+For $p(x)$, the parameter $\lambda > 0$.
+For $p(y)$, $\alpha,\beta > 0$.
+The term in brackets at the end is a constant, chosen so that the pdf integrates to one.
+$\Gamma$ is the gamma function, which has the property $\Gamma(n) = (n-1)!$.
+
+We're going to demonstrate some connections using their cgf's, which are
+\begin{eqnarray*}
+    k_x(s)  &=& - \log \left( 1 - s/\lambda \right) \\
+    k_y(s)  &=& - \alpha \log \left( 1 - s/\beta \right) .
+\end{eqnarray*}
+As usual, do the calculations in Matlab and submit your code with your answer.
+%
+\begin{parts}
+\item What is the skewness $\gamma_1$ of a gamma random variable?
+How does it compare to the skewness of an exponential?
+\item For what choice of parameter values does a gamma random variable have an exponential distribution?
+\item What is the cgf of the sum of $n$ independent exponential random variables?
+How does it compare to the cgf of a gamma random variable?
+\item What is the cgf of the sum of two independent and identical gamma random variables?
+\end{parts}
+
+\begin{solution}
+\begin{parts}
+\item Note that the exponential is a special case of the gamma:
+set $\alpha = 1$ and $\beta = \lambda$.
+For the gamma, we have
+\begin{eqnarray*}
+    \kappa_1 &=& \alpha /\beta \\
+    \kappa_2 &=& \alpha /\beta^2 \\
+    \kappa_3 &=& 2 \alpha /\beta^3 \\
+    \kappa_4 &=& 6 \alpha /\beta^4 ,
+\end{eqnarray*}
+which gives us
+\begin{eqnarray*}
+    \gamma_1 &=& 2/\alpha^{1/2} \\
+    \gamma_2 &=& 6/\alpha .
+\end{eqnarray*}
+When $\alpha = 1$ (the exponential case), we have $\gamma_1 = 2$
+and $\gamma_2 = 6$.
+
+\item Done.
+
+\item If we sum $n$ independent exponentials, the cgf is the sum, which is the original
+cgf times $n$:
+\begin{eqnarray*}
+    k(s)  &=& - n \log \left( 1 - s/\lambda \right)  .
+\end{eqnarray*}
+This has the same form as the gamma, with $\alpha = n$ and $\beta = \lambda$.
+
+\item Similarly, if we sum two independent gammas, the cgf
+is two times the original:
+\begin{eqnarray*}
+    k(s)  &=& - 2\alpha \log \left( 1 - s/\beta \right) .
+\end{eqnarray*}
+This is still gamma, but with $2\alpha$ taking the place of $\alpha$.
+\end{parts}
+\end{solution}
+
+
+\end{questions}
+
+\vfill \centerline{\it \copyright \ \number\year \ NYU Stern School of Business}
+
+\end{document}
+
+\pagebreak
+{\bf Matlab program}
+%
+\verbatiminput{../Matlab/hw1_s13.m}
+
+\end{document}
+
+
+

@@ -1,0 +1,303 @@
+\documentclass[11pt]{article}
+
+\oddsidemargin=0.25truein \evensidemargin=0.25truein
+\topmargin=-0.5truein \textwidth=6.0truein \textheight=8.75truein
+
+%\usepackage{graphicx}
+\usepackage{verbatim}
+%\usepackage{booktabs}
+\usepackage{comment}
+\usepackage{hyperref}
+\urlstyle{rm}   % change fonts for url's (from Chad Jones)
+\hypersetup{
+    colorlinks=true,        % kills boxes
+    allcolors=blue,
+    pdfsubject={ECON-UB233, Macroeconomic foundations for asset pricing},
+    pdfauthor={Dave Backus @ NYU},
+    pdfstartview={FitH},
+    pdfpagemode={UseNone},
+%    pdfnewwindow=true,      % links in new window
+%    linkcolor=blue,         % color of internal links
+%    citecolor=blue,         % color of links to bibliography
+%    filecolor=blue,         % color of file links
+%    urlcolor=blue           % color of external links
+% see:  http://www.tug.org/applications/hyperref/manual.html
+}
+% more from Chad Jones
+%\usepackage{tweaklist}
+%\renewcommand{\enumhook}{\setlength{\topsep}{0pt}%
+%  \setlength{\itemsep}{0pt}}
+
+\usepackage[small, compact]{titlesec}
+\renewcommand{\thefootnote}{\fnsymbol{footnote}}
+
+% document starts here
+\begin{document}
+\parskip=\bigskipamount
+\parindent=0.0in
+\thispagestyle{empty}
+{\large ECON-UB 233 \hfill Dave Backus @ NYU}
+
+\bigskip\bigskip
+\centerline{\Large \bf Review for Quiz \#2}
+\centerline{Revised: \today}
+
+\bigskip
+I'll focus again on the big picture to give you a sense of
+what we've done and how it fits together.
+For each topic/result/concept, I recommend you construct a numerical example or two to
+remind yourself how it works.
+
+
+\section{Asset pricing:  summary}
+
+This is fundamental, worth repeating.
+
+The {\it no-arbitrage theorem\/} tells us that we can price
+assets using state prices:
+break an asset's payoff into state-contingent pieces,
+multiply each one by its state price, and add them up.
+That turns states and state prices from hopelessly abstract objects
+into objects with practical value.
+
+The no-abritrage theorem says:
+Consider a collection of assets $j$ with prices $q^j$ that pay dividends $d^j(z)$
+in state $z$.
+If there are no arbitrage opportunities in this collection of assets,
+then there are positive state prices $Q(z)$ that price the assets:
+\begin{eqnarray}
+    q^j &=& \sum_z Q(z) d^j(z)
+    \label{eq:qj-state-price}
+\end{eqnarray}
+for all assets $j$.
+
+There are two versions of this wonderful result that are more commonly used.
+The first is based on a {\it pricing kernel\/} $m$,
+defined implicitly by $ Q(z) = p(z) m(z)$.
+(Solve for $m$ if you like.)
+The pricing relation (\ref{eq:qj-state-price}) becomes
+\begin{eqnarray}
+    q^j &=& \sum_z p(z) m(z) d^j(z) \;\;=\;\; E (m d^j) .
+    \label{eq:q=Emd}
+\end{eqnarray}
+From this, we can show that risk premiums stem from covariances of returns with $m$.
+[Can you show this?]
+There's also has a nice link to representative agent models,
+where $m$ is the agent's marginal rate of substitution.
+
+The second version is based on
+{\it risk-neutral probabilities\/} $p^*$,
+defined implicitly by $ Q(z) = p(z) m(z) = q^1 p^*(z)$.
+%(Solve for $p^*$ if you like.)
+Here
+\begin{eqnarray*}
+    q^1 &=& \sum_z p(z) m(z) \;\;=\;\; E(m)
+\end{eqnarray*}
+is the price of a one-period riskfree bond.
+The pricing relation (\ref{eq:qj-state-price}) now turns into
+\begin{eqnarray}
+    q^j &=& q^1 \sum_z p^*(z) d^j(z)  \;\;=\;\; q^1 E^* (d^j) ,
+    \label{eq:q=Estar-d}
+\end{eqnarray}
+where $E^*$ means the expectation computed from the risk-neutral probabilities.
+Once we know $p^*$, it's a little simpler because we only need the
+expectation of $d^j$, not the expectation of the product $m d^j$.
+The reason, of course, is that the product is built into $p^*$.
+This version is useful in pricing derivatives,
+because the risk-neutral distribution is the same for all of them.
+
+
+\section{Properties of pricing kernels}
+
+Here are three applications of the pricing kernel.
+The first is to representative agent models,
+which provide a source of insight into which assets have
+the highest expected returns.
+The other two relate risk premiums to the dispersion of the pricing kernel.
+
+{\it Application 1:  representative agent.\/}
+Here the pricing kernel $m$ is the marginal rate of substitution
+of a representative agent.
+If $g(z)$ is the growth rate of consumption and the agent has power utility,
+the pricing kernel is
+$ m(z) = \beta g(z)^{-\alpha}$.
+
+The classic example here is the equity premium.
+Define equity as a claim to a dividend tied to the same growth rate,
+such as $ d(z) = g(z)^\lambda$.
+If we choose a distribution for $g$ and ``reasonable'' values for  parameters,
+the question is whether a model of this sort can generate an equity premium similar
+to what we observe.
+The answer is, basically, no.
+We saw that for returns measured in levels, returns in logs,
+a two-state distribution, a lognormal distribution, and some others.
+Unless we have a very large value of $\alpha$, we don't have a chance.
+One mechanism that made modest progress was to have strong negative skewness
+in (log) consumption growth, which tends to increase risk premiums.
+
+
+{\it Application 2: HJ bound.\/}
+The question is where we went wrong.
+The Hansen-Jagannathan bound suggests that a power utility pricing kernel
+doesn't have much of a chance to start with.
+We start with the {\it Sharpe ratio\/}, the ratio of the mean of an excess return
+to its standard deviation.
+If we look at returns on lots of assets, the idea is to look for the asset
+with the largest Sharpe ratio.
+Hansen and Jagannathan show that the largest Sharpe ratio places a lower bound on
+the ratio of the standard deviation of the pricing kernel to its mean:
+\begin{eqnarray*}
+  \frac{| E(x)|}{ \mbox{\it Std\/}(x)} &\leq& \frac{ \mbox{\it Std\/}(m)}{E(m)} .
+\end{eqnarray*}
+Roughly speaking, large Sharpe ratios imply large standard deviations of the pricing kernel.
+
+One way to think about the representative agent model's failure with the equity premium
+is that it doesn't deliver enough variation in the pricing kernel.
+
+
+{\it Application 3: entropy bound.\/}
+Similar idea, somewhat different implementation.
+We define the entropy of the pricing kernel by
+\begin{eqnarray*}
+    H(m) &=& \log E(m) - E \log m .
+\end{eqnarray*}
+This is a measure of dispersion or variation:
+it's nonnegative, and strictly positive unless $m$ is constant.
+The bound here tells us that
+\begin{eqnarray*}
+    E  \log r^j - \log r^1  &\leq&  H(m) .
+\end{eqnarray*}
+The difficulty here with the representative agent model is
+that it doesn't generate enough entropy in the pricing kernel.
+
+One of the nice things about entropy as a measure is that it incorporates
+things like skewness and excess kurtosis naturally.
+We can think of the first term in entropy as the cgf of $\log m$
+evaluated at $s=1$:
+\begin{eqnarray*}
+   \log E(m) &=& \log E \left( e^{\log m}\right)
+        \;\;=\;\; k(1; \log m)
+        \;\;=\;\; \kappa_1 + \kappa_2/ 2 + \kappa_3/3! + \kappa_4/4! + \cdots .
+\end{eqnarray*}
+When we subtract the mean, $E \log m = \kappa_1$, we get entropy:
+\begin{eqnarray*}
+   H(m)  &=& \log E(m) - E \log m
+        \;\;=\;\; \kappa_2/ 2 + \kappa_3/3! + \kappa_4/4! + \cdots .
+\end{eqnarray*}
+In the lognormal case, only $\kappa_2$ is nonzero.
+Otherwise, the other cumulants play a role.
+
+
+\section{Option pricing}
+
+We have several components that combine to give us a complete picture.
+The notation below isn't self-contained, you may need to go back to the notes.
+
+
+{\it Options.\/}
+Options are the right to buy or sell an asset
+(the ``underlying'')
+at a fixed price $k$ (the ``strike'')
+at (or by) some future date.
+We'll label the dates $t$ (``now'') and $t+1$ (or $t+\tau$) (``later'').
+The question is what that right is worth now.
+We're going to value it using risk-neutral probabilities.
+
+{\it Put-call parity.\/}
+For European options, there's a connection between prices of put options
+(the right to sell) and call options (the right to buy):
+\begin{eqnarray*}
+    \underbrace{q^c_t}_{\mbox{buy call}} -
+    \underbrace{q^p_t}_{\mbox{sell put}} +
+    \underbrace{q^\tau_t k}_{\mbox{present value of strike}}
+    &=&
+    \underbrace{s_t}_{\mbox{buy stock}} .
+    \label{eq:put-call-parity}
+\end{eqnarray*}
+This holds for every strike $k$.
+It works pretty well in practice, as we saw in Lab Report \#6.
+
+{\it BSM formula and implied volatility.\/}
+The standard textbook formula for a call option is
+\begin{eqnarray*}
+        q^c_t &=& s_t N(d) - q^\tau_t b N (d - \tau^{1/2}\sigma ) \\
+%        \label{eq:bsm-call}
+          d &=& \frac{\log(s_t/q^\tau_t k) + \tau \sigma^2/2}{\tau^{1/2}\sigma} .
+\end{eqnarray*}
+Everything is observable here except $\sigma$, which
+we can back out from the price.
+That is: given $\sigma$, we use the formula to compute the price.
+But if we know the price, we can reverse the process and compute what is
+commonly referred to as
+{\it implied volatility\/}:  the value of $\sigma$ for which the formula
+delivers the observed price.
+
+One of the reliable facts about option prices is that volatility varies with the strike.
+The shape of the line in a  graph of volatility against the strike price
+is referred to as the {\it volatility smile\/}.
+We'll think of it as a convenient way to summarize option prices.
+
+{\it Risk-neutral pricing.\/}
+We've seen that any cash flow can be valued using (\ref{eq:q=Estar-d}).
+Options are no different.
+The question is generally what the risk-neutral distribution is.
+We need a risk-neutral distribution that prices both the underlying
+and options on the underlying.
+
+Let's be specific.
+The risk-neutral pricing relation (\ref{eq:q=Estar-d})
+applied to the underlying gives us
+\begin{eqnarray*}
+    s_t &=& q^1_t  E^* (s_{t+1}) .
+\end{eqnarray*}
+Given a risk-neutral distribution, this gives us $s_t$.
+Usually we observe $s_t$, and this gives rise to a restriction
+on the risk-neutral distribution that we call the
+{\it no-arbitrage condition\/}.
+
+The classic example is the lognormal case.
+Suppose $x_{t+1} = \log s_{t+1} \sim \mathcal{N}(\kappa_1, \kappa_2)$
+(remember:  this is the risk-neutral distribution).
+Then the pricing relation implies
+\begin{eqnarray*}
+    s_t &=& q^1_t E^* (e^{x_{t+1}}) \;\;=\;\; q^1_t  e^{\kappa_1 + \kappa_2/2} .
+\end{eqnarray*}
+Usually we choose $\kappa_1$ to satisfy the equation given information
+about the other components.
+
+*****
+{\it Option prices as integrals.\/}
+Show how this works, in general.  ???
+
+{\it BSM from lognormal risk-neutral underlying.\/}
+With these ingredients, we can derive the BSM formula using
+a lognormal risk-neutral distribution of the underlying.
+A put price is at strike $k$ is
+\begin{eqnarray*}
+    q^p_t &=& q^1_t  E^* (k-e^{x_{t+1}})^+
+          \;\;=\;\;  q^1_t  \int_{-\infty}^{\log k}
+          (k-e^{x_{t+1}}) (2 \pi \kappa_2)^{-1/2}
+          \exp[ - (x_{t+1} - \kappa_1)^2/2 \kappa_2] d x_{t+1} .
+\end{eqnarray*}
+Integrating gives us
+\begin{eqnarray*}
+    q^p_t &=& q^1_t k N(d) - q^1_t e^{\kappa_1 + \kappa_2/2} N(d-\kappa_2^{1/2}) \\
+    d &=& (\log k - \kappa_1)/\kappa_2^{1/2} .
+\end{eqnarray*}
+We get the BSM formula for $\tau=1$ by setting $\kappa_2 = \sigma^2$
+and using the no-arbitrage condition.
+
+
+{\it Beyond BSM.\/}
+It's not hard to get option formulas that differ from BSM:
+we simply start with a risk-neutral distribution of the underlying
+that's not lognormal.
+There are lots of examples.
+We used ``normal mixtures,"
+which have some of the analytical convenience of normality
+but more flexibility.
+
+
+\vfill \centerline{\it \copyright \ \number\year \
+NYU Stern School of Business}
+\end{document}

@@ -1,0 +1,490 @@
+\documentclass[11pt]{article}
+
+\oddsidemargin=0.25truein \evensidemargin=0.25truein
+\topmargin=-0.5truein \textwidth=6.0truein \textheight=8.75truein
+
+%\usepackage{graphicx}
+\usepackage{verbatim}
+\usepackage{booktabs}
+\usepackage{comment}
+\usepackage[dvipdfm]{hyperref}
+\urlstyle{rm}   % change fonts for url's (from Chad Jones)
+\hypersetup{
+    colorlinks=true,        % kills boxes
+    allcolors=blue,
+    pdfsubject={ECON-UB233, Macroeconomic foundations for asset pricing},
+    pdfauthor={Dave Backus @ NYU},
+    pdfstartview={FitH},
+    pdfpagemode={UseNone},
+%    pdfnewwindow=true,      % links in new window
+%    linkcolor=blue,         % color of internal links
+%    citecolor=blue,         % color of links to bibliography
+%    filecolor=blue,         % color of file links
+%    urlcolor=blue           % color of external links
+% see:  http://www.tug.org/applications/hyperref/manual.html
+}
+
+\renewcommand{\thefootnote}{\fnsymbol{footnote}}
+\newcommand{\tp}{\mbox{\it tp\/}}
+\newcommand{\bp}{\mbox{\it bp\/}}
+\newcommand{\yp}{\mbox{\it yp\/}}
+
+% document starts here
+\begin{document}
+\parskip=\bigskipamount
+\parindent=0.0in
+\thispagestyle{empty}
+{\large ECON-UB 233 \hfill Dave Backus @ NYU}
+
+\bigskip\bigskip
+\centerline{\Large \bf Exponential-Affine Models}
+\centerline{(Started: April 12, 2012; Revised: \today)}
+
+\bigskip
+We look at models in which logarithms of bond
+prices are linear functions of a state variable.
+This convenient form makes it relatively easy to explore their
+properties.
+An example is the behavior of term premiums,
+whose apparent variation  and predictability
+seems like a feature of the data we'd like to understand better.
+
+
+\subsection*{Vasicek model}
+
+
+{\it Model.\/}
+A more common version of the Vasicek model than our ARMA(1,1) pricing kernel
+consists of the two equations
+\begin{eqnarray*}
+    \log m_{t+1} &=& \delta - x_t + \lambda w_{t+1} \\
+         x_{t+1} &=& \varphi x_t + \sigma w_{t+1} ,
+\end{eqnarray*}
+with $\{ w_t \} \sim \mbox{NID}(0,1)$.
+If you substitute for $x_t$, you can see that this is the ARMA(1,1)
+in different form.
+Here we've given the state variable $x_t$ a mean of zero,
+something we'll come back to.
+We'll see that this model, like the others in this module,
+delivers bond prices whose logs are linear in the state variable $x_t$.
+
+
+
+{\it Recursions.\/}
+We build up bond prices one at a time from
+the pricing relation
+\begin{eqnarray*}
+    q^{n+1}_t &=& E_t \left( m_{t+1} q^n_{t+1} \right) ,
+\end{eqnarray*}
+starting with $q^0_t = 1$ (a dollar now is worth a dollar).
+Let's get warmed up with the short rate $f^0_t$, corresponding
+to $n=0$:
+\begin{eqnarray*}
+    q^1_t   &=&  E_t m_{t+1} \\
+    - f^0_t &=&  \log q^1_{t} \;\;=\;\; \log E_t m_{t+1} .
+\end{eqnarray*}
+We'll solve this with the usual ``mean plus variance over two''
+formula for lognormal random variables.
+As of date $t$,
+the conditional distribution of $\log m_{t+1}$ is
+normal with mean and variance
+\begin{eqnarray*}
+    E_t m_{t+1} &=& \delta - x_t \\
+    \mbox{Var}_t m_{t+1} &=& \lambda^2 .
+\end{eqnarray*}
+The short rate is therefore
+$ f^0_t = x_t - (\delta + \lambda^2/2)$.
+The short rate is $x_t$ plus a constant,
+so it inherits the variance and autocorrelation of $x_t$.
+
+For bonds of higher maturity, we
+guess prices of ``exponential-affine'' form
+\begin{eqnarray*}
+    \log q^n_t &=& A_n + B_n x_t
+\end{eqnarray*}
+for some coefficients $\{ A_n, B_n\}$ yet to be determined.
+(And no, $A_n$ isn't the cumulative sum as it was
+in our last set of notes, it's a stand-alone coefficient.)
+Think about this for some particular maturity $n$.
+The pricing relation tells us we
+need to evaluate the conditional mean of the product
+$m_{t+1} q^n_{t+1}$.
+We do this the usual way:  take logs, then use the properties
+of lognormal random variables.
+Here we have
+\begin{eqnarray*}
+    \log m_{t+1} + \log q^{n+1}_t &=&
+            (\delta + A_n) + (\varphi B_n -1) x_t + (\lambda + B_n \sigma) w_{t+1} .
+\end{eqnarray*}
+The conditional mean and variance are
+\begin{eqnarray*}
+   E_t \left( \log m_{t+1} + \log q^{n}_{t+1} \right) &=&
+            (\delta + A_n) + (\varphi B_n -1) x_t \\
+   \mbox{Var}_t \left( \log m_{t+1} + \log q^{n+1}_t \right) &=&
+            (\lambda + B_n \sigma)^2 .
+\end{eqnarray*}
+Using (again!) the ``mean and variance over two'' formula, we have
+\begin{eqnarray*}
+    \log q^{n+1}_t &=&
+            (\delta + A_n) + (\varphi B_n -1) x_t + (\lambda + B_n \sigma)^2/2 \\
+                &=& A_{n+1} + B_{n+1} x_t.
+\end{eqnarray*}
+Lining up terms, we have
+\begin{eqnarray*}
+    A_{n+1} &=& A_n + \delta + (\lambda + B_n\sigma)^2/2 \\
+    B_{n+1} &=& \varphi B_n - 1 .
+\end{eqnarray*}
+Given values for the parameters $(\delta, \varphi, \sigma, \lambda)$
+we compute these one at a time,
+starting with $A_0 = B_0 = 0$.
+It's easy to do this in (say) Matlab, or even a spreadsheet program.
+
+{\it Estimation.\/}
+Now where do the parameters come from?
+We'll use properties of forward rates, starting with the short rate $f^0_t$.
+In principle they're interconnected, but here we can solve for them one at a time:
+%
+\begin{itemize}
+\item Autocorrelation.  Because $f^0_t$ is linear in $x_t$, and $x_t$ is an AR(1),
+the autocorrelation of the short rate is $\varphi$.
+So we set $\varphi$ equal to the observed autocorrelation of the short rate in the data.
+Using the table distributed in class, we have $\varphi = 0.959$.
+
+\item Variance.  Similarly, the variance of the short rate is the variance of $x$,
+which is $ \sigma^2/(1-\varphi^2)$.
+Using data from the same table gives us ???
+Note that we have converted the numbers in the table to monthly numbers.
+
+\item Long forward rates.  Next we have $\lambda$, which controls the pricing of
+interest rate risk and therefore the slope of the forward rate curve.
+Recall that forward rates are
+\begin{eqnarray*}
+    f^n_t &=& \log (q^n_t/q^{n+1}_t)
+                \;\;=\;\;  (A_n - A_{n+1}) + (B_n - B_{n+1}) x_t .
+\end{eqnarray*}
+Since $x_t$ has a zero mean,  we have
+\begin{eqnarray*}
+    E (f^n - f^0) &=&  (A_n - A_{n+1}) - (A_0 - A_{1}) .
+\end{eqnarray*}
+There's nothing particularly intuitive about this formula,
+but if we choose values of $\varphi$, $\sigma$, and $\lambda$,
+we can compute the $A$'s and see how they line up with the evidence.
+If we're off, we vary $\lambda$ until we get it.
+
+[Comment:  this works because the $\delta$'s cancel out.  Show this?]
+
+\item Mean short rate.  This doesn't really matter, but
+the mean short rate is
+\begin{eqnarray*}
+    E (f^0) &=&  - (\delta + \lambda^2/2) .
+\end{eqnarray*}
+Given our value of $\lambda$, we choose $\delta$ to match
+the observed mean short rate.
+
+\end{itemize}
+If any of this seems mysterious, see the Matlab program.
+
+
+{\it An alternative parameterization (optional).\/}
+Suppose we change the model (slightly) to
+\begin{eqnarray*}
+    \log m_{t+1} &=& - \lambda^2/2 - x_t + \lambda w_{t+1} \\
+         x_{t+1} &=& (1-\varphi) \delta + \varphi x_t + \sigma w_{t+1} .
+\end{eqnarray*}
+Show that the short rate is now exactly $x_t$.
+The model is equivalent to the previous one,
+we've simply moved the mean to a different part of the model.
+
+[Start with this?]
+
+
+\subsection*{Duration revisited}
+
+
+[next time]
+
+
+\subsection*{The Cox-Ingersoll-Ross model}
+
+
+{\it Model.\/}
+Here's a popular variant of the Vasicek model
+in which risk and risk premiums move around.
+More on the latter shortly.
+The model is
+\begin{eqnarray*}
+    \log m_{t+1} &=& - (1+\lambda^2/2 ) x_t + \lambda x_t^{1/2} w_{t+1} \\
+         x_{t+1} &=& (1-\varphi) \delta + \varphi x_t + x_t^{1/2} \sigma w_{t+1} ,
+\end{eqnarray*}
+with (as usual) independent standard normal innovations $w_t$.
+Here $x_t$ plays two roles:  It governs the conditional mean
+of the pricing kernel, as it did before,
+but it also governs the conditional variance.
+
+The so-called ``square-root'' process for $x_t$ guarantees that
+it remains positive --- at least it does in continuous time.
+The idea is that the variance shrinks as $x_t$ gets close to zero.
+As a result, the change in $x_t$ near zero comes from the mean reversion term,
+\begin{eqnarray*}
+       x_{t+1} - x_t  &\approx& (1-\varphi) \delta  \;\;>\;\; 0.
+\end{eqnarray*}
+As long as $\delta>0$, that pushes $x_t$ away from zero and keeps it positive.
+
+
+Despite the square-root process, $x_t$ is still an AR(1).
+Its mean is
+\begin{eqnarray*}
+    E(x_t) &=& (1-\varphi) \delta + \varphi E(x_{t-1})
+            \;\;\;\Rightarrow\;\;\; E(x) \;\;=\;\; \delta .
+\end{eqnarray*}
+The variance is
+\begin{eqnarray*}
+    \mbox{Var}(x) &=& E (x_t - \delta)^2
+                \;\;=\;\; E \left[ \varphi (x_{t-1} - \delta) + \sigma x_{t-1}^{1/2} w_t \right]^2 \\
+                &=& \varphi^2 \mbox{Var}(x) + E (\sigma^2 x_{t-1})
+                \;\;=\;\;  \varphi^2 \mbox{Var}(x_{t}) + \sigma^2 \delta ,
+\end{eqnarray*}
+or
+\begin{eqnarray*}
+    \mbox{Var}(x) &=&   \sigma^2 \delta / (1-\varphi^2) .
+\end{eqnarray*}
+What about the autocovariance?
+The first autocovariance is
+\begin{eqnarray*}
+    \mbox{Cov}(x_t,x_{t-1}) &=& E (x_t - \delta)(x_{t-1} - \delta)  \\
+                &=& E  \left\{ [ \varphi (x_{t-1} - \delta) + \sigma x_{t-1}^{1/2} w_t ] (x_{t-1} - \delta) \right\} \\
+                &=& \varphi \mbox{Var}(x) .
+\end{eqnarray*}
+The first autocorrelation is therefore $\varphi$.
+
+
+
+
+
+{\it Recursions.\/}
+We follow the same logic as in the Vasicek model,
+starting with the short rate
+\begin{eqnarray*}
+    - f^0_t &=&   \log E_t m_{t+1} .
+\end{eqnarray*}
+The conditional distribution of $\log m_{t+1}$ is
+normal with mean and variance
+\begin{eqnarray*}
+    E_t m_{t+1} &=& - (1+\lambda^2/2) x_t \\
+    \mbox{Var}_t m_{t+1} &=& \lambda^2 x_t .
+\end{eqnarray*}
+The new ingredient is that the variance is now linear in $x_t$.
+The short rate is therefore
+$ f^0_t = x_t $.
+That's why we started with a somewhat odd coefficient of $x_t$
+in the pricing kernel --- so this would work out.
+
+For bonds of arbitrary maturity,
+we use the guess  $ \log q^n_t = A_n + B_n x_t$.
+That gives us
+\begin{eqnarray*}
+    \log m_{t+1} + \log q^{n+1}_t &=&
+            [A_n + (1-\varphi) \delta] + [\varphi B_n -(1+\lambda^2/2)] x_t
+                    + (\lambda + B_n \sigma) x_t^{1/2} w_{t+1} .
+\end{eqnarray*}
+whose conditional mean and variance are
+\begin{eqnarray*}
+   E_t \left( \log m_{t+1} + \log q^{n}_{t+1} \right) &=&
+            [A_n + B_n (1-\varphi) \delta] + [\varphi B_n -(1+\lambda^2/2)] x_t \\
+   \mbox{Var}_t \left( \log m_{t+1} + \log q^{n+1}_t \right) &=&
+            (\lambda + B_n \sigma)^2 x_t .
+\end{eqnarray*}
+The ``mean and variance over two'' formula gives us
+\begin{eqnarray*}
+    \log q^{n+1}_t &=&
+            [A_n + B_n (1-\varphi) \delta] + [\varphi B_n -(1+\lambda^2/2)] x_t
+                    + (\lambda + B_n \sigma)^2/2  x_t  \\
+                &=& A_{n+1} + B_{n+1} x_t.
+\end{eqnarray*}
+Lining up terms, we have
+\begin{eqnarray*}
+    A_{n+1} &=& A_n + B_n (1-\varphi) \delta \\
+    B_{n+1} &=& \varphi B_n -(1+\lambda^2/2) + (\lambda + B_n \sigma)^2/2 .
+\end{eqnarray*}
+This is a mess, but it's easy to program up, which is what we'll do.
+We start, as always, with $A_0 = B_0 = 0$.
+
+{\it Estimation.\/}
+We estimate parameters much as we did before:
+%
+\begin{itemize}
+\item Autocorrelation.
+We set $\varphi$ equal to the observed autocorrelation of the short rate in the data,
+just as we did before.
+
+\item Mean.  We set $\delta$ equal to the mean short rate.
+
+\item Variance.  Similarly, the variance of the short rate is the variance of $x$,
+which is $ \sigma^2 \delta/(1-\varphi^2)$.
+Given values for $\varphi$ and $\delta$,
+the variance of the short rate nails down $\sigma$.
+
+\item Long forward rates.  Again,
+$\lambda$ controls the mean forward rate curve.
+Recall that forward rates are
+\begin{eqnarray*}
+    f^n_t &=& \log (q^n_t/q^{n+1}_t)
+                \;\;=\;\;  (A_n - A_{n+1}) + (B_n - B_{n+1}) x_t .
+\end{eqnarray*}
+Since $x_t$ has a  mean of $\delta$,  we have
+\begin{eqnarray*}
+    E (f^n - f^0) &=&  [(A_n - A_{n+1}) - (A_0 - A_{1})] +
+        [(B_n - B_{n+1}) - (B_0 - B_{1})] \delta.
+\end{eqnarray*}
+We simply vary $\lambda$ until it gives us the right mean forward spread.
+
+\end{itemize}
+See the Matlab program.
+
+
+
+\subsection*{Term premiums}
+
+Now let's think about {\it term premiums\/}:
+(risk) premiums on bonds of different terms or maturities.
+We connect term premiums
+reflected in bond returns and forward rates.
+We start with the latter; the others follow from their definitions.
+Then we describe how term premiums can be predicted.
+
+{\it Definitions.\/}
+Let $q^n_t$ be the price at date $t$ of an $n$-period zero-coupon bond.
+Yields $y$ and forward rates $f$ are defined from prices by
+\begin{eqnarray*}
+    - \log q^n_t  &=&  n y^n_t
+            \;\;=\;\;  f^0_t  + f^1_t + \cdots + f^{n-1}_t.
+\end{eqnarray*}
+The definition of forward rates implies
+$ f^n_t = \log (q^n_t/q^{n+1}_t )$.
+One-period returns are $  r^n_{t+1} = q^{n-1}_{t+1}/q^n_t $.
+The {\it short rate\/} is $\log r^1_{t+1} = y_t^1 = f^0_t $.
+
+We define (forward) {\it term premiums\/} $\tp$ by
+\begin{eqnarray}
+    f^n_t &=&  E_t f^0_{t+n} + \tp^n_t .
+    \label{eq:tp-def}
+\end{eqnarray}
+%(Aficionados will see the expectations hypothesis lurking here.)
+We define {\it bond premiums\/} from (log) excess returns:
+\begin{eqnarray*}
+    \bp^n_t &=& E_t (\log r^n_{t+1}  - \log r^1_{t+1}) .
+\end{eqnarray*}
+The question is how the two are related.
+
+The answer follows from the definitions.
+The excess return on an $(n+1)$-period bond is
+\begin{eqnarray*}
+   \log r^n_{t+1} - \log r^1_{t+1} &=&
+            (f^1_t-f^0_{t+1}) + ... + (f^n_t-f^{n-1}_{t+1}).
+\end{eqnarray*}
+The typical term is
+\begin{eqnarray*}
+    f^j_t - f^{j-1}_{t+1} &=&  (E_t f^0_{t+j} - E_{t+1}f^0_{t+j})
+        + \tp^j_t - \tp^{j-1}_{t+1} .
+\end{eqnarray*}
+That is, you get innovations in forward rates and changes in term premiums.  Since the former have (conditional) mean zero by construction, only the latter show up in bond risk premiums:
+\begin{eqnarray*}
+    \bp^{n+1}_t &=&  E_t (\tp^1_{t+1}-\tp^0_t) + E_t (\tp^2_{t+1}-\tp^1_t)
+                    + ... + E_t (\tp^n_{t+1}-\tp^{n-1}_t)       \\
+               &=&  E_t (\tp^1_{t+1} - \tp^1_t) + E_t (\tp^2_{t+1}-\tp^2_t)
+                  + ... + E_t (\tp^{n-1}_{t+1}-\tp^{n-1}_t) + \tp^n_t .
+\end{eqnarray*}
+In short, bond premiums are functions of term premiums.
+In stationary ergodic settings, the unconditional means have a more simple form: $ E (\bp^{n+1}) = E (\tp^n )$.
+
+{\it Evidence on term premiums.\/}
+We consider three approaches to term premiums:
+\begin{itemize}
+\item Term premiums are zero:  $\tp^n_t = 0$.
+This is obviously false, because on average term premiums increase with maturity $n$.
+\item Term premiums are constant and depend only on maturity:  $\tp^n_t = \tp^n$.
+\item Term premiums are arbitrary functions of the state.
+This allows almost anything we might consider, including exponential-affine models.
+\end{itemize}
+Let's see what they deliver.
+
+Although it's clearly false,
+the first approach leads to some useful expressions for forward rates and bond returns.
+The first is that excess returns on bonds of all maturities are zero.
+We can look at forward rates or bond returns, but we see the same thing.
+We also have some strong implications for the dynamics of forward rates.  
+If term premiums are zero, equation (\ref{eq:tp-def}) becomes
+\begin{eqnarray*}
+    f^n_t &=&  E_t f^0_{t+n}  .
+\end{eqnarray*}
+That is:  forward rates are expectations of future short rates.  
+For this reason, the first approach is often referred to as
+the {\it expectations hypothesis\/}.  
+
+
+We're going to show that the expectations hypothesis implies
+that forward rates are martingales:  
+\begin{eqnarray}
+    f^n_t &=&  E_t f^{n-1}_{t+1}  .
+    \label{eq:forwards-martingale} 
+\end{eqnarray}
+Why?  It's a little subtle, but let's work through the logic.  
+The key ingredient is the law of iterated expectations, 
+an extension of what I learned as the double expectation theorem.
+If we have a stochastic process for a random variable $x_t$, 
+then 
+\begin{eqnarray*}
+    E_t x_{t+n} &=& E_t \left( E_{t+1} x_{t+n} \right) 
+            \;\;=\;\; E_t \left( E_{t+1} [E_{t+2} x_{t+n}] \right) ...  
+\end{eqnarray*}
+We've done stuff like this all along, computing things one period at a time.
+It works because as we move the expectation back in time,
+we base it on less information.
+This says we can either do that directly (the left-hand side)  
+or do it one period at a time (the right-hand side).  
+
+Now let's apply this to the expected future short rate.
+We'll do this for $n=2$ to keep things simple.  
+We have 
+\begin{eqnarray*}
+    f^2_t &=&  E_t f^{0}_{t+2}  
+            \;\;=\;\; E_t (E_{t+1} f^{0}_{t+2} ) 
+            \;\;=\;\; E_t f^{1}_{t+1}  .
+\end{eqnarray*}
+More generally, we get the martingale sequence 
+$f^n_t, f^{n-1}_{t+1}, \ldots , f^{0}_{t+n}$.
+Each is the expectation of the short rate at $t+n$, 
+but they're expectations at different dates.  
+
+All of this is a long-winded way of setting up some  regression evidence.
+Under the expectations hypothesis, 
+forward rates are martingales.
+We can examine that idea by trying to see if we can come 
+up with a better prediction than zero.
+We've already seen that a constant helps, since it adds a nonzero risk premium.
+But we can do better than that.
+If we estimate 
+\begin{eqnarray*}
+   E_t ( f^{n-1}_{t+1} - f^{0}_{t} ) &=& a_n + b_n (f^n_t - f^0_t) + \mbox{error} 
+\end{eqnarray*}
+for lots of maturities $n$, what do we see?
+If the expectations hypothesis is right, we should get $b_n = 1$.
+In fact we get $b^1 = 0.5$, $b^3 = 0.75$, etc.  
+As $n$ increases, the coefficients get closer to one, but at short 
+maturities
+they're clearly not one. 
+
+So what does that tell us?  We can predict changes in term premiums.  
+It's not hard to show that this carries over to excess returns.  
+
+
+\subsection*{Predictability in affine models}
+
+
+
+
+\vfill \centerline{\it \copyright \ \number\year \
+NYU Stern School of Business}
+
+
+\end{document}

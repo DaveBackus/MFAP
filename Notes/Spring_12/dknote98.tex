@@ -1,0 +1,184 @@
+\documentstyle[11pt]{article}
+
+\oddsidemargin=0.25truein
+\evensidemargin=0.25truein
+\topmargin=0.0truein
+\textwidth=6.0truein
+\textheight=8.00truein
+
+\newcommand{\var}{\mbox{\em Var\/}}
+\newcommand{\cov}{\mbox{\em Cov\/}}
+\newcommand{\corr}{\mbox{\em Corr\/}}
+\newcommand{\nid}{\mbox{NID}}
+\newcommand{\ds}{\displaystyle}
+
+% next three lines for biblio setup
+\newcommand{\paperstart}[0]{\par\penalty 1 \hangindent=32pt \hangafter=1}
+\newcommand{\paperend}[0]{\penalty -1 \par\vskip 10pt plus 10pt minus 10pt}
+%\newcommand{\paperend}[0]{\penalty -1 \par\vskip 15pt plus 25pt minus 10pt}
+\newcommand{\paper}[1]{\paperstart #1 \paperend}
+
+% document starts here
+\begin{document}
+\parskip=\bigskipamount
+\parindent=0.0in
+\thispagestyle{empty}
+\begin{flushright} Wu \& Backus \end{flushright}
+
+\bigskip
+\centerline{\Large \bf Notes on Duffie and Kan}
+\centerline{(June 17, 1998; revised September 13, 1998)}
+
+\bigskip
+The idea is to work through Duffie and Kan's representation
+theorem for affine models in our discrete-time notation and setting.
+This is an attempt at understanding, not necessarily
+an accurate translation.
+
+\section*{Affine Models}
+
+Quick summary of affine models.
+All arbitrage-free models obey the pricing relation,
+\begin{equation}
+        b^{n+1}_t \;=\; E_t \left( m_{t+1} b^n_{t+1} \right)
+        \label{eq:foc}
+\end{equation}
+for some choice of $m$.
+An affine model is one for which the solution is log-linear in
+a vector $z$ of state variables:
+\begin{equation}
+        - \log b^{n}_t \;=\; A_n + B_n z_t .
+        \label{eq:loglin}
+\end{equation}
+Our approach bases such models on a law of motion for the state vector,
+\begin{equation}
+        z_{t+1} \;=\; M(z_t) + V(z_t) \varepsilon_{t+1} ,
+        \label{eq:z}
+\end{equation}
+and a pricing kernel,
+\begin{equation}
+        - \log m_{t+1} \;=\; N(z_t) + \lambda^\top W(z_t) \varepsilon_{t+1} ,
+        \label{eq:m}
+\end{equation}
+where $\{ \varepsilon_t \} \sim \mbox{NID}(0,I)$.
+We say (\ref{eq:z})
+is affine if $M$ and $VV^\top$
+[resp $N$ and $WW^\top$]
+are linear in $z$.
+Similarly, (\ref{eq:m}) is affine if
+$N$ and $WW^\top$ are linear in $z$.
+
+
+\section*{Representation Theorem}
+
+{\bf Proposition. }
+Consider an arbitrage-free model of the term structure.
+Then:
+\begin{enumerate}
+\item[(a)] If (\ref{eq:z}) and (\ref{eq:m}) are affine with $W(z) = V(z)$,
+        then bond prices satisfy (\ref{eq:loglin}).
+\item[(b)] If bond prices are affine [ie, they satisfy (\ref{eq:loglin})]
+        and the state equation is affine [$M$ and $VV^\top$ are linear in $z$],
+        then the pricing kernel satisfies (\ref{eq:m}) with
+        $N$, $WW^\top$, and $WV^\top$ linear in $z$.
+        (We need invertibility, too.)
+%\item[(c)]
+\end{enumerate}
+
+{\bf Proof. }
+Start with applying the pricing relation.
+We get
+\begin{equation}
+        A_n + B_n^\top z \;=\;
+                A_n + B_n^\top M(z) + N(z)
+                + \frac{1}{2}
+                  \left[ B_n^\top V(z) + \lambda^\top W(z) \right]
+                  \left[ B_n^\top V(z) + \lambda^\top W(z) \right]^\top .
+        \label{eq:foc-aff}
+\end{equation}
+Part (a). Clearly this works if $ V(z) = W(z) $.
+
+Part (b).
+Take the univariate case.
+Equation (\ref{eq:foc-aff}) becomes
+\[
+        A_n + B_n z \;=\;
+                A_n + B_n M(z) + N(z)
+                + \frac{1}{2} \left(
+                   [B_n V(z)]^2 + [\lambda W(z)]^2
+                  2[B_n V(z) \lambda W(z)]   \right) .
+\]
+Hence,
+\[
+              N(z)  + [\lambda W(z)]^2/2 +  [B_n \lambda V(z) W(z)]
+\]
+must be linear in $z$.
+The invertibility condition means $B_n = 0 $ for some $n$.
+You can get this to work three different ways:
+(i)~Vasicek makes $V$ and $W$ independent of $z$.
+(ii)~CIR make $V(z)$ proportional to $W(z)$ based on square root terms so that
+$W(z)^2$ and $V(z)W(z)$ are linear in $z$.
+(iii)~Duffee/Dai suggest making $V(z)$ independent of $z$
+and $W(z)$ linear,
+with $N(z) + [\lambda W(z)]^2/2 = 0 $ (fortuitous cancellation).
+I think you can show these are the only possibilities.
+
+
+\section*{Variants}
+
+
+Jumps...
+
+
+\section*{Appendix: Duffie and Kan}
+
+Quick summary of their environment, using their notation and
+equation numbers.
+\begin{itemize}
+\item Notation:  prices of zeros are $f$, short rate is $R$.
+\item Behavior of state variables:
+$$
+        dX_t  \;=\; \mu(X_t) dt + \sigma(X_t) dW_t
+                                        \eqno{(2.3)}
+$$
+\item Prices of zeros are expected discounted value using the risk neutral measure:
+$$
+        f(X_t,T-t) \;=\; E \left[ \exp
+                \left( - \int_{t}^T R(X_s) ds \right) | X_t \right]
+                                        \eqno{(2.4)}
+$$
+[Comment:  like our foc, but not clear what price of risk.]
+A model that satisfies (2.3,2.4) is said to be {\it compatible\/}.
+
+\item We say $(f,\mu,\sigma)$ is {\it exponential affine\/} if
+$$
+        \log f(x,\tau) \;=\; A(\tau) + B(\tau) x
+                                        \eqno{(3.1)}
+$$
+
+
+
+\end{itemize}
+
+
+{\bf Proposition. }
+Consider a compatible term structure model.
+\begin{enumerate}
+\item [(a)] If $\mu$, $\sigma \sigma^\top$, and $R$ are affine,
+the $f$ is exponential affine.
+\item [(b)] If $f$ is exponential affine, then $R$ is affine.
+If there e
+\end{enumerate}
+
+
+\section*{References}
+
+\paper{Duffie and Kan, 1996,
+        ``A yield-factor model of interest rates,''
+        {\it Mathematical Finance\/} 6, 379-406.}
+
+
+\end{document}
+
+
+

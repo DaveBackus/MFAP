@@ -1,0 +1,526 @@
+\documentclass[11pt]{article}
+
+\oddsidemargin=0.25truein \evensidemargin=0.25truein
+\topmargin=-0.5truein \textwidth=6.0truein \textheight=8.75truein
+
+%\usepackage{graphicx}
+\usepackage{verbatim}
+\usepackage{booktabs}
+\usepackage{comment}
+\usepackage[dvipdfm]{hyperref}
+\urlstyle{rm}   % change fonts for url's (from Chad Jones)
+\hypersetup{
+    colorlinks=true,        % kills boxes
+    allcolors=blue,
+    pdfsubject={ECON-UB233, Macroeconomic foundations for asset pricing},
+    pdfauthor={Dave Backus @ NYU},
+    pdfstartview={FitH},
+    pdfpagemode={UseNone},
+%    pdfnewwindow=true,      % links in new window
+%    linkcolor=blue,         % color of internal links
+%    citecolor=blue,         % color of links to bibliography
+%    filecolor=blue,         % color of file links
+%    urlcolor=blue           % color of external links
+% see:  http://www.tug.org/applications/hyperref/manual.html
+}
+
+\renewcommand{\thefootnote}{\fnsymbol{footnote}}
+
+% document starts here
+\begin{document}
+\parskip=\bigskipamount
+\parindent=0.0in
+\thispagestyle{empty}
+{\large ECON-UB 233 \hfill Dave Backus @ NYU}
+
+\bigskip\bigskip
+\centerline{\Large \bf Introduction to Bond Pricing}
+\centerline{(Started: April 1, 2012; Revised: \today)}
+
+\bigskip
+We define bond prices and related objects
+and describe the connection between bond prices and the
+pricing kernel in arbitrage-free economies.
+The idea, first, is to show the properties of the pricing kernel
+determine those of bond prices and, second,
+to use observed properties of bond prices
+(mean, standard deviation, autocorrelation)
+to infer parameter values for some simple pricing kernels.
+The pricing kernel is, so to speak, reverse engineered
+from bond prices rather than built up from (say)
+the marginal rate of substitution of a representative agent.
+We leave for later the question of how to reconcile
+the two approaches.
+
+
+\subsection*{Bond prices, yields, and forward rates}
+
+Bond prices:
+$q^n_t$ is the price at date $t$ of one unit
+at date $t+n$.
+One unit of what?
+For now, dollars, but we can reconsider units later.
+Some people refer to these prices as {\it discount factors\/}
+or prices of {\it zeros\/}, meaning zero-coupon bonds.
+
+What about coupons?  Same thing, but apply appropriate price
+to each payment.
+
+{\it Yields\/} are a convention for reporting prices.
+The continuously-compounded yield is connected to the price by
+\begin{eqnarray}
+    q^n_t &=&  \exp(- n y^n_t)
+        \;\;\Leftrightarrow\;\;
+        y^n_t \;\;=\;\; - n^{-1} \log q^n_t .
+        \label{eq:yields}
+\end{eqnarray}
+It's the average rate of discount over the interval $[t, t+n]$.
+Sometimes it's more useful to apply a different
+rate to each period:
+\begin{eqnarray}
+    q^n_t &=&  \exp[- (f^0_t + f^1_t + \cdots + f^{n-1}_t)]
+        \;\;\Leftrightarrow\;\;
+        f^n_t \;\;=\;\;  \log q^n_t - \log q^{n+1}_t .
+        \label{eq:forwards}
+\end{eqnarray}
+We refer to $f^j_t$ as the $j$-period ahead {\it forward rate\/}.
+Together we have
+\begin{eqnarray*}
+    y^n_t &=&  n^{-1} \left( f^0_t + f^1_t + \cdots + f^{n-1}_t \right).
+\end{eqnarray*}
+In words:  yields are averages of forward rates.
+
+Sometimes for convenience we'll refer to the {\it short rate\/}
+$f^0_t = y^1_t$.
+This is continuously compounded, not the same as the return on
+a one-period bond (we'll get to returns shortly).
+
+[Draw time line, show where yields and forwards go...]
+
+[Draw $-\log q^n$ v. $n$, show yields and forwards...]
+
+Evidently we can report bond prices $q^n_t$ (one number for each maturity $n$),
+yields $y^n_t$, or forward rates $f^n_t$.
+Once we know one, we can compute the others.
+I think forwards are mathematically simpler,
+but yields are more common.
+
+
+\subsection*{Pricing kernels and bond prices}
+
+The simplicity and elegance of bond pricing comes
+from the lack of an uncertain dividend.
+Since the cash flows are known ---
+that's why we call the subject ``fixed income'' ---
+prices depend only on the pricing kernel, as we'll see.
+To be clear:  the pricing kernel alone determines
+bond prices.  Period.
+
+
+We price assets as we did before:  using the no-arbitrage theorem.
+In a dynamic setting, this is
+\begin{eqnarray}
+    E_t \left( m_{t+1} r_{t+1} \right) &=& 1
+    \label{eq:E(mr)=1}
+\end{eqnarray}
+for the (gross) return $r$ on any traded security.
+The expectation $E_t$ means conditional on the state at date $t$.
+That is:  there exists a positive pricing kernel $m>0$
+that prices assets at every date and state.
+
+[Note units:  $m$ has inverse units to $r$.
+If $r_{t+1}$ is dollars tomorrow for dollars today,
+then $m_{t+1}$ has units of 1/dollars tomorrow
+for 1/dollars today.
+That way the units cancel and we're left with the unit-free ``1.''
+Why bring this up?  It'll come up later.]
+
+What are the {\it bond returns\/} we plug into this pricing relation?
+The relevant returns are sometimes called {\it holding period returns\/}
+for a holding period of one.
+If we buy an $n+1$-period bond at $t$ and hold it for one period,
+we're left with an $n$-period bond at $t+1$.
+Our (gross) return is
+\begin{eqnarray}
+        r^{n+1}_{t+1} &=&  q^n_{t+1}/q^{n+1}_t .
+        \label{eq:bond-returns}
+\end{eqnarray}
+Same object for bonds as the returns we've computed on
+other assets.
+
+
+Now put this to work.  If we substitute the return (\ref{eq:bond-returns})
+into the pricing relation (\ref{eq:E(mr)=1}) we have
+\begin{eqnarray}
+    q^{n+1}_t &=& E_t \left( m_{t+1} q^n_{t+1} \right) ,
+    \label{eq:bond-recursion}
+\end{eqnarray}
+which we compute starting with $q^0_t = 1$ (one now costs one).
+The first one is what we've been doing all along:
+$ q^1_t = E_t (m_{t+1}) $.
+Long-maturity bonds follows from the same logic repeated:
+given the price of an $n$-period bond,
+find the price of an $n+1$-period bond from (\ref{eq:bond-recursion}).
+
+Optional digression.
+We've done this recursively, but you can imagine doing it ``all at once.''
+The price of a two-period bond, for example, can be written
+\begin{eqnarray*}
+    q^{2}_t &=& E_t \left( m_{t+1} q^1_{t+1} \right) \\
+            &=& E_t \left( m_{t+1} E_{t+1} [m_{t+2}] \right) \\
+            &=& E_t \left( m_{t+1} m_{t+2} \right) .
+\end{eqnarray*}
+The last line follows from the law of iterated expectations.
+Repeating the same logic, we find
+\begin{eqnarray*}
+    q^{n}_t  &=& E_t \left( m_{t+1} m_{t+2} \cdots m_{t+n} \right) .
+\end{eqnarray*}
+If this seems overly mysterious, just leave it alone,
+we won't be using it.
+It shows, though, how dynamics in $m$ might affect bond prices.
+
+
+
+\subsection*{The iid pricing kernel}
+
+Before we get started, what would happen if $\{ m_t \}$ were iid?
+Let's see how that works.
+The one-period bond price is
+\begin{eqnarray*}
+    q^{1}_t &=& E_t \left( m_{t+1} \right) .
+\end{eqnarray*}
+Since $m$ is iid, this is just a number $q^1$,
+the same in all date-$t$ states.
+[Does this need explaining?]
+
+% ?? this is easier with the product of m's version
+
+
+Now let's do the same thing again.
+Since $q^1 $ is a number, we have
+\begin{eqnarray*}
+    q^{2}_t &=& E_t \left( m_{t+1} q^1 \right)
+            \;\;=\;\;  q^1 E_t \left( m_{t+1}  \right)
+            \;\;=\;\;  (q^1)^2 .
+\end{eqnarray*}
+Using the same logic, we get
+\begin{eqnarray*}
+    q^{n} &=& (q^1)^n .
+\end{eqnarray*}
+If we apply their definitions,
+we see that bond yields and forward rates are constant over time.
+They're also the same at all maturities and equal to each other.
+Bottom line:  there's no interest rate risk if $m$ is iid.
+
+The conclusion, evidently, is that we need dynamics in $m$
+to generate reasonable bond prices.
+But what kind of dynamics?
+We'll start simple and add complexity when called for.
+
+
+\subsection*{The moving average pricing kernel}
+
+If we need dynamics, one idea that may come to mind is to use
+our linear dynamic models, specifically the infinite moving average.
+Whether it comes to mind or not, that's what we're going to do.
+
+Let us say, then, that the pricing kernel has the form
+\begin{eqnarray}
+    \log m_t &=& \delta + \sum_{j=0}^\infty a_j w_{t-j} ,
+    \label{eq:logm-ma}
+\end{eqnarray}
+where $\{ w_t \} \sim \mbox{NID}(0,1)$ and
+the $a_j$'s are square-summable moving average coefficients.
+[What does this mean?]
+If $a_j = 0$ for $j \geq 1$ the pricing kernel is iid,
+otherwise its dynamics
+are governed by the moving average coefficients.
+The $\log$ is essential and possible because the theorem
+says $m$ is strictly positive.
+
+Let's look at the one-period ``short'' rate and see how it works.
+If the pricing kernel is (\ref{eq:logm-ma}),
+then next period's pricing kernel is
+\begin{eqnarray*}
+    \log m_{t+1} &=& \delta + \sum_{j=0}^\infty a_{1+j} w_{t-j} + a_0 w_{t+1} .
+\end{eqnarray*}
+The first two terms are known at $t$, the last one is not.
+Other than the conditioning, we're back in our familiar lognormal world.
+The log pricing kernel is normal with conditional mean and variance
+\begin{eqnarray*}
+    E_t ( \log m_{t+1}) &=& \delta + \sum_{j=0}^\infty a_{1+j} w_{t-j} \\
+    \mbox{Var}_t ( \log m_{t+1}) &=& a_0^2 .
+\end{eqnarray*}
+The usual ``mean plus variance over two'' gives us
+\begin{eqnarray*}
+    \log q^1_t &=& \log E_t \left(m_{t+1}\right)
+            \;\;=\;\; \delta + \sum_{j=0}^\infty a_{1+j} w_{t-j} + a_0^2/2 ,
+\end{eqnarray*}
+which has the same infinite moving average form as the pricing kernel.
+Note, too, the moving average coefficients:
+we simply moved them over one place.
+
+
+Can we express long-term bond prices in similar fashion?
+The answer is yes,
+but it's best to start out with the solution:
+
+{\it Proposition\/}.  If the pricing kernel is (\ref{eq:logm-ma}),
+forward rates are
+\begin{eqnarray}
+    - f^n_t &=& \delta + A_n^2/2 + \sum_{j=0}^\infty a_{n+1+j} w_{t-j} ,
+\end{eqnarray}
+where $A_n = a_0 + a_1 + \cdots + a_n = \sum_{j=0}^n a_j $.
+Bond prices and yields follow from their definitions.
+
+Now how did we get there?
+Suppose bond prices have the form
+\begin{eqnarray*}
+    \log q^n_t &=& \delta^n + \sum_{j=0}^\infty b^n_{j} w_{t-j}
+\end{eqnarray*}
+with parameters $\delta^n$ and $\{b^n_j \}$ to be determined.
+Since $q^0_t = 1$, we have $\delta^0 =b^0_j = 0$.
+Given parameters for some maturity $n$,
+we use the pricing relation (\ref{eq:bond-recursion})
+to find the parameters of maturity $n+1$.
+
+
+Here's a typical step.
+The pricing relation uses the conditional distribution of
+\begin{eqnarray*}
+    \log m_{t+1} + \log q^n_{t+1} &=&  (\delta + \delta^n)
+                + \sum_{j=0}^\infty (a_{1+j} + b^n_{j+1}) w_{t-j}
+                + (a_0 + b^n_0) w_{t+1} .
+\end{eqnarray*}
+As before the first two terms on the right are known at date $t$
+and the last one is not.
+The conditional distribution is therefore normal with mean and variance
+\begin{eqnarray*}
+  E_t (  \log m_{t+1} + \log q^n_{t+1})  &=&  (\delta + \delta^n)
+                + \sum_{j=0}^\infty (a_{1+j} + b^n_{j+1}) w_{t-j} \\
+  \mbox{Var}_t (  \log m_{t+1} + \log q^n_{t+1})
+                &=&  (a_0 + b^n_0)^2  .
+\end{eqnarray*}
+The usual ``mean plus variance over two gives us
+\begin{eqnarray*}
+  \log q^{n+1}_t  &=&  (\delta + \delta^n)
+                + \sum_{j=0}^\infty (a_{1+j} + b^n_{j+1}) w_{t-j} +
+             (a_0 + b^n_0)^2 / 2 \\
+                &=& \delta^{n+1} + \sum_{j=0}^\infty b^{n+1}_{j} w_{t-j} .
+\end{eqnarray*}
+Lining up terms gives us
+\begin{eqnarray*}
+    \delta^{n+1} &=& \delta + \delta^n + (a_0 + b_0^n)^2/2\\
+    b_j^{n+1} &=& b_{j+1}^{n} + a_{j+1} ,
+\end{eqnarray*}
+two recursions that we need to beat into more useful shape.
+
+The trick is to be patient and work this out step by step.
+Let's take the second one.
+For $n = 0$,  we have $b^0_j = 0$ all $j$.
+For $n=1$, we have
+\begin{eqnarray*}
+    b^1_j &=& b^0_{j+1} + a_{1+j}
+            \;\;=\;\; 0 + a_{1+j}.
+\end{eqnarray*}
+That's what we saw earlier:  we simply shift the $a_j$'s over one.
+For $n=2$, we have
+\begin{eqnarray*}
+    b^2_j &=& b^1_{j+1} + a_{1+j}
+            \;\;=\;\; a_{2+j} + a_{1+j} ,
+\end{eqnarray*}
+and for $n=3$ we have
+\begin{eqnarray*}
+    b^3_j &=& b^2_{j+1} + a_{1+j}
+            \;\;=\;\; a_{3+j} + a_{2+j} + a_{1+j} .
+\end{eqnarray*}
+With a little work, we see that
+\begin{eqnarray*}
+    b^n_j &=& A_{n+j} - A_j  ,
+\end{eqnarray*}
+and we're done with the $b$'s.
+
+Now the $\delta$'s.
+We start again with $n=0$, in which case $\delta^0 = 0$.
+We'll need $b^n_0 = A_{n} - A_0 $,
+which implies $a_0 + b^n_0 = A_n$.
+We find, in order,
+\begin{eqnarray*}
+    \delta^1 &=& \delta + \delta^0 + a_0^2/2
+            \;\;=\;\; \delta + a_0^2/2 \\
+    \delta^2 &=& 2 \delta + a_0^2/2 + A_1^2/2 \\
+    \delta^3 &=& 3 \delta + a_0^2/2 + A_1^2/2 + A_2^2/2\\
+    \delta^n &=& n \delta + A_0^2/2 + A_1^2/2 + \cdots + A_{n-1}^2/2 .
+\end{eqnarray*}
+that does it for bond prices.
+
+The solution is simpler if we express it in terms of forward rates,
+as we did in the proposition.
+We can always reconstitute bond prices from (\ref{eq:forwards}).
+From the definition,
+\begin{eqnarray*}
+    - f^n_t &=& \log q^{n+1}_t - \log q^n_t \\
+            &=& (\delta^{n+1} - \delta^n) + \sum_{j=0}^\infty
+                    (b^{n+1}_j - b^n_j) w_{t-j} \\
+            &=&  \delta + A_n^2/2 + \sum_{j=0}^\infty
+                    a_{n+1+j} w_{t-j}  ,
+\end{eqnarray*}
+as stated in the proposition.
+
+
+Properties.
+Here's a list:
+\begin{itemize}
+\item The iid case revisited.
+In the iid case, $a_j = 0$ for $j\geq 0$ and $A_n = A_0$ for all $n$.
+As a result, $f^n$ is constant and equal for all $n$.
+Ditto yields (averages of forwards).
+Otherwise, the $a$'s affect both
+the average shape of the forward rate curve
+and the dynamics of interest rates.
+\item Mean forward rates.
+Since the $w$'s have zero mean, mean forward rates are
+\begin{eqnarray*}
+  -  E( f^n_t)
+            &=&  \delta + A_n^2/2 .
+\end{eqnarray*}
+The only term here that varies with $n$ is the last one,
+so the shape of the mean forward rate curve depends on the $a$'s through
+the partial sums $A_n$.
+The mean forward rate spread is
+\begin{eqnarray}
+    E( f^n - f^0 )
+            &=&  (A_0^2 - A_n^2)/2 .
+            \label{eq:vasicek-mean-forwards}
+\end{eqnarray}
+You might think about how we might generate an upward-sloping mean forward
+rate curve.  What does that imply for the $a$'s?
+
+\item Interest rate dynamics.
+The dynamics of forward rates also depend on the $a$'s,
+but through the coefficients of $w_{t-j}$.
+Note that as we increase maturity $n$, we shift the coefficients (increase the subscript).
+
+\item We see, therefore, that the dynamics of the pricing kernel,
+reflected by its moving average coefficients,
+determines both the shape of the average yield curve
+and the dynamics of forward rates.
+This interaction between cross-section and time-series properties
+is inherent to bond pricing.
+
+\item What happens as we increase maturity $n$?
+If the $a$'s go to zero, as they must, then the forward rate becomes constant:
+its dependence on the $w$'s goes away.
+This is a fairly general result:  that forward rates converge
+to a constant at long enough maturities.
+\end{itemize}
+
+
+
+\subsection*{The Vasicek model}
+
+In the previous section, we found bond prices and forward rates
+from the pricing kernel.
+Here we do the reverse:  How can we use what we know about forward rates
+to estimate the parameters of the pricing kernel?
+
+The idea is to combine time series and cross section information
+about interest rates to estimate the parameters of the pricing kernel.
+We can use information about the dynamics of interest rates
+to infer some of the $a_j$'s:  note, for example, that the short
+rate includes $a_1, a_2, \ldots $.
+It also allows us to identify the $w_t$'s.
+But what about $a_0$?
+This we need the cross-section information for.
+The mean forward rate spread is given by
+(\ref{eq:vasicek-mean-forwards}),
+so the partial sums play a central role.
+
+
+It's helpful to simplify the model first.
+Suppose $\log m_t$ is ARMA(1,1).
+Then it has the structure:  $a_0$, $a_1$,
+and $a_{j+1} = \varphi a_j = \varphi^j a_1$ for $j\geq 1$.
+The three parameters $(a_0,a_1,\varphi)$ are enough to nail it down.
+The autoregressive parameter $\varphi$ is less than one in absolute value,
+otherwise the process isn't square summable.
+
+With this structure, the one-period bond price is an AR(1):
+\begin{eqnarray*}
+    \log q^1_t &=& \delta + a_0^2/2 + \sum_{j=0}^\infty a_{1+j} w_{t-j}  \\
+             &=& \delta + a_0^2/2 + \sum_{j=0}^\infty \varphi^j a_{1} w_{t-j}  \\
+             &=& (1-\varphi) (\delta + a_0^2/2) + \varphi \log q^1_{t-1} + a_1 w_t .
+\end{eqnarray*}
+The short rate $f^0_t = - \log q^1_t$ is the same with the opposite sign:
+\begin{eqnarray*}
+     f^1_t  &=& - (1-\varphi) (\delta + a_0^2/2) + \varphi f^0_{t-1} - a_1 w_t .
+\end{eqnarray*}
+It has autocorrelation $\varphi$ and variance $a_1^2/(1-\varphi^2)$.
+The mean we're less concerned with, but it's $ - (\delta + a_0^2/2)$.
+
+
+Now let's estimate parameters from properties of forward rates.
+Some ballpark numbers are (we'll discuss this more in class)
+%
+\begin{center}
+\begin{tabular}{lrrr}
+\toprule
+Forward rate $f^n_t$    &  Mean  &  Std Dev  &  Autocorr \\
+\midrule
+$f^0_t$                 &  6.683 & 2.703     &  0.959   \\
+$f^{12}_t$              &  7.921 & 2.495     &  0.969   \\
+$f^{120}_t$             &  8.858 & 1.946     &  0.980   \\
+\bottomrule
+\end{tabular}
+\end{center}
+%
+The numbers are  computed from monthly data but reported as annual
+percentages, something that will show up in our calculations.
+
+Now let's put these numbers to work.
+From the autocorrelation, we have $\varphi = 0.959$.
+From the standard deviation, we have
+\begin{eqnarray*}
+    (2.703/1200)^2 &=&  a_1^2/(1-\varphi^2)
+            \;\;\Rightarrow\;\; a_1 \;\;=\;\; - 0.645 \times 10^{-3} .
+\end{eqnarray*}
+With this sign convention, an increase in $w_t$ corresponds to an
+increase in the short rate.
+The small magnitude stems largely from short rates being small in magnitude.
+What about $a_0$?  This comes from the mean forward rate.
+If we choose it to match the mean forward premium at maturity $n=120$,
+we need:
+\begin{eqnarray*}
+    (A_0^2 - A_{120}^2)/2 &=& (8.858 - 6.683)/1200 .
+\end{eqnarray*}
+If we choose $a_0 = 0.124$ we're pretty close.
+
+[See Matlab program.]
+
+What do we have?
+(i)~The moving average coefficients start with an initial big one,
+then much smaller ones that decay slowly to zero.
+(ii)~They flip sign, too:  if you want the mean forward rate curve to slope up,
+then $a_0$ and $a_j$ for $j\geq 1$ have to have opposite signs.
+
+
+\begin{comment}
+\subsection*{The expectations hypothesis}
+
+Martingales...
+
+
+%\subsection*{The Cox-Ingersoll-Ross model}
+
+
+
+%\subsection*{Exponential-affine models}
+\end{comment}
+
+
+\vfill \centerline{\it \copyright \ \number\year \
+NYU Stern School of Business}
+
+
+
+\end{document}

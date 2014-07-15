@@ -1,0 +1,264 @@
+\documentclass[11pt]{exam}
+
+\oddsidemargin=0.25truein \evensidemargin=0.25truein
+\topmargin=-0.5truein \textwidth=6.0truein \textheight=8.75truein
+
+%\RequirePackage{graphicx}
+\usepackage{verbatim}
+\usepackage{booktabs}
+\usepackage{comment}
+\usepackage{hyperref}
+\urlstyle{rm}   % change fonts for url's (from Chad Jones)
+\hypersetup{
+    colorlinks=true,        % kills boxes
+    allcolors=blue,
+    pdfsubject={ECON-UB233, Macroeconomic foundations for asset pricing},
+    pdfauthor={Dave Backus @ NYU},
+    pdfstartview={FitH},
+    pdfpagemode={UseNone},
+%    pdfnewwindow=true,      % links in new window
+%    linkcolor=blue,         % color of internal links
+%    citecolor=blue,         % color of links to bibliography
+%    filecolor=blue,         % color of file links
+%    urlcolor=blue           % color of external links
+% see:  http://www.tug.org/applications/hyperref/manual.html
+}
+
+\renewcommand{\thefootnote}{\fnsymbol{footnote}}
+\newcommand{\var}{\mbox{\it Var\/}}
+
+\printanswers
+
+% document starts here
+\begin{document}
+\parskip=\bigskipamount
+\parindent=0.0in
+\thispagestyle{empty}
+{\large ECON-UB 233 \hfill Dave Backus @ NYU}
+
+\bigskip\bigskip
+\centerline{\Large \bf Quiz \#3}
+\centerline{(Revised: \today)}
+
+\bigskip
+{\it Please write your name below.
+Then complete the exam in the space provided.
+There are TWO questions.
+You may refer to one page of notes:
+standard paper, both sides, any content you wish.}
+
+\bigskip
+\begin{flushleft}
+\rule{4in}{0.5pt} \\ (Name and signature)
+\end{flushleft}
+
+
+\begin{questions}
+%-----------------------------------------------------------------------
+\question (moving averages) (50~points)
+Consider the MA(2),
+\begin{eqnarray*}
+    x_t &=& \delta + w_t + \theta_1 w_{t-1} + \theta_2 w_{t-2},
+\end{eqnarray*}
+with $\{ w_t \} \sim \mbox{NID}(0,1)$
+(the $w$'s are independent normals with mean zero and variance one).
+Our mission is to explore its properties.
+
+\begin{parts}
+\part What is the mean of $x$?  The variance?
+(10~points)
+\part What are the conditional means,
+$E_t (x_{t+1})$, $E_t (x_{t+2})$, and  $E_t (x_{t+3})$?
+(10~points)
+\part What are the conditional variances,
+$\mbox{Var}_t (x_{t+1})$,
+$\mbox{Var}_t (x_{t+2})$,
+and $\mbox{Var}_t (x_{t+3})$?
+(10~points)
+\part What is the autocovariance function,
+\begin{eqnarray*}
+    \gamma(k)  &=& \mbox{Cov}(x_t,x_{t-k}),
+\end{eqnarray*}
+for $k=0,1,2,3$?
+(10~points)
+\part What is the autocorrelation function?
+Under what conditions are $\rho(1)$ and $\rho(2)$ positive?
+(10~points)
+\end{parts}
+
+\begin{solution}
+\begin{parts}
+\part The mean is $\delta$,
+\begin{eqnarray*}
+   E( x_t) &=& E (\delta + w_t + \theta_1 w_{t-1} + \theta_2 w_{t-2})
+        \;\;=\;\; \delta .
+\end{eqnarray*}
+The variance is
+\begin{eqnarray*}
+   \mbox{Var} ( x_t) &=& E (x_t - \delta)^2
+        \;\;=\;\;  1 + \theta_1^2 + \theta_2^2 .
+\end{eqnarray*}
+\part The conditional means are
+\begin{eqnarray*}
+   E_t ( x_{t+1}) &=& E_t (\delta + w_{t+1} + \theta_1 w_{t} + \theta_2 w_{t-1})
+        \;\;=\;\; \delta + \theta_1 w_{t} + \theta_2 w_{t-1} \\
+   E_t ( x_{t+2}) &=& E_t (\delta + w_{t+2} + \theta_1 w_{t+1} + \theta_2 w_{t})
+        \;\;=\;\; \delta + \theta_2 w_{t} \\
+   E_t ( x_{t+3}) &=& E_t (\delta + w_{t+3} + \theta_1 w_{t+2} + \theta_2 w_{t+1})
+        \;\;=\;\; \delta .
+\end{eqnarray*}
+You can see that  as we increase the forecast horizon,
+the conditional mean approaches the mean.
+
+\part The conditional variances are
+\begin{eqnarray*}
+   \mbox{Var}_t ( x_{t+1}) &=& E_t [(w_{t+1})^2]
+        \;\;=\;\; 1  \\
+   \mbox{Var}_t ( x_{t+2}) &=& E_t [(w_{t+2} + \theta_1 w_{t+1})^2]
+        \;\;=\;\; 1  + \theta_1^2 \\
+   \mbox{Var}_t ( x_{t+3}) &=& E_t [(w_{t+3} + \theta_1 w_{t+2} + \theta_2 w_{t+1})^2]
+        \;\;=\;\; 1  + \theta_1^2 + \theta_2^2 .
+\end{eqnarray*}
+You see here that as we increase the forecast horizon,
+the conditional variance approaches the variance.
+
+
+\part The autocovariance function is
+\begin{eqnarray*}
+    \mbox{Cov}(x_t,x_{t-k}) &=&
+            \left\{
+            \begin{array}{ll}
+            1 + \theta_1^2 + \theta_2^2 & k=0 \\
+            \theta_1 + \theta_1 \theta_2 & k=1 \\
+            \theta_2                    & k=2 \\
+            0                           & k \geq 3 .
+            \end{array}
+            \right.
+\end{eqnarray*}
+\part Autocorrelations are scaled autocovariances:
+$\rho(k) = \gamma(k)/\gamma(0)$.
+$\rho(2)$ is positive if $\theta_2$ is.
+$\rho(1)$ is positive if $\theta_1 (1+\theta_2)$ is.
+Both are therefore positive if $\theta_1$ and $\theta_2$ are
+positive.
+\end{parts}
+\end{solution}
+
+
+%\pagebreak \phantom{xx} \pagebreak
+%-----------------------------------------------------------------------
+\question (moving average bond pricing) (50~points)
+Consider the bond pricing model
+\begin{eqnarray*}
+    \log m_{t+1} &=& - \lambda^2/2 - x_t + \lambda w_{t+1} \\
+    x_t &=& \delta + \sigma (w_t + \theta w_{t-1}) .
+\end{eqnarray*}
+
+\begin{parts}
+\part What is the short rate $f^0_t$?
+(10~points)
+\part Suppose bond prices take the form
+\begin{eqnarray*}
+    \log q^n_{t} &=& A_n + B_n w_t + C_n w_{t-1} .
+\end{eqnarray*}
+Use the pricing relation to derive recursions connecting
+$(A_{n+1}, B_{n+1}, C_{n+1})$ to $(A_{n}, B_{n}, C_{n})$.
+What are $(A_{n}, B_{n}, C_{n})$ for $n=0,1,2,3$?
+(20~points)
+\part Express forward rates as functions of the state $(w_t,w_{t-1}$).
+What are $f^1_t$ and $f^2_t$?
+(10~points)
+\part What is $E(f^1- f^0)$?  What parameters govern its sign?
+(10~points)
+\end{parts}
+
+\begin{comment}
+\begin{solution}
+\begin{parts}
+\part The short rate is
+\begin{eqnarray*}
+    f^0_t &=& - \log E_t m_{t+1} \;\;=\;\;  \lambda^2/2 + x_t - \lambda^2/2
+            \;\;=\;\; x_t .
+\end{eqnarray*}
+The second equality is the usual ``mean plus variance over two'' with the sign flipped
+(as indicated by the first equality).
+In other words:  the usual setup.
+In what follows, we'll kill off $x_t$ by substituting.
+\part
+Bond prices follow from the pricing relation,
+\begin{eqnarray*}
+    q_t^{n+1} &=& E_t (m_{t+1} q_{t+1}^n) ,
+\end{eqnarray*}
+starting with $n=0$ and  $q^0_t = 1$.
+The state in this case is $(w_t, w_{t-1})$, a simple example of a
+two-dimensional model, hence the extra term in the form of the bond price.
+We need
+\begin{eqnarray*}
+    \log (m_{t+1} q_{t+1}^n) &=&
+            A_n - (\lambda^2/2 + \delta) + (\lambda+B_n) w_{t+1}
+            + (C_n-\sigma) w_t - \sigma \theta w_{t-1} .
+\end{eqnarray*}
+The (conditional) mean and variance are
+\begin{eqnarray*}
+    E_t [ \log (m_{t+1} q_{t+1}^n)] &=&
+            A_n - (\lambda^2/2 + \delta)
+            + (C_n-\sigma) w_t - \sigma \theta w_{t-1} \\
+    \mbox{Var}_t [\log (m_{t+1} q_{t+1}^n)] &=&
+            (\lambda+B_n)^2 .
+\end{eqnarray*}
+Using ``mean plus variance over two'' and lining up terms gives us
+\begin{eqnarray*}
+        A_{n+1} &=& A_n - (\lambda^2/2 + \delta) + (\lambda+B_n)^2/2 \\
+                &=& A_n - \delta + \lambda B_n + (B_n)^2/2 \\
+        B_{n+1} &=& C_n - \sigma \\
+        C_{n+1} &=& - \sigma \theta
+\end{eqnarray*}
+for $n=0,1,2,\ldots$.
+That gives us
+\begin{center}
+\begin{tabular}{cccc}
+        $n$  & $A_n$ & $B_n$ & $C_n$ \\
+        \midrule
+        0   &  0 & 0 & 0 \\
+        1   &  $-\delta$ & $-\sigma$ & $-\sigma\theta$  \\
+        2   &  $-2 \delta - \lambda\sigma + \sigma^2/2$   &  $-\sigma(1+\theta)$ & $-\sigma\theta$ \\
+        3   &  X  &  $-\sigma(1+\theta)$ & $-\sigma\theta$
+\end{tabular}
+\end{center}
+with
+$X = - 3 \delta - \lambda (2+\theta)+ [1 + (1+\theta)^2] \sigma^2/2 $.
+
+\part In general, forward rates are
+\begin{eqnarray*}
+    f^n_t &=& (A_n - A_{n+1}) + (B_n - B_{n+1}) w_t + (C_n - C_{n+1}) w_{t-1} .
+\end{eqnarray*}
+That gives us
+\begin{eqnarray*}
+    f^0_t &=& \delta + \sigma w_t + \sigma \theta  w_{t-1} \\
+    f^1_t &=& \delta + \lambda\sigma - \sigma^2/2 + \sigma \theta w_t  \\
+    f^2_t &=& \delta - (1+\theta)^2 \sigma^2/2 + \lambda \sigma (1+\theta) .
+\end{eqnarray*}
+
+\part The means are the same with $w_t = w_{t-1} = 0$, their mean.
+Therefore
+\begin{eqnarray*}
+   E (f^1 - f^0) &=& \lambda \sigma - \sigma^2/2 .
+\end{eqnarray*}
+Therefore we need $\lambda\sigma > \sigma^2/2 $,
+so a necessary condition is that $\lambda$ and $\sigma$ have the same sign.
+
+\end{parts}
+\end{solution}
+\end{comment}
+
+\end{questions}
+
+
+%\pagebreak \phantom{xx}
+
+\vfill \centerline{\it \copyright \ \number\year \
+NYU Stern School of Business}
+\end{document}
+
+
+

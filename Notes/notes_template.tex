@@ -1,0 +1,188 @@
+\documentclass[11pt]{article}
+
+\oddsidemargin=0.25truein \evensidemargin=0.25truein
+\topmargin=-0.5truein \textwidth=6.0truein \textheight=8.75truein
+
+%\RequirePackage{graphicx}
+\RequirePackage[hypertex]{hyperref}
+\RequirePackage{comment}
+\usepackage{amssymb}
+\usepackage{amsfonts}
+\usepackage{booktabs}
+
+\renewcommand{\thefootnote}{\fnsymbol{footnote}}
+\newcommand{\var}{\mbox{\it Var\/}}
+
+% document starts here
+\begin{document}
+\parskip=\bigskipamount
+\parindent=0.0in
+\thispagestyle{empty}
+{\large ECON-UB 233 \hfill Dave Backus @ NYU} 
+
+\bigskip\bigskip
+\centerline{\Large \bf Notes ... %
+\footnote{Working notes, no guarantee of accuracy or sense.}}
+\centerline{(Started: March 9, 2011; Revised: \today)}
+
+\bigskip
+This pulls together a few things we've done over the years.
+The question is the following:  given a pricing kernel,
+how does the return that maximizes the mean log return
+compare to the return that maximizes the Sharpe ratio?
+The first one hits the entropy bound,
+the second hits the Hansen-Jagannathan bound.
+We follow Bryan's lead (his 2010 qualifier question)
+and derive the returns that hit the bounds
+from maximization problems.
+
+
+\subsection*{Preliminaries}
+
+Environment.  Two periods.
+You might think of this as summarizing the relationship between
+a node and its successors in a more general dynamic setting.
+Finite state space with elements $s$.
+Probabilities are $p(s)$ --- these would be conditional probabilities
+in a dynamic setting.
+
+Bounds.  As usual, there's a pricing kernel $m(s)>0$
+that prices all returns $r(s)$:
+\begin{eqnarray}
+    1 &=& E ( m r )
+            \;\;=\;\; \sum_s p(s) m(s) r(s) .
+            \label{eq:foc}
+\end{eqnarray}
+The entropy bound is
+\begin{eqnarray}
+    E ( \log r - \log r^1 )
+            &\leq& \log E m - E \log m ,
+            \label{eq:bound-entropy}
+\end{eqnarray}
+where $r^1 = 1/E m $ is the return on a one-period bond.
+The Hansen-Jagannathan bound applies to
+excess returns $x$,  differences between any two returns
+satisfying (\ref{eq:foc}).
+The bound is
+\begin{eqnarray}
+    E x /\var (x)^{1/2}
+            &\leq& \var (m)^{1/2} /E m .
+            \label{eq:bound-hj}
+\end{eqnarray}
+The left side is the Sharpe ratio for the investment strategy with
+excess return $x$.
+
+
+\subsection*{Hitting the bounds}
+
+Suppose you could choose any returns $\{ r(s) \}$
+that satisfy (\ref{eq:foc}).
+What choices hit the two bounds?
+
+The entropy bound is easy.  We choose the elements $r(s)$ to maximize
+$ E \log r$ subject to the pricing relation (\ref{eq:foc}).
+The Lagrangian problem is
+\begin{eqnarray*}
+    \max_{\{ r(s) \}} \;\; \mathcal{L} &=&  E \log r + \lambda [1 - E(mr)]
+            \;\;=\;\; \sum_s p(s) \log r(s)
+        + \lambda \left(  1 - \sum_s p(s) m(s) r(s) \right) .
+\end{eqnarray*}
+The foc for $r(s)$ is
+\begin{eqnarray*}
+    p(s)/r(s) &=& \lambda p(s) m(s) .
+\end{eqnarray*}
+If we multiply by $r(s)$ and sum over $s$, we find $\lambda = 1$.
+That gives us the return $r(s) = 1/m(s)$
+or
+\begin{eqnarray*}
+     \log r(s) &=& - \log m(s) .
+\end{eqnarray*}
+Since $r^1 = E(m)$ is given, this maximizes the mean log excess return, too.
+
+Now the HJ bound.
+We maximize the (log) Sharpe ratio:
+\begin{eqnarray*}
+    \max_{\{ x(s) \}} \;\; \mathcal{L}
+        &=& \log E(x) - (1/2) \log \var(x) + \lambda [0 - E(mx)] \\
+        &=& \log \left[ \sum_s p(s) x(s) \right] - (1/2)
+        \log \left[ \sum_s p(s) x(s)^2 -
+                \left(\sum_s p(s) x(s)\right)^2 \right] \\
+        && + \; \lambda \left[  0 - \sum_s p(s) m(s) x(s) \right] .
+\end{eqnarray*}
+% ugly ??
+The foc for $x(s)$ is
+\begin{eqnarray*}
+    p(s)/E(x)- p(s) [x(s) - E(x)]/\var(x)  &=& \lambda p(s) m(s) .
+\end{eqnarray*}
+Sum over $s$ to get
+\begin{eqnarray*}
+    1/E(x)  &=& \lambda E(m) .
+\end{eqnarray*}
+The foc becomes
+\begin{eqnarray}
+    \frac{x(s) - E(x)}{\var(x)} &=& -
+                \frac{m(s) - E(m)}{E(m)E(x)} .
+                \label{eq:xs-hj-prelim}
+\end{eqnarray}
+That is, we have a perfect negative correlation between the
+excess return $x$ and the pricing kernel $m$.
+
+This isn't a solution yet, since the mean and variance of $x$
+haven't been nailed down.
+If we square equation (\ref{eq:xs-hj-prelim}) and take its expectation,
+we get
+\begin{eqnarray*}
+    \frac{1}{\var(x)}  &=& \frac{\var(m)} {E(m)^2 E(x)^2}
+    \;\;\;\; \Leftrightarrow \;\;\;\;
+    E(x) E(m)  \;\;=\;\; \var(m)^{1/2}\var(x)^{1/2} .
+\end{eqnarray*}
+[Need to worry about sign of $E(x)$, but see below.]
+This verifies that we've hit the bound (\ref{eq:bound-hj}).
+It also allows us to rewrite (\ref{eq:xs-hj-prelim}) as
+\begin{eqnarray}
+    \frac{x(s) - E(x)}{\var(x)^{1/2}} &=& -
+                \frac{m(s) - E(m)}{\var(m)^{1/2}} .
+                \label{eq:xs-hj-final}
+\end{eqnarray}
+You can see from the bound that we've nailed down the Sharpe ratio,
+but not the individual terms.
+In fact, they're not determined.
+The Sharpe ratio is invariant to leverage:
+if $x$ is a solution, then so is $\lambda x$ for any $\lambda$.
+If $E(x)$ is negative, we just choose $\lambda<0$.
+So let's choose an arbitrary $E(x)$.
+Then $\var(x)$ is determined by the bound and
+(\ref{eq:xs-hj-final}) is a complete characterization of the solution.
+
+
+\subsection*{Discussion}
+
+1. Comparison.  The entropy bound gives us an exact loglinear relation
+between the return and the pricing kernel.
+The HJ bound gives us an exact linear relation.
+They're clearly not the same if we have more than 2 states.
+
+2. Lognormal case.
+Suppose $\log m \sim \mathcal{N}(\kappa_1,\kappa_2)$.
+Then the return that hits the entropy bound is
+$\log r = - \log m \sim \mathcal{N}(-\kappa_1,\kappa_2)$.
+%The return that hits the HJ bound is
+[Should be able to show that the return that maxes the Sharpe
+ratio is approximately the same for small time intervals:
+think of $\kappa_1$ and $\kappa_2$ as being $o(dt)$.
+But they're not exactly the same.]
+
+3. Examples.  For a multiperiod investment, you want to
+maximize the mean log return.
+Then there are probably examples in the literature that generate higher
+Sharpe ratios but do not contribute to mean log returns.
+In this sense, the Sharpe ratio is misleading.
+Does that sound right?  Do you know any good examples?  I'm guessing
+something beyond the lognormal case would be helpful.
+
+%There are some examples if you Google
+%``Sharpe ratio and growth optimal portfolio''.
+
+
+
+\end{document}

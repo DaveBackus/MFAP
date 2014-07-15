@@ -1,0 +1,497 @@
+\documentclass[11pt]{article}
+
+\oddsidemargin=0.25truein \evensidemargin=0.25truein
+\topmargin=-0.5truein \textwidth=6.0truein \textheight=8.75truein
+
+%\RequirePackage{graphicx}
+\usepackage{comment}
+\usepackage[dvipdfm]{hyperref}
+\urlstyle{rm}   % change fonts for url's (from Chad Jones)
+\hypersetup{
+    colorlinks=true,        % kills boxes
+%    allcolors=blue,
+    pdfsubject={ECON-UB233, Macroeconomic foundations for asset pricing},
+    pdfauthor={Dave Backus @ NYU},
+    pdfstartview={FitH},
+    pdfpagemode={UseNone},
+%    pdfnewwindow=true,      % links in new window
+%    linkcolor=blue,         % color of internal links
+%    citecolor=blue,         % color of links to bibliography
+%    filecolor=blue,         % color of file links
+%    urlcolor=blue           % color of external links
+% see:  http://www.tug.org/applications/hyperref/manual.html
+}
+
+\usepackage{verbatim}
+%\usepackage{booktabs}
+
+\renewcommand{\thefootnote}{\fnsymbol{footnote}}
+\newcommand{\var}{\mbox{\it Var\/}}
+\newcommand{\rp}{\mbox{\it rp\/}}
+\newcommand{\cbar}{\bar{c}}
+
+% document starts here
+\begin{document}
+\parskip=\bigskipamount
+\parindent=0.0in
+\thispagestyle{empty}
+{\large ECON-UB 233 \hfill Dave Backus @ NYU}
+
+\bigskip\bigskip
+\centerline{\Large \bf Risk \& Risk Aversion}
+\centerline{(Started: January 18, 2012; Revised: \today)}
+
+\bigskip
+Risk and risk aversion are fundamental building blocks
+for thinking about how economic risk is priced.
+We say people are {\it risk averse\/} if they
+prefer a sure thing to a risky outcome with the same mean.
+The question is what form this risk aversion takes.
+We'll see that the entire distribution matters.
+If we think about this in terms of moments,
+it's not just the variance that's relevant,
+but skewness and kurtosis, too.
+
+A quick review follows.
+We start off abstractly,
+then add more detail as we go.
+Some of the math is unnecessary,
+but I thought looking at the issue from several different
+perspectives would give us deeper insight.
+We end up with what will become our workhorse:
+expected utility with a power utility function.
+
+
+\subsection*{Risk}
+
+The risk we care about is the risk of outcomes,
+which we'll describe with our basic setup for random variables:
+states $z$ drawn from a set $\mathcal{Z}$ and probabilities $p(z)$.
+Suppose the outcome we care about is a random variable $c(z)$,
+which assigns an outcome ``consumption in state $z$''
+to every state $z$.
+We say the outcome is riskless or riskfree if $c(z)$ is
+the same for all $z$.
+Otherwise, it's risky.
+What kinds of risk are we concerned with?
+That depends on our preferences, which we turn to next.
+
+
+\subsection*{Utility functions and certainty equivalents}
+
+{\it Utility functions\/} are mathematical devices that we use
+to describe the preferences of an ``economic agent,''
+a hypothetical individual who follows whatever rules we lay down.
+The function tells us the amount of utility (``happiness'')
+the agent gets from any combination of consumption quantities.
+For example, the function $U(a,b)$ might express preferences
+over quantities of apples and bananas.
+We assume without fail that more is always better:
+increasing the quantities $a$ or $b$ increases utility $U$.
+Other properties of $U$ it might indicate
+whether the agent prefers apples or bananas,
+and how many of one it takes to compensate for the loss of the other.
+
+We use the same tool to describe preferences
+over risky consumption.
+Let us say that the set of possible states is finite:
+$ \mathcal{Z} = \{ 1, 2, \ldots, Z \}$.
+Nothing important depends on this, but it makes the notation simpler.
+The vector of possible consumption outcomes is therefore
+$[c(1), c(2), \ldots, c(Z)]$.
+Utility over these outcomes might be written
+$U [c(1), c(2), \ldots, c(Z)]$.
+Again we would say that $U$ is increasing in each of its arguments
+(more is better).
+Depending on other properties of $U$,
+the agent might prefer to invest different amounts in
+risky securities or take jobs with more or less risky income outcomes ---
+any decision that involves risk.
+We've done this at a high level of abstraction,
+but it's helpful nonetheless to give labels to things,
+even if we're somewhat vague at this point about what they mean.
+
+[Draw indifference curve for 2-state case.]
+
+One way to assess the agent's attitude toward risk
+is to look at the utility of a given
+vector of consumption outcomes
+with that of a constant outcome.
+The {\it certainty equivalent\/} $\mu$
+is the value of constant consumption
+that generates exactly the same utility:
+\begin{eqnarray}
+    U [c(1), c(2), \ldots, c(Z)]
+            &=& U (\mu, \mu, \ldots, \mu ) .
+    \label{eq:certequiv-def}
+\end{eqnarray}
+The idea is to think about this as an equation that (implicitly) determines $\mu$.
+If we knew the function $U$, we could presumably do the calculation;
+we'll do exactly that later on once we've been more explicit about $U$.
+In a sense, $\mu$ converts the utility of the risky outcome
+into handy consumption units.
+Note, too, that if consumption is constant, then the certainty
+equivalent equals that same constant.
+
+[Back to 2-state case.
+Show 45-degree line and certainty equivalent.]
+
+Even at this level of generality, we can talk about risk aversion.
+Consider these two objects related to a risky consumption
+outcome $\{ c(z)\}$:
+%
+\begin{itemize}
+\item The certainty equivalent $\mu$.
+
+\item The mean consumption outcome.  The mean is
+\begin{eqnarray*}
+    \cbar &=& \sum_z p(z) c(z) \;\;=\;\; E(c) .
+\end{eqnarray*}
+\end{itemize}
+%
+Comparing these two objects tells us how much we dislike
+the risky outcome.
+If $\mu = \cbar$,
+then we don't care about risk at all.
+Why?
+Because risky consumption gives us the same amount
+of utility as constant consumption equal to $\cbar$.
+Evidently risk doesn't affect our utility in this case.
+More generally, we say the agent is risk averse if
+the certainty equivalent of the risky outcome
+is less than the mean:   $\mu < \cbar$.
+The difference between them measures how much we dislike the risky outcomes.
+A useful measure of this dislike is the ``risk penalty''
+\begin{eqnarray}
+    \rp &=& \log (\cbar/\mu)  .
+    \label{eq:rp-def}
+\end{eqnarray}
+It tells us how much of a consumption penalty we'd be willing to accept
+relative to the mean to have riskless consumption.
+%It combines the amount of risk and how much we dislike it.
+The log form is arbitrary, but will be convenient later on.
+
+Here's an example.
+Let's say there are two states with probabilities
+$p(1) = p(2) = 1/2$.
+Suppose $c(1) = 2$ and $c(2) = 8$.
+The $\cbar = 5$.
+What is the certainty equivalent $\mu$?
+You need to know your preferences to do this,
+but let's it's 4:  you're willing to forgo one
+relative to the mean to eliminate the risk.
+The risk penalty is therefore
+$ \rp = \log (\cbar/\mu) = \log(5/4) = 0.2231$.
+
+
+\subsection*{Concave and convex functions}
+
+Here's some terminology we'll use shortly --- it comes up a lot
+in economics and finance.
+We say a function $f(x)$ is {\it concave\/}
+if for any two points $x_1$ and $x_2$,
+the function of a weighted average is less than the
+weighted average of the function:
+\begin{eqnarray*}
+    f[ w x_1 + (1-w) x_2] &\leq&  w f(x_1) + (1-w) f(x_2)
+\end{eqnarray*}
+for any number $w$ between zero and one.
+If $f$ is differentiable, that means $f''(x) < 0$.
+We say $f(x)$ is  {\it convex\/}
+if the inequality goes the other way.
+Equivalently, $f$ is convex if $-f$ is concave.
+Sometimes people use strong inequalities and distinguish
+between strict and weak concavity/convexity.
+
+{\it Examples.\/}
+Which of the following are concave?  Convex?
+\begin{eqnarray*}
+    (a) \;\; f(x) &=& x - x^2 \\
+    (b) \;\; f(x) &=& \log x  \\
+    (c) \;\; f(x) &=& e^x \\
+    (d) \;\; f(x) &=& x^{1-\alpha}/(1-\alpha) \\
+    (e) \;\; f(x) &=& \max \{ 0, x-b \} .
+\end{eqnarray*}
+Think about these, maybe draw them to see what they look like.
+The last one you might recognize as the payoff from
+a call option on $x$ with strike price $b$.
+
+
+Suppose, now, that $x$ is a random variable and $f(x)$ is a function
+of it.
+{\it Jensen's inequality\/} says that if $f$ is concave, then
+\begin{eqnarray*}
+    E f(x) &\leq& f [E(x)] ,
+\end{eqnarray*}
+with equality if $x$ is constant.
+%In the two-state case, the proof follows directly
+%from the definition of concavity.
+The difference between the left and right sides reflects
+the impact of risk, so you can see that this might be
+an essential tool in quantifying risk.
+If $f$ is convex, the inequality goes the other way.
+
+{\it Example\/}.
+Suppose $x$ is normal with mean $\kappa_1$ and variance $\kappa_2$.
+Then
+\begin{eqnarray*}
+    E \left( e^x \right) &=&  e^{\kappa_1 + \kappa_2/2}
+            \;\;\geq\;\; e^{\kappa_1},
+\end{eqnarray*}
+with equality if $\kappa_2 = 0$ ($x$ is constant at $\mu$).
+[You should ask yourself:  what does this have to do with
+Jensen's inequality?]
+
+
+\subsection*{Expected utility}
+
+Most work in economics and finance uses expected utility,
+a specific form of the function $U$ that we'll define shortly.
+We'll be no different.
+But I think our long buildup is useful because it hints
+that other approaches to risk are possible.
+In fact, it's an active topic of research,
+both in economics and psychology.
+
+Expected utility gives $U$ the additive form
+\begin{eqnarray}
+    U [c(1), c(2), \ldots, c(Z)]
+            &=& \sum_z p(z) u[c(z)]  \;\;=\;\;  E [u(c)] .
+\end{eqnarray}
+for some state-utility function $u$.
+This puts a lot of structure on preferences,
+but structure is good if it's sensible,
+it gives us more precise predictions.
+
+
+Probabilities here are (in theory) subjective:
+they're positive numbers $p(z)$ that sum to one that reflect
+the agent's preferences.
+We go one step further and make the assumption
+of {\it rational expectations\/}:
+$p(z)$ is the true probability distribution over states $z$.
+There's been no end of debate about this,
+but it's incredibly useful when we implement
+expected utility and compare its predictions with evidence.
+
+
+The action in expected utility is in the function $u$.
+It controls the certainty equivalent, the solution to
+\begin{eqnarray*}
+    \sum_z p(z) u[c(z)]
+        &=&  \sum_z p(z) u(\mu)  \;\;=\;\; u(\mu) .
+\end{eqnarray*}
+More on this shortly.
+Clearly $u$ must be increasing (more is better):
+that is, $u'(c) > 0$.
+That means we can solve for the certainty equivalent:
+\begin{eqnarray*}
+    \mu &=& u^{-1} \left( \sum_z p(z) u[c(z)] \right)
+        \;\;=\;\; u^{-1} \left[ E u(c) \right] .
+\end{eqnarray*}
+The expression $u^{-1}$ means the inverse function of $u$,
+so that $u^{-1} [u(x)] = x $.
+This is a little abstract at this point, but we'll put it to work
+in the next section.
+
+
+Risk aversion is more complicated.
+We'll look at it a couple different ways.
+Both tell us that $u$ is concave,
+which here means  $u''(c) < 0$.
+The first is to look at the 2-state case.
+Suppose the two states occur with probability one-half each
+and consumption outcomes $c(1) < c(2)$.
+Mean consumption is therefore $ \cbar = (1/2)c(1) + (1/2) c(2)$.
+Expected utility is
+\begin{eqnarray*}
+    E [u(c)] &=&  (1/2) u[c(1)] + (1/2) u[c(2)] .
+\end{eqnarray*}
+When is this less than $u(\cbar)$?
+When the function $u$ is concave.
+so we have $E[u(c)] < u(\cbar)$ (risk aversion) if $u'' < 0$.
+And if we take $u^{-1}$ of both sides, we have
+$\mu < \cbar$.
+
+[As usual, it's easier if you draw a picture.
+Plot $u(c)$ v $c$.
+Show expected utility and certainty equivalent.]
+
+Another approach is to do a Taylor series expansion,
+a trick devised by Paul Samuelson.
+Recall that the Taylor series expansion (if it exists) of a
+function $f$ of a variable $x$ around the point $x^*$ is
+\begin{eqnarray*}
+    f(x) &=& f(x^*) + f'(x^*) (x-x^*) + f''(x^*) (x-x^*)^2/2 +
+        f'''(x^*) (x-x^*)^3/3! + \cdots .
+\end{eqnarray*}
+The Taylor series expansion of $u$ around mean consumption $\cbar$
+is
+\begin{eqnarray*}
+    u(c) &=& u(\cbar) + u'(\cbar) (c-\cbar)  + u''(\cbar) (c-\cbar)^2/2
+        + u'''(\cbar) (c-\cbar)^3/3! + \cdots .
+\end{eqnarray*}
+Expected utility is therefore
+\begin{eqnarray*}
+  E u(c) &=& u(\cbar) + u''(\cbar) E (c-\cbar)^2/2 +
+        + u'''(\cbar) E (c-\cbar)^3/3! + \cdots \nonumber \\
+        &=& u(\cbar) + u''(\cbar) \mu_2/2
+            + u'''(\cbar) \mu_3 /3! + u''''(\cbar) \mu_4 /4! + \cdots ,
+        \label{eq:eu-samuelson}
+\end{eqnarray*}
+where $\mu_j$ is the $j$th central moment.
+We'll refer to this as the Samuelson expansion.
+Note that the linear term disappears.
+It's sometimes said that expected utility agents
+don't care about small risks, because if the risks are small enough
+the other terms go to zero and $u(c) \approx u(\cbar)$.
+Note too that increasing the variance reduces
+utility since $u'' < 0$,
+so variance is evidently a disliked component of risk.
+What about skewness or kurtosis, captured here by the third
+and fourth central moments, $\mu_3$ and $\mu_4$?
+The answer depends, apparently,
+on the third and fourth derivatives of $u$,
+whatever those might be.
+
+
+\subsection*{Power utility}
+
+Since we have a practical applied interest in this subject,
+we'd like to have a specific function we can put to work.
+That function is the power function;
+applied to utility we would write
+\begin{eqnarray}
+    u(c) &=& c^{1-\alpha}/(1-\alpha)
+\end{eqnarray}
+for some parameter $\alpha > 0$.
+The parameter $\alpha$ controls sensitivity to risks of all kinds
+and is often referred to (for reasons we won't go into)
+as the {\it coefficient of relative risk aversion\/}.
+Larger values of $\alpha$ are associated with stronger aversion to risk.
+
+What about the derivatives?
+The first two are
+\begin{eqnarray*}
+    u'(c)  &=& c^{-\alpha} \;\;>\;\; 0 \\
+    u''(c) &=& -\alpha c^{-\alpha-1} \;\;<\;\; 0 ,
+\end{eqnarray*}
+which have the signs we want.
+The third and fourth derivatives are
+\begin{eqnarray*}
+    u'''(c)  &=& \alpha (\alpha+1) c^{-\alpha-2} \;\;>\;\; 0 \\
+    u''''(c) &=& - \alpha (\alpha+1) (\alpha+2) c^{-\alpha-2} \;\;<\;\; 0 .
+\end{eqnarray*}
+The Samuelson expansion (\ref{eq:eu-samuelson}) tells us then that
+power expected utility agents like positive skewness
+and dislike positive kurtosis.
+
+With this functional form,
+the certainty equivalent is
+\begin{eqnarray}
+    \mu &=& \left( \sum_z p(z) c(z)^{1-\alpha} \right)^{1/(1-\alpha)}
+        \;\;=\;\; \left[ E (c^{1-\alpha}) \right]^{1/(1-\alpha)} .
+    \label{eq:certainty-equivalent-power}
+\end{eqnarray}
+[If that's not clear, go back to the previous versions.]
+It's a little ugly, but at least we have a formula we can use ---
+and we'll do that right now.
+
+
+One question we might ask ourselves is what values of $\alpha$ are reasonable.
+That's a tough question,
+but a useful starting point is to consider an example and apply introspection.
+Suppose you are given two choices for your career income, with the same
+income every year:
+\begin{itemize}
+\item Choice 1:  probability one-half each of an income (= consumption)
+of 100k a year or 200k a year.
+\item Choice 2:  a sure income (= consumption) of $\cbar$ (your certainty equivalent).
+\end{itemize}
+The question for you (here's where introspection comes in)
+is What value of $\mu$ generates the same utility as Choice 1?
+Given an answer, we can reverse engineer your risk aversion
+parameter $\alpha$.
+
+
+Here's a Matlab script that does the calculation:
+\begin{verbatim}
+% inputs
+c1 = 100;
+c2 = 200;
+cbar = 125        % introspective estimate of your certainty equivalent
+% guess alpha and see how close mu comes to cbar
+alpha = 2         % comment: enter number of your choice
+mu = (0.5*c1^(1-alpha)+0.5*c2^(1-alpha))^(1/(1-alpha))
+\end{verbatim}
+%You vary $\alpha$ until $\mu = \cbar$.
+If your certainty equivalent is $\cbar = 125$, then
+your implied value of $\alpha$ is about 3.25.
+You can figure this out by trying different values of $\alpha$
+until you find one that gives you the same certainty equivalent:
+$ \mu = \cbar$.
+Or you could do this for a bunch of values of $\alpha$ at the same time
+(think of $\alpha$ as a grid)
+using Matlab's vector capabilities.
+Or you could use a numerical equation-solver,
+which we'll do later in the course.
+
+
+\subsection*{Cumulant expansion of certainty equivalents}
+
+Here's another expansion,
+this one expressing the risk penalty in terms of the
+cumulants of $\log c$.
+Let $ x = \log c$ have cgf $k(s) = \log E (e^{sx}) $.
+Note that $\cbar = E(c) = E (e^x) = \exp[k(1)]$.
+The certainty equivalent (\ref{eq:certainty-equivalent-power})
+follows from
+\begin{eqnarray*}
+    E (c^{1-\alpha}) &=& E e^{(1-\alpha) x} = \exp[k(1-\alpha)] \\
+    \mu  &=& [E (c^{1-\alpha})]^{1/(1-\alpha)}
+                \;\;=\;\; \exp[(1-\alpha)^{-1} k(1-\alpha)] .
+\end{eqnarray*}
+The risk penalty (\ref{eq:rp-def}) is therefore
+\begin{eqnarray*}
+    \rp &=& k(1) - (1-\alpha)^{-1} k(1-\alpha) \\
+        &=& [1-(1-\alpha)] \kappa_2/2 + [1- (1-\alpha)^2] \kappa_3/3!
+            + [1- (1-\alpha)^3] \kappa_4/4! + \cdots ,
+\end{eqnarray*}
+where $\kappa_j$ is the $j$th cumulant of $x = \log c$.
+The one in each coefficient is simply the impact of the cumulant on the mean:
+increasing any cumulant of $\log c$ raises the mean of $c$.
+Beyond that, the magnitude of the impact of a cumulant
+on the risk penalty depends on the risk aversion
+parameter $\alpha$.
+The coefficient of the variance ($\kappa_2$) is simply $\alpha$.
+Higher skewness ($\kappa_3$) reduces the risk penalty if $\alpha > 2$.
+And so on.
+
+
+\subsection*{Bottom line}
+
+Expected utility depends, in general,
+on the complete distribution of outcomes,
+including its moments and cumulants.
+The power utility version is particularly useful,
+since risk aversion is captured by a single parameter.
+
+
+\vfill \centerline{\it \copyright \ \number\year \
+NYU Stern School of Business}
+
+
+\end{document}
+
+NOTES
+********************************
+Samuelson reference
+
+Samuelson REStud 1970
+http://www.jstor.org/stable/2296483
+
+Related
+http://www.jstor.org/pss/1827501
+http://www.jstor.org/pss/2118079
+http://www.rhsmith.umd.edu/faculty/gskoulak/Taylor_Approximation_Quality_CRRA.pdf
+http://finance.sauder.ubc.ca/~garlappi/Papers/Taylor_GS_2009_08_28.pdf

@@ -1,0 +1,540 @@
+\documentclass[11pt]{article}
+
+\oddsidemargin=0.25truein \evensidemargin=0.25truein
+\topmargin=-0.5truein \textwidth=6.0truein \textheight=8.75truein
+
+%\RequirePackage{graphicx}
+\usepackage{comment}
+\usepackage[dvipdfm]{hyperref}
+\urlstyle{rm}   % change fonts for url's (from Chad Jones)
+\hypersetup{
+    colorlinks=true,        % kills boxes
+    allcolors=blue,
+    pdfsubject={ECON-UB233, Macroeconomic foundations for asset pricing},
+    pdfauthor={Dave Backus @ NYU},
+    pdfstartview={FitH},
+    pdfpagemode={UseNone},
+%    pdfnewwindow=true,      % links in new window
+%    linkcolor=blue,         % color of internal links
+%    citecolor=blue,         % color of links to bibliography
+%    filecolor=blue,         % color of file links
+%    urlcolor=blue           % color of external links
+% see:  http://www.tug.org/applications/hyperref/manual.html
+}
+
+\usepackage{verbatim}
+%\usepackage{booktabs}
+
+\renewcommand{\thefootnote}{\fnsymbol{footnote}}
+\newcommand{\var}{\mbox{\it Var\/}}
+\newcommand{\rp}{\mbox{\it rp\/}}
+\newcommand{\cbar}{\bar{c}}
+
+% document starts here
+\begin{document}
+\parskip=\bigskipamount
+\parindent=0.0in
+\thispagestyle{empty}
+{\large ECON-UB 233 \hfill Dave Backus @ NYU}
+
+\bigskip\bigskip
+\centerline{\Large \bf Consumption, Saving, \& Portfolio Choice}
+\centerline{(Started: January 18, 2012; Revised: \today)}
+
+\bigskip
+Another building block for thinking about business cycles
+and asset returns is what we'll call the consumer's problem:
+how an individual might decide between current consumption
+and saving for future consumption,
+and how that saving is allocated across assets.
+We'll see how this works in a two-period setting,
+which captures the essential ideas in a relatively simple way.
+
+This will seem obscure the first time you see it,
+but fundamental result is the equation
+\begin{eqnarray*}
+    E (mr) &=& 1 .
+\end{eqnarray*}
+Variation on this equation account for
+an embarrassingly large part of macroeconomics and finance.
+
+
+\subsection*{Kuhn-Tucker conditions}
+
+The KT conditions are solution method for a common class of optimization problems.
+In the standard math treatment, optimization means minimization.
+Economists prefer to maximize, but the ideas are interchangeable:
+maximizing $f(x)$ is the same as minimizing $-f(x)$.
+
+The canonical constrained optimization problem
+is to choose a variable $x$ to maximize a function
+$f(x)$ subject to a constraint $g(x) \geq 0$.
+Formally, we might write it as
+\begin{eqnarray*}
+    \max_x && f(x) \\
+    \mbox{subject to} && g(x) \geq 0 .
+\end{eqnarray*}
+We find the solution using the so-called Lagrangean function
+\begin{eqnarray*}
+    \mathcal{L}(x,\lambda) &=& f(x) + \lambda g(x) ,
+\end{eqnarray*}
+where $\lambda$ is called the {\it Lagrange multiplier\/}.
+The necessary conditions for a maximum are
+\begin{eqnarray*}
+   \partial \mathcal{L}/\partial x \;\;=\;\; f'(x) + \lambda g'(x) &=&  0 \\
+   \lambda g(x) &=& 0 ,
+%    g(x) &=& 0 \mbox{ if } \lambda > 0 .
+\end{eqnarray*}
+with  $\lambda \geq 0$ and $g(x) \geq 0$.
+These are necessary conditions,
+but with the right structure --- which includes any problem in this course ---
+they are also sufficient.
+What we've done here is add an extra variable $\lambda$
+and an extra equation to the usual unconstrained maximization problem.
+The second line says that if the multiplier is positive,
+the constraint binds (holds with equality):  $g(x) = 0$.
+But if $g(x) > 0$, the multiplier must be zero:  $\lambda = 0$.
+{\it If we're sure the constraint binds, we can replace the second equation
+with $ \partial \mathcal{L}/\partial \lambda = g(x) = 0$.
+That will be true for every example we study in this class.\/}
+
+The same idea extends to problems where $x$ and $g$
+are vectors.
+If $x$ is a vector, we differentiate $\mathcal{L}$ with
+respect to each of them.
+And if $g$ is a vector, we make $\lambda$ a vector of the same
+dimension.
+You'll see how this works when we put it to work.
+
+
+{\it Example 1.\/}
+I stole this one from Sargent, not sure where he got it.
+Let $f(x) =- (x+1)^2/2$  and $g(x) = x \geq 0$.
+The Lagrangean is
+\begin{eqnarray*}
+    \mathcal{L} &=& - (x+1)^2/2 + \lambda x .
+\end{eqnarray*}
+The necessary conditions are
+\begin{eqnarray*}
+    -(x+1) + \lambda &=& 0 \\
+    \lambda x &=& 0.
+\end{eqnarray*}
+The first equation implies $\lambda = x + 1$.
+If we substitute this into the second, we get $x(x+1) = 0$,
+which has two solutions.
+One is $x=-1$, which violates the constraint.
+The other is $x=0$, which implies $\lambda = 1$.
+
+
+{\it Example 2.\/}
+Consider an agent with income $y$ who is deciding
+how many apples $a$ and bananas $b$ to consume.
+Her utility function is
+\begin{eqnarray*}
+    U(a,b) &=& \beta \log a + (1-\beta) \log b .
+\end{eqnarray*}
+If prices of apples and bananas are $q_a$ and $q_b$,
+respectively, her budget constraint is
+\begin{eqnarray*}
+    q_a a + q_b b  &\leq& y  .
+\end{eqnarray*}
+The inequality is there to give this the same form as the
+generic problem, but you can guess that it binds:
+there's no reason here not to spend all your money.
+
+We find the solution using the same methods.
+The Lagrangean is
+\begin{eqnarray*}
+    \mathcal{L} &=& \beta \log a + (1-\beta) \log b
+            + \lambda \left[ y - (q_a a + q_b b) \right] .
+\end{eqnarray*}
+The necessary conditions are
+\begin{eqnarray*}
+        \beta / a &=& \lambda q_a \\
+        (1-\beta) / b &=& \lambda q_b \\
+   \lambda \left[ y - (q_a a + q_b b) \right] &=& 0 .
+\end{eqnarray*}
+The solution includes $\lambda = 1/y $,
+$ a = \beta y/q_a $, and $b = (1-\beta) y /q_b $.
+
+
+\subsection*{Consumption and saving}
+
+We approach consumption and saving the same way we approached
+consumption of apples and bananas.
+The goods here are consumption now ($c_0$)
+and consumption later ($c_1$).
+The utility function has a special form we use for dynamic
+problems,
+\begin{eqnarray}
+    U(c_0,c_1) &=& u(c_0) + \beta u(c_1) ,
+    \label{eq:utility-2period}
+\end{eqnarray}
+where $\beta$ is the discount factor (a number between zero and one)
+and $u$ is some convenient function.
+We'll say that $u$ is increasing ($u' > 0$) and concave ($u'' < 0$).
+Power utility is a common choice:
+$u(c) = c^{1-\alpha}/(1-\alpha)$ with $\alpha > 0$.
+Log utility $u(c) = \log c$ corresponds to $\alpha = 1$.
+
+We're going to think about the problem of choosing
+$c_0$ and $c_1$ now, at date 0.
+At date 1, we simply execute our plan.
+If incomes in the two periods are $(y_0,y_1)$,
+the budget constraint might be expressed
+\begin{eqnarray}
+    c_0 + q c_1 &\leq& y_0 + q y_1  \;\;=\;\; Y .
+    \label{eq:budget-2period}
+\end{eqnarray}
+Here $q$ is the date-0 price of one unit of date-1 consumption in ``$c_0$ units.''
+It may look more familiar if we write $q = 1/(1+r)$, so that
+$q$ discounts date-1 quantities are the appropriate rate.
+We'll write $q = 1/r$ instead, simply because we're lazy:
+it's a lot easier to write $r$ than $1+r$, especially if you have
+to do it many times.
+We refer to $r$ defined this way as the gross interest rate.
+
+% ?? [Should we add $q_0$ here?]
+
+Now what, you might ask, does this have to do with saving?
+The choice of first-period consumption also dictates a choice for saving.
+Since $q = 1/r$, we can rewrite the budget constraint as
+\begin{eqnarray*}
+    c_0 + (1/r) c_1 &\leq& y_0 + (1/r) y_1 .
+\end{eqnarray*}
+If we define saving as $s = y_0 - c_0$,
+this becomes
+\begin{eqnarray*}
+    c_1  &\leq& r s +  y_1 .
+\end{eqnarray*}
+That is:  tomorrow's consumption is tomorrow's income
+plus today's saving with interest.
+We'll ignore saving from now on, but it's there behind the scenes.
+
+We now have the pieces of the consumption-saving problem:
+the utility function (\ref{eq:utility-2period})
+and the budget constraint (\ref{eq:budget-2period}).
+We attack it with the usual tools.
+The necessary conditions for utility maximization are
+\begin{eqnarray*}
+        u'(c_0)  &=& \lambda  \\
+       \beta u'(c_1)  &=& \lambda q
+\end{eqnarray*}
+plus the budget constraint, which we assume binds (it does).
+
+One implication of these conditions is a relation
+between consumption and the interest rate.
+If we take the ratio of the two necessary conditions,
+we have
+\begin{eqnarray*}
+       \beta u'(c_1)/u'(c_0)  &=& q \;\; [= 1/r].
+\end{eqnarray*}
+This says that the marginal rate of substitution
+between current and future consumption equals
+the relative price.
+If we denote the mrs by $m$, we have
+\begin{eqnarray}
+       \beta u'(c_1)/u'(c_0)  r  &=& m r \;\;=\;\;  1 .
+       \label{eq:euler-deterministic}
+\end{eqnarray}
+We'll see variants of this equation throughout the course.
+
+[Draw budget line and indifference curves, show tangency.
+Budget line is $c_0 + c_1/r = Y$, so slope in $(c_0,c_1)$ space
+is $-r$.]
+
+So what do we have here?  We have a connection between
+preferences, consumption, and the interest rate.
+If we discount the future more ($\beta$ is smaller),
+then for a given interest rate we'll choose
+more consumption now and less later.
+This is implied because $u'$ is decreasing (recall $u''<0$).
+Makes sense:  if we put less weight on the future,
+we'll allocate less of our income to future consumption.
+The interest rate works the same way.
+If we raise $r$, which makes future consumption cheaper,
+we'll do more of it.
+With power utility, we can be even more specific:
+$u'(c) = c^{-\alpha}$ and
+\begin{eqnarray*}
+       \beta (c_1/c_0)^{-\alpha}  r  &=& 1 .
+\end{eqnarray*}
+Here a high interest rate is associated with
+high consumption growth.
+
+This connection between consumption and the interest rate
+will hold in all of our models.
+Here the interest rate is given and we choose consumption.
+In market settings, we often reverse the causality
+and say that the high interest rate is a consequence
+of high future consumption growth.
+That's true in the data, too:  interest rates are high
+when the economy (including consumption) is growing quickly
+and low when it's not.
+
+
+
+Let's return to our problem and solve it explicitly
+for the case of log utility.
+We solve the necessary conditions for consumption:
+\begin{eqnarray*}
+        c_0  &=& 1/\lambda  \\
+        c_1  &=& \beta/(\lambda q) .
+\end{eqnarray*}
+If we substitute into the budget constraint,
+we have
+\begin{eqnarray}
+    c_0 + q c_1 &=& \lambda^{-1}
+            \left(1 + \beta \right) \;\;=\;\; Y.
+\end{eqnarray}
+That gives us (see the necessary conditions)
+\begin{eqnarray*}
+        c_0  &=& [1/(1+\beta)] Y \\
+        c_1  &=& [\beta/(1+\beta)] Y / q  .
+\end{eqnarray*}
+This will look familiar from the example in the previous section.
+
+You might try the more general power utility case yourself.
+
+
+\subsection*{Consumption and portfolio choice 1:  Arrow securities}
+
+We can do the same thing in risky settings.
+Continue our two-period environment,
+but let the state $z$ in the second period be random.
+We treat consumption in each of these states
+as separate decisions, which we choose in the usual way
+at date 0.
+
+[Draw event tree.]
+
+Our agent is now choosing current consumption $c_0$
+and future consumption $c_1(z)$ for each state $z$.
+Utility is
+\begin{eqnarray}
+    u(c_0) + \beta \sum_z p(z) u[c_1(z)]
+    &=&     u(c_0) + \beta E u(c_1) ,
+    \label{eq:utility-2period-stochastic}
+\end{eqnarray}
+where $p(z)$ is the probability that state $z$ occurs
+(rational expectations).
+The budget constraint becomes
+\begin{eqnarray}
+    c_0 + \sum_z q(z) c_1(z) &\leq& y_0 + \sum_z q(z) y_1(z) \;\;=\;\; Y ,
+    \label{eq:budget-2period-stochastic}
+\end{eqnarray}
+where $q(z)$ is today's price of one unit of date-1 consumption in state $z$.
+
+
+We refer to $q(z)$ as the {\it state price\/}:
+for $q(z)$ units of date-0 consumption today, you get one
+unit of date-1 consumption if state $z$ occurs --- and nothing otherwise.
+So it's the price now of one unit of consumption later if $z$ occurs.
+Another way to think about $q(z)$ is that it's the price of a risky asset.
+The return on this asset is $r(z) = 1/q(z)$.
+If you're familiar with linear algebra,
+you might guess that these so-called {\it Arrow securities\/}
+form a convenient basis for the state space.
+In words, this means that it's easy to see how you could
+use this collection of assets to construct any consumption outcome you want.
+
+
+The necessary conditions for utility maximization in this case are
+\begin{eqnarray*}
+    u'(c_0)  &=& \lambda  \\
+       \beta p(z) u'[c_1(z)]  &=& \lambda q(z) \;\; [= 1/r(z)],
+\end{eqnarray*}
+with one of the second equation for every value of $z$.
+The ratio --- plus the definition $ r(z) = 1/q(z)$ ---
+gives us
+\begin{eqnarray*}
+       \beta p(z) u'[c_1(z)] / u'(c_0) r(z)  &=& 1 .
+\end{eqnarray*}
+It's not all that useful here,
+because $r(z)$ for these assets is zero in all states but one,
+but if we sum over $z$ we get
+\begin{eqnarray*}
+     \sum_z  \beta p(z) u'[c_1(z)] / u'(c_0) r(z)  &=&
+     E \left( \beta u'(c_1) / u'(c_0) r \right)
+     \;\;=\;\; 1 ,
+     \label{eq:euler-stochastic}
+\end{eqnarray*}
+a stochastic version of (\ref{eq:euler-deterministic}).
+It's a somewhat strange object in this context,
+since $r(z)$ is zero in all states by one,
+but shows the underlying unity of what we're doing.
+
+
+\subsection*{Consumption and portfolio choice 2:  arbitrary assets}
+
+Here's a version with more explicit portfolio choice
+and an arbitrary set of assets.
+
+We need to be clear about what we mean by an asset.
+An asset here is a claim to a random dividend.
+Let us say, to be concrete, that asset $j$ pays $d^j(z)$ units
+of the consumption good at date 1 in state $z$.
+Different dividend streams constitute different assets.
+To complete the notation,
+let us say that asset $j$ sells at date 0
+for $q^j$ units of the date-0 consumption good
+and has gross return as date 1 of $r^j(z) = d^j(z)/q^j$.
+We reserve $j=1$ for the (one period) riskfree asset,
+which has constant dividend $d^1(z) = 1$ and price $q^1$.
+
+
+The portfolio choice problem here consists of the same preferences,
+equation (\ref{eq:utility-2period-stochastic}),
+and a suitably modified budget constraint.
+At date 0, the agent's income goes either to consumption
+or asset purchases:
+\begin{eqnarray*}
+    c_0 + \sum_j a^j q^j &=& y_0 ,
+\end{eqnarray*}
+where $a^j$ ($a$ for asset) is the number of units
+purchased of asset $j$.
+At date 1, the agent then consumes her income
+plus the payoffs from her asset positions:
+\begin{eqnarray*}
+    c_1(z)  &=& y_1(z) + \sum_j a^j d^j(z) .
+\end{eqnarray*}
+Note that once we choose asset positions $a^j$,
+consumption is determined.
+
+Our portfolio choice problem is then
+\begin{eqnarray}
+    \max_{\{ a^j \}} && u \left(y_0 - \sum_j a^j q^j \right)
+            + \beta E u \left( y_1(z) + \sum_j a^j d^j(z) \right) .
+\end{eqnarray}
+The first-order conditions are
+\begin{eqnarray}
+ u' \left(c_0\right) q^j &=& E \left[ \beta u'\left( c_1 \right) d^j \right] ,
+\end{eqnarray}
+with one such condition for each asset $j$.
+If we divide by the left side,
+we have
+\begin{eqnarray}
+ 1  &=& E \left[ \beta [u'\left( c_1 \right)/u' \left(c_0\right)] r^j \right] ,
+\end{eqnarray}
+our usual condition.
+
+
+\subsection*{Arbitrage}
+
+We skipped some of the technical details above,
+which is ok, that's part of our plan.
+But there's one that's worth a closer look:
+that not all asset prices $q^j$
+and dividends $d^j$ are allowed.
+We need to rule out combinations that allow
+investors to get something for nothing.
+Once we've ruled them out, we have the resulting
+combinations are {\it arbitrage free\/}.
+We touch on this now because it will show up later.
+
+First some notation.
+Let $q$ be a column vector of asset prices,
+with each element corresponding to a different asset.
+And let $D$ be a matrix whose $j$th column is the dividend
+vector $d^j$ for the $j$ asset, which each row corresponding
+to a specific state.
+If $J$ is the number of assets and $Z$ the number of states,
+then $D$ is $Z$ by $J$.
+
+An arbitrage is a set of portfolio quantities $a$ (one element for each asset)
+that generates positive dividends ($D a > 0$)
+at nonpositive cost ($q^\top a \leq 0$).
+The first condition means here that all the elements
+of $Da$ are greater than or equal to zero and at least one is strictly
+positive.
+We say $(q,D)$ are arbitrage free if
+any portfolio with positive dividends has positive cost:
+$q^\top a > 0$.
+
+{\it Examples.\/}
+Which of these price-dividend combinations are arbitrage free?
+\begin{eqnarray*}
+  (a) \;\;  q &=& \left[
+            \begin{array}{c}
+             1 \\ 2
+            \end{array}
+          \right], \;\;\;
+        D \;\;=\;\;
+            \left[
+            \begin{array}{cc}
+             1 & 0 \\ 0 & 1
+            \end{array}
+          \right]    \hspace*{0.5in}  \\
+  (b) \;\;  q &=& \left[
+            \begin{array}{c}
+             1 \\ 1
+            \end{array}
+          \right], \;\;\;
+        D \;\;=\;\;
+            \left[
+            \begin{array}{cc}
+             1 & 1 \\ 1 & 2
+            \end{array}
+          \right]      \\
+  (c) \;\;    q &=& \left[
+            \begin{array}{c}
+             1 \\ 2
+            \end{array}
+          \right], \;\;\;
+        D \;\;=\;\;
+            \left[
+            \begin{array}{cc}
+             1 & 1 \\ 1 & 2
+            \end{array}
+          \right]      \\
+  (d) \;\;    q &=& \left[
+            \begin{array}{c}
+             3 \\ 6
+            \end{array}
+          \right], \;\;\;
+        D \;\;=\;\;
+            \left[
+            \begin{array}{cc}
+             1 & 1 \\ 1 & 2 \\ 1 & 3
+            \end{array}
+          \right]    .
+\end{eqnarray*}
+You should stare at this and think about what you see.
+In (a) we have Arrow securities:  each one pays one unit
+in one state.
+We see that state 2 is more expensive than state 1.
+In (b) you might notice that the second asset dominates the first:
+same price, but the second has greater dividends in state 2
+(and the same in state 1).
+This can't work.  If you shorted asset 1 and used the proceeds to invest
+in asset 2, you get something for nothing.
+More  formally, let $a^\top = (-1,1)$ and see what you get.
+In (c) we have the same dividends, but a higher price of asset 2,
+which kills off the arbitrage opportunity.
+In (d) we have fewer assets than states, but the same logic applies.
+You won't be able to find an arbitrage.
+
+If we allowed arbitrage opportunities in the portfolio choice
+problem, the optimal portfolio would be to go infinite in
+those positions.
+Markets generally don't let that happen:
+the prices adjust and the opportunities go away.
+
+
+\subsection*{Bottom line}
+
+This condition will show up all over:
+\begin{eqnarray*}
+    E \left[ \beta u'(c_1) / u'(c_0) r \right] &=&
+        E \left( m r \right) \;\;=\;\;  1
+\end{eqnarray*}
+for returns $r$ on all assets.
+Versions of this equation are the basis for
+much of modern macroeconomics and finance.
+
+\vfill \centerline{\it \copyright \ \number\year \
+NYU Stern School of Business}
+
+
+\end{document}
+

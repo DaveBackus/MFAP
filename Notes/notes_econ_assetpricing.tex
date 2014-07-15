@@ -1,0 +1,970 @@
+\documentclass[11pt]{article}
+
+\oddsidemargin=0.25truein \evensidemargin=0.25truein
+\topmargin=-0.5truein \textwidth=6.0truein \textheight=8.75truein
+
+\usepackage{comment}
+\usepackage{booktabs}
+\usepackage{hyperref}
+\urlstyle{rm}   % change fonts for url's (from Chad Jones)
+\hypersetup{
+    colorlinks=true,        % kills boxes
+    allcolors=blue,
+    pdfsubject={ECON-UB233, Macroeconomic foundations for asset pricing},
+    pdfauthor={Dave Backus @ NYU},
+    pdfstartview={FitH},
+    pdfpagemode={UseNone},
+%    pdfnewwindow=true,      % links in new window
+%    linkcolor=blue,         % color of internal links
+%    citecolor=blue,         % color of links to bibliography
+%    filecolor=blue,         % color of file links
+%    urlcolor=blue           % color of external links
+% see:  http://www.tug.org/applications/hyperref/manual.html
+}
+
+\usepackage{verbatim}
+%\usepackage{booktabs}
+\usepackage[small, compact]{titlesec}
+
+% list spacing
+\usepackage{enumitem}
+\setitemize{leftmargin=*, topsep=0pt}
+\setenumerate{leftmargin=*, topsep=0pt}
+
+\usepackage{needspace}
+% example:  \needspace{4\baselineskip} makes sure we have four lines available before pagebreak
+
+\renewcommand{\thefootnote}{\fnsymbol{footnote}}
+
+% document starts here
+\begin{document}
+\parskip=\bigskipamount
+\parindent=0.0in
+\thispagestyle{empty}
+{\large ECON-UB 233 \hfill Dave Backus @ NYU}
+
+\bigskip\bigskip
+\centerline{\Large \bf Approaches to Asset Pricing}
+\centerline{Revised: \today}
+
+
+*** work in digression:  change of measure and Girsanov formula ***
+\url{http://www.math.nyu.edu/faculty/goodman/teaching/StochCalc2012/notes/Week10.pdf}
+
+
+*** also mention CAPM 
+
+\bigskip
+Darrell Duffie notes that the 1970s were a ``golden age''
+for asset pricing theory,
+but suggests that the period since has been ``a mopping-up operation''
+(Duffie, {\it Dynamic Asset Pricing Theory\/}, preface).
+That takes some of the glamor out of the subject,
+but he's right, the basic theory has been worked out.
+The same is true of calculus, but that doesn't make it any less useful.
+Our goal here is to summarize the concepts and results,
+including the remarkable {\it no-arbitrage theorem\/} and
+the mysterious {\it risk-neutral probabilities\/}.
+
+One way to state the theorem is that there is an $m$ that makes
+$E(mr^j) = 1$ for every asset $j$.
+In finance, it's common to find a statistical $m$ that works reasonably well
+for the assets of interest.
+The source of this $m$ is left unresolved.
+In macroeconomics, it's common to link $m$ to the marginal rate of substitution
+of a representative agent.
+It's not a perfect theory, but it gives us some insight into asset returns,
+particularly the tendency for equity to pay higher returns, on average,
+than bonds.
+Why?
+Assets that pay off mostly in good states (states in which consumption is high)
+tend to have lower prices and (therefore) higher returns than those that pay off mostly in bad states.
+
+
+\section{Overview}
+
+The setting is our usual two-period event tree:
+there are two dates, 0 and 1,
+and at date 1 some state $z$ occurs with probability $p(z)$.
+A particular asset $j$ is a claim to a date-1 ``dividend'' $d^j(z$),
+a function of the state $z$ (a random variable, in other words).
+If the date-0 price of this asset is $q^j$,
+the gross return between dates 0 and 1 is $r^j(z) = d^j(z) / q^j$.
+
+[Draw the event tree, note where prices and dividends are paid.]
+
+In this context, we can summarize modern asset pricing theory.
+The idea is to derive prices of assets from state prices
+--- prices $Q(z)$ of Arrow securities.
+Why we can do this is a subtle issue that we'll address later,
+but for now note that if we know the dividends and state prices,
+the asset's price is the sum
+\begin{eqnarray}
+    q^j   &=& \sum_z Q(z) d^j(z) .
+    \label{eq:state-prices}
+\end{eqnarray}
+We'll refer to (\ref{eq:state-prices}) and its successors
+as the {\it pricing relation\/}.
+Once we know the state prices $Q(z)$,
+we use the pricing relation to compute $q^j$.
+When we do this, we say we ``price'' the asset.
+
+
+This is a good example of one of the clever tricks of modern finance:
+we decompose an asset into pieces that we value separately.
+Here the pieces are Arrow securities,
+which we might have mistakenly thought of as a purely theoretical concept.
+The theorem says we can always decompose an asset into its component Arrow securities
+and value the security as the sum of the values of its parts.
+In this respect, the basic theory of asset pricing is very simple.
+%Everything else is just decoration.
+%That's what Duffie had in mind when he called it a ``mopping up operation.''
+What the theorem doesn't tell us is what the state prices are or how
+we might compute them.
+
+We'll look at two other versions of the same equation ---
+same theory, just different notation.
+One is based on a {\it pricing kernel\/}
+(or {\it stochastic discount factor\/}) $m$,
+defined implicitly  by $ Q(z) = p(z) m(z) $.
+[That is:  $m(z) = Q(z)/p(z)$.]
+After substitution,
+equation (\ref{eq:state-prices}) becomes
+\begin{eqnarray}
+    q^j   &=& \sum_z p(z) m(z) d^j(z)  \;\;=\;\; E (m d^j) .
+    \label{eq:pricing-kernel}
+\end{eqnarray}
+Dividing by $q^j$ gives us the familiar $E(mr^j) = 1$.
+Here $m$ plays the same role the market plays in the CAPM:
+the return on an asset depends on the relation between the return and the pricing kernel.
+More on that shortly.
+
+Another version is based on so-called {\it risk-neutral probabilities\/} $p^*$,
+defined implicitly by $ Q(z) = p(z) m(z) = q^1 p^*(z) $,
+where $q^1 = \sum_z p(z) m(z) = E(m)$ is the price of a one-period riskfree bond.
+These objects,
+\begin{eqnarray*}
+    p^*(z) &=& p(z) m(z) /q^1 ,
+\end{eqnarray*}
+are positive if the $m$'s are, and they sum to one,
+so they are legitimate probabilities.
+The pricing relation (\ref{eq:pricing-kernel}) becomes
+\begin{eqnarray}
+    q^j   &=& q^1 \sum_z p^*(z) d^j(z)  \;\;=\;\; q^1 E^* (d^j) ,
+    \label{eq:risk-neutral-probs}
+\end{eqnarray}
+where $E^*$ means the expectation based on the $p^*$s.
+In (\ref{eq:pricing-kernel}), the pricing kernel performed two roles:
+discounting and risk adjustment.
+Here the same roles are divided between $q^1$ (discounting)
+and $p^*$ (risk adjustment).
+If it were up to me, I'd call them {\it risk-adjusted probabilities\/},
+but I haven't had much success selling that to others.
+
+
+The idea in each of these cases is to go from
+state prices (or pricing kernel or risk-neutral probabilities)
+to prices of specific assets.
+We say we ``price'' these assets.
+%The perspective is the reverse of the portfolio choice problem,
+%where the prices of assets are given and we choose consumption,
+%but the connection between the two is the same.
+
+
+\section{The no-arbitrage theorem}
+
+We start with the remarkable no-arbitrage theorem
+connecting arbitrage and state prices.
+Versions were developed by
+Steve Ross (``Return, risk, and arbitrage,'' 1977)
+and Michael Harrison and David Kreps (``Martingales and arbitrage,'' 1979)
+in the late 1970s.
+The focus on arbitrage wasn't completely new ---
+Fischer Black and Myron Scholes used similar methods to value options ---
+but it was a sharp break from the mean-variance approach to asset pricing
+that dominated finance at the time ---
+and that still plays a central role in textbooks.
+
+We won't prove the theorem, but we'll show how it works with some examples.
+The first step is to define arbitrage opportunities
+and what it means for an economy to be free of them.
+Suppose we have a finite number of assets and states.
+Let $q$ be a column vector of asset prices,
+with each element corresponding to a different asset.
+And let $D$ be a matrix whose $j$th column is the dividend
+vector $d^j$ for the $j$th asset,
+with each row corresponding to a specific state.
+If $J$ is the number of assets and $Z$ the number of states,
+then $D$ is $Z$ by $J$.
+The asset structure of an economy is thus summarized by $D$.
+
+A portfolio is a vector of quantities $a$,
+where element $a_j$ is the number of shares of asset $j$.
+An arbitrage is a portfolio that generates positive dividends
+at no cost.
+Mathematically, we might write positive dividends as
+\begin{eqnarray*}
+    \sum_j d^j(z) a_j &\geq& 0
+\end{eqnarray*}
+for all states $z$ and strictly positive for at least one state.
+And ``no cost'' might be generalized to
+\begin{eqnarray*}
+    \sum_j a_j q^j &\leq& 0  .
+\end{eqnarray*}
+%The first condition means here that all the elements
+%of $Da$ are greater than or equal to zero and at least one is strictly
+%positive.
+We say $(q,D)$ is {\it arbitrage free\/} if there are no portfolios $a$
+that allow arbitrage.
+
+Now what about state prices?
+We're looking for prices $Q(z)$ %, with one price for each state,
+such that the price of every asset equals the sum of the values
+of its state-specific dividends ---
+that is, equation (\ref{eq:state-prices}).
+In matrix terms
+\begin{eqnarray}
+    q &=&  D^\top Q,
+    \label{eq:state-prices-matrix}
+\end{eqnarray}
+which is equation (\ref{eq:state-prices}) rewritten in matrix form
+for all assets at once.
+
+Here's the result (draw a box around it, it's the central result in modern
+asset pricing):
+
+{\bf Theorem.\/}  {\it There exist positive state prices $Q(z)$
+consistent with (\ref{eq:state-prices})
+if and only if the economy is arbitrage free.\/}
+
+What's remarkable about this is that it's so general.
+Absence of arbitrage is ruled out in general equilibrium models,
+because it's inconsistent with equilibrium,
+specifically the combination of agent maximization and market clearing.
+But here we get state prices with a lot less structure than that.
+The theorem tells us, under the no-arbitrage condition,
+that we can always find state prices that value assets
+correctly, but doesn't tell us much more.
+Note, too, that the theorem goes both ways:
+if we value assets with some set of state prices,
+the result is free of arbitrage opportunities.
+
+We won't prove the theorem, but some examples should give you the idea.
+
+{\it Examples.\/}
+Which of these price-dividend combinations are arbitrage free?
+What are the state prices?
+\begin{eqnarray*}
+  (a) \;\;  q &=& \left[
+            \begin{array}{c}
+             1 \\ 2
+            \end{array}
+          \right], \;\;\;
+        D \;\;=\;\;
+            \left[
+            \begin{array}{cc}
+             1 & 0 \\ 0 & 1
+            \end{array}
+          \right]    \hspace*{0.5in}  \\
+  (b) \;\;  q &=& \left[
+            \begin{array}{c}
+             2 \\ 2
+            \end{array}
+          \right], \;\;\;
+        D \;\;=\;\;
+            \left[
+            \begin{array}{cc}
+             1 & 1 \\ 1 & 2
+            \end{array}
+          \right]      \\
+  (c) \;\;    q &=& \left[
+            \begin{array}{c}
+             2 \\ 3
+            \end{array}
+          \right], \;\;\;
+        D \;\;=\;\;
+            \left[
+            \begin{array}{cc}
+             1 & 1 \\ 1 & 2
+            \end{array}
+          \right]      \\
+  (d) \;\;    q &=& \left[
+            \begin{array}{c}
+             3 \\ 6
+            \end{array}
+          \right], \;\;\;
+        D \;\;=\;\;
+            \left[
+            \begin{array}{cc}
+             1 & 1 \\ 1 & 2 \\ 1 & 3
+            \end{array}
+          \right]    .
+\end{eqnarray*}
+You should stare at this and think about what you see.
+In (a) we have Arrow securities,
+so their prices are the state prices.
+In (b) you might notice that the second asset dominates the first:
+same price, but the second has greater dividends in state 2
+(and the same in state 1).
+This can't work.  If you shorted asset 1 and used the proceeds to invest
+in asset 2, you get something for nothing.
+More  formally, let $a^\top = (-1,1)$ and see what you get.
+What about the state prices?
+Since $D$ is square, we can solve (\ref{eq:state-prices-matrix})
+for the state prices.
+We get $q(z)^\top = (1, 0)$, so they're not strictly positive.
+In (c) we have the same dividends, but a higher price of asset 2,
+which kills off the arbitrage opportunity.
+
+In (d) we have fewer assets than states, but the same logic applies.
+You won't be able to find an arbitrage.
+But here, because you have fewer equations than unknowns,
+the choice of $Q$ isn't unique:
+there are lots of $Q$'s that price the assets the same way.
+That's a classic feature of models with more states and assets ---
+what we call {\it incomplete markets\/}.
+It's an illustration of how the theory is more general than our complete
+markets economies.
+
+%[Write out the equations.]
+
+
+\section{Pricing kernels and risk premiums}
+
+Here we shift from state prices to a pricing kernel
+and describe the theoretical foundation of risk premiums.
+We'll see that risk premiums are tied to the covariance of returns with the pricing kernel.
+This has some of the same flavor as the CAPM, but a different logical foundation.
+
+
+When we define the pricing kernel $m(z)$ from state prices by $Q(z) = p(z) m(z)$,
+we introduce probabilities into the pricing equation.
+That's helpful, because we often want to know about things like the mean
+return, which depends (obviously) on the probabilities of various outcomes.
+Consider the pricing of the one-period riskfree asset.
+As we've seen, the price is $q^1 = E(m)$ and the (gross) return is $r^1 = 1/E(m)$.
+
+Now that we have probabilities, we can define {\it risk premiums\/}.
+We define the risk premium on asset $j$ as its expected excess return
+over the one-period riskfree rate:
+$ E(r^j - r^1)$.
+It can be positive, negative, or zero, depending on the asset.
+
+Now consider the pricing of an arbitrary asset $j$ with equation (\ref{eq:pricing-kernel}).
+The mean return now depends on the relation between the dividend and the pricing kernel.
+If $m$ is constant, the price of the asset depends only on its expected dividend:
+\begin{eqnarray*}
+    q^j &=& E (m d^j) \;\;=\;\; m E(d^j) \;\;=\;\; q^1 E(d^j) .
+\end{eqnarray*}
+The return is therefore
+$r^j = d^j/q^j$ and the expected return $E(r^j) = E(d^j)/[q^1 E(d^j)] = r^1$.
+Since every asset has the same expected return, there are no risk premiums.
+Evidently variation in $m$ is central to having nonzero risk premiums.
+
+In general, the risk premium depends on the relation between
+the two random variables, $m$ and $d$:
+whether $E(md)$ is larger or smaller than $E(m) E(d)$.
+If it's greater, the price is higher and the expected return lower
+than the riskfree rate.
+We can elaborate using
+\begin{eqnarray*}
+    q^j \;\;=\;\;    E(md^j) &=& E(m) E(d^j) + \mbox{Cov}(m,d^j).
+\end{eqnarray*}
+[Can you show this?  Use the definition of the covariance and expand.]
+So if $\mbox{Cov}(m,d) =0$, we're back to the zero risk premium case.
+This is analogous to the infamous ``zero beta'' asset of intro finance courses.
+If the covariance is negative, the price is lower and the mean return higher.
+
+We can also look directly at excess returns.  Since $ E(mr^j) = 1$ for all assets $j$,
+we can subtract asset 1 and express the pricing relation in terms
+of the excess return $x^j = r^j - r^1 $:
+\begin{eqnarray*}
+    E( m x^j) &=& 0.
+\end{eqnarray*}
+Using the relation for the expectation of a product, we have
+\begin{eqnarray*}
+    E(x^j) &=& - \mbox{Cov}(m,x^j)/E(m) .
+\end{eqnarray*}
+%\end{document}
+Since $m$ and $E(m)$ are positive, the expected excess return
+(the risk premium) has the opposite sign as the covariance with $m$.
+
+The next question is where $m$ comes from.
+%People take two different approaches.
+In finance, it's common to think of $m$ as an arbitrary random variable
+whose properties are chosen to reproduce observed asset prices.
+We'll see examples of this sort when we look at models to value options and bonds.
+In macroeconomics, it's common to think of $m$ as connected to
+the state of the economy, whether it's growing rapidly or slowly.
+We give an example of that next.
+
+
+\section{The Capital Asset Pricing Model reconsidered}
+
+{\bf ***************************************************************}
+
+Describe model, explain how it compares to what we've done...  ??
+
+Or put at end??
+
+
+\section{Macrofoundations of the pricing kernel}
+
+What would make the covariance between the pricing kernel and dividends negative --- or positive?
+At the level of generality of the theorem, we have little basis for an answer.
+That's where macroeconomic foundations come in, they supply an economic basis
+for saying which states have high prices
+and which states have low prices.
+The basic idea is that prices are cheaper when goods are plenty ---
+namely, in booms.
+And prices are high when goods are scarce --- in recessions.
+
+The cleanest version of this is a representative agent model.
+In this case, $m$ is the marginal rate of substitution of a representative agent.
+Since marginal utility is decreasing, $m$ is lower in
+good states --- states where consumption is high ---
+than in bad states.
+An asset, like an equity index, that pays off most in good times
+will therefore have a lower price [$q^j = E(md^j) < E(m) E(d^j)$]
+and a higher mean return [$E(r^j) = E(d^j)/q^j$].
+
+
+%{\it Example.\/}
+In practice, we typically specify a (realistic) distribution for consumption
+and use it to derive prices of assets.
+We illustrate the approach in a lognormal setting, where the math is unusually transparent.
+Suppose the state $z \sim \mathcal{N}(\kappa_1,\kappa_2)$.
+%(I know, you're getting tired of this one, but first things first.)
+Let $y_1(z)/y_0 = e^z$, so that $z = \log (y_1/y_0) = \log y_1 - \log y_0$.
+Assume also that we have power utility:
+$u'(c) = c^{-\alpha}$ for some $\alpha > 0$.
+Now some questions, with answers:
+\begin{itemize}
+\item What is the pricing kernel?  Its distribution?
+The pricing kernel is $m = \beta (c_1/c_0)^{-\alpha}$, so
+\begin{eqnarray*}
+    \log m(z) &=& \log \beta - \alpha (\log y_1(z) - \log y_0)
+            \;\;\sim \;\; \mathcal{N}(\log \beta - \alpha \kappa_1, \alpha^2 \kappa_2) .
+\end{eqnarray*}
+\item How is the pricing kernel related to output?  They move in opposite directions,
+as you can see above.
+It's our old marginal utility result:  consumption has less value in states where there's a lot of it.
+The strength of this effect depends on the risk aversion parameter $\alpha$.
+If we set $\alpha = 0$ the effect goes away and the pricing kernel is constant.
+
+\item What are the price and return of a one-period (riskfree) bond?
+They solve
+\begin{eqnarray*}
+    q^1 &=& E(m) \;\;=\;\; \beta e^{ - \alpha \kappa_1 + \alpha^2 \kappa_2/2 } \\
+    r^1 &=& 1/q^1 \;\;=\;\; \beta^{-1} e^{\alpha \kappa_1 - \alpha^2 \kappa_2/2 } .
+\end{eqnarray*}
+[This kind of calculation should be close to automatic by now.]
+\item What is the price of an asset (``equity'') with dividend
+$d^e(z) = [y_1(z)/y_0]^\lambda$ for some
+arbitrary value of $\lambda$?
+This is a useful device, since it allows us to vary the sensitivity of the dividend
+to the endowment without killing off our convenient loglinear structure.
+As long as $\lambda > 0$, this is an asset that pays off most in good states.
+The price of this ``equity'' is
+\begin{eqnarray*}
+    q^e &=& E(md) \;\;=\;\; \beta e^{ (\lambda- \alpha) \kappa_1
+    + (\lambda-\alpha)^2 \kappa_2/2 } .
+\end{eqnarray*}
+Note that when $\lambda = 0$ we get the one-period bond's dividend and price.
+\item What is the return on equity?  The mean return?
+The return is $r^e(z) = d(z)/q^e$, which satisfies
+\begin{eqnarray*}
+    \log r^e(z) &=& \lambda \log y_1(z) - \log q^e
+            \;\;\sim \;\; \mathcal{N}
+            (-\log \beta + \alpha \kappa_1 - (\lambda-\alpha)^2 \kappa_2/2, \lambda^2 \kappa_2) .
+\end{eqnarray*}
+(This takes patience, just stick with it.  Or use Matlab for the substitutions.)
+The mean return is therefore
+\begin{eqnarray*}
+    E (r^e) &=& \beta^{-1} e^{\alpha \kappa_1 + [\lambda^2 - (\lambda-\alpha)^2] \kappa_2/2 } .
+\end{eqnarray*}
+
+\item Is there a risk premium on equity?
+The standard definition of a risk premium is a difference in expected return:  $E(r^e-r^1)$.
+The $\beta$ and $\kappa_1$ terms are the same, so we have (thankfully)
+no risk premium when $\kappa_2 = 0$.
+If we compare the $\kappa_2$ terms, we see that the risk premium is positive if
+\begin{eqnarray*}
+    0 &<& [\lambda^2 - (\lambda-\alpha)^2] + \alpha^2 \;\;=\;\; 2 \alpha \lambda .
+\end{eqnarray*}
+So the risk premium is positive if $\lambda > 0$.
+It's larger if risk aversion is larger (larger $\alpha$)
+or the dividend is more sensitive to the endowment (larger $\lambda$).
+\end{itemize}
+This delivers on our hope for insight:
+assets that pay off more in good times ($\lambda>0$) have positive risk premiums as a result.
+
+
+\section{Risk-neutral probabilities with power utility 1}
+
+This is just a change in notation, but it's a common one in finance.
+As we noted, risk-neutral probabilities $p^*$ are defined implicitly by
+\begin{eqnarray*}
+    q^1 p^*(z) &=& p(z) m(z) .
+\end{eqnarray*}
+If you prefer, you can write $  p^*(z) = p(z) m(z)/q^1 $.
+They're probabilities in the sense that they're positive and sum to one,
+but they incorporate risk pricing via $m$.
+If $m$ is constant, then $p^*(z) = p(z)$
+and all assets have the same expected return:  there's no adjustment for risk.
+
+With risk-neutral probabilities,
+the pricing relation becomes, as we've seen,
+\begin{eqnarray*}
+    q^j &=& q^1 E^* (d^j).
+\end{eqnarray*}
+Dividing by $q^j$ and substituting $r^1 = 1/q^1$, we have
+\begin{eqnarray*}
+    r^1 &=& E^* (r^j).
+\end{eqnarray*}
+In words:  under the risk-neutral probabilities, all assets have the same expected return.
+We saw that a pricing kernel puts less weight on some states than others ---
+perhaps the good states, as in macro-based models.
+Here we get the same thing by placing lower (risk-neutral) probabilities
+on some states.
+%As a result,
+%under the risk-neutral probabilities all assets have the same expected return.
+%How does this work for assets with higher expected returns and positive risk premiums?
+%Evidently $p^*$ puts more weight on bad outcomes and less weight on good outcomes than $p$.
+
+{\it Example (Bernoulli risks).\/}
+Let $ z = \log y_1 - \log y_0 = \log g$ (log consumption growth)
+take on two values,
+\begin{eqnarray*}
+    z &=&   \left\{
+            \begin{array}{ll}
+            \gamma_1 & \mbox{with probability } 1-\omega \\
+            \gamma_2 > \gamma_1 & \mbox{with probability } \omega .
+            \end{array}
+            \right.
+\end{eqnarray*}
+The pricing kernel is $\beta g^{-\alpha} = \beta e^{-\alpha z}$.
+When we value assets with the pricing kernel, we put more weight
+on the bad state (state 1), because marginal utility is higher.
+
+What happens to the risk-neutral probabilities?
+The probability of state 1 is
+\begin{eqnarray*}
+        p^*(z=\gamma_1)
+            &=& \frac{(1-\omega) \beta e^{-\alpha \gamma_1}}
+                    {(1-\omega) \beta e^{-\alpha \gamma_1} + \omega \beta e^{-\alpha \gamma_2}}
+            \;\;=\;\; \frac{(1-\omega)}
+                    {(1-\omega) + \omega e^{-\alpha (\gamma_2-\gamma_1)}}
+            \;\;>\;\; 1-\omega .
+\end{eqnarray*}
+The inequality follows because $\gamma_2 > \gamma_1$,
+which means the denominator is less than one.
+The risk neutral probabilities put more weight
+on the bad outcome, just as the pricing kernel does.
+We knew, of course, that the two approaches had to give us the same answer,
+but it's useful see it in action.
+It's also clear, here and in general, that the discount factor $\beta$
+drops out of the risk-neutral probabilities.
+It shows up, instead, in the bond price $q^1$ in the pricing relation
+(\ref{eq:risk-neutral-probs}).
+
+{\it Example (normal risks).\/}
+We return to the example of the previous section.
+We have $ z = \log y_1 - \log y_0 \sim \mathcal{N}(\kappa_1, \kappa_2) $.
+The pdf is therefore
+\begin{eqnarray*}
+    p(z) &=& (2 \pi \kappa_2)^{-1/2} \exp[ - (z-\kappa_1)^2/(2\kappa_2)]
+\end{eqnarray*}
+and the pricing kernel is $m(z) = \beta \exp(-\alpha z)$.
+The one-period riskfree bond price is therefore
+$ q^1 = E(m) = \beta \exp(-\alpha \kappa_1 + \alpha^2 \kappa_2/2)$,
+as we saw earlier.
+That gives us the risk-neutral pdf
+\begin{eqnarray*}
+    p^*(z)  &=& p(z) m (z) /q^1 \\
+            &=& (2 \pi \kappa_2)^{-1/2} \exp[ - (z-\kappa_1)^2/(2\kappa_2)]
+                        \beta \exp(-\alpha z)/q^1 \\
+            &=& (2 \pi \kappa_2)^{-1/2} \exp[ - (z-\kappa_1+\alpha \kappa_2)^2/(2\kappa_2)] .
+\end{eqnarray*}
+That is, $z$'s true distribution is $\mathcal{N}(\kappa_1,\kappa_2)$,
+but its risk-neutral distribution is $\mathcal{N}(\kappa_1-\alpha \kappa_2,\kappa_2)$:
+we shift the distribution to the left (more pessimistic) to account
+for risk.  How much depends on risk ($\kappa_2$) and risk aversion ($\alpha$).
+
+
+\section{Risk-neutral probabilities with power utility 2}
+
+
+We've seen two examples connecting true and risk-neutral probabilities
+in representative agent economies with power utility.
+In the lognormal case, the only change is in the mean:  risk-neutral
+probabilities build in risk aversion by reducing the mean.
+That's not true in general.
+In general, all of the cumulants of the distribution change.
+We'll see that shortly with numerical examples.
+In the next section, we derive an analytic expressions connecting
+their cumulants.
+
+Let us say that we have an arbitrary continuous probability distribution over states $z$.
+We can approximate most such distributions with a grid over a finite number
+of states.
+If we make the grid fine enough, we can get as close to a continuous distribution
+as we like.
+Here's an example of such a grid in Matlab:
+\begin{verbatim}
+zmax = 4;
+dz = 0.1;
+z = [-zmax:dz:zmax]';
+\end{verbatim}
+The next step is to define probabilities over the grid points.
+If we used a standard normal density, we could generate probabilities
+from
+\begin{verbatim}
+p = exp(-z.^2/2)*dz/sqrt(2*pi);
+\end{verbatim}
+Here we'll do something a little different.
+Since we know how this works for the normal distribution
+(we shift the mean left, keep the variance the same),
+we'd like to consider alternatives.
+Gram-Charlier distributions are a useful class.
+The idea is (roughly) to approximate a distribution
+with nonzero skewness and excess kurtosis from the normal.
+If skewness and excess kurtosis are $\gamma_1$ and $\gamma_2$,
+then the density is
+\begin{eqnarray*}
+    p(z) &=& p = (2 \pi)^{-1/2} \exp(-z.^2/2)[1 + \gamma_1(z^3-3z)/3! + \gamma_2(z^4-6z^2+3)/4!] .
+\end{eqnarray*}
+Our discrete approximation is therefore
+\begin{verbatim}
+p = exp(-z.^2/2).*(1 + gamma1*(z.^3-3*z)/6 + gamma2*(z.^4-6*z.^2+3)/24);
+p = p*dz/sqrt(2*pi);
+\end{verbatim}
+If $\gamma_1 = \gamma_2 = 0$ we get the standard normal.
+Otherwise, we get distributions with various levels of skewness
+and excess kurtosis.
+
+Given a distribution for the state, we then generate consumption
+growth, the pricing kernel, and risk-neutral probabilities,
+each of them as functions of the same state.
+Let us say that log consumption growth is
+\begin{eqnarray*}
+    \log g(z) &=& \mu + \sigma z .
+\end{eqnarray*}
+The pricing kernel is then
+\begin{eqnarray*}
+    m(z) &=& \beta g(z)^{-\alpha}  .
+\end{eqnarray*}
+The price of a one-period riskfree bond is therefore
+\begin{eqnarray*}
+    q^1 &=& E(m) \;\;=\;\; \sum_z p(z) m(z) ,
+\end{eqnarray*}
+giving us the risk-neutral probabilities
+\begin{eqnarray*}
+    p^*(z) &=& p(z) m(z) / q^1 .
+\end{eqnarray*}
+In Matlab, these steps are
+\begin{verbatim}
+logg = mug + sigmag*z;
+g = exp(logg);
+m = beta*g.^(-alpha);
+q1 = p'*m
+pstar = p.*m/q1;
+\end{verbatim}
+
+So what does this give us?
+This is easier to see than describe, but if you vary
+$\gamma_1$ and $\gamma_2$ you can generate a lot of different shapes
+for $p$.
+And you'll notice that $p^*$ can have a much different shape.
+It really is true that the normal result (shift the mean) is special.
+
+
+\section{More fun with generating functions}
+
+We can also approach the difference between true and risk-neutral
+probabilities analytically --- again, for the case of power utility.
+(The reason for power utility is that its form matches up nicely
+with the exponential in the moment generating function.)
+The idea comes from Ian Martin.
+
+Suppose, as in our examples,
+that the state is $ z = \log y_1 - \log y_0$.
+The cumulant generating function  of $z$ is
+\begin{eqnarray*}
+    k(s) &=& \log E (e^{sz}) .
+\end{eqnarray*}
+In this notation, the log of the one-period bond price is
+\begin{eqnarray*}
+    \log q^1  &=& \log E (\beta e^{-\alpha z})
+            \;\;=\;\; \log \beta +  k(-\alpha).
+\end{eqnarray*}
+The cgf of the risk-neutral distribution is
+\begin{eqnarray}
+    k^*(s) &=& \log [E (m e^{sz})/q^1]
+        \;\;=\;\;   \log E \left( \beta e^{-\alpha z}e^{sz} \right) - \log q^1
+        \;\;=\;\;  k(s-\alpha) - k(-\alpha)  .
+        \label{eq:risk-neutral-cgf}
+\end{eqnarray}
+This is a thing of beauty, a wonderfully compact
+summary of how true and risk-neutral distributions are connected.
+
+{\it Example.\/}
+We'll redo the calculation of the previous section:
+the risk-neutral distribution of $z = \log y_1 - \log y_0$
+when $z \sim \mathcal{N}(\kappa_1,\kappa_2)$.
+We know that $k(s) = s \kappa_1 + s^2 \kappa_2/2$.
+Therefore
+\begin{eqnarray*}
+    k^*(s) &=& [(s-\alpha) \kappa_1 + (s-\alpha)^2 \kappa_2/2]
+            - [-\alpha \kappa_1 + \alpha^2 \kappa_2/2]  \\
+           &=& s(\kappa_1 - \alpha \kappa_2) + s^2 \kappa_2/2 ,
+\end{eqnarray*}
+the same answer we had before.
+Even better, you can have Matlab do the substitution.
+
+For extra credit, show how cumulants are related.
+In the example, the only change is the mean.
+What happens in general?
+
+
+\section*{Bottom line}
+
+The no-arbitrage theorem tells us that if arbitrage is ruled out,
+we can value assets with state prices.
+State prices, pricing kernels, and risk-neutral probabilities all represent
+the same idea.
+
+
+\section*{Practice problems}
+
+\begin{enumerate}
+\item {\it State prices.\/}
+Consider the following collections of asset prices $q$ and dividends $D$:
+\begin{eqnarray*}
+  (a) \;\;  q &=& \left[
+            \begin{array}{c}
+             1 \\ 1.5
+            \end{array}
+          \right], \;\;\;
+        D \;\;=\;\;
+            \left[
+            \begin{array}{cc}
+             1 & 1 \\ 1 & 2
+            \end{array}
+          \right]    \hspace*{0.5in}  \\
+  (b) \;\;  q &=& \left[
+            \begin{array}{c}
+             1
+            \end{array}
+          \right], \;\;\;
+        D \;\;=\;\;
+            \left[
+            \begin{array}{cc}
+             1 & 2
+            \end{array}
+          \right]  .
+\end{eqnarray*}
+Are they arbitrage free?  What are the implied state prices?
+%
+\needspace{2\baselineskip}
+Answer.
+\begin{enumerate}
+\item If we solve for state prices, we get $Q(1) = Q(2) = 1/2$.
+The existence of positive state prices tells us it's arbitrage free.
+\item There's only one asset, and it has a positive price,
+so it's arbitrage free.
+State prices aren't unique: any positive solution to $ 1 = Q(1) + 2 Q(2)$ works.
+That means we need $ 0 < Q(2) < 1/2$ and $Q(1) = 1 - 2 Q(2)$.
+\end{enumerate}
+
+\item {\it Pricing kernel.\/} For the same problem, example (a), suppose
+the (true) probabilities are $p(1) = p(2) = 1/2$.
+\begin{enumerate}
+\item What is the pricing kernel?
+\item What are the risk-neutral probabilities?
+\end{enumerate}
+%
+\needspace{2\baselineskip}
+Answer.
+\begin{enumerate}
+\item State prices are connected to the pricing kernel by $Q(z) = p(z) m(z)$.
+Here we have $m(1) = m(2) = 1$.
+\item Risk-neutral probabilities are connected to the pricing kernel
+by $p^*(z) = p(z) m(z) / q^1$.
+Here $q^1 = E(m) = 1$ and $p^*(1) = p^*(2) = 1/2$.
+\end{enumerate}
+
+\item {\it Returns and risk premiums.\/}
+Consider the asset prices and dividends
+\begin{eqnarray*}
+    \mbox{Asset 1:}&&  q^1 = 3/4, \;\; d^1(1) = 1, \;\; d^1(2) = 1 \\
+    \mbox{Asset 2:}&&  q^2 = 1, \;\; d^2(1) = 1, \;\; d^2(2) = 2.
+\end{eqnarray*}
+\begin{enumerate}
+\item What are the state prices? Is $(q,D)$ arbitrage free?
+\item What are the returns on the two assets?
+\item If $p(1) = p(2) = 1/2$, what are the expected returns?
+\item What is the pricing kernel?
+Why does the second asset have a higher excess return?
+\item What are the risk-neutral probabilities?
+Why does the second asset have a higher excess return?
+\end{enumerate}
+%
+\needspace{2\baselineskip}
+Answer.
+\begin{enumerate}
+\item The state prices are $Q(1) = 1/2$ and $Q(2) = 1/4$.
+Since both are positive, the system is arbitrage free.
+\item Returns are $r^j(z) = d^j(z)/q^j $.
+That gives us returns
+
+\begin{center}
+\begin{tabular}{ccc}
+\toprule
+Asset &  State 1 & State 2 \\
+\midrule
+1     &  4/3  &   4/3  \\
+2     &  1    &   2  \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\item Expected returns are
+$ E(r^1) = 4/3$ and $E(r^2) = 3/2$.
+We would say that the second asset has a risk premium of 1/6.
+
+\item The pricing kernel is connected to probabilities and state
+prices by $ m(z) = Q(z)/p(z)$.
+That gives us $m(1) = 1$ and $m(2) = 1/2$.
+The second asset has a higher expected return because it pays off more in state 2,
+where $m$ is lower.
+
+\item Risk-neutral probabilities
+are connected to the pricing kernel and probabilities by
+$ p^*(z) = p(z) m(z) /q^1 $.
+That gives us $p^*(1) = 2/3$ and $p^*(2) = 1/3$.
+The second asset has a higher expected return because it pays off more in state 2,
+where $p^*$ is lower.
+
+\end{enumerate}
+
+
+\item {\it Risk-neutral probabilities with exponential risk.\/}
+In our usual two-period setup, suppose the representative agent
+has power utility and
+$x(z) = \log c_1(z) - \log c_0 $ has an exponential distribution:
+\begin{eqnarray*}
+    p(x) &=& \lambda e^{-\lambda x} ,
+\end{eqnarray*}
+for $x \geq 0$ and $\lambda > 0$.
+What is the pricing kernel?
+What is the risk-neutral distribution of $x$?
+%
+\needspace{2\baselineskip}
+Answer.
+This is a little sloppy, but the following question nails down the details.
+The risk-neutral probability is
+the product of the true probability and the pricing kernel divided by $q^1$.
+The pricing kernel here is $  m(x) = \beta e^{-\alpha x} $.
+Since $q^1$ is constant, the risk-neutral probabilities are
+\begin{eqnarray*}
+    p^*(x) &\propto& p(x) m(x)
+        \;\;=\;\; \lambda e^{-\lambda x} \beta e^{-\alpha x}
+                \;\;=\;\; \mbox{constant} \times e^{-(\lambda + \alpha) x} .
+\end{eqnarray*}
+The constant must be $\lambda + \alpha$ if the probabilities are
+to integrate to one.
+This tell us the risk-neutral distribution is also exponential,
+but with parameter $\lambda + \alpha$.
+The mean and standard deviation are both $1/(\lambda+\alpha)$,
+which decline with risk aversion $\alpha$.
+So the risk-neutral distribution has a smaller mean
+and also a smaller standard deviation.
+The former is like the normal distribution, the latter is not.
+
+\item {\it Exponential risk, cgf version.\/}
+Do the same problem using the cgf and equation (\ref{eq:risk-neutral-cgf}).
+%
+\needspace{2\baselineskip}
+Answer.  You may show, or recall,
+that an exponential random variable with parameter $\lambda>0$
+has cgf
+\begin{eqnarray*}
+    k(s) &=& - \log (1-s/\lambda) \;\;=\;\; \log \left( \frac{\lambda}{\lambda - s}\right).
+\end{eqnarray*}
+The cgf formula (\ref{eq:risk-neutral-cgf}) gives us
+\begin{eqnarray*}
+    k^*(s) &=& k(s-\alpha) - k(-\alpha)
+            \;\;=\;\; \log \left( \frac{\lambda+\alpha}{\lambda+\alpha - s}\right),
+\end{eqnarray*}
+which is the cgf for an exponential random variable with parameter $\lambda + \alpha$.
+
+\item {\it Asset pricing with exponential risk.\/}
+We consider asset prices in the same setting:
+exponential risk, power utility, and so on.
+We assume $\lambda > 1$ throughout.
+%For all of these calculations, we set $\lambda = 2$, $\alpha = 3$, and $\beta = 0.9$.
+\begin{enumerate}
+\item What is the price of a bond paying a dividend of one in all states?
+What is its return?
+\item What is the price of ``equity,'' a claim to the aggregate growth rate $e^x$?
+What is its return?  Its expected return?
+\item What is the risk premium on equity?  How does it depend on $\alpha$?
+\end{enumerate}
+%
+\needspace{2\baselineskip}
+Answer.
+\begin{enumerate}
+\item The price of the bond is
+\begin{eqnarray*}
+    q^1 &=& \int_{0}^\infty  m(x) p(x) dx
+            \;\;=\;\; \int_{0}^\infty \beta \lambda e^{-(\lambda + \alpha) x} dx
+            \;\;=\;\; \left. - \left( \frac{\lambda \beta}{\lambda + \alpha} \right) e^{-(\lambda + \alpha) x} \right|_0^\infty  \\
+        &=& \beta \lambda /(\lambda + \alpha) . \phantom{sum^K}
+\end{eqnarray*}
+Its return is $r^1 = 1/q^1 = (\lambda + \alpha)/(\beta \lambda )$.
+
+\item The price of ``equity'' is
+\begin{eqnarray*}
+    q^e &=& \int_{0}^\infty \beta \lambda e^{(1-\lambda -\alpha) x} dx
+            \;\;=\;\; \beta \lambda /(\lambda + \alpha-1) . \phantom{sum^K}
+\end{eqnarray*}
+The return is the dividend divided by the price:  $r^e(x) = e^x/q^e$.
+The expected return is the expected dividend divided by the price.
+The expected dividend is
+\begin{eqnarray*}
+    E(d^e) &=& E(e^x) \;\;=\;\; \int_{0}^\infty \lambda e^{(1-\lambda) x} dx
+            \;\;=\;\; \lambda/(\lambda-1) .
+\end{eqnarray*}
+The expected return is $ E(r^e) = [\lambda/(\lambda-1)] [(\lambda+\alpha)/(\beta \lambda) ]$.
+
+\item If $\alpha = 0$, both assets have expected return $1/\beta$.
+But if $\alpha > 0$, the return on equity is greater.
+
+\end{enumerate}
+\end{enumerate}
+
+
+\section*{More}
+
+The material is standard.
+The best textbook reference is Duffie, {\it Dynamic Asset Pricing Theory\/}, any edition.
+(The earlier ones are cheaper, and just as good for our purposes.)
+See esp Chapters 1 and 2.
+Ross's classic paper is also a good read, esp Section 9.3.
+I scanned and posted it
+\href{http://pages.stern.nyu.edu/~dbackus/233/SteveRoss_risk-arb_chapter_1977.pdf}{here}.
+
+\vfill
+{\bigskip \centerline{\it \copyright \ \number\year \
+NYU Stern School of Business}
+}
+
+\end{document}
+
+\pagebreak
+\verbatiminput{../Matlab/risk_neutral_probs.m}
+
+
+
+\end{document}

@@ -1,0 +1,103 @@
+\documentclass[11pt]{article}
+
+\oddsidemargin=0.25truein \evensidemargin=0.25truein
+\topmargin=-0.5truein \textwidth=6.0truein \textheight=8.75truein
+
+%\usepackage{graphicx}
+\usepackage{verbatim}
+%\usepackage{booktabs}
+\usepackage{comment}
+\usepackage[dvipdfm]{hyperref}
+\urlstyle{rm}   % change fonts for url's (from Chad Jones)
+\hypersetup{
+    colorlinks=true,        % kills boxes
+    allcolors=blue,
+    pdfsubject={ECON-UB233, Macroeconomic foundations for asset pricing},
+    pdfauthor={Dave Backus @ NYU},
+    pdfstartview={FitH},
+    pdfpagemode={UseNone},
+%    pdfnewwindow=true,      % links in new window
+%    linkcolor=blue,         % color of internal links
+%    citecolor=blue,         % color of links to bibliography
+%    filecolor=blue,         % color of file links
+%    urlcolor=blue           % color of external links
+% see:  http://www.tug.org/applications/hyperref/manual.html
+}
+
+\renewcommand{\thefootnote}{\fnsymbol{footnote}}
+
+% document starts here
+\begin{document}
+\parskip=\bigskipamount
+\parindent=0.0in
+\thispagestyle{empty}
+{\large ECON-UB 233 \hfill Dave Backus @ NYU}
+
+\bigskip\bigskip
+\centerline{\Large \bf Option Pricing}
+\centerline{(Started: November 21, 2011; Revised: \today)}
+
+\bigskip
+The goal here is to derive the Black-Scholes-Merton formula from a model
+in which the price of the ``underlying'' --- 
+the asset the option is based on --- 
+has a lognormal risk-neutral distribution.
+This is expressed most simply in terms of a flat volatility smile.    
+Then we go on and show how other distributions can generate other
+shapes for the smile, including shapes similar to those
+we observe for real-world options.
+The focus is on options on S\&P 500 index futures, 
+a popular and convenient contract.  
+It has a macro flavor:  ups and downs of the S\&P 500 
+are closely connected to ups and downs in the economy.  
+
+
+In all of this, we'll use a timing in which $t$ is now
+and $t+1$ is later.
+With time measured in years, $t+1$ would be one year from now. 
+That's similar to what we've done so far, 
+but with $t$ taking the place of date 0 and $t+1$ taking the place of date 1.  
+
+
+\subsection*{Options and put-call parity}
+
+
+An asset is a cash flow, what's the cash flow here?  
+
+\subsection*{The BSM formula and the volatility smile}
+
+Our notation...
+
+\subsection*{Risk-neutral option pricing}
+
+
+Price with risk-neutral probs, note cross-section feature...
+
+
+\subsection*{The BSM model}
+
+Digression on normal cdf...
+
+
+\subsection*{Sums and mixtures}
+
+How to get departures from normality, and how to compute option prices...  
+
+
+\subsection*{The Merton model}
+
+Normal mixture...  
+
+
+\subsection*{Time intervals and divisibility}
+
+
+
+\subsection*{Bottom line}
+
+
+
+
+\vfill \centerline{\it \copyright \ \number\year \
+NYU Stern School of Business}
+\end{document}

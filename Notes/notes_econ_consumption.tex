@@ -1,0 +1,1015 @@
+\documentclass[11pt]{article}
+
+\oddsidemargin=0.25truein \evensidemargin=0.25truein
+\topmargin=-0.5truein \textwidth=6.0truein \textheight=8.75truein
+
+%\RequirePackage{graphicx}
+\usepackage{comment}
+\usepackage{hyperref}
+\urlstyle{rm}   % change fonts for url's (from Chad Jones)
+\hypersetup{
+    colorlinks=true,        % kills boxes
+    allcolors=blue,
+    pdfsubject={ECON-UB233, Macroeconomic foundations for asset pricing},
+    pdfauthor={Dave Backus @ NYU},
+    pdfstartview={FitH},
+    pdfpagemode={UseNone},
+%    pdfnewwindow=true,      % links in new window
+%    linkcolor=blue,         % color of internal links
+%    citecolor=blue,         % color of links to bibliography
+%    filecolor=blue,         % color of file links
+%    urlcolor=blue           % color of external links
+% see:  http://www.tug.org/applications/hyperref/manual.html
+}
+
+\usepackage{verbatim}
+\usepackage{booktabs}
+\usepackage[small,compact]{titlesec}
+%\titleformat{\section}{\large\bfseries\sffamily}{\thesection}{1em}{}  % edited by LC
+
+% list spacing
+\usepackage{enumitem}
+\setitemize{leftmargin=*, topsep=0pt}
+\setenumerate{leftmargin=*, topsep=0pt}
+
+\usepackage{needspace}
+% example:  \needspace{4\baselineskip} makes sure we have four lines available before pagebreak
+
+\renewcommand{\thefootnote}{\fnsymbol{footnote}}
+\newcommand{\var}{\mbox{\it Var\/}}
+\newcommand{\rp}{\mbox{\it rp\/}}
+\newcommand{\cbar}{\bar{c}}
+
+% document starts here
+\begin{document}
+\parskip=\bigskipamount
+\parindent=0.0in
+\thispagestyle{empty}
+{\large ECON-UB 233 \hfill Dave Backus @ NYU}
+
+\bigskip\bigskip
+\centerline{\Large \bf Consumption, Saving, \& Portfolio Choice}
+\centerline{Revised: \today}
+
+\medskip
+Another building block for thinking about business cycles
+and asset returns is what we'll call the consumer's problem:
+how an individual might decide between current consumption
+and saving for future consumption,
+and how that saving is allocated across assets.
+We'll see how this works in a two-period setting,
+which captures the essential ideas in a relatively simple way.
+
+This will seem obscure the first time you see it,
+but fundamental result is the equation
+\begin{eqnarray}
+    E (mr) &=& 1 .
+    \label{eq:E(mr)=1}
+\end{eqnarray}
+Variants of this equation account for
+an embarrassingly large part of macroeconomics and finance,
+including virtually all of modern asset pricing.
+We'll see it a lot.
+
+
+\section{Kuhn-Tucker conditions}
+
+The KT conditions are a solution method for a common class of optimization problems.
+In the standard treatment, optimization means minimization.
+Economists prefer to maximize, but the ideas are interchangeable:
+maximizing $f(x)$ is the same as minimizing $-f(x)$.
+
+The canonical constrained optimization problem in economics
+is to choose a variable $x$ to maximize a function
+$f(x)$ subject to a constraint $g(x) \geq 0$.
+Formally, we might write it as
+\begin{eqnarray*}
+    \max_x && f(x) \\
+    \mbox{subject to} && g(x) \geq 0 .
+\end{eqnarray*}
+We find the solution using the so-called Lagrangean function
+\begin{eqnarray*}
+    \mathcal{L}(x,\lambda) &=& f(x) + \lambda g(x) ,
+\end{eqnarray*}
+where $\lambda$ is called the {\it Lagrange multiplier\/}.
+The first-order (necessary) conditions for a maximum are
+\begin{eqnarray*}
+   \partial \mathcal{L}/\partial x \;\;=\;\; f'(x) + \lambda g'(x) &=&  0 \\
+   \lambda g(x) &=& 0 ,
+%    g(x) &=& 0 \mbox{ if } \lambda > 0 .
+\end{eqnarray*}
+with  $\lambda \geq 0$ and $g(x) \geq 0$.
+These are first-order conditions,
+but with the right structure --- which includes any problem in this course ---
+they are also sufficient.
+Typically it's sufficient for $f$ and $g$ to be concave.
+
+The Lagrange multiplier is the value, in units of $f$,
+of loosening the constraint $g$ a little.
+Economists refer to it as a ``shadow price,''
+the price of the constraint.
+In some economic applications the analogy goes further:
+the multipliers are the prices of the goods to which the constraint applies.
+We'll see that in the next chapter.
+
+What we've done here is add an extra variable $\lambda$
+and an extra equation to the usual unconstrained maximization problem.
+The second line says that if the multiplier is positive,
+the constraint binds (holds with equality):  $g(x) = 0$.
+But if $g(x) > 0$, the multiplier must be zero:  $\lambda = 0$.
+{\it If we're sure the constraint binds, we can replace the second equation
+with $ \partial \mathcal{L}/\partial \lambda = g(x) = 0$.
+That will be true for every example we study in this class.\/}
+
+The same idea extends to problems where $x$ and $g$
+are vectors.
+If $x$ is a vector, we differentiate $\mathcal{L}$ with
+respect to each of them.
+And if $g$ is a vector, we make $\lambda$ a vector of the same
+dimension.
+You'll see how this works when we put it to work.
+
+
+{\it Example.\/}
+I stole this one from Tom Sargent, not sure where he got it, but it's clever.
+Let $f(x) =- (x+1)^2/2$  and $g(x) = x \geq 0$.
+The Lagrangean is
+\begin{eqnarray*}
+    \mathcal{L} &=& - (x+1)^2/2 + \lambda x .
+\end{eqnarray*}
+The first-order conditions are
+\begin{eqnarray*}
+    -(x+1) + \lambda &=& 0 \\
+    \lambda x &=& 0.
+\end{eqnarray*}
+The first equation implies $\lambda = x + 1$.
+If we substitute this into the second, we get $x(x+1) = 0$,
+which is quadratic and therefore has two solutions.
+One is $x=-1$, which violates the constraint.
+The answer is evidently the other solution, $x=0$, which implies $\lambda = 1$.
+
+
+{\it Example.\/}
+Consider an agent with income $y$ who is deciding
+how many apples $a$ and bananas $b$ to consume.
+Her utility function is
+\begin{eqnarray*}
+    U(a,b) &=& \beta \log a + (1-\beta) \log b .
+\end{eqnarray*}
+If prices of apples and bananas are $q_a$ and $q_b$,
+respectively, her budget constraint is
+\begin{eqnarray*}
+    q_a a + q_b b  &\leq& y  .
+\end{eqnarray*}
+The inequality is there to give this the same form as the
+generic problem, but you can guess that it binds:
+there's no reason here not to spend all your money.
+
+We find the solution using the same methods.
+The Lagrangean is
+\begin{eqnarray*}
+    \mathcal{L} &=& \beta \log a + (1-\beta) \log b
+            + \lambda \left[ y - (q_a a + q_b b) \right] .
+\end{eqnarray*}
+The first-order conditions are
+\begin{eqnarray*}
+        \beta / a &=& \lambda q_a \\
+        (1-\beta) / b &=& \lambda q_b \\
+   \lambda \left[ y - (q_a a + q_b b) \right] &=& 0 .
+\end{eqnarray*}
+The solution includes $\lambda = 1/y $,
+$ a = \beta y/q_a $, and $b = (1-\beta) y /q_b $.
+
+
+\section{Consumption and saving}
+
+We approach consumption and saving the same way we approached
+consumption of apples and bananas.
+The goods here are consumption now ($c_0$)
+and consumption later ($c_1$).
+The utility function has a special form we use for dynamic
+problems,
+\begin{eqnarray}
+    U(c_0,c_1) &=& u(c_0) + \beta u(c_1) ,
+    \label{eq:utility-2period}
+\end{eqnarray}
+where $\beta$ is the {\it discount factor\/} (typically a number between zero and one)
+and $u$ is some convenient function.
+We'll say that $u$ is increasing ($u' > 0$) and concave ($u'' < 0$).
+Power utility is a common choice:
+$u(c) = c^{1-\alpha}/(1-\alpha)$ with $\alpha > 0$.
+Log utility $u(c) = \log c$ corresponds to $\alpha = 1$.
+[This is a tricky one, ask me if you're interested.]
+
+We're going to think about the problem of choosing
+$c_0$ and $c_1$ now, at date 0.
+At date 1, we simply execute our plan:
+we consume current income and the proceeds of any saving we do at date 0.
+More on that shortly.
+If incomes in the two periods are $(y_0,y_1)$,
+the natural budget constraint is
+\begin{eqnarray*}
+   q_0 c_0 + q_1 c_1 &\leq& q_0 y_0 + q_1 y_1  .
+%    \label{eq:budget-2period}
+\end{eqnarray*}
+We don't need both prices, all we need
+is the relative price $Q = q_1/q_0$.
+Then we can rewrite the constraint as
+\begin{eqnarray}
+    c_0 + Q c_1 &\leq& y_0 + Q y_1  \;\;=\;\; Y .
+    \label{eq:budget-2period}
+\end{eqnarray}
+Here $Q$ is the date-0 price of one unit of date-1 consumption in ``$c_0$ units.''
+It may look more familiar if we write $Q = 1/(1+r)$, so that
+$Q$ discounts date-1 quantities at the appropriate rate.
+We'll write $Q = 1/r$ instead, simply because we're lazy:
+it's easier to write $r$ than $1+r$, especially if you have
+to do it many times.
+We refer to $r$ defined this way as the {\it gross\/} interest rate.
+
+
+Now what, you might ask, does this have to do with saving?
+The choice of first-period consumption also dictates a choice for saving.
+Since $Q = 1/r$, we can rewrite the budget constraint as
+\begin{eqnarray*}
+    c_0 + (1/r) c_1 &\leq& y_0 + (1/r) y_1 .
+\end{eqnarray*}
+If we define saving as $s = y_0 - c_0$,
+this becomes
+\begin{eqnarray*}
+    c_1  &\leq& r s +  y_1 .
+\end{eqnarray*}
+That is:  tomorrow's consumption is tomorrow's income
+plus today's saving with interest.
+We'll ignore saving from now on, but it's there behind the scenes.
+
+We now have the pieces of the consumption-saving problem:
+the utility function (\ref{eq:utility-2period})
+and the budget constraint (\ref{eq:budget-2period}).
+We attack it with the usual Lagrangian methods.
+The first-order conditions for utility maximization are
+\begin{eqnarray*}
+        u'(c_0)  &=& \lambda  \\
+       \beta u'(c_1)  &=& \lambda Q
+\end{eqnarray*}
+plus the budget constraint, which we assume binds (it does).
+
+One implication of these conditions is a relation
+between consumption and the interest rate.
+If we take the ratio of the two first-order conditions,
+we have
+\begin{eqnarray*}
+       \frac {\beta u'(c_1)}{u'(c_0)}  &=& Q \;\;=\;\; 1/r.
+\end{eqnarray*}
+This says that the marginal rate of substitution
+between current and future consumption equals
+the relative price.
+If we denote the marginal rate of substitution or mrs by $m$, we have
+\begin{eqnarray}
+       \frac{\beta u'(c_1)}{u'(c_0)} \ r  &=& m r \;\;=\;\;  1 .
+       \label{eq:euler-deterministic}
+\end{eqnarray}
+We'll see variants of this equation throughout the course.
+
+[Draw budget line and indifference curves, show tangency.
+Budget line is $c_0 + c_1/r = Y$, so slope in $(c_0,c_1)$ space
+is $-r = - 1/Q$.]
+
+So what do we have here?  We have a connection between
+preferences, consumption, and the interest rate.
+If we discount the future more ($\beta$ is smaller),
+then for a given interest rate we'll choose
+more consumption now and less later.
+This is implied because $u'$ is decreasing (recall $u''<0$).
+Makes sense:  if we put less weight on the future,
+we'll allocate less of our income to future consumption.
+The interest rate works the same way.
+If we raise $r$, which makes future consumption cheaper,
+we'll do more of it.
+With power utility, we can be even more specific:
+$u'(c) = c^{-\alpha}$ and
+\begin{eqnarray*}
+       \beta (c_1/c_0)^{-\alpha}  r  &=& 1 .
+\end{eqnarray*}
+Here a high interest rate is associated with
+high consumption growth,
+hence high future consumption and low current consumption.
+
+This connection between consumption and the interest rate
+will hold in all of our models.
+Here the interest rate is given and we choose consumption.
+In some settings, we reverse the causality
+and say that the high interest rate is a consequence
+of high future consumption growth.
+More generally, they're both outcomes of market decisions.
+However we interpret it, the positive association between the interest rate
+and consumption growth is something we see in the data:
+interest rates are high, for the most part,
+when the economy (including consumption) is growing quickly
+and low when it's not.
+
+
+Let's return to our problem and solve it explicitly
+for the case of log utility.
+We solve the first-order conditions for consumption:
+\begin{eqnarray*}
+        c_0  &=& 1/\lambda  \\
+        c_1  &=& \beta/(\lambda Q) .
+\end{eqnarray*}
+If we substitute into the budget constraint,
+we have
+\begin{eqnarray}
+    c_0 + Q c_1 &=& \lambda^{-1}
+            \left(1 + \beta \right) \;\;=\;\; Y.
+\end{eqnarray}
+That gives us (see the first-order conditions)
+\begin{eqnarray*}
+        c_0  &=& [1/(1+\beta)] Y \\
+        c_1  &=& [\beta/(1+\beta)] Y / Q  .
+\end{eqnarray*}
+This will look familiar from the second example in the previous section.
+
+%You might try the more general power utility case yourself.
+
+
+\section{Consumption and portfolio choice 1:  Arrow securities}
+
+We can do the same thing in risky settings.
+We'll continue our two-period environment,
+but let the state $z$ in the second period be random.
+We treat consumption in each of these states
+as separate decisions, which we choose in the usual way
+at date 0.
+
+[Draw event tree.]
+
+Our agent is now choosing current consumption $c_0$
+and future consumption $c_1(z)$ for each state $z$.
+Utility is
+\begin{eqnarray}
+    u(c_0) + \beta \sum_z p(z) u[c_1(z)]
+    &=&     u(c_0) + \beta E u(c_1) ,
+    \label{eq:utility-2period-stochastic}
+\end{eqnarray}
+where $p(z)$ is the probability that state $z$ occurs
+(remember, rational expectations).
+The budget constraint becomes
+\begin{eqnarray}
+    c_0 + \sum_z Q(z) c_1(z) &\leq& y_0 + \sum_z Q(z) y_1(z) \;\;=\;\; Y ,
+    \label{eq:budget-2period-stochastic}
+\end{eqnarray}
+where $Q(z)$ is today's price of one unit of date-1 consumption in state $z$.
+
+
+We refer to $Q(z)$ as the {\it state price\/}:
+for $Q(z)$ units of date-0 consumption today, we get one
+unit of date-1 consumption if state $z$ occurs --- and nothing otherwise.
+Another way to think about $Q(z)$ is that it's the price of a risky asset
+which we'll call an {\it Arrow security\/}.
+It's like a digital option:  fixed payoff in some situations, nothing in others.
+If you're familiar with linear algebra,
+you might guess that {Arrow securities}
+form a convenient basis for the state space.
+In words, this means that it's easy to see how you could
+use this collection of assets to construct any consumption outcome you want.
+One of the central results of modern asset pricing is that
+we can generally do this with assets, too:  decompose them
+into collections of Arrow securities and value them with state prices.
+More on that in a couple weeks.
+
+{\it Example.\/}
+Suppose we have two states and two assets.
+Asset 1 is a riskfree bond, paying one in each state.
+Asset 2 we'll call equity.  It pays one in state 1, two in state 2.
+We can think of each of them as collections of the two Arrow securities.
+The bond consists of one unit of each Arrow security.
+Why?  Because Arrow security $z$ pays one in state $z$, nothing in other states.
+So if we have one unit of each Arrow security,
+we have the same payoff in all states as the bond.
+Equity pays one in state 1, two in state 2,
+so we can replicate its payoffs with one unit of the first Arrow security
+and two units of the second.
+
+This replication allows us to compute the prices of the assets from the state prices.
+If $q^1$ is the price of the bond and $q^e$ is the price of equity, we have
+\begin{eqnarray*}
+    q^1 &=& Q(1) + Q(2) \\
+    q^e &=& Q(1) + 2 Q(2) .
+\end{eqnarray*}
+In this case, because the numbers of states and assets are the same,
+we can also do the reverse:  if we know the prices of the assets,
+we can find the prices of the Arrow securities.
+
+
+
+
+
+Back to our problem:  choose $\{c_0, c_1(z)\}$ to maximize
+utility (\ref{eq:utility-2period-stochastic}) subject to the budget constraint
+(\ref{eq:budget-2period-stochastic}).
+If we use the Lagrange multiplier $\lambda$ on the budget constraint,
+the first-order conditions are
+\begin{eqnarray*}
+    u'(c_0)  &=& \lambda  \\
+       \beta p(z) u'[c_1(z)]  &=& \lambda Q(z),
+\end{eqnarray*}
+with a version of the second equation for every value of $z$.
+The ratio of the second equation to the first is
+\begin{eqnarray*}
+    \beta p(z) u'[c_1(z)]/u'(c_0) &=& Q(z) ,
+\end{eqnarray*}
+a convenient expression relating consumption to state prices.
+This is the usual condition equating the marginal rate of substitution
+to the relative price, but here we do it in every state.
+
+\begin{comment}
+The definition $ r(z) = 1/Q(z)$ gives us
+\begin{eqnarray*}
+       \{ \beta p(z) u'[c_1(z)] / u'(c_0) \} r(z)  &=& 1 ,
+\end{eqnarray*}
+a variant of our favorite equation.
+It's not all that useful here,
+because $r(z)$ for these assets is zero in all states but one,
+but if we sum over $z$ we get
+\begin{eqnarray*}
+     \sum_z  \frac { \beta p(z) u'[c_1(z)] }{ u'(c_0)}\ r(z)  &=&
+     E \left( \frac {\beta u'(c_1)}{u'(c_0)} \ r \right)
+     \;\;=\;\; 1 ,
+     \label{eq:euler-stochastic}
+\end{eqnarray*}
+a stochastic version of (\ref{eq:euler-deterministic}).
+It's a somewhat strange object in this context,
+since $r(z)$ is zero in all states by one,
+but it illustrates the underlying unity of what we're doing.
+\end{comment}
+
+
+\section{Consumption and portfolio choice 2:  arbitrary assets}
+
+Here's a version with more explicit portfolio choice
+and an arbitrary set of assets which in principle could
+look more like the assets we see in modern economies.
+We start with a description of assets and returns.  
+
+{\it Assets and returns.\/} 
+We need to be clear about what we mean by an asset.
+An asset here is a claim to a random ``dividend,'' 
+with dividend defined broadly to include anything the asset is a claim to.
+Let us say, to be concrete, that one unit of asset $j$ is a claim to $d^j(z)$ units
+of the consumption good at date 1 in state $z$.
+Different dividend streams constitute different assets.
+To complete the notation,
+let us say that asset $j$ sells at date 0
+for $q^j$ units of the date-0 consumption good.
+So we pay $q^j$ at date 0 for $d^j(z)$ at date 1 in state $z$.
+Uncertainty over the payoff is built into the dependence 
+the $d^j$ on the state $z$.  
+
+[Draw event tree. Show when prices are quoted, and when dividends are paid.]
+
+The gross {\it return\/} on asset $j$ between dates 0 and 1 
+is the ratio of the dividend to the price: $r^j(z) = d^j(z)/q^j$.
+Since $d^j(z)$ and $r^j(z)$ are functions of the state $z$,
+they're random variables as we defined them earlier.
+We reserve $j=1$ for the (one period) riskfree asset,
+which has constant dividend $d^1(z) = 1$ and price $q^1$.
+
+In most applications, asset prices are arbitrary but returns are not.
+What on earth could that mean?
+It means that the units are arbitrary.
+The price of equity depends on how we define a share.
+Suppose the price for some definition of a share is $q^j$.
+Then the price of two shares is $2q^j$.
+These two shares pay a dividend of $2 d^j(z)$.
+The return is therefore $ 2d^j(z)/(2^jq) = d^j(z)/q^j$,
+which is the same as the return on one share.
+That will come as no surprise, but it's helpful to remember
+that the units --- the definition of a share --- don't matter.
+In the next section, we'll use this to define
+units so that the price is one.
+In this case the dividend is the return:  $r^j(z) = d^j(z)/q^j = d^j(z)$.
+
+We generally define the {\it excess return\/} on asset $j$ as the difference
+between its return and the return on the riskfree bond:
+$ x^j(z) = r^j(z) - r^1 $. 
+The mean excess return, $ E[x^j(z)]$ is typically referred
+to as the {\it risk premium\/}.
+
+
+{\it Portfolio choice.\/} 
+Now that we know what assets are, we can describe portfolio choice.
+Here the problem consists of the same preferences,
+equation (\ref{eq:utility-2period-stochastic}),
+and a suitably modified budget constraint.
+At date 0, the agent's income goes either to consumption
+or asset purchases:
+\begin{eqnarray}
+    c_0 + s \;\;=\;\; c_0 + \sum_j a^j q^j &=& y_0 ,
+    \label{eq:budget-2period-c0}
+\end{eqnarray}
+where $a^j$ ($a$ for asset) is the number of units
+purchased of asset $j$ and $q^j$ is the price of each unit.
+At date 1, the agent consumes her income
+plus the payoffs from her asset positions:
+\begin{eqnarray}
+    c_1(z)  &=& y_1(z) + \sum_j a^j d^j(z) .
+    \label{eq:budget-2period-c1}
+\end{eqnarray}
+Once we choose asset positions $a^j$,
+this determines consumption $c_1(z)$.
+
+
+We solve the problem by our usual methods.
+We maximize (\ref{eq:utility-2period-stochastic})
+subject to the constraints (\ref{eq:budget-2period-c0}) and (\ref{eq:budget-2period-c1}).
+We apply the Lagrange multipliers $\lambda_0$ and $\lambda_1(z)$ (one for each $z$) to the constraints,
+giving us the Lagrangian
+\begin{eqnarray*}
+    \mathcal{L} &=& u(c_0) + \beta \sum_z p(z) u[c_1(z)] \\
+        &&   + \; \lambda_0 \Big[ y_0 - c_0 - \sum_j a^j q^j \Big]
+        + \sum_z \lambda_1(z) \Big[ y_1(z) + \sum_j a^j d^j(z) - c_1(z) \Big] .
+\end{eqnarray*}
+The first-order conditions include
+\begin{eqnarray*}
+  c_0: &        0 \;\;=& u'(c_0) - \lambda_0 \\
+  c_1(z): &     0 \;\;=& \beta p(z) u'[c_1(z)] - \lambda_1(z) \\
+  a^j: &        0 \;\;=& - q^j \lambda_0 + \sum_z \lambda_1(z) d_j(z) .
+\end{eqnarray*}
+The ratio of the second to the first gives us, for each state $z$,
+\begin{eqnarray*}
+    \beta p(z) u'[c_1(z)] / u'(c_0) &=& \lambda(z)/\lambda_0 .
+\end{eqnarray*}
+If we relabel by $Q(z) = \lambda(z)/\lambda_0$, we have the same relation
+we had earlier connecting  the marginal rate of substitution to state prices.
+Evidently there are state prices hiding behind the scenes here,
+even though we do not have explicit Arrow securities.
+
+We can also express asset prices in terms of state prices.
+The third equation can be written
+\begin{eqnarray*}
+    q^j &=& \sum_z Q(z) d^j(z) ,
+\end{eqnarray*}
+which is another equation we'll run across again.
+It decomposes the price of the asset into pieces attributed to each state.
+We did this by example in the previous section.
+
+Finally, we can write the solution in the form of
+our asset pricing relation (\ref{eq:E(mr)=1}).
+If we substitute
+$ Q(z) = \beta p(z) u'[c_1(z)] / u'(c_0) = p(z) m(z)$
+and $r^j(z) = d^(z)/q^j $,
+we have
+\begin{eqnarray*}
+    1 &=& \sum_z Q(z) r(z) \;\;=\;\; \sum_z p(z) m(z) r(z) \;\;=\;\; E (mr) ,
+\end{eqnarray*}
+the equation we promised at the start.
+Here the asset price and return are given,
+and the consumer's choice leads to a connection with consumption.
+Later on we'll turn that around:
+take consumption decisions as given and explore
+the implications for asset prices.
+
+Remark:  I got this version
+of the problem from Tom Sargent.
+You could attack the portfolio decision directly,
+substituting the $c$'s into the utility function
+and maximizing with respect to the $a^j$'s.
+The advantage is this approach is that the state prices
+pop out from the multipliers.
+
+
+\section{Merton's portfolio formula}
+
+Portfolio problems don't typically lend themselves
+to simple solutions.
+You can solve the first-order conditions numerically,
+but that leaves us without much in the way of sharp insights.
+Here's an example, though, that works.
+
+We'll change the notation and consider the portfolio decision over two assets,
+one risky (``equity'') and one not (``riskfree bond'').
+Our agent has income $y_0$ at date 0, consuming $c_0$ and investing the rest,
+an no income at date 1 other than the proceeds of from investments.
+If she invests a fraction $a$ in the risky asset, date-1 consumption is
+\begin{eqnarray*}
+    c_1(z) &=& (y_0 - c_0) [(1-a) r^1 + a r^e(z)],
+\end{eqnarray*}
+where $r^1$ is the (gross) return on the bond and $r^e$ is the return on equity.
+You might verify for yourself that this is a two-asset version
+of the problem we looked at in the previous section,
+expressed in somewhat different notation.
+
+The agent's decision problem is therefore to choose $(c_0,a)$ to maximize
+\begin{eqnarray*}
+    u(c_0) + \beta \sum_z p(z) u \left\{ (y_0 - c_0) [(1-a) r^1 + a r^e(z)] \right\} .
+\end{eqnarray*}
+The first-order conditions are
+\begin{eqnarray*}
+    c_0 :&  0 &=\;\; u'(c_0) - \beta \sum_z p(z) u'[c_1(z)] [(1-a) r^1 + a r^e(z)] \\
+    a:&     0 &=\;\; \beta \sum_z p(z) u'[c_1(z)] (y_0-c_0) [ r^e(z)-r^1] .
+\end{eqnarray*}
+Once you substitute for $c_1(z)$, you have two equations in the two unknowns,
+$c_0$ and $a$.
+
+This simplifies if we have power utility:
+$u(c) = c^{1-\alpha}/(1-\alpha)$ with $\alpha > 0$.
+Then $u'(c) = c^{-\alpha} $ and the second equation becomes
+\begin{eqnarray*}
+    0 &=& \beta \sum_z p(z) \left\{ (y_0-c_0)[(1-a) r^1 + a r^e(z)]\right\}^{-\alpha} (y_0-c_0) [ r^e(z)-r^1] \\
+    0 &=& \sum_z p(z) [(1-a) r^1 + a r^e(z)]^{-\alpha} [ r^e(z)-r^1] .
+\end{eqnarray*}
+Note the value of power utility:  the portfolio weight $a$ doesn't depend
+on the scale of consumption and can be solved separately.
+You can imagine calculating the rhs in Matlab
+and varying $a$ until it equals zero.
+
+Now the insight.  You might guess that how much equity you hold
+depends on its risk and return (the distribution of its return)
+and the agent's preference toward risk (risk aversion, $\alpha$).
+Merton's portfolio formula makes this precise:
+\begin{eqnarray*}
+    a &=& \frac{1}{\alpha} \frac{E (r^e - r^1)}{\mbox{Var}(r^e)} .
+\end{eqnarray*}
+This combines several ingredients:
+the expected excess return on the risky asset $E (r^e - r^1)$,
+its risk $\mbox{Var}(r^e)$,
+and the agent's risk aversion $\alpha$.
+%And it requires a lognormal distribution of $r^e$.
+The result is fragile, in the sense that many modest changes to the problem
+change the answer as well,
+but it's a useful starting point for an unusually tricky problem.
+
+The result is harder to prove than say, so we won't do it.
+Maybe another time.
+If you come up with Merton's formula as some kind of approximation
+of the first-order conditions, let me know.
+
+\begin{comment}
+Merton derived it in continuous time using a set of tools
+we will diligently avoid.
+Here we might start with the lognormal assumption.
+Let us say that $x = \log r^e - \log r^1 \sim \mathcal{N}(\kappa_1,\kappa_2)$.
+Then $r^e = r^1 e^x$ and
+$r^e-r^1 = r^1 (e^x-1)$.
+\end{comment}
+
+
+\section*{Bottom line}
+
+We derived the fundamental equation for the course:
+\begin{eqnarray*}
+    E \left( \frac{\beta u'(c_1)}{u'(c_0)}\; r^j \right) &=&
+        E \left( m r^j \right) \;\;=\;\;  1
+\end{eqnarray*}
+for (gross) returns $r^j$ on all assets $j$.
+Here it's the first-order condition for a consumer's portfolio choice
+problem.
+Later on it will show up as an asset pricing relation.
+
+
+\section*{Practice problems}
+
+\begin{enumerate}
+\item {\it Lagrangian methods.\/}
+Consider the constrained optimization problem:  choose $\{x,y\}$
+to maximize
+\begin{eqnarray*}
+    f(x,y) &=& x + \log y
+\end{eqnarray*}
+subject to $ x + y \leq 7$.
+%
+\begin{enumerate}
+\item What is the Lagrangian function associated with this problem?
+\item What are the first-order conditions?
+\item What values of $x$ and $y$ solve the problem?
+\end{enumerate}
+%
+\needspace{2\baselineskip}
+Answer.
+\begin{enumerate}
+\item The Lagrangian is
+\begin{eqnarray*}
+    \mathcal{L} &=& x + \log y  + \lambda (7 - x - \log y ).
+\end{eqnarray*}
+\item The first-order conditions are
+\begin{eqnarray*}
+    1 &=& \lambda \\
+    1/y &=& \lambda .
+\end{eqnarray*}
+\item The solution is $\lambda = 1 = y$ and $x = 6$.
+\end{enumerate}
+
+\item {\it Consumption, saving, and the interest rate.\/}
+Consider the two-period consumer problem:  choose consumptions $(c_0,c_1)$
+to maximize utility
+\begin{eqnarray*}
+    U(c_0,c_1) &=& c_0^{1-\alpha}/(1-\alpha) + \beta c_1^{1-\alpha}/(1-\alpha)
+\end{eqnarray*}
+subject to the budget constraint $ c_0 + Q c_1 \leq y_0 $
+(that is, there's no date-1 income).  %(\ref{eq:budget-2period}).
+%
+\begin{enumerate}
+\item What is the Lagrangian function associated with this problem?
+What are the first-order conditions?
+\item Express consumptions as functions of income $y_0$ and the
+price $Q$.
+\item How does date-0 consumption $c_0$ depend on $Q$?
+\item How does saving depend on $Q$?  On the interest rate?
+\end{enumerate}
+%
+\needspace{2\baselineskip}
+Answer.
+\begin{enumerate}
+\item The Lagrangian is
+\begin{eqnarray*}
+    \mathcal{L} &=& c_0^{1-\alpha}/(1-\alpha) + \beta c_1^{1-\alpha}/(1-\alpha)
+            + \lambda (y_0 - c_0 - Q c_1 ).
+\end{eqnarray*}
+The first-order conditions are
+\begin{eqnarray*}
+        0 &=& c_0^{-\alpha} - \lambda \\
+        0 &=& \beta c_1^{-\alpha} - \lambda Q .
+\end{eqnarray*}
+\item We have the two first-order conditions plus the budget constraint
+to solve for the three unknowns $(c_0,c_1,\lambda)$.
+We solve the foc's for the $c$'s, then substitute back into the budget constraint:
+\begin{eqnarray*}
+    \lambda^{-1/\alpha} &=& y_0/ \big( 1 + Q^{1-1/\alpha} \beta^{1/\alpha} \big) .
+\end{eqnarray*}
+Now we plug this into the foc's to get
+\begin{eqnarray*}
+    c_0 &=& \lambda^{-1/\alpha}  \;\;=\;\;
+            y_0/ \big( 1 + Q^{1-1/\alpha} \beta^{1/\alpha} \big) \\
+    c_1 &=& (\lambda Q/\beta)^{-1/\alpha}  \;\;=\;\;
+            y_0 Q^{-1/\alpha} \beta^{1/\alpha} / \big( 1 + Q^{1-1/\alpha} \beta^{1/\alpha} \big).
+\end{eqnarray*}
+\item The impact of an increase in $Q$ on $c_0$ depends on $\alpha$.
+If $\alpha<1$, $c_0$ rises, otherwise it falls.
+
+\item Since saving is $ s = y_0-c_0$,
+the impact of an increase in the interest rate is the reverse of the impact on $c_0$.
+We change signs again if we use the interest rate, which is connected to $Q$ by $Q=1/r$.
+
+\end{enumerate}
+
+\item {\it Arrow securities 1.\/}
+Consider an economy with two assets and two states.
+Asset 1 (a bond) pays 1.0 in each state and sells for $q^1 = 0.9$.
+Asset 2 (equity) pays 1.0 in state 1, 1.5 in state 2, and sells for 1.2.
+\begin{enumerate}
+\item What is the return on the bond?
+\item What is the return on equity?
+\item Describe how each asset can be decomposed into a collection of Arrow securities.
+\item What are the prices of the Arrow securities (aka the state prices)?
+\end{enumerate}
+%
+\needspace{2\baselineskip}
+Answer.
+\begin{enumerate}
+\item Returns are ratios of payoffs $d(z)$ to price $q$.
+For the bond, the payoff is the same in both states, so we have
+$ r^1 = d/q = 1/0.9 $.
+\item For equity, the return depends on the state:
+\begin{eqnarray*}
+    r^e(z) &=& \left\{
+                \begin{array}{ll}
+                1/1.2 & \mbox{if } z=1 \\  1.5/1.2 & \mbox{if } z=2 .
+                \end{array}
+                \right.
+\end{eqnarray*}
+\item The descriptions tell us how the assets are connected to Arrow securities.
+The bond consists of one unit of each Arrow security.
+Equity consists of one unit of the first Arrow security and 1.5 units of the second.
+\item Prices of assets and Arrow securities are connected by
+\begin{eqnarray*}
+    q^1 &=& 1.0 Q(1) + 1.0 Q(2) \\
+    q^e &=& 1.0 Q(1) + 1.5 Q(2) .
+\end{eqnarray*}
+The prices of Arrow securities are
+$Q(1) = 0.3$ and $Q(2) = 0.6$.
+\end{enumerate}
+
+\item {\it Arrow securities 2.\/}
+Consider an economy with two assets and three states.
+Asset 1 (a bond) pays one in each state and sells for $q^1 = 13/12$.
+Asset 2 (equity) pays one in state 1, two in state 2, and three in state 3,
+and sells for 27/12.
+
+Can you find the prices of the Arrow securities?
+What would you suggest?
+%
+\needspace{2\baselineskip}
+Answer.
+As before, the descriptions tell us how the assets are connected to Arrow securities.
+They give us
+\begin{eqnarray*}
+    q^1 &=& 1.0 Q(1) + 1.0 Q(2) + 1.0 Q(3) \\
+    q^e &=& 1.0 Q(1) + 2.0 Q(2) + 3.0 Q(3) .
+\end{eqnarray*}
+% Q = 1/4, 1/3, 1/2 works
+We have three unknowns but only two equations, so we have some ambiguity over
+the state prices.
+There are several things we could do about this.
+One is get more assets.  We could consider equity options, for example.
+Another is not to worry about it:  any solution to the two equations prices
+the assets correctly.
+Yet another is to choose the ``smallest'' vector $Q$ that works.
+
+\item {\it Portfolio choice.\/}
+Portfolio choice problems are notoriously unfriendly,
+but we can get a sense of their properties with an example.
+The agent's consumption-saving-portfolio-choice problem is
+\begin{eqnarray*}
+   \max_{c_0, a} &&  u(c_0) + \beta \sum_z p(z) u[c_1(z)] \\
+   \mbox{Subject to} &&  c_1(z)\;\;=\;\; (y_0-c_0)[(1-a) r^1 + a r^e(z)] .
+\end{eqnarray*}
+The idea is that we have two assets,
+a riskfree asset with gross return $r^1$ (``$1$'' for one-period bond)
+and a risky asset with gross return $r^e$  (``$e$'' for equity).
+We invest a fraction $a$ of our saving $s = y_0 - c_0$
+in equity and the complementary
+fraction $1-a$ in the riskfree bond.
+If $a>1$, the agent has a levered position.
+Note that this version of the problem is slightly different from the one we used in class.
+
+We'll deal with a special case:
+two states, $z=1$ and $z=2$;
+equally likely, $p(1) = p(2) = 1/2$;
+and power utility, $u(c) = c^{1-\alpha}/(1-\alpha)$.
+Parameter values include
+$\beta = 1/1.1$,
+$r^1 = 1.1$,
+$r^e(1) = 1.0$, $r^e(2) = 1.4$,
+$ y_0 = 1$.
+
+\begin{enumerate}
+\item What are the mean and variance of the return on equity?
+\item What are the implied prices of Arrow securities?
+Hint:  Recall that Arrow securities pay off in one state only.
+Our assets are combinations of Arrow securities,
+so it's a question of unbundling them.
+\item What are the first-order conditions for $c_0$ and $a$?
+Show that with power utility,
+the latter can be determined without knowing $c_0$.
+\item Solve these conditions numerically for $\alpha = 5$.
+What values do you get for $a$, $c_0$, $c_1(1)$, and $c_1(2)$?
+%Comment:  I did this
+%by varying $a$ until its first-order condition was satisfied.
+%You could also compute the first-order condition for a grid of values for $a$,
+%and choose the one that works best.
+\item How does your answer change if you use $\alpha = 2$?
+Does the difference make sense to you?
+\item How do your answers compare to those of Merton's portfolio formula?
+\end{enumerate}
+%
+\needspace{2\baselineskip}
+Answer.
+\begin{enumerate}
+\item The mean is 1.2 (the average of 1.0 and 1.4)
+and the variance is $0.2^2 = 0.04$.
+
+\item
+Let $Q(z)$ be the price of the Arrow security that pays one
+in state $z$.
+A one-period bond pays one in each state, so its price is the sum:
+\begin{eqnarray*}
+    q^1 \; (=1/r^1)  &=&  Q(1) + Q(2)  .
+\end{eqnarray*}
+Equity is a little more complicated, because we have to agree on
+units.  Let's choose units to that the price of a share is one
+unit of date-0 consumption.
+Then it pays off 1.0 units of date-1 consumption in state $z=1$
+and 1.4 units in state $z=2$:
+\begin{eqnarray*}
+    q^e \; (=1)  &=&  1.0 Q(1) + 1.4 Q(2)  .
+\end{eqnarray*}
+Now it's a matter of algebra to find
+$Q(1) = 0.6818$ and $Q(2) = 0.2273$.
+
+
+\item The first-order conditions are
+\begin{eqnarray*}
+    c_0:  &&  u'(c_0) \;\;=\;\; \beta \sum_z p(z)
+%            u' \left\{  (y_0-c_0) [ (1-a)r^1 + a r^e(z)] \right\}
+            u'[c_1(z)] [ (1-a)r^1 + a r^e(z)] \\
+    a:    && 0 \;\;=\;\; \beta \sum_z p(z) u'[c_1(z)] [r^e(z) - r^1 ]  .
+\end{eqnarray*}
+Written out more completely, the latter becomes
+\begin{eqnarray*}
+    0 &=& \beta \sum_z p(z) (y_0-c_0)^{1-\alpha} [ (1-a)r^1 + a r^e(z)]^{-\alpha} [r^e(z) - r^1 ] \\
+    &=&  \sum_z p(z) [ (1-a)r^1 + a r^e(z)]^{-\alpha} [r^e(z) - r^1 ] ,
+\end{eqnarray*}
+which depends on $a$ but not $c_0$.
+
+\item
+We'll talk about numerical methods for solving equations shortly (``root-finding''),
+but the simplest way is to compute the right side of the previous equation
+for a grid of values for $a$.
+We take the value that produces the first-order condition closest to zero.
+A grid of 0.01 gives us $a=1.70$ when $\alpha=2$.
+
+Now that we know $a$, we can find $c_0$ from the first first-order condition:
+\begin{eqnarray*}
+    c_0^{-\alpha}  &=&  \beta (y_0-c_0)^{-\alpha}
+            \sum_z p(z) [ (1-a)r^1 + a r^e(z)]^{1-\alpha}  .
+\end{eqnarray*}
+We compute the sum on the rhs first --- denote it by $S$ (for sum).
+Then we solve for $c_0$:
+\begin{eqnarray*}
+    (y_0-c_0)/c_0 &=& (\beta S)^{-1/\alpha}
+        \;\;\Rightarrow\;\;
+        c_0  \;\;=\;\; y_0 /[ 1 + (\beta S)^{-1/\alpha}] .
+\end{eqnarray*}
+Second-period consumption follows from the budget constraint:
+$c_1(z)=  (y_0-c_0)[(1-a) r^1 + a r^e(z)] $.
+The numbers are listed below:
+\begin{center}
+\begin{tabular}{lccccc}
+\toprule
+                &  $a$  &  $S$    & $c_0$   &  $c_1(1)$ &  $c_1(2)$  \\
+\midrule
+$\alpha = 2$    & 1.702 & 0.8482  & 0.4676  & 0.4951    & 0.8576 \\
+$\alpha = 5$    & 0.637 & 0.6135  & 0.4708  & 0.5484    & 0.6832 \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\item When $\alpha=5$, we get $a=0.64$ by the same method.
+The punchline:  when we increase risk aversion, we hold less of the risky asset
+and have less risky second-period consumption as a result.
+
+\item Merton's formula gives us $a= 1.25$ with $\alpha = 2$
+and $a = 0.5 $ with $\alpha = 5$.
+There are ways to make the approximation better, but we'll leave that for someone else.
+\end{enumerate}
+%
+\needspace{2\baselineskip}
+Here's the Matlab code:
+\begin{verbatim}
+% inputs
+beta = 1/1.1;
+r1 = 1.1;
+re_1 = 1.0;
+re_2 = 1.4;
+y0 = 1;
+
+% Arrow securities
+disp('Prices of Arrow securities')
+Q = inv([1 1; 1 1.4])*[1/r1; 1]
+
+% portfolio weight a: find value that sets foc closest to zero
+agrid = [0.1:0.001:2];
+
+disp('Portfolio shares for alpha equal to 2 and 5')
+alpha = 2;
+foc2 = 0.5*((1-agrid)*r1+agrid*re_1).^(-alpha).*(re_1-r1) + ...
+        0.5*((1-agrid)*r1+agrid*re_2).^(-alpha).*(re_2-r1);
+[focmin,i] = min(abs(foc2));
+a2 = agrid(i)
+
+alpha = 5;
+foc5 = 0.5*((1-agrid)*r1+agrid*re_1).^(-alpha).*(re_1-r1) + ...
+        0.5*((1-agrid)*r1+agrid*re_2).^(-alpha).*(re_2-r1);
+axis = 0*agrid;
+[focmin,i] = min(abs(foc5));
+a5 = agrid(i)
+
+plot(agrid,foc2,'b')
+hold on
+plot(agrid,foc5,'m')
+plot(agrid,axis,'k')
+ylabel('First-order condition')
+xlabel('Portfolio weight a')
+title('Blue is \alpha=2, Magenta is \alpha=5')
+
+disp(' ')
+disp('Consumption quantities')
+alpha = 5; a = a5;          % change as needed
+S = 0.5*((1-a)*r1+a*re_1)^(1-alpha) + 0.5*((1-a)*r1+a*re_2)^(1-alpha)
+SBA = (S*beta)^(-1/alpha)
+
+c0 = y0/(1+SBA)
+saving = y0 - c0
+
+c1_1 = saving*((1-a)*r1+a*re_1)
+c1_2 = saving*((1-a)*r1+a*re_2)
+
+% Merton's formula
+% See:  http://en.wikipedia.org/wiki/Merton's_portfolio_problem
+disp('Compare answers to Merton formula')
+E_rx = 0.5*(re_1+re_2) - r1
+var_re = 0.2^2
+
+amerton2 = E_rx/(2*var_re)
+amerton5 = E_rx/(5*var_re)
+\end{verbatim}
+
+\end{enumerate}
+
+\vfill
+{\bigskip \centerline{\it \copyright \ \number\year \
+NYU Stern School of Business}
+}
+
+\end{document}
+

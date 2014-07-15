@@ -1,0 +1,191 @@
+\documentclass[11pt]{exam}
+
+\oddsidemargin=0.25truein \evensidemargin=0.25truein
+\topmargin=-0.5truein \textwidth=6.0truein \textheight=8.75truein
+
+%\RequirePackage{graphicx}
+\usepackage{comment}
+\usepackage{verbatim}
+\usepackage{booktabs}
+\usepackage{graphicx}
+\usepackage[dvipdfm]{hyperref}
+\urlstyle{rm}   % change fonts for url's (from Chad Jones)
+\hypersetup{
+    colorlinks=true,        % kills boxes
+    allcolors=blue,
+    pdfsubject={ECON-UB233, Macroeconomic foundations for asset pricing},
+    pdfauthor={Dave Backus @ NYU},
+    pdfstartview={FitH},
+    pdfpagemode={UseNone},
+%    pdfnewwindow=true,      % links in new window
+%    linkcolor=blue,         % color of internal links
+%    citecolor=blue,         % color of links to bibliography
+%    filecolor=blue,         % color of file links
+%    urlcolor=blue           % color of external links
+% see:  http://www.tug.org/applications/hyperref/manual.html
+}
+
+\renewcommand{\thefootnote}{\fnsymbol{footnote}}
+\newcommand{\var}{\mbox{\it Var\/}}
+
+%\printanswers
+
+% document starts here
+\begin{document}
+\parskip=\bigskipamount
+\parindent=0.0in
+\thispagestyle{empty}
+{\large ECON-UB 233 \hfill Dave Backus @ NYU}
+
+\bigskip\bigskip
+%\centerline{\Large \bf Lab Report \#7:  Stochastic Processes}
+\centerline{\Large \bf Lab Report \#7:  Dynamics in Theory and Data}
+\centerline{(Started: April 11, 2012; Revised: \today)}
+
+\bigskip
+{\it Due at the start of class.
+You may speak to others, but whatever you hand in should be your own work.}
+
+\begin{questions}
+
+\begin{solution}
+Answers follow.  See Matlab code at the end for calculations.
+\end{solution}
+
+%-----------------------------------------------------------------------
+\question (dynamics of interest rates)
+We'll look at the autocorrelations of interest rates to get a sense
+of their dynamics.  
+The first step is to download some data from the Fed. 
+Go to 
+
+\url{http://www.federalreserve.gov/releases/h15/data.htm}
+
+and download monthly data for Treasury constant maturities, 
+specifically the 1-month and 10-year maturities, 
+for the period 1985 to present.   
+Read them into Matlab and:  
+
+
+\begin{parts}
+\part Compute the mean, standard deviation, 
+and autocorrelation function (acf) for the 1-month 
+interest rate.  
+(You may recall that we used the program {\tt acf.m} for the latter
+in class.  It's our program, not part of Matlab, although Matlab's
+Econometrics Toolbox has a similar function.
+It works on time series objects, which is something I'd prefer to avoid for now.
+But by all means do whatever you wish.) 
+
+\part Describe the acf for an AR(1):  
+\begin{eqnarray*}
+    x_t &=& (1-\varphi) \mu + \varphi x_{t-1} + \theta w_t ,
+\end{eqnarray*}
+where $ \{ w_t \} \sim \mbox{NID}(0,1)$.  
+How do the acf's compare for the data and a suitably estimated AR(1)?  
+\part Compute the mean, standard deviation,
+autocorrelation function (acf) for the 10-year interest rate.
+How do they compare to the 1-month rate?
+\end{parts}
+
+\begin{solution}
+\begin{parts}
+\part ..
+\end{parts}
+\end{solution}
+
+%-----------------------------------------------------------------------
+\question (two-state Markov chain)
+We can get a sense of how Markov chains work with a two-state example.
+A two-state chain is characterized by a 2 by 2 transition matrix $P$.
+Because the rows sum to one, $P$ has (essentially) two parameters.
+A convenient parameterization is
+\begin{eqnarray}
+    P &=& (1-\varphi)
+        \left[
+        \begin{array}{cc}
+        \omega & 1-\omega \\ \omega & 1-\omega
+        \end{array}
+        \right]
+        + \varphi
+        \left[
+        \begin{array}{cc}
+        1  & 0  \\  0  & 1
+        \end{array}
+        \right] ,
+        \label{eq:p-simple}
+\end{eqnarray}
+where the two parameters are $\omega$ and $\varphi$.
+
+\begin{parts}
+\part Under what conditions on $(\omega, \varphi)$ is $P$ a legitimate
+transition matrix?
+\part What are the two-period transitions $P^2$?
+You can either do this by hand or get Matlab to do it.  Either way,
+the key is to arrange the terms into a form similar to (\ref{eq:p-simple}).
+\part What about the $k$-period transitions?
+\part What happens as we continue to increase $k$?
+What is the equilibrium distribution?
+\part (extra credit) What are the eigenvalues of $P$?
+\end{parts}
+
+\begin{solution}
+\begin{parts}
+\part
+\end{parts}
+\end{solution}
+
+
+%-----------------------------------------------------------------------
+\question (state-space representations)
+State-space models have a similar mathematical structure
+in the sense that dynamics follow from powers of a matrix.
+The canonical version is
+\begin{eqnarray}
+    x_{t+1} &=& A x_t + B w_{t+1} .
+    \label{eq:state-space}
+\end{eqnarray}
+Here $x$ is a vector, $w \sim \mathcal{N}(0,I)$
+is also a vector (of possibly different dimension),
+and $(A,B)$ are matrices.
+
+\begin{parts}
+\part Consider the ARMA(1,1):
+\begin{eqnarray*}
+    y_t &=& \varphi_1 y_{t-1} + \theta_0 w_t + \theta_1 w_{t-1} .
+\end{eqnarray*}
+Show that this can be expressed in the same form as (\ref{eq:state-space}).
+\part Ditto for the ARMA(2,1):
+\begin{eqnarray*}
+    y_t &=& \varphi_1 y_{t-1} + \varphi_2 y_{t-2} + \theta_0 w_t + \theta_1 w_{t-1} .
+\end{eqnarray*}
+\part For the general model (\ref{eq:state-space}),
+what is the distribution of $x_{t+2}$ given $x_t$?
+\part Ditto for $x_{t+k}$.
+Under what conditions does this converge as $k$ gets large?
+
+\end{parts}
+
+\begin{solution}
+\begin{parts}
+\part
+\end{parts}
+\end{solution}
+
+\end{questions}
+
+\vfill \centerline{\it \copyright \ \number\year \
+NYU Stern School of Business}
+
+\end{document}
+
+\pagebreak
+Matlab program:
+\verbatiminput{../Matlab/hw7_s12.m}
+
+\end{document}
+
+
+%  EXTRA STUFF
+
+

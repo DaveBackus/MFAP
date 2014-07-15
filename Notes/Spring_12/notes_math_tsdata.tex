@@ -1,0 +1,148 @@
+\documentclass[11pt]{article}
+
+\oddsidemargin=0.25truein \evensidemargin=0.25truein
+\topmargin=-0.5truein \textwidth=6.0truein \textheight=8.75truein
+
+%\usepackage{graphicx}
+\usepackage{verbatim}
+%\usepackage{booktabs}
+\usepackage{comment}
+\usepackage[dvipdfm]{hyperref}
+\urlstyle{rm}   % change fonts for url's (from Chad Jones)
+\hypersetup{
+    colorlinks=true,        % kills boxes
+    allcolors=blue,
+    pdfsubject={ECON-UB233, Macroeconomic foundations for asset pricing},
+    pdfauthor={Dave Backus @ NYU},
+    pdfstartview={FitH},
+    pdfpagemode={UseNone},
+%    pdfnewwindow=true,      % links in new window
+%    linkcolor=blue,         % color of internal links
+%    citecolor=blue,         % color of links to bibliography
+%    filecolor=blue,         % color of file links
+%    urlcolor=blue           % color of external links
+% see:  http://www.tug.org/applications/hyperref/manual.html
+}
+
+\renewcommand{\thefootnote}{\fnsymbol{footnote}}
+
+% document starts here
+\begin{document}
+\parskip=\bigskipamount
+\parindent=0.0in
+\thispagestyle{empty}
+{\large ECON-UB 233 \hfill Dave Backus @ NYU}
+
+\bigskip\bigskip
+\centerline{\Large \bf Math Tools:  Time Series Data}
+\centerline{(Started: December 5, 2011; Revised: \today)}
+
+\bigskip
+We describe a couple ways to summarize the dynamic patterns
+evident in time series data:
+a sample of observations
+$ (x_t, x_2, \ldots, x_T)$.
+What's different about time series data is that the order matters:
+$x_3$ is next to $x_2$ and $x_4$,
+which is typically relevant to how we think about them.
+
+We develop two tools for describing the behavior of time series variables.
+The first is the {\it autocorrelation function\/},
+a summary of the relation between $x_t$ and $x_{t-k}$
+for various values of $k$.
+The second is the {\it cross-correlation function\/}
+a summary of the relation between $x_t$ and $y_{t-k}$.
+
+
+\begin{comment}
+\subsection*{Stationarity}
+
+We'll be talking about sample moments, but the sample moments only
+make sense if we have some underlying distribution theory.
+Distribution of $x_t$ doesn't depend on $t$.
+For example, its mean and variance don't depend on $t$.
+Ditto joint distribution $ (x_t, x_{t+1}, x_{t+k} ,...)$ ...
+
+That means moments don't depend on $t$, including mean and variance.
+\end{comment}
+
+\subsection*{Autocovariances and autocorrelations}
+
+You may recall that the sample mean is
+\begin{eqnarray*}
+    \bar{x} &=& T^{-1} \sum_{t=1}^T x_{t}
+\end{eqnarray*}
+and the variance is
+\begin{eqnarray*}
+    \gamma_x(0)  &=&   T^{-1} \sum_{t=1}^T (x_{t}-\bar{x})^2 .
+\end{eqnarray*}
+The rational for the odd notation should be clear shortly.
+
+
+Consider the covariance of $x_t$ with $x_{t-k}$,
+for $k$ a nonnegative integer.
+The sample covariance is computed
+\begin{eqnarray*}
+    \gamma_x(k)  &=&  T^{-1} \sum_{t=k+1}^T (x_{t}-\bar{x})(x_{t-k}-\bar{x}) .
+\end{eqnarray*}
+Since we only have the observations $x_t$ for $t=1,...,T$,
+we need to start the sum at $t=k+1$.
+By longstanding convention, we nevertheless divide the sum by $T$ rather than $T-k$.
+We could also consider negative values of $k$, but we'd have to adjust the
+range in the sum appropriately.
+We refer to $\gamma_x(k)$, a function of $k$, as the autocovariance function;
+that is, the covariances of $x$ with itself, so to speak.
+When $k=0$, we get the variance.
+
+The shape of $\gamma_x(k)$ is useful in telling us about the dynamics of $x$,
+but it's more common to scale it by $\gamma_x(0)$ and convert it to
+a correlation.
+The autocorrelation function $\rho_x(k)$ is defined by
+\begin{eqnarray*}
+    \rho_x(k)  &=&  \gamma_x(k)/\gamma_x(0).
+\end{eqnarray*}
+Obviously $\rho_x(0) = 1$:  $x_t$ is perfectly correlated with $x_t$.
+But for other values of $k$ it can take a variety of forms.
+
+We see, for example, that autocorrelations of equity returns are very small:
+returns are virtually uncorrelated over time.
+Interest rates, however, are very persistent:
+the autocorrelations decline slowly with $k$.
+You can verify other patterns in the data we used in class.
+
+\subsection*{Cross-covariances and cross-correlations}
+
+We can extend the idea to the relation between two variables, say $x$ and $y$.
+The sample {\it cross-covariance function\/} (cross meaning across two variables)
+is defined by
+\begin{eqnarray*}
+    \gamma_{xy}(k)  &=&
+            T^{-1} \sum_{t} (x_t - \bar{x}) (y_{t-k} - \bar{y}) ,
+\end{eqnarray*}
+where the sum is over the appropriate range.
+This is defined by integer values of $k$.
+If $k$ is negative, we're looking at the covariance of
+$x$ and future $y$.
+If $k$ is positive, we're looking at the covariance of
+$x$ and past $y$.
+Either way, we learn something about the dynamic association of $x$ and $y$.
+
+As before, it's conventional to report correlations rather than covariances.
+The {\it cross-correlation function\/} is
+\begin{eqnarray*}
+    \gamma_{xy}(k)  &=&  \frac{\gamma_{xy}(k)}{\gamma_{x}(0)^{1/2}\gamma_{y}(0)^{1/2}} ,
+\end{eqnarray*}
+the covariance divided by the product of standard deviations.
+
+\vfill \centerline{\it \copyright \ \number\year \
+NYU Stern School of Business}
+
+\end{document}
+
+\pagebreak
+Matlab programs:
+\verbatiminput{../Matlab/acf.m}
+\verbatiminput{../Matlab/ccf.m}
+\verbatiminput{../Matlab/business_cycles.m}
+
+\end{document}

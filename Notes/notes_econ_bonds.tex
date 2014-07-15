@@ -1,0 +1,1663 @@
+\documentclass[11pt]{article}
+
+\oddsidemargin=0.25truein \evensidemargin=0.25truein
+\topmargin=-0.5truein \textwidth=6.0truein \textheight=8.75truein
+
+%\usepackage{graphicx}
+\usepackage{verbatim}
+\usepackage{booktabs}
+\usepackage{comment}
+\usepackage[small, compact]{titlesec}
+\usepackage{hyperref}
+\urlstyle{rm}   % change fonts for url's (from Chad Jones)
+\hypersetup{
+    colorlinks=true,        % kills boxes
+    allcolors=blue,
+    pdfsubject={ECON-UB233, Macroeconomic foundations for asset pricing},
+    pdfauthor={Dave Backus @ NYU},
+    pdfstartview={FitH},
+    pdfpagemode={UseNone},
+%    pdfnewwindow=true,      % links in new window
+%    linkcolor=blue,         % color of internal links
+%    citecolor=blue,         % color of links to bibliography
+%    filecolor=blue,         % color of file links
+%    urlcolor=blue           % color of external links
+% see:  http://www.tug.org/applications/hyperref/manual.html
+}
+
+% list spacing
+\usepackage{enumitem}
+\setitemize{leftmargin=*, topsep=0pt}
+\setenumerate{leftmargin=*, topsep=0pt}
+
+\usepackage{needspace}
+% example:  \needspace{4\baselineskip} makes sure we have four lines available before pagebreak
+
+\renewcommand{\thefootnote}{\fnsymbol{footnote}}
+\newcommand{\tp}{\mbox{\it tp\/}}
+\newcommand{\bp}{\mbox{\it bp\/}}
+\newcommand{\yp}{\mbox{\it yp\/}}
+
+% document starts here
+\begin{document}
+\parskip=\bigskipamount
+\parindent=0.0in
+\thispagestyle{empty}
+{\large ECON-UB 233 \hfill Dave Backus @ NYU}
+
+\bigskip\bigskip
+\centerline{\Large \bf Models of Bond Pricing}
+\centerline{Revised: \today}
+
+\bigskip
+We define bond prices and related objects
+and describe the connection between bond prices and the
+pricing kernel in arbitrage-free economies.
+Formally, we apply the no-arbitrage theorem in a dynamic setting.
+One version:  there exists a positive pricing kernel $m$ that satisfies
+\begin{eqnarray}
+    E_t \big( m_{t+1} r_{t+1}^j \big) &=& 1
+    \label{eq:E(mr)=1}
+\end{eqnarray}
+for gross returns $r^j$ on all assets $j$.
+
+Our application is bonds.
+We show that properties of the pricing kernel,
+particularly its dynamics,
+determine those of bond prices.
+We then use observed properties of bond prices
+(mean, standard deviation, autocorrelation)
+to infer parameter values for some popular models.
+All of our examples are loglinear; they're what have come to be
+called {\it exponential-affine\/} models.
+The convenience of linearity should be clear from our earlier work.
+%The pricing kernel is, so to speak, reverse engineered
+%from bond prices rather than built up from (say)
+%the marginal rate of substitution of a representative agent.
+%We leave for another time (never?) the question of how to reconcile
+%the two approaches.
+
+Built into our approach is the idea that variation in
+bond prices and others things over time
+is variation in the state.
+The state evolves through time in some specified way.
+Bond prices are functions of the state,
+so they vary through time as well.
+But the variation comes from their connection to the state.
+
+
+\section{Definitions:  bond prices, yields, and forward rates}
+
+Bond prices:
+$q^n_t$ is the price at date $t$ of one unit
+at date $t+n$.
+One unit of what?
+For now, dollars, but we can reconsider units later.
+Some people refer to these prices as {\it discount factors\/}
+or prices of {\it zeros\/}, meaning zero-coupon bonds.
+
+What about coupons?  Same thing, but apply the appropriate price
+to each payment.
+
+{\it Yields\/} are a convention for reporting prices.
+The continuously-compounded yield is connected to the price by
+\begin{eqnarray}
+    q^n_t &=&  \exp(- n y^n_t)
+        \;\;\Leftrightarrow\;\;
+        y^n_t \;\;=\;\; - n^{-1} \log q^n_t .
+        \label{eq:yields}
+\end{eqnarray}
+It's the average rate of discount over the interval $[t, t+n]$.
+Sometimes it's more useful to apply a different
+rate to each period:
+\begin{eqnarray}
+    q^n_t &=&  \exp[- (f^0_t + f^1_t + \cdots + f^{n-1}_t)]
+        \;\;\Leftrightarrow\;\;
+        f^n_t \;\;=\;\;  \log q^n_t - \log q^{n+1}_t .
+        \label{eq:forwards}
+\end{eqnarray}
+We refer to $f^j_t$ as the $j$-period ahead {\it forward rate\/}.
+Together we have
+\begin{eqnarray*}
+    y^n_t &=&  n^{-1} \left( f^0_t + f^1_t + \cdots + f^{n-1}_t \right).
+\end{eqnarray*}
+In words:  yields are averages of forward rates.
+Yields and forwards are analogous to average and marginal cost in microeconomics.
+
+[Draw time line, show what periods yields and forwards apply to.]
+
+[Plot $-\log b^n_t$ versus maturity $n$.  Show yields and forwards.]
+
+Sometimes for convenience we'll refer to the {\it short rate\/}
+$f^0_t = y^1_t$.
+This is continuously compounded, not the same as the return on
+a one-period bond (we'll get to returns shortly).
+
+Evidently we can report bond prices $q^n_t$ (one number for each maturity $n$),
+yields $y^n_t$, or forward rates $f^n_t$.
+Once we know one, we can compute the others.
+Forwards are mathematically simpler, but yields are more common.
+
+One last thing:  bond prices and returns have units.
+Typically the units are dollars (or other currency):
+bonds are claims to dollars, prices are measured in dollars,
+and returns are dollars later per dollar now.
+We could use other units, but those are the standard one.
+
+
+\section{Pricing kernels and bond prices}
+
+The simplicity and elegance of bond pricing comes
+from the lack of an uncertain dividend.
+Since the cash flows are known ---
+that's why we call bonds and related securities as ``fixed income'' ---
+prices depend only on the pricing kernel.
+To make the point absolutely clear:  the pricing kernel alone determines
+bond prices.  Period.
+
+
+We price assets as we did before:  using the no-arbitrage theorem.
+In a dynamic setting, this is equation (\ref{eq:E(mr)=1}).
+The difference with our earlier work is that $m$ is now a stochastic process.
+
+[Note units:  $m$ has inverse units to $r$.
+If $r_{t+1}$ is dollars tomorrow for dollars today,
+then $m_{t+1}$ has units of 1/dollars tomorrow
+for 1/dollars today.
+That way the units cancel and we're left with the unit-free ``1'' on the rhs.]
+
+What are the {\it bond returns\/} we plug into this pricing relation?
+The relevant returns are sometimes called {\it holding period returns\/}
+for a holding period of one.
+If we buy an $(n+1)$-period bond at $t$ and hold it for one period,
+we're left with an $n$-period bond at $t+1$.
+Our (gross) return is
+\begin{eqnarray}
+        r^{n+1}_{t+1} &=&  q^n_{t+1}/q^{n+1}_t .
+        \label{eq:bond-returns}
+\end{eqnarray}
+Same object for bonds as the returns we've computed on
+other assets.
+
+
+Now put this to work.  If we substitute the return (\ref{eq:bond-returns})
+into the pricing relation (\ref{eq:E(mr)=1}) we have
+\begin{eqnarray}
+    q^{n+1}_t &=& E_t \left( m_{t+1} q^n_{t+1} \right) .
+    \label{eq:bond-recursion}
+\end{eqnarray}
+So if we know the price of an $n$-period bond,
+we can compute the price of an $(n+1)$-period bond.
+We do this recursively starting with $q^0_t = 1$ (one now costs one).
+The first one is what we've been doing all along:
+$ q^1_t = E_t (m_{t+1} q^0_{t+1}) = E_t (m_{t+1})$.
+Long-maturity bonds follow from the same logic repeated:
+given the price of an $n$-period bond,
+use (\ref{eq:bond-recursion}) to find the price of an $n+1$-period bond.
+
+{\bf **** Do big M thing, show how relative price can be computed sequentially ****}
+
+Optional digression.
+We've done this recursively, but you can imagine doing it ``all at once.''
+The price of a two-period bond, for example, can be written
+\begin{eqnarray*}
+    q^{2}_t &=& E_t \left( m_{t+1} q^1_{t+1} \right) \\
+            &=& E_t \left( m_{t+1} E_{t+1} [m_{t+2}] \right) \\
+            &=& E_t \left( m_{t+1} m_{t+2} \right) .
+\end{eqnarray*}
+The last line follows from the law of iterated expectations.
+Repeating the same logic, we find
+\begin{eqnarray*}
+    q^{n}_t  &=& E_t \left( m_{t+1} m_{t+2} \cdots m_{t+n} \right) .
+\end{eqnarray*}
+If this seems overly mysterious, just leave it alone.
+
+
+Our focus will be on the dynamics of $m$.
+To make the point that dynamics are needed to produce realistic
+bond prices, consider the case of an iid pricing kernel.
+The one-period bond price is, as we've seen,
+\begin{eqnarray*}
+    q^{1}_t &=& E_t \left( m_{t+1} \right) .
+\end{eqnarray*}
+Since $m$ is iid, this is just a number $q^1$,
+the same in all date-$t$ states.
+%
+Now let's do the same thing again.
+Since $q^1 $ is a number, we have
+\begin{eqnarray*}
+    q^{2}_t &=& E_t \left( m_{t+1} q^1 \right)
+            \;\;=\;\;  q^1 E_t \left( m_{t+1}  \right)
+            \;\;=\;\;  (q^1)^2 .
+\end{eqnarray*}
+Using the same logic over and over again gives us
+\begin{eqnarray*}
+    q^{n} &=& (q^1)^n .
+\end{eqnarray*}
+If we apply their definitions,
+we would see that bond yields and forward rates are the same across maturities
+and constant over time.
+Any way you look at it, there's no interest rate risk if $m$ is iid.
+
+The conclusion, evidently, is that we need dynamics in $m$
+to generate reasonable bond prices.
+But what kind of dynamics?
+We'll start simple and add complexity when called for.
+
+
+\section{The moving average pricing kernel (skip)}
+
+If we need dynamics, one idea that may come to mind is to use
+our linear dynamic models, specifically the infinite moving average.
+Whether it comes to mind or not, that's what we're going to do.
+
+Let us say, then, that the pricing kernel has the form
+\begin{eqnarray}
+    \log m_t &=& \delta + \sum_{j=0}^\infty a_j w_{t-j} ,
+    \label{eq:logm-ma}
+\end{eqnarray}
+where $\{ w_t \} $ is a sequence of iid standard normal random variables and
+the $a_j$'s are square-summable moving average coefficients.
+[Remind yourself what this means.]
+If $a_j = 0$ for $j \geq 1$ the pricing kernel is iid,
+otherwise its dynamics
+are governed by the moving average coefficients.
+The $\log$ is essential and guarantees that $m$ is strictly positive,
+as required by the no-arbitrage theorem.
+
+Let's look at the one-period ``short'' rate and see how it works.
+If the pricing kernel is (\ref{eq:logm-ma}),
+then next period's pricing kernel is
+\begin{eqnarray*}
+    \log m_{t+1} &=& \delta + \sum_{j=0}^\infty a_{1+j} w_{t-j} + a_0 w_{t+1} .
+\end{eqnarray*}
+The first two terms are known at $t$, the last one is not.
+%Other than the conditioning, we're back in our familiar lognormal world.
+As of date $t$, the log pricing kernel is normal with conditional mean and variance
+\begin{eqnarray*}
+    E_t ( \log m_{t+1}) &=& \delta + \sum_{j=0}^\infty a_{1+j} w_{t-j} \\
+    \mbox{Var}_t ( \log m_{t+1}) &=& a_0^2 .
+\end{eqnarray*}
+The usual ``mean plus variance over two'' gives us
+\begin{eqnarray*}
+    \log q^1_t &=& \log E_t \left(m_{t+1}\right)
+            \;\;=\;\; \delta + \sum_{j=0}^\infty a_{1+j} w_{t-j} + a_0^2/2 ,
+\end{eqnarray*}
+which has the same infinite moving average form as the pricing kernel.
+Note, too, the moving average coefficients:
+we simply moved them over one place.
+
+
+Can we express long-term bond prices in similar fashion?
+The answer is yes,
+but it's easiest to start with the solution:
+
+{\it Proposition\/}.  If the pricing kernel is (\ref{eq:logm-ma}),
+forward rates are
+\begin{eqnarray}
+    - f^n_t &=& \delta + A_n^2/2 + \sum_{j=0}^\infty a_{n+1+j} w_{t-j} ,
+\end{eqnarray}
+where $A_n = a_0 + a_1 + \cdots + a_n = \sum_{j=0}^n a_j $.
+Bond prices and yields follow from their definitions.
+
+Now how did we get there?
+Suppose bond prices have the form
+\begin{eqnarray*}
+    \log q^n_t &=& \delta^n + \sum_{j=0}^\infty b^n_{j} w_{t-j}
+\end{eqnarray*}
+with parameters $\delta^n$ and $\{b^n_j \}$ to be determined.
+Since $q^0_t = 1$, we have $\delta^0 =b^0_j = 0$.
+Given parameters for some maturity $n$,
+we use the pricing relation (\ref{eq:bond-recursion})
+to find the parameters of maturity $n+1$.
+
+
+Here's a typical step.
+The pricing relation uses the conditional distribution of
+\begin{eqnarray*}
+    \log m_{t+1} + \log q^n_{t+1} &=&  (\delta + \delta^n)
+                + \sum_{j=0}^\infty (a_{1+j} + b^n_{j+1}) w_{t-j}
+                + (a_0 + b^n_0) w_{t+1} .
+\end{eqnarray*}
+As before the first two terms on the right are known at date $t$
+and the last one is not.
+The conditional distribution is therefore normal with mean and variance
+\begin{eqnarray*}
+  E_t (  \log m_{t+1} + \log q^n_{t+1})  &=&  (\delta + \delta^n)
+                + \sum_{j=0}^\infty (a_{1+j} + b^n_{j+1}) w_{t-j} \\
+  \mbox{Var}_t (  \log m_{t+1} + \log q^n_{t+1})
+                &=&  (a_0 + b^n_0)^2  .
+\end{eqnarray*}
+The usual ``mean plus variance over two'' gives us
+\begin{eqnarray*}
+  \log q^{n+1}_t  &=&  (\delta + \delta^n)
+                + \sum_{j=0}^\infty (a_{1+j} + b^n_{j+1}) w_{t-j} +
+             (a_0 + b^n_0)^2 / 2 \\
+                &=& \delta^{n+1} + \sum_{j=0}^\infty b^{n+1}_{j} w_{t-j} .
+\end{eqnarray*}
+Lining up terms gives us
+\begin{eqnarray*}
+    \delta^{n+1} &=& \delta + \delta^n + (a_0 + b_0^n)^2/2\\
+    b_j^{n+1} &=& b_{j+1}^{n} + a_{j+1} ,
+\end{eqnarray*}
+two recursions that we need to beat into more useful shape.
+
+The trick is to be patient and work this out step by step.
+Let's take the second one.
+For $n = 0$,  we have $b^0_j = 0$ all $j$.
+For $n=1$, we have
+\begin{eqnarray*}
+    b^1_j &=& b^0_{j+1} + a_{1+j}
+            \;\;=\;\; 0 + a_{1+j}.
+\end{eqnarray*}
+That's what we saw earlier:  we simply shift the $a_j$'s over one.
+For $n=2$, we have
+\begin{eqnarray*}
+    b^2_j &=& b^1_{j+1} + a_{1+j}
+            \;\;=\;\; a_{2+j} + a_{1+j} ,
+\end{eqnarray*}
+and for $n=3$ we have
+\begin{eqnarray*}
+    b^3_j &=& b^2_{j+1} + a_{1+j}
+            \;\;=\;\; a_{3+j} + a_{2+j} + a_{1+j} .
+\end{eqnarray*}
+With a little work, we see that
+\begin{eqnarray*}
+    b^n_j &=& A_{n+j} - A_j  ,
+\end{eqnarray*}
+and we're done with the $b$'s.
+
+Now the $\delta$'s.
+We start again with $n=0$, in which case $\delta^0 = 0$.
+We'll need $b^n_0 = A_{n} - A_0 $,
+which implies $a_0 + b^n_0 = A_n$.
+We find, in order,
+\begin{eqnarray*}
+    \delta^1 &=& \delta + \delta^0 + a_0^2/2
+            \;\;=\;\; \delta + a_0^2/2 \\
+    \delta^2 &=& 2 \delta + a_0^2/2 + A_1^2/2 \\
+    \delta^3 &=& 3 \delta + a_0^2/2 + A_1^2/2 + A_2^2/2\\
+    \delta^n &=& n \delta + A_0^2/2 + A_1^2/2 + \cdots + A_{n-1}^2/2 .
+\end{eqnarray*}
+That does it for bond prices.
+
+The solution is simpler if we express it in terms of forward rates,
+as we did in the proposition.
+We can always reconstitute bond prices from (\ref{eq:forwards}).
+From the definition,
+\begin{eqnarray*}
+    - f^n_t &=& \log q^{n+1}_t - \log q^n_t \\
+            &=& (\delta^{n+1} - \delta^n) + \sum_{j=0}^\infty
+                    (b^{n+1}_j - b^n_j) w_{t-j} \\
+            &=&  \delta + A_n^2/2 + \sum_{j=0}^\infty
+                    a_{n+1+j} w_{t-j}  ,
+\end{eqnarray*}
+as stated in the proposition.
+
+
+Properties.
+Here's a list:
+\begin{itemize}
+\item The iid case revisited.
+In the iid case, $a_j = 0$ for $j\geq 0$ and $A_n = A_0$ for all $n$.
+As a result, $f^n$ is constant and equal for all $n$.
+Ditto yields (averages of forwards).
+%Otherwise, the $a$'s affect both
+%the average shape of the forward rate curve
+%and the dynamics of interest rates.
+\item Mean forward rates.
+Since the $w$'s have zero mean, mean forward rates are
+\begin{eqnarray*}
+  -  E( f^n_t)
+            &=&  \delta + A_n^2/2 .
+\end{eqnarray*}
+The only term here that varies with $n$ is the last one,
+so the shape of the mean forward rate curve depends on the $a$'s through
+the partial sums $A_n$.
+The mean forward rate spread is
+\begin{eqnarray}
+    E( f^n - f^0 )
+            &=&  (A_0^2 - A_n^2)/2 .
+            \label{eq:vasicek-mean-forwards}
+\end{eqnarray}
+You might think about how we might generate an upward-sloping mean forward
+rate curve.  What does that imply for the $a$'s?
+
+\item Interest rate dynamics.
+The dynamics of forward rates also depend on the $a$'s,
+but through the coefficients of $w_{t-j}$.
+Note that as we increase maturity $n$, we shift the coefficients (increase the subscript).
+
+\item We see, therefore, that the dynamics of the pricing kernel,
+reflected by its moving average coefficients,
+determines both the shape of the average yield curve
+and the dynamics of forward rates.
+This interaction between cross-section and time-series properties
+is inherent to bond pricing.
+
+\item What happens as we increase maturity $n$?
+If the $a$'s go to zero, as they must, then the forward rate becomes constant:
+its dependence on the $w$'s goes away.
+This is a fairly general result:  that forward rates converge
+to a constant at long enough maturities.
+\end{itemize}
+
+
+
+\section{The Vasicek model}
+
+The Vasicek model is a good illustration of how bond-pricing models
+work.
+We can add bells and whistles without end,
+but most other models have at their hearts a similar structure.
+We outline the basic structure and go on to connect the model's
+parameters to what we know about the behavior of interest rates.
+
+In the previous section, we found bond prices and forward rates
+from the pricing kernel.
+Here we do that, but we also do the reverse:
+We use what we know about forward rates
+to estimate the parameters of the pricing kernel.
+So what do we know?
+We have both time-series and cross-section information.
+Time-series information includes the autocorrelations
+of interest rates.
+Cross-section information includes the mean forward rate curve:
+that long rates are on average greater than short rates.
+These seem like basic features of interest rates that
+we would like any reasonable model to reproduce.
+
+
+{\it Model.\/}
+The model consists of the two equations
+\begin{eqnarray*}
+    \log m_{t+1} &=& \delta - x_t + \lambda w_{t+1} \\
+         x_{t+1} &=& \varphi x_t + \sigma w_{t+1} ,
+\end{eqnarray*}
+with $\{ w_t \} \sim \mbox{NID}(0,1)$.
+It's essential here that the same random variable $w_t$ shows up in both equations.
+We'll see later that $w_t$ reflects interest rate risk.
+The coefficient $\lambda$ in the pricing kernel equation is often referred to as
+the {\it price of risk\/} --- here, evidently, the price of interest rate risk.
+It tells us how much weight the pricing kernel gives to the risk $w_t$.
+This model, like the others we study,
+delivers bond prices whose logs are linear in the state variable $x_t$.
+Therefore yields and forward rates are linear in the state as well.
+
+One more thing:
+If we substitute for $x_t$, we see that $\log m_t$ is
+\begin{eqnarray*}
+    \log m_t &=& \delta + \lambda w_t - \sigma \sum_{j=1}^\infty \varphi^{j-1} w_{t-j} .
+\end{eqnarray*}
+Since the coefficients decline at a geometric rate after the first one,
+this is an ARMA(1,1).
+[Think about this if it isn't clear.]
+
+{\it Recursions.\/}
+We build up bond prices one at a time from
+the pricing relation
+\begin{eqnarray*}
+    q^{n+1}_t &=& E_t \left( m_{t+1} q^n_{t+1} \right) ,
+\end{eqnarray*}
+starting with $q^0_t = 1$ (a dollar now is worth a dollar).
+Let's get warmed up with the short rate $f^0_t$, corresponding
+to $n=0$:
+\begin{eqnarray*}
+    q^1_t   &=&  E_t m_{t+1} \\
+    - f^0_t &=&  \log q^1_{t} \;\;=\;\; \log E_t m_{t+1} .
+\end{eqnarray*}
+We'll solve this with the usual ``mean plus variance over two''
+formula for lognormal random variables.
+As of date $t$,
+the conditional distribution of $\log m_{t+1}$ is
+normal with mean and variance
+\begin{eqnarray*}
+    E_t \left( \log m_{t+1}\right) &=& \delta - x_t \\
+    \mbox{Var}_t \left( \log m_{t+1} \right) &=& \lambda^2 .
+\end{eqnarray*}
+The short rate is therefore
+$ f^0_t = x_t - (\delta + \lambda^2/2)$.
+The short rate is $x_t$ plus a constant,
+so it inherits its variance and autocorrelation.
+The disturbance $w_t$ therefore represents interest rate risk:
+an increase in $w_t$ corresponds to an increase in the short rate
+of $\sigma w_t$.
+
+For bonds of higher maturity, we
+guess prices of ``exponential-affine'' form
+\begin{eqnarray*}
+    \log q^n_t &=& A_n + B_n x_t
+\end{eqnarray*}
+for some coefficients $\{ A_n, B_n\}$ to be determined.
+(And no, $A_n$ isn't the cumulative sum as it was previously,
+it's a stand-alone coefficient.)
+Think about this for some particular maturity $n$.
+The pricing relation tells us we
+need to find the conditional mean of the product
+$m_{t+1} q^n_{t+1}$.
+We do this the usual way:  take logs,
+then apply the ``mean plus variance over two'' formula for
+lognormal random variables.
+Taking logs gives us
+\begin{eqnarray*}
+    \log m_{t+1} + \log q^{n+1}_t &=&
+            (\delta + A_n) + (\varphi B_n -1) x_t + (\lambda + B_n \sigma) w_{t+1} .
+\end{eqnarray*}
+The conditional mean and variance are
+\begin{eqnarray*}
+   E_t \Big( \log m_{t+1} + \log q^{n}_{t+1} \Big) &=&
+            (\delta + A_n) + (\varphi B_n -1) x_t \\
+   \mbox{Var}_t \left( \log m_{t+1} + \log q^{n+1}_t \right) &=&
+            (\lambda + B_n \sigma)^2 .
+\end{eqnarray*}
+Now apply the formula:
+\begin{eqnarray*}
+    \log q^{n+1}_t &=&
+            (\delta + A_n) + (\varphi B_n -1) x_t + (\lambda + B_n \sigma)^2/2 \\
+                &=& A_{n+1} + B_{n+1} x_t.
+\end{eqnarray*}
+Lining up terms, we have
+\begin{eqnarray*}
+    A_{n+1} &=& A_n + \delta + (\lambda + B_n\sigma)^2/2 \\
+    B_{n+1} &=& \varphi B_n - 1 .
+\end{eqnarray*}
+Given values for the parameters $(\delta, \varphi, \sigma, \lambda)$
+we compute these one at a time,
+starting with $A_0 = B_0 = 0$.
+It's easy to do this in (say) Matlab, or even a spreadsheet program.
+
+{\it Parameters.\/}
+Let's choose parameters that match some of the observed
+properties of forward rates.
+Some ballpark numbers are reported in Table \ref{tab:forward-moments}.
+The numbers are  computed from monthly data for US Treasuries
+over the period 1970-1992.
+They're reported as annual
+percentages, something that will show up in our calculations.
+Annual means we multiplied them by 12, and percentage means we multiplied them by 100,
+so we multiplied them by 1200 altogether.
+
+%
+\begin{table}[h]
+%\begin{center}
+\centering
+\caption{Properties of forward rates}
+\begin{tabular}{lrrr}
+\toprule
+Forward rate $f^n_t$    &  Mean  &  Std Dev  &  Autocorr \\
+\midrule
+$f^0_t$                 &  6.683 & 2.703     &  0.959   \\
+$f^{12}_t$              &  7.921 & 2.495     &  0.969   \\
+$f^{120}_t$             &  8.858 & 1.946     &  0.980   \\
+\bottomrule
+\end{tabular}
+\label{tab:forward-moments}
+\end{table}
+%
+
+Now let's put these numbers to work.
+The time interval for our analysis will be one month,
+so the short rate is the one-month rate --- $f^0$ in the table.
+%
+\begin{itemize}
+\item Autocorrelation.  Because $f^0_t$ is linear in $x_t$, and $x_t$ is an AR(1),
+the autocorrelation of the short rate is $\varphi$.
+So we set $\varphi$ equal to the observed autocorrelation of the short rate in the data.
+From the table, we have $\varphi = 0.959$.
+[You might think to yourself:  What about the autocorrelations of other rates?]
+
+\item Variance.  Similarly, the variance of the short rate is the variance of $x$,
+which is $ \sigma^2/(1-\varphi^2)$.
+Using data from the same table gives us
+\begin{eqnarray*}
+    \mbox{Var}(f^0) &=& \left( 2.703/1200 \right)^2
+            \;\;=\;\; \sigma^2/(1-\varphi^2)
+            \;\;\;\Rightarrow\;\;\; \sigma = 6.38 \times 10^{-4} .
+\end{eqnarray*}
+Note that we have converted the numbers in the table from annual percentages
+to monthly interest.
+
+\item Long forward rates.  Next we have $\lambda$, which controls the pricing of
+interest rate risk and therefore the slope of the forward rate curve.
+Recall that forward rates are
+\begin{eqnarray*}
+    f^n_t &=& \log (q^n_t/q^{n+1}_t)
+                \;\;=\;\;  (A_n - A_{n+1}) + (B_n - B_{n+1}) x_t .
+\end{eqnarray*}
+Since $x_t$ has a zero mean,  we have
+\begin{eqnarray*}
+    E (f^n - f^0) &=&  (A_n - A_{n+1}) - (A_0 - A_{1}) \\
+            &=&  \left[ \lambda^2 - (\lambda + B_n\sigma)^2 \right] / 2 .
+\end{eqnarray*}
+We solve this numerically.
+We choose values for $(\varphi, \sigma, \lambda)$,
+compute the $A_n$'s and $B_n$'s, and vary $\lambda$ until
+we hit the observed mean forward spread:
+$(8.858-6.683)/1200$.
+The value that works is $\lambda = 0.125$.
+
+\item Mean short rate.  This doesn't really matter, but
+the mean short rate is
+\begin{eqnarray*}
+    E (f^0) &=&  - (\delta + \lambda^2/2) .
+\end{eqnarray*}
+Given our value of $\lambda$, we choose $\delta$ to match
+the observed mean short rate.
+
+\end{itemize}
+If any of this seems mysterious, see the Matlab program.
+%{\tt affine.m}.
+
+
+{\it Alternative parameterization (optional).\/}
+Suppose we change the model (slightly) to
+\begin{eqnarray*}
+    \log m_{t+1} &=& - \lambda^2/2 - x_t + \lambda w_{t+1} \\
+         x_{t+1} &=& (1-\varphi) \delta + \varphi x_t + \sigma w_{t+1} .
+\end{eqnarray*}
+Show that the short rate is now exactly $x_t$.
+The model is equivalent to the previous one,
+we've simply moved the mean to a different part of the model.
+
+\section{Interest rate risk and duration}
+
+We can use the Vasicek model as a laboratory for thinking about interest rate risk.
+If we were in a world where the model generated interest rates,
+how should we think about interest rate risk?
+Risk in this model stems entirely from variation in the state variable $x_t$.
+The log bond price is a linear function of $x_t$:
+\begin{eqnarray*}
+    \log q^n_t &=& A_n + B_n x_t .
+\end{eqnarray*}
+Variation in bond prices is driven by the state $x_t$, period.
+Since $x_t$ is (except for a constant) the short rate,
+the coefficient $B_n$ summarizes sensitivity to interest rate risk.
+
+We can be more specific if we look at $B_n$.
+The recursion $B_{n+1} = \varphi B_n - 1$ starts with $B_0 = 0$,
+which gives us
+\begin{eqnarray*}
+    B_n &=& - (1 + \varphi + \varphi^2 + \cdots + \varphi^{n-1})
+            \;\;=\;\; -(1-\varphi^n)/(1-\varphi) .
+\end{eqnarray*}
+This increases with $n$, so long bonds are more sensitive to interest rate risk.
+The yield is $y^n_t = -n^{-1} \log q^n_t = - A_n/n - (B_n/n) x_t$.
+If $0 < \varphi < 1$,
+$B_n/n$ will decline with maturity.
+
+Let's compare this to {\it duration\/}.
+Prices of zeros are connected to yields by
+\begin{eqnarray*}
+    q^n_t &=& \exp( - n y^n_t ).
+\end{eqnarray*}
+Duration is defined by
+\begin{eqnarray*}
+    D &=& - \frac{\partial \log q^n_t}{\partial y^n_t} \;\;=\;\; n.
+\end{eqnarray*}
+This is particularly clean with continuous compounding,
+but you get something similar with other kinds of compounding.
+
+All of this is fine, but think about how duration is used.
+We typically ignore the superscript $n$ in the yield and consider
+an increase in yields at all maturities.
+This is clear when we compute duration for coupon bonds from the
+relation between the price and the yield to maturity.
+In principle we should discount coupons with the rate appropriate
+to the dates they're paid, but we use the yield to maturity
+of the bond to discount all payments.
+We then interpret $D$ as sensitivity to generalized interest rate risk.
+
+In the real world, interest rates aren't locked together.
+Ten-year interest rate risk isn't the same as one-year interest rate risk.
+In the Vasicek model, there's only one kind of risk --- risk to $x_t$ ---
+but sensitivity varies by maturity.
+But note that sensitivity $B_n$ isn't proportional to maturity,
+as it is with duration.
+With mean reversion ($0 < \varphi < 1$), sensitivity $B_n$ increases more slowly than $n$.
+We get $B_n = n$ only in the limiting case $\varphi = 1$.
+Otherwise, mean reversion moderates the sensitivity of long rates to movements in
+the short rate.
+Where did we go wrong?
+We really need sensitivity to $x_t$,
+\begin{eqnarray*}
+     - \frac{\partial \log q^n_t}{\partial y^n_t}
+      \cdot \frac{\partial \log y^n_t}{\partial x_t} &=& n \cdot (B_n/n) \;\;=\;\; B_n.
+\end{eqnarray*}
+This is an indication that duration isn't really the right tool for the job.
+It's a shortcut that has been used for decades,
+but it's not really a measure of interest rate sensitivity.
+
+
+\section{The theory of long rates}
+
+****** ???? *****
+
+Perron-Frobenius stuff ???
+
+
+
+\section{The Cox-Ingersoll-Ross model}
+
+
+{\it Model.\/}
+Here's a popular variant of the Vasicek model
+in which risk and risk premiums move around.
+More on that shortly.
+The model is
+\begin{eqnarray}
+    \log m_{t+1} &=& - (1+\lambda^2/2 ) x_t + \lambda x_t^{1/2} w_{t+1} \nonumber \\
+         x_{t+1} &=& (1-\varphi) \delta + \varphi x_t + \sigma x_t^{1/2} w_{t+1} ,
+         \label{eq:square-root}
+\end{eqnarray}
+with (as usual) independent standard normal innovations $w_t$.
+Here $x_t$ plays two roles:  It governs the conditional mean
+of the pricing kernel, as it did before,
+but it also governs the conditional variance.
+
+The so-called ``square-root'' process (\ref{eq:square-root}) guarantees that
+it remains positive --- at least it does in continuous time.
+The idea is that the variance shrinks as $x_t$ gets close to zero.
+As a result, the change in $x_t$ near zero comes from the mean reversion term,
+\begin{eqnarray*}
+       x_{t+1} - x_t  &\approx& (1-\varphi) \delta  \;\;>\;\; 0.
+\end{eqnarray*}
+As long as $\delta>0$, that pushes $x_t$ away from zero and keeps it positive.
+
+
+Despite the square-root process, $x_t$ is still an AR(1).
+Its mean is
+\begin{eqnarray*}
+    E(x_t) &=& (1-\varphi) \delta + \varphi E(x_{t-1})
+            \;\;\;\Rightarrow\;\;\; E(x) \;\;=\;\; \delta .
+\end{eqnarray*}
+The variance is
+\begin{eqnarray*}
+    \mbox{Var}(x) &=& E (x_t - \delta)^2
+                \;\;=\;\; E \left[ \varphi (x_{t-1} - \delta) + \sigma x_{t-1}^{1/2} w_t \right]^2 \\
+                &=& \varphi^2 \mbox{Var}(x) + E (\sigma^2 x_{t-1})
+                \;\;=\;\;  \varphi^2 \mbox{Var}(x_{t}) + \sigma^2 \delta ,
+\end{eqnarray*}
+or
+\begin{eqnarray*}
+    \mbox{Var}(x) &=&   \sigma^2 \delta / (1-\varphi^2) .
+\end{eqnarray*}
+What about the autocovariance?
+The first autocovariance is
+\begin{eqnarray*}
+    \mbox{Cov}(x_t,x_{t-1}) &=& E [(x_t - \delta)(x_{t-1} - \delta)]  \\
+                &=& E  \left\{ [ \varphi (x_{t-1} - \delta) + \sigma x_{t-1}^{1/2} w_t ] (x_{t-1} - \delta) \right\} \\
+                &=& \varphi \mbox{Var}(x) .
+\end{eqnarray*}
+The first autocorrelation is therefore $\varphi$.
+[For practice, show that the $k$th autocorrelation is $\varphi^k$, \
+the same as an AR(1) with iid disturbances.]
+
+{\it Recursions.\/}
+We follow the same logic as in the Vasicek model,
+starting with the short rate
+\begin{eqnarray*}
+    - f^0_t &=&   \log E_t m_{t+1} .
+\end{eqnarray*}
+The conditional distribution of $\log m_{t+1}$ is
+normal with mean and variance
+\begin{eqnarray*}
+    E_t m_{t+1} &=& - (1+\lambda^2/2) x_t \\
+    \mbox{Var}_t m_{t+1} &=& \lambda^2 x_t .
+\end{eqnarray*}
+The new ingredient is that the variance is now linear in $x_t$.
+The short rate is therefore
+$ f^0_t = x_t $.
+That's why we started with a somewhat odd coefficient of $x_t$
+in the pricing kernel --- so this would work out.
+
+For bonds of arbitrary maturity,
+we use the guess  $ \log q^n_t = A_n + B_n x_t$.
+That gives us
+\begin{eqnarray*}
+    \log m_{t+1} + \log q^{n+1}_t &=&
+            [A_n + (1-\varphi) \delta] + [\varphi B_n -(1+\lambda^2/2)] x_t
+                    + (\lambda + B_n \sigma) x_t^{1/2} w_{t+1} .
+\end{eqnarray*}
+The conditional mean and variance are
+\begin{eqnarray*}
+   E_t \left( \log m_{t+1} + \log q^{n}_{t+1} \right) &=&
+            [A_n + B_n (1-\varphi) \delta] + [\varphi B_n -(1+\lambda^2/2)] x_t \\
+   \mbox{Var}_t \left( \log m_{t+1} + \log q^{n+1}_t \right) &=&
+            (\lambda + B_n \sigma)^2 x_t .
+\end{eqnarray*}
+The ``mean plus variance over two'' formula gives us
+\begin{eqnarray*}
+    \log q^{n+1}_t &=&
+            [A_n + B_n (1-\varphi) \delta] + [\varphi B_n -(1+\lambda^2/2)] x_t
+                    + [(\lambda + B_n \sigma)^2/2]  x_t  \\
+                &=& A_{n+1} + B_{n+1} x_t.
+\end{eqnarray*}
+Lining up terms, we have
+\begin{eqnarray*}
+    A_{n+1} &=& A_n + B_n (1-\varphi) \delta \\
+    B_{n+1} &=& \varphi B_n -(1+\lambda^2/2) + (\lambda + B_n \sigma)^2/2 .
+\end{eqnarray*}
+This is a mess, but it's easy to program, which is what we'll do.
+We start, as always, with $A_0 = B_0 = 0$.
+[Remind yourself why.]
+
+{\it Estimation.\/}
+Now let's estimate parameters from the properties of forward rates
+reported in Table \ref{tab:forward-moments}.
+%
+\begin{itemize}
+\item Autocorrelation.
+We set $\varphi$ equal to the observed autocorrelation of the short rate in the data,
+just as we did before.
+From the table, that gives us $\varphi = 0.959$.
+
+\item Mean.  We set $\delta$ equal to the mean short rate:
+$\delta = 6.683/1200$.
+
+\item Variance.  Similarly, the variance of the short rate is the variance of $x_t$,
+which is $ \sigma^2 \delta/(1-\varphi^2)$.
+Given values for $\varphi$ and $\delta$,
+the variance implies $\sigma = 8.6\times 10^{-3}$.
+
+\item Long forward rates.  Again,
+$\lambda$ controls the mean forward rate curve.
+Recall that forward rates are
+\begin{eqnarray*}
+    f^n_t &=& \log (q^n_t/q^{n+1}_t)
+                \;\;=\;\;  (A_n - A_{n+1}) + (B_n - B_{n+1}) x_t .
+\end{eqnarray*}
+Since $x_t$ has a  mean of $\delta$,  we have
+\begin{eqnarray*}
+    E (f^n - f^0) &=&  [(A_n - A_{n+1}) - (A_0 - A_{1})] +
+        [(B_n - B_{n+1}) - (B_0 - B_{1})] \delta.
+\end{eqnarray*}
+We set $\lambda=1.32$, which gives us the right mean forward spread.
+
+\end{itemize}
+See the Matlab program for details.
+
+
+
+%\end{document}
+\section{Term premiums and predictable returns}
+
+We step back now and consider the predictability excess returns.
+There's a mountain of work documenting what seem to be predictable patterns
+in excess returns, which in principle can be used to motivate active
+investment strategies.
+We review some of the work on bond returns and go on, in subsequent sections,
+to see whether we can build bond-pricing models that reproduce
+what we know about bond returns.
+
+
+We define {\it term premiums\/} $\tp$ by
+\begin{eqnarray}
+    f^n_t &=&  E_t f^0_{t+n} + \tp^n_t
+    \label{eq:tp}
+\end{eqnarray}
+and {\it bond premiums\/} $\bp$ by
+\begin{eqnarray*}
+    \bp^n_t &=& E_t (\log r^n_{t+1}  - \log r^1_{t+1}) .
+\end{eqnarray*}
+The question we ask of each is whether they are predictable:
+if we regressed them on variables known at date $t$,
+how much, if any, of the variation can we attribute to those variables?
+
+It's helpful here to have a benchmark.
+We have two, but they'll turn out to be the same.
+One is whether excess returns are predictable.
+The other is whether the term premium is predictable.
+Our benchmark in both cases is that they're not predictable.
+Our theory doesn't suggest this, in general,
+but it's a useful basis of comparison.
+
+The strongest version of this is the {\it expectations hypothesis\/} or EH,
+the assumption that the term premium $\tp^n_t$ is zero, or at least constant.
+Constant is all we care about, but zero gives us a particularly clean form.
+If term premiums are zero, then we have
+\begin{eqnarray*}
+    f^n_t &=& E_t f^0_{t+n} .
+\end{eqnarray*}
+This implies, if we do it period by period, that
+$(f^n_t, f^{n-1}_{t+1}, ... , f^0_{t+n})$
+is a martingale sequence:
+\begin{eqnarray*}
+    f^j_t &=& E_t f^{j-1}_{t+1} .
+\end{eqnarray*}
+Note that each of these rates applies to the same period,
+the period between $t+n$ and $t+n+1$.
+What's different is that they're rates quoted at different times.
+The idea is that the rate quoted today is a good predictor of the rate
+quoted next period.
+
+This idea goes back a long ways.
+Fifty years ago lots of people thought it was a good idea,
+now it's the starting point for more sophisticated theories
+of term premiums.
+Here's why.
+We can see how well it works by running the regression
+\begin{eqnarray*}
+    f^{n-1}_{t+1} &=& a_n + b_n f^n_t .
+\end{eqnarray*}
+If the EH is true, we should find that $b_n = 1$.
+We should also find $a_n=0$, but allowing it to be nonzero
+would take care of any constant term premiums.
+[Can you see why?]
+For technical reasons, we typically run the alternative
+\begin{eqnarray*}
+    f^{n-1}_{t+1} - f^0_t &=& a_n + b_n (f^n_t - f^0_t) .
+\end{eqnarray*}
+If the EH is true, we should again find that $b_n = 1$.
+
+What do we find?
+We find for monthly US data that $b_1 = 0.5$, $b_3 = 0.75$,
+$b_{12} = 0.90$, and $b_{60} = 0.96$.
+As we increase maturity, the EH looks better and better.
+But for short maturities it's not very good.
+
+So what's going on?
+We'll look at short maturities, since that seems to be where the action is.
+If we raise the forward rate $f^1_t$ (relative to $f^0_t$),
+we see that the future short rate $f^0_{t+1}$ goes up by 0.5,
+not the 1.0 implied by the EH.
+Equation (\ref{eq:tp}) for $n=1$ tells us
+\begin{eqnarray*}
+    f^1_t &=&  E_t f^0_{t+1} + \tp^1_t .
+\end{eqnarray*}
+The difference must be a change in the term premium.
+If we increase the left side by 1.0, then both terms on the right increase
+by about one-half.
+
+% ??
+You might also show how this works with excess returns.  Define returns
+in terms of forwards and see what they imply.
+
+
+\section{Predictability in the Vasicek and CIR models}
+
+We're interested in the equation
+\begin{eqnarray*}
+    f^{0}_{t+1} - f^0_t &=& a_1 + b_1 (f^1_t - f^0_t) .
+\end{eqnarray*}
+With data, we get $b_1 \approx 1/2$.  What do we get in models?
+The idea is that both the lhs variable $f^{0}_{t+1} - f^0_t$
+and the rhs variable $f^1_t - f^0_t$ can be expressed in terms
+of a state variable $x_t$, which allows us to deduce what the regression
+coefficient $b_1$ is.
+
+{\it Vasicek.\/}
+Recall that we had $B_1 = -1$ and $B_2 = -(1+\varphi)$.
+The first two forward rates are
+\begin{eqnarray*}
+    f^0_t &=& \mbox{constants} + x_t \\
+    f^1_t &=& \mbox{constants} + (B_1-B_2) x_t
+            \;\;=\;\; \mbox{constants} + \varphi x_t .
+\end{eqnarray*}
+That gives us a rhs variable $f^1_t - f^0_t = (\varphi-1)x_t$.
+The lhs is
+\begin{eqnarray*}
+    f^0_{t+1} - f^0_t &=& \mbox{constants} + x_{t+1} - x_t
+                    \;\;=\;\; \mbox{constants} + (\varphi-1) x_t + \sigma w_{t+1}.
+\end{eqnarray*}
+Since $w_{t+1}$ is independent of the rhs (in fact of anything dated $t$ or before),
+we're effectively regressing $(\varphi-1) x_t$
+on itself.
+The coefficient is therefore $b_1 = 1$.
+
+This model, in short, fails to account for the evidence against the expectations
+hypothesis.
+More work would show us that term premiums in this model are constant:
+there's no variation in either risk or the price of risk,
+so premiums are constant.
+We need something else.
+
+
+{\it CIR.\/}
+This model has variation in risk at its core,
+so we have a chance of doing better.
+Note that $B_1 = -1$ and $B_2 = -(1+\varphi) + \sigma(\lambda + \sigma/2)$.
+That implies
+\begin{eqnarray*}
+    f^0_t &=& x_t \\
+    f^1_t &=& \mbox{constants} + (B_1-B_2) x_t
+            \;\;=\;\; \mbox{constants} + [\varphi-\sigma(\lambda+\sigma/2)] x_t ,
+\end{eqnarray*}
+which gives us the rhs variable
+\begin{eqnarray*}
+    f^1_t - f^0_t &=& \mbox{constants} + [\varphi-1-\sigma(\lambda+\sigma/2)] x_t .
+\end{eqnarray*}
+The lhs variable is
+\begin{eqnarray*}
+    f^0_{t+1} - f^0_t &=&  \mbox{constants} + (\varphi-1) x_t + \sigma x_t^{1/2} w_{t+1}.
+\end{eqnarray*}
+The regression coefficient is therefore
+\begin{eqnarray*}
+    b_1 &=& \frac{\varphi-1}{\varphi-1-\sigma(\lambda+\sigma/2)} .
+\end{eqnarray*}
+This can deliver lots of values of $b_1$, including our preferred value $b_1 = 1/2$.
+But with the parameter value we chose earlier, we get $b_1 = 1.384$.
+So we've deviated from the EH, but in the wrong direction.
+
+The issue is $\lambda$.  We can choose $\lambda$ to get $b_1 = 1/2$:
+\begin{eqnarray*}
+    \lambda &=& (1-\varphi)/\sigma - \sigma/2 .
+\end{eqnarray*}
+But now the mean forward rate curve declines with maturity ---
+it slopes the wrong way.
+
+% ?? add stuff on risk and return
+% also cylicality of risk
+
+
+\section{Another ``exponential-affine'' model}
+
+
+We'll take one last shot at predictability.
+The model is
+\begin{eqnarray*}
+    \log m_{t+1} &=& - (\lambda_0 + \lambda_1 x_t)^2/2 + \delta - x_t
+            + (\lambda_0 + \lambda_1 x_t) w_{t+1} \\
+            x_{t+1} &=& \varphi x_t + \sigma w_{t+1} .
+\end{eqnarray*}
+This structure is cleverly rigged to deliver loglinear bond prices.
+If $\lambda_1 = 0$, we're back to Vasicek.
+
+We solve it the usual way.
+We guess  $ \log q^n_t = A_n + B_n x_t$ and substitute into the
+pricing relation.
+The conditional mean and variance are
+\begin{eqnarray*}
+   E_t \left( \log m_{t+1} + \log q^{n}_{t+1} \right) &=&
+            - (\lambda_0 + \lambda_1 x_t)^2/2 + \delta + (\varphi B_n -1) x_t  \\
+   \mbox{Var}_t \left( \log m_{t+1} + \log q^{n+1}_t \right) &=&
+            \left[B_n \sigma + (\lambda_0 + \lambda_1 x_t)\right]^2  .
+\end{eqnarray*}
+The ``mean plus variance over two'' formula gives us, eventually,
+the recursions
+\begin{eqnarray*}
+    A_{n+1} &=& A_n + \delta + B_n \sigma (B_n \sigma/2 + \lambda_0) \\
+    B_{n+1} &=& \varphi B_n - 1 + B_n \sigma \lambda_1 .
+\end{eqnarray*}
+This implies
+$B_1 = -1$ and $B_2 = -(1+\varphi) - \sigma \lambda_1 $.
+
+
+After the usual manipulations,
+we find the regression coefficient
+\begin{eqnarray*}
+    b_1 &=& \frac{\varphi-1}{\varphi-1+\sigma\lambda_1} .
+\end{eqnarray*}
+This model has one clear advantage over the previous ones:
+we have two parameters governing the price of risk,
+$\lambda_0$ and $\lambda_1$.
+We can, in principle, choose $\lambda_1$ to reproduce
+the regression coefficient and $\lambda_0$ to reproduce the
+mean forward rate curve.
+
+Here's how that might work:
+%
+\begin{itemize}
+\item Set $\varphi = 0.959$, as before, to reproduce the
+autocorrelation of the short rate.
+\item Set $\delta = - 6.683/1200$ to reproduce the mean short rate.
+\item Set $ \sigma^2 = (2.703/1200)^2 (1-\varphi^2)$.
+\end{itemize}
+All of this is similar to what we've done before.
+Now add
+\begin{itemize}
+\item Set $\lambda_1=-63.5$ to reproduce the regression coefficient $b_1$.
+If you plot the forward rate curve you'll see it has little effect on it.
+\item Now set $\lambda_0$ to hit the long forward rate.  I get
+$\lambda_0 = 0.234$.
+You'll notice there's more curvature to the mean forward rate curve,
+something we might comment on in class.
+\end{itemize}
+
+
+\section*{Bottom line}
+
+Bond pricing is a classic application of dynamic asset pricing.
+We get to use what we've learned about stochastic processes to characterize
+bond prices of all maturities as functions of the state.
+These prices follow, as always, from the no-arbitrage theorem.
+We developed several exponential-affine models in which
+bond prices  are loglinear functions of the state
+and the state is an interest rate.
+The latter is special, but illustrates how the dynamics of the state,
+typically captured by the autoregressive parameter $\varphi$,
+are reflected in long-maturity bond prices.
+Mean reversion, for example, tends to reduce the sensitivity
+of long bond prices to the state.
+In this sense, the cross section of bond prices
+incorporates the time series behavior of interest rates.
+
+We can use similar methods to price other assets.
+The new ingredient with other assets is cash flows,
+which themselves might be modeled as functions of the state.
+
+
+\section*{Practice problems}
+
+
+\begin{enumerate}
+\item {\it Bond basics.\/}
+Consider the bond prices at some date $t$:
+%
+\begin{center}
+\tabcolsep=0.1in
+\begin{tabular}{lrrr}
+\toprule
+Maturity $n$   & \phantom{xx} Price $q^n_t$ \\ %& \phantom{xx} Yield $y^n$ & Forward $f^{n-1}$ \\
+\midrule
+0           &    1.0000   \\
+1 year      &    0.9512   \\
+2 years     &    0.8958   \\
+3 years     &    0.8353   \\
+4 years     &    0.7788   \\
+5 years     &    0.7261   \\
+\bottomrule
+\end{tabular}
+\end{center}
+%
+\begin{enumerate}
+\item What are the yields $y^n_t$?
+\item What are the forward rates $f^{n-1}_t$?
+\item Suppose $f^1_t$ rises by 1 percent.
+How does $y^1_t$ change?
+How does $y^2_t$ change?
+\end{enumerate}
+%
+\needspace{2\baselineskip}
+Answer.
+\begin{center}
+\tabcolsep=0.1in
+\begin{tabular}{lrrr}
+\toprule
+Maturity $n$   & \phantom{xx} Price $q^n_t$ & \phantom{xx} Yield $y^n_t$ & Forward $f^{n-1}_t$ \\
+\midrule
+0           &    1.0000  \\
+1 year      &    0.9512  & 0.0500 & 0.0500 \\
+2 years     &    0.8958  & 0.0550 & 0.0600 \\
+3 years     &    0.8353  & 0.0600 & 0.0700 \\
+4 years     &    0.7788  & 0.0625 & 0.0700 \\
+5 years     &    0.7261  & 0.0640 & 0.0700 \\
+\bottomrule
+\end{tabular}
+\end{center}
+\medskip
+
+\begin{enumerate}
+\item See above.
+\item See above.
+\item If $f^1_t$ rises by 1\%, then $y^1_t= f^0_t$ doesn't change
+and $y^2_t = (f^0_t+f^1_t)/2 $ rises by 0.5\%.
+\end{enumerate}
+
+
+%-----------------------------------------------------------------------
+\item {\it Moving average bond pricing.\/}
+Consider the bond pricing model
+\begin{eqnarray*}
+    \log m_{t+1} &=& - \lambda^2/2 - x_t + \lambda w_{t+1} \\
+    x_t &=& \delta + \sigma (w_t + \theta w_{t-1}) .
+\end{eqnarray*}
+
+\begin{enumerate}
+\item What is the short rate $f^0_t$?
+\item Suppose bond prices take the form
+\begin{eqnarray*}
+    \log q^n_{t} &=& A_n + B_n w_t + C_n w_{t-1} .
+\end{eqnarray*}
+Use the pricing relation to derive recursions connecting
+$(A_{n+1}, B_{n+1}, C_{n+1})$ to $(A_{n}, B_{n}, C_{n})$.
+What are $(A_{n}, B_{n}, C_{n})$ for $n=0,1,2,3$?
+\item Express forward rates as functions of the state $(w_t,w_{t-1}$).
+What are $f^1_t$ and $f^2_t$?
+\item What is $E(f^1- f^0)$?  What parameters govern its sign?
+\end{enumerate}
+%
+\needspace{2\baselineskip}
+Answer.
+\begin{enumerate}
+\item The short rate is
+\begin{eqnarray*}
+    f^0_t &=& - \log E_t m_{t+1} \;\;=\;\;  \lambda^2/2 + x_t - \lambda^2/2
+            \;\;=\;\; x_t .
+\end{eqnarray*}
+The second equality is the usual ``mean plus variance over two'' with the sign flipped
+(as indicated by the first equality).
+In other words:  the usual setup.
+In what follows, we'll kill off $x_t$ by substituting.
+\item
+Bond prices follow from the pricing relation,
+\begin{eqnarray*}
+    q_t^{n+1} &=& E_t (m_{t+1} q_{t+1}^n) ,
+\end{eqnarray*}
+starting with $n=0$ and  $q^0_t = 1$.
+The state in this case is $(w_t, w_{t-1})$, a simple example of a
+two-dimensional model, hence the extra term in the form of the bond price.
+We need
+\begin{eqnarray*}
+    \log (m_{t+1} q_{t+1}^n) &=&
+            A_n - (\lambda^2/2 + \delta) + (\lambda+B_n) w_{t+1}
+            + (C_n-\sigma) w_t - \sigma \theta w_{t-1} .
+\end{eqnarray*}
+The (conditional) mean and variance are
+\begin{eqnarray*}
+    E_t [ \log (m_{t+1} q_{t+1}^n)] &=&
+            A_n - (\lambda^2/2 + \delta)
+            + (C_n-\sigma) w_t - \sigma \theta w_{t-1} \\
+    \mbox{Var}_t [\log (m_{t+1} q_{t+1}^n)] &=&
+            (\lambda+B_n)^2 .
+\end{eqnarray*}
+Using ``mean plus variance over two'' and lining up terms gives us
+\begin{eqnarray*}
+        A_{n+1} &=& A_n - (\lambda^2/2 + \delta) + (\lambda+B_n)^2/2 \\
+                &=& A_n - \delta + \lambda B_n + (B_n)^2/2 \\
+        B_{n+1} &=& C_n - \sigma \\
+        C_{n+1} &=& - \sigma \theta
+\end{eqnarray*}
+for $n=0,1,2,\ldots$.
+That gives us
+\begin{center}
+\begin{tabular}{cccc}
+        $n$  & $A_n$ & $B_n$ & $C_n$ \\
+        \midrule
+        0   &  0 & 0 & 0 \\
+        1   &  $-\delta$ & $-\sigma$ & $-\sigma\theta$  \\
+        2   &  $-2 \delta - \lambda\sigma + \sigma^2/2$   &  $-\sigma(1+\theta)$ & $-\sigma\theta$ \\
+        3   &  X  &  $-\sigma(1+\theta)$ & $-\sigma\theta$
+\end{tabular}
+\end{center}
+with
+$X = - 3 \delta - \lambda (2+\theta)+ [1 + (1+\theta)^2] \sigma^2/2 $.
+
+\item In general, forward rates are
+\begin{eqnarray*}
+    f^n_t &=& (A_n - A_{n+1}) + (B_n - B_{n+1}) w_t + (C_n - C_{n+1}) w_{t-1} .
+\end{eqnarray*}
+That gives us
+\begin{eqnarray*}
+    f^0_t &=& \delta + \sigma w_t + \sigma \theta  w_{t-1} \\
+    f^1_t &=& \delta + \lambda\sigma - \sigma^2/2 + \sigma \theta w_t  \\
+    f^2_t &=& \delta - (1+\theta)^2 \sigma^2/2 + \lambda \sigma (1+\theta) .
+\end{eqnarray*}
+
+\item The means are the same with $w_t = w_{t-1} = 0$, their mean.
+Therefore
+\begin{eqnarray*}
+   E (f^1 - f^0) &=& \lambda \sigma - \sigma^2/2 .
+\end{eqnarray*}
+Therefore we need $\lambda\sigma > \sigma^2/2 $,
+so a necessary condition is that $\lambda$ and $\sigma$ have the same sign.
+
+\end{enumerate}
+
+%-----------------------------------------------------------------------
+\item  {\it Expected returns on bonds.\/}
+Consider the bond pricing model
+\begin{eqnarray*}
+    \log m_{t+1} &=& - (\lambda_0 + \lambda_1 w_t)^2/2 + \delta - x_t
+            + (\lambda_0 + \lambda_1 w_t) w_{t+1} \\
+            x_{t} &=& \delta + \sigma (w_t + \theta w_{t-1}) ,
+\end{eqnarray*}
+where the $w_t$'s are  independent standard normal random variables.
+%
+\begin{enumerate}
+\item Suppose bond prices take the form
+\begin{eqnarray*}
+    \log q^n_t &=& A_n + B_n w_t + C_n w_{t-1} .
+\end{eqnarray*}
+How is $(A_{n+1},B_{n+1},C_{n+1})$ connected to $(A_{n},B_{n},C_{n})$?
+What are the values of $(A_{n},B_{n},C_{n})$ for $n=0,1,2$?
+\item Express the expected log excess return on a two-period bond as a function
+of the coefficients $(A_{n},B_{n},C_{n})$ for $n=1,2$.
+Use your solution for the coefficients to describe how expected log excess returns vary with the
+interest rate innovation $w_t$.
+\end{enumerate}
+%
+\needspace{2\baselineskip}
+Answer.
+\begin{enumerate}
+\item We use the usual formula,
+$ q^{n+1}_t = E_t (m_{t+1} q^n_{t+1})$.
+Then with substitutions,
+\begin{eqnarray*}
+    \log (m_{t+1} q^n_{t+1}) &=& A_n - \delta + (C_n-\sigma) w_t - \sigma\theta w_{t-1}
+            - (\lambda_0 + \lambda_1 w_t)^2/2 \\
+            && + \; [B_n + (\lambda_0 + \lambda_1 w_t)] w_{t+1} .
+\end{eqnarray*}
+The first line on the rhs gives us the conditional mean, the second line gives us the variance.
+Some intensive algebra gives us
+\begin{eqnarray*}
+    A_{n+1} &=& A_n - \delta + B_n^2/2 + B_n \lambda_0 \\
+    B_{n+1} &=& C_n - \sigma + B_n \lambda_1 \\
+    C_{n+1} &=& - \sigma \theta .
+\end{eqnarray*}
+That gives us
+\begin{center}
+\begin{tabular}{cccc}
+$n$ & $A_n$ & $B_n$ & $C_n$ \\
+\midrule
+0 & 0 & 0 & 0 \\
+1 & $-\delta$ & $-\sigma$ & $-\sigma \theta$ \\
+2 & $- 2\delta -\lambda_0 \sigma + \sigma^2/2$ & $- \sigma (1+\theta+\lambda_1)$ & $-\sigma\theta$
+\end{tabular}
+\end{center}
+
+\item The log excess return is
+\begin{eqnarray*}
+    \log r^2_{t+1} - \log r^1_{t+1} &=& \log q^1_{t+1} - \log q^2_t + \log q^1_t \\
+            &=& (2 A_1 - A_2) + (C_1 + B_1 - B_2) w_t + (C_1 - C_2) w_{t-1} \\
+            &&        + \; B_1 w_{t+1} .
+\end{eqnarray*}
+The expected excess return knocks out the last term.
+
+If we substitute our solutions, we have
+\begin{eqnarray*}
+   E_t \left( \log r^2_{t+1} - \log r^1_{t+1}\right)
+            &=& (\sigma \lambda_0 + \sigma^2/2)  + (\sigma\lambda_1) w_t  .
+\end{eqnarray*}
+So the key parameter is $\lambda_1$:  the sensitivity of the ``price of risk''
+to $w_t$.
+\end{enumerate}
+
+%-----------------------------------------------------------------------
+\item  {\it Stochastic volatility and equity pricing (40 points).\/}
+The Cox-Ingersoll-Ross model of bond pricing consists of the equations
+\begin{eqnarray*}
+    \log m_{t+1} &=& -(1+\lambda^2/2) x_{t} + \lambda x_t^{1/2} w_{t+1} \\
+        x_{t+1}  &=& (1-\varphi)\delta + \varphi x_t + \sigma x_t^{1/2} w_{t+1} ,
+\end{eqnarray*}
+with the usual independent standard normal disturbances $w_t$.
+We add to it an equation governing the dividend $d_t$ paid by a one-period
+equity-like claim:
+\begin{eqnarray*}
+    \log d_{t+1} &=& \alpha + \beta x_t + \gamma x_t^{1/2} w_{t+1} .
+\end{eqnarray*}
+Here $x_t$ plays the role of the state:  if we know $x_t$, we know the conditional
+distributions of $ (m_{t+1}, x_{t+1}, d_{t+1})$.
+
+\begin{enumerate}
+\item  Conditional on $x_t$,
+what are the mean and variance of $\log m_{t+1}$?
+What is its distribution?
+\item  What is the price $q^1_t$ of a one-period bond?
+What is its return $ r^1_{t+1} = 1/q^1_t$?
+\item  What is the price $q^e_t$ of equity, a claim to the dividend
+$d_{t+1}$?
+What is its return $r^e_{t+1}$?
+\item  Conditional on $x_t$, what is the expected log excess return on equity,
+$E_t (\log r^e_{t+1} - \log r^1_{t+1})$?
+\end{enumerate}
+%
+\needspace{2\baselineskip}
+Answer.
+\begin{enumerate}
+\item  Conditional on $x_t$, $\log m_{t+1}$ is normal with mean and variance
+\begin{eqnarray*}
+    E_t (\log m_{t+1}) &=& -(1+\lambda^2/2) x_{t} \\
+    \mbox{Var}_t (\log m_{t+1}) &=& \lambda^2 x_t .
+\end{eqnarray*}
+
+\item  The price uses the ``mean plus variance over two'' formula:
+\begin{eqnarray*}
+    \log q^1_t  &=& - x_{t} .
+\end{eqnarray*}
+The log return is $\log r^1_{t+1} = x_t$.
+
+\item  The price of equity is
+\begin{eqnarray*}
+    \log q^e_t &=& \log E_t (m_{t+1} d_{t+1} ) \\
+            &=& \alpha + [\beta - (1+\lambda^2/2)] x_t
+                + [(\gamma+\lambda)^2/2 ]  x_t \\
+            &=& \alpha + (\beta - 1 + \gamma^2/2 + \gamma\lambda) x_t .
+\end{eqnarray*}
+The return is
+\begin{eqnarray*}
+    \log r^e_{t+1} &=& \log d_{t+1} - \log q^e_t
+            \;\;=\;\; (1 - \gamma^2/2 - \gamma\lambda) x_t
+                + \gamma x_t^{1/2} w_{t+1} .
+\end{eqnarray*}
+\item  Conditional on $x_t$, the expected excess return is
+\begin{eqnarray*}
+    E_t (\log r^e_{t+1} - \log r^1_{t+1} )
+            &=& - (\gamma^2/2 + \gamma\lambda) x_t .
+\end{eqnarray*}
+\end{enumerate}
+
+%-----------------------------------------------------------------------
+\item {\it Exponential-affine equity valuation.\/}
+We explore variation in expected excess returns
+(``risk premiums'') in an environment like the one we used for bond pricing.
+We say a return or expected return is predictable if it depends on
+the state.
+If we know the state, we can use it to ``predict'' the return.
+In the asset management business, you might imagine strategies to exploit such
+information.
+For example, you might invest more in assets when their expected returns are high,
+and less when they're low.
+
+Here's the model.  The pricing kernel is
+\begin{eqnarray*}
+    \log m_{t+1} &=& - (\lambda_0 + \lambda_1 x_t)^2/2 - x_t
+                + (\lambda_0 + \lambda_1 x_t) w_{t+1} \\
+        x_{t+1} &=& (1-\varphi) \delta + \varphi x_t + \sigma w_{t+1} ,
+\end{eqnarray*}
+where $\{ w_t \}$ is (as usual) a sequence of independent standard normal random variables.
+This model differs from Vasicek in having a price of risk $\lambda$ that
+depends on the state $x_t$.
+The dependence is carefully designed to deliver loglinear (``exponential-affine'')
+bond prices.
+%
+\begin{enumerate}
+\item  What is the (stationary) mean of $x_t$?  The variance?
+\item  What is the price $q^1_t$ of a one-period bond?
+What is its (gross) return $r^1_{t+1}$?
+\item  What is the mean log return $E (\log r^1_{t+1})$?
+What parameter(s) govern its value in the model?
+\item  Now consider the price of ``equity,'' a claim to the dividend
+\begin{eqnarray*}
+    \log d_{t+1} &=&  \alpha + \beta w_{t+1} .
+\end{eqnarray*}
+What is its price $q^e_t$?
+Its (gross) return $r^e_{t+1}$?
+\item  What is the expected excess log return $ E_t (\log r^e_{t+1} - \log r^1_{t+1})$ in state $x_t$?
+In what states is it high?  In what states low?
+\item  Which equation is responsible for the predictability of the expected return?
+\end{enumerate}
+%
+\needspace{2\baselineskip}
+Answer.
+The point is that we can generate predictable excess
+returns for equity just as we did for bonds.
+\begin{enumerate}
+\item  $x_t$ is an AR(1).
+The mean is $\delta$ and the variance is $\sigma^2/(1-\varphi^2)$.
+\item   The model is set up to deliver
+\begin{eqnarray*}
+    \log q^1_t &=& \log E_t (m_{t+1}) \;\;=\;\; - x_t \\
+    \log r^1_{t+1} &=& - \log q^1_t \;\;=\;\; x_t .
+\end{eqnarray*}
+\item  The mean log return is the mean of $x_t$, namely $\delta$.
+\item  The price is
+\begin{eqnarray*}
+    \log q^e_t &=& \log E_t (m_{t+1} d_{t+1})
+            \;\;=\;\; \alpha - x_t + \beta^2/2 + \beta ( \lambda_0+ \lambda_1 x_t) .
+\end{eqnarray*}
+The return is
+\begin{eqnarray*}
+    \log r^e_{t+1} &=& \log d_{t+1} - \log q^e_t
+            \;\;=\;\;  x_t - \beta^2/2  -
+                \beta (\lambda_0 + \lambda_1 x_t) + \beta w_{t+1}.
+\end{eqnarray*}
+\item  The expected excess return is
+\begin{eqnarray*}
+   E_t ( \log r^e_{t+1}- \log r^1_{t+1}) &=&
+             - \beta^2/2  -  \beta (\lambda_0 + \lambda_1 x_t)
+\end{eqnarray*}
+The second term is predictable through $x_t$.
+\end{enumerate}
+
+\item {\it Bond pricing with nonnormal innovations.\/} 
+????
+
+
+\end{enumerate}
+
+\vfill \centerline{\it \copyright \ \number\year \
+NYU Stern School of Business}
+
+
+\end{document}
+
+
+
+\end{document}
+
+% *******************************************************************************
+
+\section{Term premiums}
+
+Now let's think about {\it term premiums\/}:
+(risk) premiums on bonds of different terms or maturities.
+We connect term premiums
+reflected in bond returns and forward rates.
+We start with the latter; the others follow from their definitions.
+Then we describe how term premiums can be predicted.
+
+{\it Definitions.\/}
+Let $q^n_t$ be the price at date $t$ of an $n$-period zero-coupon bond.
+Yields $y$ and forward rates $f$ are defined from prices by
+\begin{eqnarray*}
+    - \log q^n_t  &=&  n y^n_t
+            \;\;=\;\;  f^0_t  + f^1_t + \cdots + f^{n-1}_t.
+\end{eqnarray*}
+The definition of forward rates implies
+$ f^n_t = \log (q^n_t/q^{n+1}_t )$.
+One-period returns are $  r^n_{t+1} = q^{n-1}_{t+1}/q^n_t $.
+The {\it short rate\/} is $\log r^1_{t+1} = y_t^1 = f^0_t $.
+
+We define (forward) {\it term premiums\/} $\tp$ by
+\begin{eqnarray}
+    f^n_t &=&  E_t f^0_{t+n} + \tp^n_t .
+    \label{eq:tp-def}
+\end{eqnarray}
+%(Aficionados will see the expectations hypothesis lurking here.)
+We define {\it bond premiums\/} from (log) excess returns:
+\begin{eqnarray*}
+    \bp^n_t &=& E_t (\log r^n_{t+1}  - \log r^1_{t+1}) .
+\end{eqnarray*}
+The question is how the two are related.
+
+The answer follows from the definitions.
+The excess return on an $(n+1)$-period bond is
+\begin{eqnarray*}
+   \log r^n_{t+1} - \log r^1_{t+1} &=&
+            (f^1_t-f^0_{t+1}) + ... + (f^n_t-f^{n-1}_{t+1}).
+\end{eqnarray*}
+The typical term is
+\begin{eqnarray*}
+    f^j_t - f^{j-1}_{t+1} &=&  (E_t f^0_{t+j} - E_{t+1}f^0_{t+j})
+        + \tp^j_t - \tp^{j-1}_{t+1} .
+\end{eqnarray*}
+That is, you get innovations in forward rates and changes in term premiums.  Since the former have (conditional) mean zero by construction, only the latter show up in bond risk premiums:
+\begin{eqnarray*}
+    \bp^{n+1}_t &=&  E_t (\tp^1_{t+1}-\tp^0_t) + E_t (\tp^2_{t+1}-\tp^1_t)
+                    + ... + E_t (\tp^n_{t+1}-\tp^{n-1}_t)       \\
+               &=&  E_t (\tp^1_{t+1} - \tp^1_t) + E_t (\tp^2_{t+1}-\tp^2_t)
+                  + ... + E_t (\tp^{n-1}_{t+1}-\tp^{n-1}_t) + \tp^n_t .
+\end{eqnarray*}
+In short, bond premiums are functions of term premiums.
+In stationary ergodic settings, the unconditional means have a more simple form: $ E (\bp^{n+1}) = E (\tp^n )$.
+
+{\it Evidence on term premiums.\/}
+We consider three approaches to term premiums:
+\begin{itemize}
+\item Term premiums are zero:  $\tp^n_t = 0$.
+This is obviously false, because on average term premiums increase with maturity $n$.
+\item Term premiums are constant and depend only on maturity:  $\tp^n_t = \tp^n$.
+\item Term premiums are arbitrary functions of the state.
+This allows almost anything we might consider, including exponential-affine models.
+\end{itemize}
+Let's see what they deliver.
+
+Although it's clearly false,
+the first approach leads to some useful expressions for forward rates and bond returns.
+The first is that excess returns on bonds of all maturities are zero.
+We can look at forward rates or bond returns, but we see the same thing.
+We also have some strong implications for the dynamics of forward rates.
+If term premiums are zero, equation (\ref{eq:tp-def}) becomes
+\begin{eqnarray*}
+    f^n_t &=&  E_t f^0_{t+n}  .
+\end{eqnarray*}
+That is:  forward rates are expectations of future short rates.
+For this reason, the first approach is often referred to as
+the {\it expectations hypothesis\/}.
+
+
+We're going to show that the expectations hypothesis implies
+that forward rates are martingales:
+\begin{eqnarray}
+    f^n_t &=&  E_t f^{n-1}_{t+1}  .
+    \label{eq:forwards-martingale}
+\end{eqnarray}
+Why?  It's a little subtle, but let's work through the logic.
+The key ingredient is the law of iterated expectations,
+an extension of what I learned as the double expectation theorem.
+If we have a stochastic process for a random variable $x_t$,
+then
+\begin{eqnarray*}
+    E_t x_{t+n} &=& E_t \left( E_{t+1} x_{t+n} \right)
+            \;\;=\;\; E_t \left( E_{t+1} [E_{t+2} x_{t+n}] \right) ...
+\end{eqnarray*}
+We've done stuff like this all along, computing things one period at a time.
+It works because as we move the expectation back in time,
+we base it on less information.
+This says we can either do that directly (the left-hand side)
+or do it one period at a time (the right-hand side).
+
+Now let's apply this to the expected future short rate.
+We'll do this for $n=2$ to keep things simple.
+We have
+\begin{eqnarray*}
+    f^2_t &=&  E_t f^{0}_{t+2}
+            \;\;=\;\; E_t (E_{t+1} f^{0}_{t+2} )
+            \;\;=\;\; E_t f^{1}_{t+1}  .
+\end{eqnarray*}
+More generally, we get the martingale sequence
+$f^n_t, f^{n-1}_{t+1}, \ldots , f^{0}_{t+n}$.
+Each is the expectation of the short rate at $t+n$,
+but they're expectations at different dates.
+
+All of this is a long-winded way of setting up some  regression evidence.
+Under the expectations hypothesis,
+forward rates are martingales.
+We can examine that idea by trying to see if we can come
+up with a better prediction than zero.
+We've already seen that a constant helps, since it adds a nonzero risk premium.
+But we can do better than that.
+If we estimate
+\begin{eqnarray*}
+   E_t ( f^{n-1}_{t+1} - f^{0}_{t} ) &=& a_n + b_n (f^n_t - f^0_t) + \mbox{error}
+\end{eqnarray*}
+for lots of maturities $n$, what do we see?
+If the expectations hypothesis is right, we should get $b_n = 1$.
+In fact we get $b^1 = 0.5$, $b^3 = 0.75$, etc.
+As $n$ increases, the coefficients get closer to one, but at short
+maturities
+they're clearly not one.
+
+So what does that tell us?  We can predict changes in term premiums.
+It's not hard to show that this carries over to excess returns.
+
+
+
+
+\vfill \centerline{\it \copyright \ \number\year \
+NYU Stern School of Business}
+
+
+
+\end{document}
+

@@ -1,0 +1,337 @@
+\documentclass[11pt]{exam}
+
+\oddsidemargin=0.25truein \evensidemargin=0.25truein
+\topmargin=-0.5truein \textwidth=6.0truein \textheight=8.75truein
+
+%\RequirePackage{graphicx}
+\usepackage{comment}
+\usepackage{verbatim}
+\usepackage{booktabs}
+\usepackage{hyperref}
+\urlstyle{rm}   % change fonts for url's (from Chad Jones)
+\hypersetup{
+    colorlinks=true,        % kills boxes
+    allcolors=blue,
+    pdfsubject={ECON-UB233, Macroeconomic foundations for asset pricing},
+    pdfauthor={Dave Backus @ NYU},
+    pdfstartview={FitH},
+    pdfpagemode={UseNone},
+%    pdfnewwindow=true,      % links in new window
+%    linkcolor=blue,         % color of internal links
+%    citecolor=blue,         % color of links to bibliography
+%    filecolor=blue,         % color of file links
+%    urlcolor=blue           % color of external links
+% see:  http://www.tug.org/applications/hyperref/manual.html
+}
+
+\renewcommand{\thefootnote}{\fnsymbol{footnote}}
+\newcommand{\var}{\mbox{\it Var\/}}
+
+\printanswers
+
+% document starts here
+\begin{document}
+\parskip=\bigskipamount
+\parindent=0.0in
+\thispagestyle{empty}
+{\large ECON-UB 233 \hfill Dave Backus @ NYU}
+
+\bigskip\bigskip
+\centerline{\Large \bf Lab Report \#2: Sums, Mixtures, \& Certainty Equivalents}
+\centerline{Revised: \today}
+
+\bigskip
+{\it Due at the start of class.
+You may speak to others, but whatever you hand in should be your own work.
+Please include your Matlab code.}
+
+\begin{questions}
+
+\begin{solution}
+Most of the answers are computed in the Matlab
+program listed at the end.
+\end{solution}
+
+%-----------------------------------------------------------------------
+\question {\it The sum of normals is normal.\/}
+The idea here is to use cumulant generating functions (cgfs)
+to show that the sum of independent normal random variables is also normal.
+It's helpful to break the problem into manageable pieces, like this:
+\begin{parts}
+\part Consider two independent random variables $x_1$ and $x_2$,
+    not necessarily normal.
+    Show that the cgf of the sum $y = x_1 + x_2$ is the sum of their cgfs:
+\begin{eqnarray*}
+	k(s; y) &=& k(s; x_1) + k(s;x_2) .
+\end{eqnarray*}
+Hint:  note the form of the pdf and apply the definition of the cgf.
+
+\part Suppose $x_i \sim \mathcal{N}(\kappa_{i1}, \kappa_{i2})$.
+[This bit of notation means:   $x_i$ is normally distributed with
+mean $\kappa_{i1}$ and variance $\kappa_{i2}$.]
+What is $x_i$'s cgf?
+Hint:  we did this in class.
+
+\part Use (a) to find the cgf of $y = x_1 + x_2$,
+with $(x_1,x_2)$ as described in (b) (namely, normal with given means and variances).
+How do you know that $y$ is also normal?  What are its mean and variance?
+
+\part Extend this result to $y = a x_1 + b x_2$ for any real numbers $(a,b)$.
+\end{parts}
+
+\begin{solution}
+\begin{parts}
+\part If $x_1$ and $x_2$ are independent, their pdf factors:
+$ p_{12}(x_1,x_2) = p_1(x_1) p_2(x_2) $.
+That means the mgf of $x_1+x_2$ is the product of their individual mgf's:  
+$ h_y(s) = h_1(s) h_2(s) $. 
+We take the log to get the cgf's:  
+$ k_y(s) = \log h_y(s) = \log h_1(s) + \log h_2(s) = k_1(s) + k_2(s) $. 
+
+\part $  k(s; x_i) = s \kappa_{1i} + s^2 \kappa_{2i}/2 $.
+(If this isn't burned into your memory, please burn it in now.)
+\part Sum the cgf's:
+\begin{eqnarray*}
+    k(s; y) &=& k(s,x_1) + k(s,x_2) \\
+            &=& (s \kappa_{11} + s^2 \kappa_{21}/2) + (s\kappa_{12} + s^2 \kappa_{22}/2) \\
+            &=& s (\kappa_{11} + \kappa_{12} )
+                + s^2 (\kappa_{21} + \kappa_{22})/2 .
+\end{eqnarray*}
+It's normal because it's mgf has the form of a normal random variable.
+In fact, we can pick the mean and variance right out of the formula.  
+\part Still normal, but with a slight change in mean and variance:
+\begin{eqnarray*}
+    k(s; y) &=& s (a \kappa_{11} + b \kappa_{12} )
+                + s^2 (a^2 \kappa_{21} + b^2 \kappa_{22})/2  .
+\end{eqnarray*}
+\end{parts}
+\end{solution}
+
+%-----------------------------------------------------------------------
+\question {\it Sums and mixtures.\/}
+More fun with cumulant generating functions (cgfs).
+The ingredients include two independent normal random variables:
+$ x_1 \sim \mathcal{N}(0,\sigma^2)$ and $ x_2 \sim \mathcal{N}(\theta,\delta^2)$.
+Suggestion:  Have Matlab do the calculations.
+%
+\begin{parts}
+\part {\it Sum.\/}  Consider the random variable $y = x_1 + x_2$.
+Use the results of the previous question to derive the first four cumulants of $y$.
+What are the measures of skewness and excess kurtosis, $\gamma_1$ and $\gamma_2$?
+
+\part {\it Mixture.\/}  Now consider the mixture $x_3$:
+\begin{eqnarray*}
+    x_3 &=& \left\{
+            \begin{array}{ll}
+            0   & \mbox{with probability } 1-\omega \\
+            x_2 & \mbox{with probability } \omega .
+            \end{array}
+            \right.
+\end{eqnarray*}
+What is its cgf?
+Hint:  apply the definition.
+
+\part Now consider the sum $y = x_1 + x_3$.
+What is its cgf?
+What are the measures of skewness and excess kurtosis, $\gamma_1$ and $\gamma_2$?
+What parameter configuration do you need to generate negative skewness?
+\end{parts}
+
+\begin{solution}
+\begin{parts}
+\part Cumulants follow from differentiating.  
+The cgf is 
+\begin{eqnarray*}
+     k_y(s) &=& k_1(s) + k_1(s) 
+        \;\;=\;\; s (0 + \theta) + s^2 (\sigma^2 + \delta^2)/2 .
+\end{eqnarray*}     
+The cumulants are $\kappa_1 = \theta $ (the mean) 
+and $\kappa_2 = \sigma^2 + \delta^2 $ (the variance). 
+Since the cgf is quadratic (in $s$!), 
+all the derivatives after the second one are zero.  
+Therefore $\gamma_1 = \gamma_2 = 0$ as well.  
+\part Mixtures are a little different.  
+The mgf is 
+\begin{eqnarray*}
+    h(s) &=& (1-\omega) + \omega e^{s\theta + s^2 \delta^2/2} .
+\end{eqnarray*}
+The cgf is the log of $h$. 
+
+\part The cgf of a sum is the sum of the cgf's:  
+\begin{eqnarray*}
+    h_y(s) &=& s^2 \sigma^2 /2 + \log \left[(1-\omega) + \omega e^{s\theta + s^2 \delta^2/2} \right].
+\end{eqnarray*}
+We find the cumulants by differentiating.
+The expressions are a mess, but include:  
+\begin{eqnarray*}
+    \kappa_1 &=& \omega \theta \\
+    \kappa_2 &=& \sigma^2 + \omega \delta^2 + \omega(1-\omega) \theta^2 \\
+    \kappa_3 &=& \omega (1-\omega) \theta \left[ 3 \delta^2 + \theta^2 (1-2\omega) \right] .
+\end{eqnarray*}
+See the Matlab output for details.  
+It looks like $\theta $ is the key.
+If $\omega < 1/2$, then the sign of $\kappa_3$ is the same as the sign of $\theta$.  
+
+You might picture this:  start with a normal pdf for $x_1$, now add a smaller pdf on top of it
+for $x_2$. If $\theta<0$ this is to the left of the mean of the first one, 
+which gives you negative skewness. 
+
+\end{parts}
+\end{solution}
+
+
+%-----------------------------------------------------------------------
+\question {\it Lognormal risks.\/}
+Our mission is to compute the {\it risk penalty\/}
+associated with lognormal risks and power utility.
+What risks matter?  What role does the risk aversion parameter play?
+
+To be concrete, let $x = \log c \sim \mathcal{N}(\kappa_1, \kappa_2)$
+and $u(c) = c^{1-\alpha}/(1-\alpha)$ for $\alpha> 0$.
+The risk penalty is
+\begin{eqnarray*}
+    \mbox{\it rp\/} &=& \log (\bar{c}/\mu)
+                \;\;=\;\; \log \bar{c} - \log \mu ,
+\end{eqnarray*}
+where $\bar{c} = E (c) = E( e^{x})$ and $\mu$ is the certainty equivalent.
+We'll compute the terms one by one.
+
+% ?? change to mgf -- also this one's a little hard 
+\begin{parts}
+\part What is the cumulant generating function (cgf) of $x = \log c$?
+\part Use the cgf to compute $\bar{c}$.
+\part Use the cgf to compute the certainty equivalent $\mu$.
+\part What is the risk penalty?  How does it depend on risk?  Risk aversion?
+\part Suppose $\kappa_2 = 0.02^2$.  What is the risk penalty if $\alpha = 2$?
+$\alpha = 10$?  $\alpha = 20$?
+\end{parts}
+
+\begin{solution}
+The idea is to explore risk and risk aversion in a lognormal setting, 
+a setting we'll see over and over again.
+We're using the idea that if $x = \log c$, then $c = e^x$.  
+\begin{parts}
+\part The mgf of $x$  is (get used to this, you'll see it a lot) 
+\begin{eqnarray*}
+    h(s) &=& E(e^{sx}) \;\;=\;\; \exp [s \kappa_1 + s^2 \kappa_2/2 ].
+\end{eqnarray*}
+The cgf is the log of this:  
+\begin{eqnarray*}
+    k(s) &=& \log h(s)  \;\;=\;\; s \kappa_1 + s^2 \kappa_2/2 .
+\end{eqnarray*}
+
+\part We find the mean by setting $s=1$:  
+$ \bar{c} = E(c) = E(e^x) = h(1) = \exp[k(1)] = e^{\kappa_1+\kappa_2/2}$.
+
+\part We find expected utility by setting $s=1-\alpha$:  
+$ E[u(c)] = E (c^{1-\alpha})/(1-\alpha) = E (e^{(1-\alpha) x})/(1-\alpha) $.
+The numerator is the mgf evaluated at $s = 1-\alpha$. 
+So we have  
+\begin{eqnarray*}
+    E[u(c)] &=& \exp [ k(1-\alpha)/(1-\alpha) ] \\
+            &=& \exp[ (1-\alpha) \kappa_1 + (1-\alpha)^2 \kappa_2 /2 ] /(1-\alpha) \\
+            &=& \exp[ (1-\alpha) \{ \kappa_1 + (1-\alpha) \kappa_2 /2 \} ] /(1-\alpha) .  
+\end{eqnarray*}
+What level of consumption gives us the same utility?  
+Well, a constant level of consumption $\mu$ gives utility 
+$ E[u(\mu)] = u(\mu) = \mu^{1-\alpha}/(1-\alpha)$. 
+Equating $u(\mu)$ and $ E[u(c)] $ gives us 
+\begin{eqnarray*}
+    \mu &=& \exp[ \kappa_1 + (1-\alpha) \kappa_2 /2 ] .  
+\end{eqnarray*}
+
+\part The risk penalty is 
+\begin{eqnarray*}
+    \log (\bar{c}/\mu) &=& \log \bar{c} - \log \mu) \;\;=\;\; \alpha\kappa_2/2 .
+\end{eqnarray*}
+So it increases with risk $\kappa_2$ and risk aversion $\alpha$. 
+\end{parts}
+\end{solution}
+
+
+\end{questions}
+
+\vfill \centerline{\it \copyright \ \number\year \
+NYU Stern School of Business}
+
+%\end{document}
+
+
+\pagebreak
+{\bf Matlab program:}
+\verbatiminput{../Matlab/hw2_s13.m}
+
+\end{document}
+
+
+
+%-----------------------------------------------------------------------
+\question {\it Exponential risks.\/}
+Now consider the same problem when $x = - \log c $ is exponential,
+a tractable nonnormal distribution.
+The connection between $c$ and $x$ implies $c = e^{\log c} = e^{-x}$.
+The pdf is
+\begin{eqnarray*}
+    p(x)  &=& \lambda e^{-\lambda x}
+\end{eqnarray*}
+for $x \geq 0$ and $\lambda > 0$.
+The cgf is
+\begin{eqnarray*}
+    k(s)  &=& - \log \left( 1 - s/\lambda \right) .
+\end{eqnarray*}
+In terms of $x$, the mean of $c$ is $\bar{c} = E(c) = E (e^{-x})$.
+
+\begin{parts}
+\part Use the cgf to compute the variance, skewness, and excess kurtosis
+of $x$.  How do they compare to those of the normal distribution?
+\part Use the cgf to compute $\bar{c}$.
+\part Choose the value of $\lambda$ that sets
+the variance equal to $0.02^2$, the number we used earlier.
+\part
+What is the risk penalty if $\alpha = 2$? $\alpha = 10$?
+$\alpha = 20$?
+How does your answer differ from the previous one?  Why?
+\end{parts}
+
+\begin{solution}
+Same approach as the previous problem.
+\begin{parts}
+\part The first four cumulants are
+$\kappa_1 = 1/\lambda$,
+$\kappa_2 = 1/\lambda^2$,
+$\kappa_3 = 2/\lambda^3$,
+and $\kappa_4 = 6/\lambda^4$.
+Skewness and excess kurtosis are therefore
+$\gamma_1 = 2$ and $\gamma_2 6$.
+
+\part If $k(s)$ is the cgf of $x$,
+then $\log \bar{c} = k(-1)$ ($k$ evaluated at $s=-1$):
+$k(-1) = - \log (1 + 1/\lambda)$.
+
+\part We solve $0.02^2 = 1/\lambda^2$ or $\lambda = 1/0.02 = 50$.
+
+
+\part The risk penalties are
+%
+\begin{center}
+\begin{tabular}{lccc}
+        & $\alpha=2$  & $\alpha=10$  & $\alpha=20$ \\
+\midrule
+lognormal    &  0.0004 & 0.0020 & 0.0040 \\
+exponential  &  0.0004 & 0.0022 & 0.0054
+\end{tabular}
+\end{center}
+%
+The point is that departures from normality matter, although they're not
+especially large here.
+The numbers suggest that the impact increases with risk aversion $\alpha$.
+We could elaborate on this using the power series expansion of the cgf,
+which would show you that the $j$th cumulant is multiplied
+by $(-\alpha)^j/j!$, so as we increase $\alpha$ some of these terms can increase
+dramatically.
+Amir Yaron (Wharton prof) refers to this as a ``bazooka,''
+since it allows you to take a little nonnormality
+and generate enormous risk premiums.
+More on this kind of thing later in the course.
+\end{parts}
+\end{solution}

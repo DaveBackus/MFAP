@@ -1,0 +1,230 @@
+\documentclass[11pt]{article}
+
+\oddsidemargin=0.25truein \evensidemargin=0.25truein
+\topmargin=-0.5truein \textwidth=6.0truein \textheight=8.75truein
+
+%\usepackage{graphicx}
+\usepackage{verbatim}
+%\usepackage{booktabs}
+\usepackage{comment}
+\usepackage[dvipdfm]{hyperref}
+\urlstyle{rm}   % change fonts for url's (from Chad Jones)
+\hypersetup{
+    colorlinks=true,        % kills boxes
+    allcolors=blue,
+    pdfsubject={ECON-UB233, Macroeconomic foundations for asset pricing},
+    pdfauthor={Dave Backus @ NYU},
+    pdfstartview={FitH},
+    pdfpagemode={UseNone},
+%    pdfnewwindow=true,      % links in new window
+%    linkcolor=blue,         % color of internal links
+%    citecolor=blue,         % color of links to bibliography
+%    filecolor=blue,         % color of file links
+%    urlcolor=blue           % color of external links
+% see:  http://www.tug.org/applications/hyperref/manual.html
+}
+% more from Chad Jones
+%\usepackage{tweaklist}
+%\renewcommand{\enumhook}{\setlength{\topsep}{0pt}%
+%  \setlength{\itemsep}{0pt}}
+
+\renewcommand{\thefootnote}{\fnsymbol{footnote}}
+
+% document starts here
+\begin{document}
+\parskip=\bigskipamount
+\parindent=0.0in
+\thispagestyle{empty}
+{\large ECON-UB 233 \hfill Dave Backus @ NYU}
+
+\bigskip\bigskip
+\centerline{\Large \bf Review for Quiz \#1}
+\centerline{(Started: February 10, 2012; Revised: \today)}
+
+\bigskip
+I'll focus on the big picture to give you a sense of
+what we've done and how it fits together.
+The key sections are the first one, random variables,
+and the last one, asset pricing.
+The sections in between combine practice with random variables
+with insight into various approaches to asset pricing.
+
+
+\subsection*{Random variables}
+
+Random variables.  They're the input to everything we do.
+Formally, we start with a state $z$, associated probabilities $p(z)$,
+and random variables $x(z)$.
+
+Generating functions.
+We used the moment generating function $h(s) = E (e^{sx})$
+and cumulant generating function $k(s) = \log h(s)$ to
+generate moments and cumulants, resp.
+The latter are especially useful, since ``high-order'' cumulants
+(cumulants $\kappa_j$ for $j \geq 3$)
+are zero for the normal distribution.
+Measures of skewness and excess kurtosis are therefore
+indications that the distribution is something other than normal.
+
+Common distributions:  Bernoulli, Poisson, normal, exponential.
+The normal and Poisson are commonly used in option pricing.
+
+
+\subsection*{Risk and risk aversion}
+
+We'll use expected utility with a power function most of the time,
+but the more general treatment sets up
+the possibility of more general preferences.
+We may come back to that at the end of the course
+if we have time.
+Also important is the role of high-order moments and cumulants,
+which we'll see again when we look at the equity premium.
+
+
+\subsection*{Consumption, saving, and portfolio choice}
+
+Asset pricing starts with portfolio choice.
+We worked our way up to a two-period example
+with dates 0 and 1 and a number of different states $z$ at date 1.
+Clean solutions are a rarity, but we saw that a theoretical agent
+holds less of the risky asset when we increase her risk aversion.
+We also saw the first version of the equation,
+\begin{eqnarray}
+    \sum_z p(z) \{ \beta u'[c_1(z)]/u'(c_0) \} r^j(z) &=&
+        E(m r^j) \;\;=\;\; 1,
+        \label{eq:Emr}
+\end{eqnarray}
+for all traded assets $j$.
+Here it's a first-order condition for the agent:
+given returns $r^j$, choose consumption and portfolios.
+Later on it will reappear as an asset pricing relation:
+given $m$, find the price and return of an asset.
+
+
+\subsection*{Two-period economies}
+
+General equilibrium models are a basic tool of economics.
+The representative agent version is a good starting point
+for macroeconomics and finance.
+It's the predominant model in macro-finance,
+even as people work on extensions with more complex preferences
+or multiple agents.
+
+{\it Arrow securities\/} are an important concept here:
+claims to one unit of the good in a specific state $z$ at date 1.
+We denote their prices, in units of the date-0 good, by
+$q(z)$, which we call the {\it state prices\/}.
+The first-order condition of a representative agent implies
+\begin{eqnarray}
+    q(z) &=& p(z) \beta u'[c_1(z)]/u'(c_0) ,
+\end{eqnarray}
+a short step from (\ref{eq:Emr}).
+If we have as many assets as states, we can
+use them to construct state prices.
+The possibility of using the mysterious
+state prices in practical situations is a
+significant insight.
+
+
+\subsection*{Asset pricing}
+
+We change perspectives here.
+In the portfolio choice problem,
+asset prices and returns are given,
+agents simply decide how much of each asset to buy.
+In the general equilibrium problem,
+both prices and quantities are endogenous:
+they come out of the model.
+Both paths lead to (\ref{eq:Emr}), but the interpretation is different.
+Here we don't worry about where (\ref{eq:Emr}) comes from.
+We simply say that if we know $m$, we can compute asset prices and returns.
+
+%We have three versions, each of which gives us a different perspective.
+The first result, which I regard as one of the great accomplishments of modern finance,
+is that we can price assets with Arrow securities if the economy is ``arbitrage-free.''
+Again, apologies for all the $q$'s.
+If asset $j$ has dividends $d^j(z)$, its price satisfies
+\begin{eqnarray}
+    q^j &=& \sum_z q(z) d^j(z) .
+    \label{eq:qj-state-price}
+\end{eqnarray}
+The theorem says we can always find positive state prices $q(z)$ that satisfy this
+equation for every traded asset $j$.
+We haven't said anything about what the state prices are
+or where they come from,
+only that there must be some.
+
+We have two versions of this result that we'll use repeatedly.
+The first version is based on a {\it pricing kernel\/} $m$,
+defined implicitly by $ q(z) = p(z) m(z)$.
+The pricing relation (\ref{eq:qj-state-price}) becomes
+\begin{eqnarray}
+    q^j &=& \sum_z p(z) m(z) d^j(z) \;\;=\;\; E (m d^j) .
+    \label{eq:q=Emd}
+\end{eqnarray}
+This turns into (\ref{eq:Emr})
+if we divide by $q^j$ and
+note that the return is $r^j(z) = d^j(z)/q^j$.
+We can breathe some life into $m$ by equating it to the
+marginal rate of substitution of a representative agent,
+as in (\ref{eq:Emr}).
+The second version is based on
+{\it risk-neutral probabilities\/} $p^*$,
+defined implicitly by $ q(z) = p(z) m(z) = q^1 p^*(z)$.
+Here
+\begin{eqnarray*}
+    q^1 &=& \sum_z p(z) m(z) \;\;=\;\; E(m)
+\end{eqnarray*}
+is the price of a one-period riskfree bond.
+The pricing relation (\ref{eq:qj-state-price}) turns into
+\begin{eqnarray*}
+    q^j &=& q^1 \sum_z p^*(z) d^j(z)  \;\;=\;\; q^1 E^* (d^j) ,
+\end{eqnarray*}
+where $E^*$ means the expectation computed from the risk-neutral probabilities.
+
+
+\subsection*{Risk and return}
+
+We've barely touched on this, but the pricing kernel
+version (\ref{eq:q=Emd}) contains an explanation for why some assets have
+higher expected returns than others.
+There are two levels to this explanation:
+the covariance of the return with $m$ and the
+connection between $m$ and consumption.
+
+To keep things simple, let's scale the units of
+every asset so that they have the same expected dividend $E(d^j)$.
+Then any difference in expected return must come from the price:
+$ E(r^j) = E(d^j)/q^j$.
+The price of an asset follows from
+\begin{eqnarray*}
+    q^j &=& E (m d^j)
+            \;\;=\;\; E(m) E(d^j) + \mbox{Cov}(m,d^j) .
+\end{eqnarray*}
+The first term is the same for all assets,
+but the second need not be.
+Evidently assets whose dividends have the greatest negative covariance
+with $m$ have the lowest prices, hence the highest expected returns.
+Put differently:  assets are penalized, in terms of price and return,
+for having high payoffs in states when $m$ is low.
+
+The second level tells us what states those are.
+It stems from the connection
+in representative agent models between
+the pricing kernel and consumption:
+\begin{eqnarray*}
+    m(z) &=& \beta u'[c_1(z)]/u'(c_0) .
+\end{eqnarray*}
+Here we see that states with high $c_1(z)$ have low $m(z)$.
+Why?  Because marginal utility is decreasing.
+It says, in words, that payoffs when consumption is high
+are less valuable than payoffs when consumption is low.
+That's a good rationale for high average returns on assets like equity,
+whose payoffs are highest in good times,
+when consumption is high and the value of an additional
+unit of consumption is low.
+
+
+\vfill \centerline{\it \copyright \ \number\year \
+NYU Stern School of Business}
+\end{document}

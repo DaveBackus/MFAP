@@ -1,0 +1,278 @@
+\documentclass[11pt]{exam}
+
+\oddsidemargin=0.25truein \evensidemargin=0.25truein
+\topmargin=-0.5truein \textwidth=6.0truein \textheight=8.75truein
+
+\usepackage{comment}
+\usepackage{verbatim}
+\usepackage{booktabs}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\urlstyle{rm}   % change fonts for url's (from Chad Jones)
+\hypersetup{
+    colorlinks=true,        % kills boxes
+    allcolors=blue,
+    pdfsubject={ECON-UB233, Macroeconomic foundations for asset pricing},
+    pdfauthor={Dave Backus @ NYU},
+    pdfstartview={FitH},
+    pdfpagemode={UseNone},
+%    pdfnewwindow=true,      % links in new window
+%    linkcolor=blue,         % color of internal links
+%    citecolor=blue,         % color of links to bibliography
+%    filecolor=blue,         % color of file links
+%    urlcolor=blue           % color of external links
+% see:  http://www.tug.org/applications/hyperref/manual.html
+}
+
+\usepackage{attachfile}
+    \attachfilesetup{color=0.5 0 0.5}
+
+\printanswers
+
+% document starts here
+\begin{document}
+\parskip=\bigskipamount
+\parindent=0.0in
+\thispagestyle{empty}
+{\large ECON-UB 233 \hfill Dave Backus @ NYU}
+
+\bigskip\bigskip
+\centerline{\Large \bf Lab Report \#8:  Bond Prices \& Predictable Returns}
+\centerline{Revised: \today}
+
+\bigskip
+{\it Due at the start of class.
+You may speak to others, but whatever you hand in should be your own work.
+Please include your Matlab code.}
+
+
+\begin{questions}
+%-----------------------------------------------------------------------
+\question {\it Equity prices and dividends.\/}
+Suppose the ex-dividend price of equity is
+\begin{eqnarray}
+    q_t &=& \delta E_t \left( d_{t+1} + q_{t+1} \right)
+    \label{eq:forward}
+\end{eqnarray}
+with discount factor $ 0 < \delta < 1 $.
+\begin{parts}
+\item Express the price as a function of expected future dividends.
+\item Suppose dividends follow
+\begin{eqnarray*}
+    d_{t+1} &=& (1-\varphi) \mu + \varphi d_t + \sigma( w_{t+1} + \theta w_t ) ,
+\end{eqnarray*}
+where $\{ w_t \} $ is a sequence of independent standard normal random variables.
+What definition of the state is enough to describe the conditional distribution of $d_{t+1}$ at date $t$?
+\item How is the price $q_t$ related to the state?
+\item Optional, extra credit.  What are the variances of $q$ and $d$?
+How do they relate to Shiller's observation that prices are more variable
+than dividends?
+\end{parts}
+
+\begin{solution}
+\begin{parts}
+\item Repeated substitution gives us
+\begin{eqnarray*}
+    q_t &=& \sum_{j=1}^\infty \delta^j E(d_{t+j}) .
+\end{eqnarray*}
+\item The date-$t$ state for an ARMA(1,1) can be expressed by $z_t = (d_t, w_t)$.
+The conditional distribution of $d_{t+1}$ is normal with mean and variance
+\begin{eqnarray*}
+    E_t (d_{t+1}) &=& (1-\varphi) \mu + \varphi d_t + \sigma \theta w_t \\
+    \mbox{Var}_t (d_{t+1}) &=& \sigma^2 .
+\end{eqnarray*}
+\item We'll use the method of undetermined coefficients.
+If we guess $q_t = a + b d_t + c w_t $ for coefficients $(a,b,c)$ to be determined,
+then the elements of (\ref{eq:forward}) are
+\begin{eqnarray*}
+    q_t &=& a + b d_t + c w_t \\
+    E_t (q_{t+1}) &=& a + b [(1-\varphi) \mu + \varphi d_t + \sigma \theta w_t ] \\
+    E_t (d_{t+1}) &=& (1-\varphi) \mu + \varphi d_t + \sigma \theta w_t .
+\end{eqnarray*}
+Substituting into (\ref{eq:forward}) and lining up coefficients gives us
+\begin{eqnarray*}
+    a &=& \delta \big[ a + (1+b)(1-\varphi) \mu \big] \\
+    b &=& \delta \big( b \varphi + \varphi \big) \\
+    c &=& \delta (b \sigma \theta + \sigma \theta) .
+\end{eqnarray*}
+The second equation gives us $b= \delta\varphi / (1-\delta\varphi) $, 
+and therefore $1+b = 1/(1-\delta\varphi)$.
+The first and third then give us
+\begin{eqnarray*}
+    a &=& \frac{(1-\varphi)\mu\delta}{(1-\delta)(1-\delta\varphi)} ,
+    \;\;\;\;\; c \;\;=\;\; \frac{\sigma\theta\delta}{1-\delta\varphi} .
+\end{eqnarray*}
+
+\end{parts}
+\end{solution}
+
+
+%-----------------------------------------------------------------------
+\item {\it Bond basics.\/}
+Consider the following bond prices at some date $t$:
+
+\medskip
+\begin{center}
+\tabcolsep=0.1in
+\begin{tabular}{lr}
+\toprule
+Maturity $n$   & \phantom{xx} Price $q^n$ \\ %& \phantom{xx} Yield $y^n$ & Forward $f^{n-1}$ \\
+\midrule
+0           &    1.0000   \\
+1 year      &    0.9704   \\
+2 years     &    0.9324   \\
+3 years     &    0.8914   \\
+4 years     &    0.8479   \\
+5 years     &    0.8065   \\
+\bottomrule
+\end{tabular}
+\end{center}
+\medskip
+
+\begin{parts}
+\item What are the yields $y^n$?
+\item What are the forward rates $f^{n-1}$?
+\item How are the yields and forward rates related?  Verify for $y^3$.
+\end{parts}
+
+\begin{solution}
+\begin{center}
+\tabcolsep=0.1in
+\begin{tabular}{lrrr}
+\toprule
+Maturity $n$   & \phantom{xx} Price $q^n$ & \phantom{xx} Yield $y^n$ & Forward $f^{n-1}$ \\
+\midrule
+0           &    1.0000  \\
+1 year      &    0.9704  & 0.0300 & 0.0300 \\
+2 years     &    0.9324  & 0.0350 & 0.0400 \\
+3 years     &    0.8914  & 0.0383 & 0.0450 \\
+4 years     &    0.8479  & 0.0413 & 0.0500 \\
+5 years     &    0.8065  & 0.0430 & 0.0500 \\
+\bottomrule
+\end{tabular}
+\end{center}
+%\medskip
+See the attached Matlab program;
+download the pdf, open, click on pushpin:
+\attachfile{../Matlab/hw/hw8_f13.m}
+
+\begin{parts}
+\item See above.
+\item See above.
+\item Yields are averages of forward rates:
+\begin{eqnarray*}
+    y^n_t &=& n^{-1} \sum_{j=1}^n f^{j-1}_t .
+\end{eqnarray*}
+Thus $y^3 = (0.0300 + 0.0400 +  0.0450)/3 = 0.0383$.
+\end{parts}
+\end{solution}
+
+%-----------------------------------------------------------------------
+\item {\it Moving average bond pricing.\/}
+Consider the bond pricing model
+\begin{eqnarray*}
+    \log m_{t+1} &=& - \lambda^2/2 - x_t + \lambda w_{t+1} \\
+    x_t &=& \delta + \sigma (w_t + \theta w_{t-1}) .
+\end{eqnarray*}
+
+\begin{parts}
+\item What is the short rate $f^0_t$?
+\item Suppose bond prices take the form
+\begin{eqnarray*}
+    \log q^n_{t} &=& A_n + B_n w_t + C_n w_{t-1} .
+\end{eqnarray*}
+Use the pricing relation to derive recursions connecting
+$(A_{n+1}, B_{n+1}, C_{n+1})$ to $(A_{n}, B_{n}, C_{n})$.
+What are $(A_{n}, B_{n}, C_{n})$ for $n=0,1,2,3$?
+\item Express forward rates as functions of the state $(w_t,w_{t-1}$).
+What are $f^1_t$ and $f^2_t$?
+\item What is $E(f^1- f^0)$?  What parameters govern its sign?
+\end{parts}
+
+\begin{solution}
+\begin{parts}
+\item The short rate is
+\begin{eqnarray*}
+    f^0_t &=& - \log E_t m_{t+1} \;\;=\;\;  \lambda^2/2 + x_t - \lambda^2/2
+            \;\;=\;\; x_t .
+\end{eqnarray*}
+The second equality is the usual ``mean plus variance over two'' with the sign flipped
+(as indicated by the first equality).
+In other words:  the usual setup.
+In what follows, we'll kill off $x_t$ by substituting.
+\item
+Bond prices follow from the pricing relation,
+\begin{eqnarray*}
+    q_t^{n+1} &=& E_t (m_{t+1} q_{t+1}^n) ,
+\end{eqnarray*}
+starting with $n=0$ and  $q^0_t = 1$.
+The state in this case is $(w_t, w_{t-1})$, a simple example of a
+two-dimensional model, hence the extra term in the form of the bond price.
+We need
+\begin{eqnarray*}
+    \log (m_{t+1} q_{t+1}^n) &=&
+            A_n - (\lambda^2/2 + \delta) + (\lambda+B_n) w_{t+1}
+            + (C_n-\sigma) w_t - \sigma \theta w_{t-1} .
+\end{eqnarray*}
+The (conditional) mean and variance are
+\begin{eqnarray*}
+    E_t [ \log (m_{t+1} q_{t+1}^n)] &=&
+            A_n - (\lambda^2/2 + \delta)
+            + (C_n-\sigma) w_t - \sigma \theta w_{t-1} \\
+    \mbox{Var}_t [\log (m_{t+1} q_{t+1}^n)] &=&
+            (\lambda+B_n)^2 .
+\end{eqnarray*}
+Using ``mean plus variance over two'' and lining up terms gives us
+\begin{eqnarray*}
+        A_{n+1} &=& A_n - (\lambda^2/2 + \delta) + (\lambda+B_n)^2/2 \\
+                &=& A_n - \delta + \lambda B_n + (B_n)^2/2 \\
+        B_{n+1} &=& C_n - \sigma \\
+        C_{n+1} &=& - \sigma \theta
+\end{eqnarray*}
+for $n=0,1,2,\ldots$.
+That gives us
+\begin{center}
+\begin{tabular}{cccc}
+        $n$  & $A_n$ & $B_n$ & $C_n$ \\
+        \midrule
+        0   &  0 & 0 & 0 \\
+        1   &  $-\delta$ & $-\sigma$ & $-\sigma\theta$  \\
+        2   &  $-2 \delta - \lambda\sigma + \sigma^2/2$   &  $-\sigma(1+\theta)$ & $-\sigma\theta$ \\
+        3   &  X  &  $-\sigma(1+\theta)$ & $-\sigma\theta$
+\end{tabular}
+\end{center}
+with
+$X = - 3 \delta - \lambda (2+\theta)+ [1 + (1+\theta)^2] \sigma^2/2 $.
+
+\item In general, forward rates are
+\begin{eqnarray*}
+    f^n_t &=& (A_n - A_{n+1}) + (B_n - B_{n+1}) w_t + (C_n - C_{n+1}) w_{t-1} .
+\end{eqnarray*}
+That gives us
+\begin{eqnarray*}
+    f^0_t &=& \delta + \sigma w_t + \sigma \theta  w_{t-1} \\
+    f^1_t &=& \delta + \lambda\sigma - \sigma^2/2 + \sigma \theta w_t  \\
+    f^2_t &=& \delta - (1+\theta)^2 \sigma^2/2 + \lambda \sigma (1+\theta) .
+\end{eqnarray*}
+
+\item The means are the same with $w_t = w_{t-1} = 0$, their mean.
+Therefore
+\begin{eqnarray*}
+   E (f^1 - f^0) &=& \lambda \sigma - \sigma^2/2 .
+\end{eqnarray*}
+Therefore we need $\lambda\sigma > \sigma^2/2 $,
+so a necessary condition is that $\lambda$ and $\sigma$ have the same sign.
+
+\end{parts}
+\end{solution}
+
+
+
+
+\end{questions}
+
+\vfill \centerline{\it \copyright \ \number\year \ NYU Stern School of Business}
+
+\end{document}
+
+

@@ -1,0 +1,113 @@
+\documentclass[11pt]{exam}
+
+\oddsidemargin=0.25truein \evensidemargin=0.25truein
+\topmargin=-0.5truein \textwidth=6.0truein \textheight=8.75truein
+
+%\RequirePackage{graphicx}
+\usepackage{comment}
+\usepackage[dvipdfm]{hyperref}
+\urlstyle{rm}   % change fonts for url's (from Chad Jones)
+\hypersetup{
+    colorlinks=true,        % kills boxes
+    allcolors=blue,
+    pdfsubject={ECON-UB233, Macroeconomic foundations for asset pricing},
+    pdfauthor={Dave Backus @ NYU},
+%    pdfnewwindow=true,      % links in new window
+%    linkcolor=blue,         % color of internal links
+%    citecolor=blue,         % color of links to bibliography
+%    filecolor=blue,         % color of file links
+%    urlcolor=blue           % color of external links
+% see:  http://www.tug.org/applications/hyperref/manual.html
+}
+
+\renewcommand{\thefootnote}{\fnsymbol{footnote}}
+\newcommand{\var}{\mbox{\it Var\/}}
+
+% document starts here
+\begin{document}
+\parskip=\bigskipamount
+\parindent=0.0in
+\thispagestyle{empty}
+{\large ECON-UB 233 \hfill Dave Backus @ NYU}
+
+\bigskip\bigskip
+\centerline{\Large \bf Quiz \#1}
+\centerline{(Started: February 27, 2012; Revised: \today)}
+
+\bigskip
+{\it Please write your name at the top of the exam --- {NOW!}
+Then complete the exam in the space provided.
+You may refer to one page of notes:  standard paper,
+both sides if you wish.}
+
+\begin{questions}
+%-----------------------------------------------------------------------
+\question (3-state ``Bernoulli'')
+The idea is to extend our analysis to a symmetric 3-state distribution,
+where we can explore the impact of high-order cumulants.
+This is sometimes called a ``categorical distribution,''
+ but that sounds too clunky to me.
+
+Let us say, to be concrete, that the state $z$ takes on the values
+ $\{-1, 0, 1\}$ with
+ probabilities $\{p, 1-2p, p \}$.
+ A random variable $x$ is defined by $x(z) = \delta z$.
+
+\begin{parts}
+\part Does $x$ have a legitimate probability distribution?
+\part What is the moment generating of $x$?  The cumulant generating function?
+\part What are the mean and variance of $x$?
+\part What are our measures of skewness and excess kurtosis,
+$\gamma_1$ and $\gamma_2$?
+Under what conditions is $\gamma_2$ large?  
+\part Is there a value of $p$ that reproduces the values
+of $\gamma_1$ and $\gamma_2$ of a normal random variable?
+\end{parts}
+
+%\pagebreak \phantom{xx} \pagebreak
+%-----------------------------------------------------------------------
+\question (3-state ``Bernoulli,'' continued)
+For the same environment, 
+suppose $x$ is log consumption growth:
+$ \log c_1(z) - \log c_0 = x(z)$.
+\begin{parts}
+\part 
+With power utility, what is the pricing kernel?
+\part What are the state prices?
+\part What are the risk-neutral probabilities?
+\part How does the pricing kernel vary with $x$ and $z$?
+The risk-neutral probabilities?  
+How do they vary with risk aversion $\alpha$?
+Qualitative answers are sufficient.  
+\end{parts}
+
+%\pagebreak \phantom{xx} \pagebreak
+%-----------------------------------------------------------------------
+\question (short answer questions)
+\begin{parts}
+\part What is this function?  
+\begin{eqnarray*}
+    p(x) &=& (2\pi \sigma^2)^{-1/2} \exp[-(x-\mu)^2/2 \sigma^2 ]
+\end{eqnarray*}
+What do $\mu$ and $\sigma$ represent?
+\part How would I compute skewness in a sample of data: 
+$x_t$ for $t=1,2,\ldots,T$?  
+\part What determines whether skewness raises or lowers expected utility?
+\part What is a resource constraint?  How does it differ from a budget constraint?
+\part What are the prices of Arrow securities for this collection of 
+asset prices and dividends?  [??] 
+\part Suppose $x \sim \mathcal{N}(\kappa_1,\kappa_2)$.  
+What are $\kappa_1$ and $\kappa_2$?  
+What is the distribution of $\log \beta - \alpha x$?  
+
+\end{parts}
+
+%\pagebreak \phantom{xx} \pagebreak
+\end{questions}
+
+\vfill \centerline{\it \copyright \ \number\year \
+NYU Stern School of Business}
+\end{document}
+
+
+
