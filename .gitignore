@@ -5,6 +5,7 @@
 # My tweaks 
 *.bak
 *.synctex
+Current/
 
 *.pydevproject
 .project
