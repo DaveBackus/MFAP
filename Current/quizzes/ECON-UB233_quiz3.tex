@@ -1,0 +1,240 @@
+\documentclass[11pt]{exam}
+
+\oddsidemargin=0.25truein \evensidemargin=0.25truein
+\topmargin=-0.5truein \textwidth=6.0truein \textheight=8.75truein
+
+%\RequirePackage{graphicx}
+\usepackage{verbatim}
+\usepackage{booktabs}
+\usepackage{comment}
+\usepackage{hyperref}
+\urlstyle{rm}   % change fonts for url's (from Chad Jones)
+\hypersetup{
+    colorlinks=true,        % kills boxes
+    allcolors=blue,
+    pdfsubject={ECON-UB233, Macroeconomic foundations for asset pricing},
+    pdfauthor={Dave Backus @ NYU},
+    pdfstartview={FitH},
+    pdfpagemode={UseNone},
+%    pdfnewwindow=true,      % links in new window
+%    linkcolor=blue,         % color of internal links
+%    citecolor=blue,         % color of links to bibliography
+%    filecolor=blue,         % color of file links
+%    urlcolor=blue           % color of external links
+% see:  http://www.tug.org/applications/hyperref/manual.html
+}
+
+\renewcommand{\thefootnote}{\fnsymbol{footnote}}
+\newcommand{\var}{\mbox{\it Var\/}}
+
+\printanswers
+
+% document starts here
+\begin{document}
+\parskip=\bigskipamount
+\parindent=0.0in
+\thispagestyle{empty}
+{\large ECON-UB 233 \hfill Dave Backus @ NYU}
+
+\bigskip\bigskip
+\centerline{\Large \bf Quiz \#3}
+\centerline{Revised: \today}
+
+\bigskip
+{\it Please write your name below.
+Then complete the exam in the space provided.
+There are THREE questions.
+You may refer to one page of notes:
+standard paper, both sides, any content you wish.}
+
+\bigskip
+\begin{flushleft}
+\rule{4in}{0.5pt} \\ (Name and signature)
+\end{flushleft}
+
+
+\begin{questions}
+%-----------------------------------------------------------------------
+\item  {\it Moving average dynamics.\/}
+Consider the stochastic process
+\begin{eqnarray*}
+    x_t &=& \delta + w_t + \theta w_{t-1}  ,
+\end{eqnarray*}
+where $\{ w_t \} $ is our usual collection of independent standard normal random variables.
+%
+\begin{parts}
+\item Is $x$ Markov for some definition $z_t$ of the state at date $t$?
+ What is the distribution of $x_{t+1}$ conditional on $z_t$?
+ (5~points)
+\item What is the equilibrium distribution of $x$?
+ (5~points)
+\item What are the autocovariance and autocorrelation functions?
+ (10~points)
+\item What is the maximum first autocorrelation $\rho(1)$?
+For what value of $\theta$ does it occur?
+ (10~points)
+\end{parts}
+
+\begin{solution}
+\begin{parts}
+\item The natural definition of the state is $z_t = w_t$.
+Given $z_t$, $x_{t+1}$ is normal with mean $\delta _ \theta w_t$
+and variance one.
+That's the one-period conditional distribution.
+\item The equilibrium distribution is normal with mean $\delta$
+and variance $1 + \theta^2$.
+\item The autocovariance function is
+\begin{eqnarray*}
+    \gamma(k) &=& \left\{
+                \begin{array}{ll}
+                1 + \theta^2    & k=0 \\
+                \theta          & k=1 \\
+                0               & k\geq 2 .
+                \end{array}
+                \right.
+\end{eqnarray*}
+That is:  an MA(1) has a one-period memory.
+The autocorrelation function is $\rho(k) = \gamma(k)/\gamma(0)$.
+\item The first autocorrelation is
+$\rho(1) = \theta/(1+\theta^2$.
+This takes its highest value of one-half when $\theta = 1$.
+\end{parts}
+\end{solution}
+
+%\pagebreak \phantom{xx} \pagebreak
+%-----------------------------------------------------------------------
+\item  {\it Inflation and government deficits.\/}
+Here's a variant of our forward-looking inflation model.
+We have, as usual, the quantity theory plus a velocity equation:
+\begin{eqnarray*}
+    m_t + v_t &=& p_t + y_t \\
+    v_t &=& \alpha \left( E_t p_{t+1} - p_t \right) .
+\end{eqnarray*}
+Then we set $y_t = 0$ (to keep things simple) and connect the money supply $m_t$
+to the government deficit $d_t$:
+\begin{eqnarray*}
+        m_{t} &=& \delta d_t \\
+        d_{t+1} &=& \varphi d_t + \sigma w_{t+1} .
+\end{eqnarray*}
+%
+\begin{parts}
+\item Express this model as a forward-looking difference equation in
+which the price level $p_t$ is a function of its expected future value
+and the deficit.
+(15~points)
+\item How is the price level connected to the current deficit?
+(15~points)
+\end{parts}
+
+\begin{solution}
+\begin{parts}
+\item Substitutions give us
+\begin{eqnarray*}
+    p_t &=& [\alpha/(1+\alpha)] E_t p_{t+1} + [\delta/(1+\alpha)] d_t \\
+        &=& \lambda E_t p_{t+1} + \delta^\prime d_t ,
+\end{eqnarray*}
+where the second line is compact notation for the first.
+\item This has the usual forward-looking solution in which $p_t$
+is connected to expected future deficits.
+We could grind through this, but it's easier to use the method of undetermined
+coefficients.
+If we guess the solution has the form $ p_t = a d_t$ for some coefficient $a$ to be determined,
+then
+\begin{eqnarray*}
+    p_{t+1} &=& a d_{t+1} \;\;=\;\; a (\varphi d_t + \sigma w_{t+1}) \\
+   E_t (  p_{t+1})  &=&  a \varphi d_t .
+\end{eqnarray*}
+If we substitute into the difference equation above and collect coefficients
+of $d_t$, we get
+\begin{eqnarray*}
+    a &=& \frac{\delta'}{1-\lambda \varphi}  \;\;=\;\; \frac{\delta}{1+\alpha(1-\varphi)} .
+\end{eqnarray*}
+In words:  the impact of the current deficit on the price is larger if
+(i)~money is more strongly tied to deficits (large $\delta$),
+(ii)~deficits are more persistent (large $\varphi$),
+and (iii)~velocity is less sensitive to expected inflation (small $\alpha$).
+[Last one sounds wrong, mistake somewhere??]
+\end{parts}
+\end{solution}
+
+%\pagebreak \phantom{xx} \pagebreak
+%-----------------------------------------------------------------------
+\item  {\it Expected returns on bonds.\/}
+Consider the bond pricing model
+\begin{eqnarray*}
+    \log m_{t+1} &=& - (\lambda_0 + \lambda_1 w_t)^2/2 - x_t
+            + (\lambda_0 + \lambda_1 w_t) w_{t+1} \\
+            x_{t} &=& \delta + \sigma (w_t + \theta w_{t-1}) ,
+\end{eqnarray*}
+where the $w_t$'s are  independent standard normal random variables.
+%
+\begin{parts}
+\item Suppose bond prices take the form
+\begin{eqnarray*}
+    \log q^n_t &=& A_n + B_n w_t + C_n w_{t-1} .
+\end{eqnarray*}
+How is $(A_{n+1},B_{n+1},C_{n+1})$ connected to $(A_{n},B_{n},C_{n})$?
+What are the values of $(A_{n},B_{n},C_{n})$ for $n=0,1,2$?
+(20~points)
+\item Express the expected log excess return on a two-period bond as a function
+of the coefficients $(A_{n},B_{n},C_{n})$ for $n=1,2$.
+Use your solution for the coefficients to describe how expected log excess returns vary with the
+interest rate innovation $w_t$.
+(20~points)
+\end{parts}
+
+\begin{solution}
+\begin{parts}
+\item We use the usual formula,
+$ q^{n+1}_t = E_t (m_{t+1} q^n_{t+1})$.
+Then with substitutions,
+\begin{eqnarray*}
+    \log (m_{t+1} q^n_{t+1}) &=& A_n - \delta + (C_n-\sigma) w_t - \sigma\theta w_{t-1}
+            - (\lambda_0 + \lambda_1 w_t)^2/2 \\
+            && + \; [B_n + (\lambda_0 + \lambda_1 w_t)] w_{t+1} .
+\end{eqnarray*}
+The first line on the rhs gives us the conditional mean, the second line gives us the variance.
+Some intensive algebra gives us
+\begin{eqnarray*}
+    A_{n+1} &=& A_n - \delta + B_n^2/2 + B_n \lambda_0 \\
+    B_{n+1} &=& C_n - \sigma + B_n \lambda_1 \\
+    C_{n+1} &=& - \sigma \theta .
+\end{eqnarray*}
+That gives us
+\begin{center}
+\begin{tabular}{cccc}
+$n$ & $A_n$ & $B_n$ & $C_n$ \\
+\midrule
+0 & 0 & 0 & 0 \\
+1 & $-\delta$ & $-\sigma$ & $-\sigma \theta$ \\
+2 & $- 2\delta -\lambda_0 \sigma + \sigma^2/2$ & $- \sigma (1+\theta+\lambda_1)$ & $-\sigma\theta$
+\end{tabular}
+\end{center}
+
+\item The log excess return is
+\begin{eqnarray*}
+    \log r^2_{t+1} - \log r^1_{t+1} &=& \log q^1_{t+1} - \log q^2_t + \log q^1_t \\
+            &=& (2 A_1 - A_2) + (C_1 + B_1 - B_2) w_t + (C_1 - C_2) w_{t-1} \\
+            &&        + \; B_1 w_{t+1} .
+\end{eqnarray*}
+The expected excess return knocks out the last term.
+
+If we substitute our solutions, we have
+\begin{eqnarray*}
+   E_t \left( \log r^2_{t+1} - \log r^1_{t+1}\right)
+            &=& (\sigma \lambda_0 - \sigma^2/2)  + (\sigma\lambda_1) w_t  .
+\end{eqnarray*}
+So the key parameter is $\lambda_1$:  the sensitivity of the ``price of risk''
+to $w_t$.
+\end{parts}
+\end{solution}
+
+\end{questions}
+%\pagebreak \phantom{xx}
+
+\vfill \centerline{\it \copyright \ \number\year \
+NYU Stern School of Business}
+\end{document}
+
+
+

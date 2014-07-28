@@ -1,0 +1,86 @@
+\documentclass[11pt]{exam}
+
+\oddsidemargin=0.25truein \evensidemargin=0.25truein
+\topmargin=-0.5truein \textwidth=6.0truein \textheight=8.75truein
+
+%\RequirePackage{graphicx}
+\usepackage{comment}
+\usepackage[dvipdfm]{hyperref}
+\urlstyle{rm}   % change fonts for url's (from Chad Jones)
+\hypersetup{
+    colorlinks=true,        % kills boxes
+    allcolors=blue,
+    pdfsubject={ECON-UB233, Macroeconomic foundations for asset pricing},
+    pdfauthor={Dave Backus @ NYU},
+    pdfstartview={FitH},
+    pdfpagemode={UseNone},
+%    pdfnewwindow=true,      % links in new window
+%    linkcolor=blue,         % color of internal links
+%    citecolor=blue,         % color of links to bibliography
+%    filecolor=blue,         % color of file links
+%    urlcolor=blue           % color of external links
+% see:  http://www.tug.org/applications/hyperref/manual.html
+}
+%\usepackage{booktabs}
+
+\renewcommand{\thefootnote}{\fnsymbol{footnote}}
+\newcommand{\var}{\mbox{\it Var\/}}
+
+% document starts here
+\begin{document}
+\parskip=\bigskipamount
+\parindent=0.0in
+\thispagestyle{empty}
+{\large ECON-UB 233 \hfill Dave Backus @ NYU}
+
+\bigskip\bigskip
+\centerline{\Large \bf Lab Report \#??}
+\centerline{(Started: July 19, 2011; Revised: \today)}
+
+\bigskip
+{\it Due at the start of class.
+You may speak to others, but whatever you hand in should be your own work.}
+
+\begin{questions}
+\question (two-state Markov chain)
+Consider a two-state chain with transition matrix
+\begin{eqnarray*}
+    P &=& \left[
+            \begin{array}{cc}
+            (1-\rho) p + \rho & (1-\rho)(1-p) \\
+            (1-\rho) p & (1-\rho)(1-p) + \rho
+            \end{array}
+          \right]
+\end{eqnarray*}
+based on parameters $ 0 < p < 1$ and $-1 < \rho < 1$.
+\begin{parts}
+\part Verify that this is a legitimate transition matrix?  (What are the requirements for this?)
+\part What are the two-period transition probabilities?  Three-period probabilities?
+\part What is the invariant distribution?
+\part What are the eigenvalues of $P$?
+\part ??
+\end{parts}
+
+\question (discounting dividends)
+We'll use the same Markov chain as in question 1
+with $\rho = 2/3$ and $p = 1/3$.
+Suppose the dividend on an asset is one in state 1 and two in state 2.
+The discount factor is $q = 2/3$.
+\begin{parts}
+\part What is the one-period riskfree interest rate?
+\part What is the invariant distribution?
+What is the (unconditional) mean dividend?
+\part What is the discounted value of expected dividends?
+\part Price asset recursively.
+Let the price be $q^e(1)$ in state 1 and $q^e(2)$ in state 2.
+[??] What are these prices?
+
+\part Suppose returns are $r' = (d'+q')/q $.  What are the returns?  [??]
+\end{parts}
+
+
+
+\end{questions}
+
+
+\end{document}

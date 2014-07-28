@@ -1,0 +1,251 @@
+\documentclass[11pt]{exam}
+
+\oddsidemargin=0.25truein \evensidemargin=0.25truein
+\topmargin=-0.5truein \textwidth=6.0truein \textheight=8.75truein
+
+%\RequirePackage{graphicx}
+\usepackage{comment}
+\usepackage{hyperref}
+\usepackage{booktabs}
+\urlstyle{rm}   % change fonts for url's (from Chad Jones)
+\hypersetup{
+    colorlinks=true,        % kills boxes
+    allcolors=blue,
+    pdfsubject={ECON-UB233, Macroeconomic foundations for asset pricing},
+    pdfauthor={Dave Backus @ NYU},
+    pdfstartview={FitH},
+    pdfpagemode={UseNone},
+%    pdfnewwindow=true,      % links in new window
+%    linkcolor=blue,         % color of internal links
+%    citecolor=blue,         % color of links to bibliography
+%    filecolor=blue,         % color of file links
+%    urlcolor=blue           % color of external links
+% see:  http://www.tug.org/applications/hyperref/manual.html
+}
+
+\renewcommand{\thefootnote}{\fnsymbol{footnote}}
+\newcommand{\var}{\mbox{\it Var\/}}
+
+%\printanswers
+
+% document starts here
+\begin{document}
+\parskip=\bigskipamount
+\parindent=0.0in
+\thispagestyle{empty}
+{\large ECON-UB 233 \hfill Dave Backus @ NYU}
+
+\bigskip\bigskip
+\centerline{\Large \bf Quiz \#1}
+\centerline{Revised: \today}
+
+\bigskip
+{\it Please write your name below,
+then complete the exam in the space provided.
+There are FOUR questions.
+You may refer to one page of notes:
+standard paper, both sides, any content you wish.}
+
+\bigskip
+\begin{flushleft}
+\rule{4in}{0.5pt} \\ (Name and signature)
+\end{flushleft}
+
+
+\begin{questions}
+%-----------------------------------------------------------------------
+\question {\it Moments, cumulants, and generating functions (20 points).\/}
+Consider an arbitrary random variable $x$.
+\begin{parts}
+\part Define the moment generating function of $x$.
+How is the cumulant generating function related to it?
+(5~points)
+\part How is the cumulant generating function of $y = \alpha + \beta x$
+related to the cgf of $x$?
+(5~points)
+\part What is the second central moment $\mu_2$ of $x$?
+How is it connected to the moment generating function?
+(5~points)
+\part What is the third cumulant $\kappa_3$ of $x$?
+How is it connected to the cumulant generating function?
+(5~points)
+%\part Show that $\kappa_2 = \mu_2$.  (5~points)
+\end{parts}
+
+\begin{solution}
+\begin{parts}
+\part The mgf $h$ is defined by:  $h(s) = E(e^{sx})$.
+The cgf is its log:  $k(s) = \log h(s)$.
+\part The mgf of $y$ is $h_y(s) = E(e^{sy}) = E(e^{s(\alpha + \beta x}) = e^{s\alpha} h_x(\beta s)$.
+The cgf is its log:  $k_y(s) = s \alpha + k_x (\beta s)$.
+\part The second central moment is the variance.  If the mean is $\bar{x}$,
+it's $\mbox{Var}(x) = E (x-\bar{x})^2 = E(x^2) - \bar{x}^2$.
+$ E(x^2)$ is the second raw or noncentral moments, and $\bar{x}$ is the first.
+They are the second and first derivatives, resp, of the mgf, evaluated at $s=0$.
+\part The third cumulant is the third derivative of the cgf, also evaluated at $s=0$.
+It's also the third central moment.
+\end{parts}
+\end{solution}
+
+\pagebreak \phantom{xx} \pagebreak
+%-----------------------------------------------------------------------
+\question {\it Risk and return (30 points).}
+Consider an agent with utility
+\begin{eqnarray*}
+    U &=&  E [u(c)]    %\sum_z p(z) u[c(z)] ,
+\end{eqnarray*}
+where $u(c) = c^{1-\alpha}/(1-\alpha)$ for some $\alpha > 0$.
+She invests one and consumes the gross return $r$.
+
+\begin{parts}
+\part What is her expected utility if she invests everything in a riskfree asset
+whose (gross) return is 1.1?
+(Her consumption is therefore 1.1 in every state.)
+What is the certainty equivalent of this outcome?
+(10~points)
+\part What is her expected utility if she invests in an asset whose return is lognormal:
+$ \log r \sim \mathcal{N}(\kappa_1,\kappa_2)$?
+What is her certainty equivalent?
+(10~points)
+\part For what values of $\kappa_1$ and $\kappa_2$ is the risky asset preferred?
+(10~points)
+\end{parts}
+
+\begin{solution}
+\begin{parts}
+\part The certainty equivalent of a sure thing $\bar{c}$ is $\bar{c}$.
+More formally, if consumption is $\bar{c}$ in all states, then the certainty
+equivalent $\mu$ solves
+\begin{eqnarray*}
+    U(\bar{c}, \bar{c}, \ldots, \bar{c}) &=& U(\mu, \mu, \ldots, \mu) ,
+\end{eqnarray*}
+so $\mu = \bar{c}$.
+So the certainty equivalent here is 1.1.
+
+\part We're using properties of lognormal random variables here.
+We know $ E(r^{1-\alpha}) = \exp[ (1-\alpha)\kappa_1 + (1-\alpha)^2\kappa_2/2]$.
+The certainty equivalent is
+$ \mu = E(r^{1-\alpha})^{1/(1-\alpha)} = \exp[\kappa_1 + (1-\alpha)\kappa_2/2]$.
+
+\part Evidently we need
+$ \kappa_1 + (1-\alpha)\kappa_2/2 > \log 1.1 $.
+So large $\kappa_1 $ helps.  If $\alpha > 1$, small $\kappa_2$ helps, too,
+otherwise the reverse.
+\end{parts}
+\end{solution}
+
+\pagebreak \phantom{xx} \pagebreak
+%-----------------------------------------------------------------------
+\question {\it Securities and returns (30 points).\/}
+Consider an economy with two assets and two equally likely states.
+The assets have dividends
+
+\medskip
+\begin{center}
+\begin{tabular}{lcc}
+\toprule
+Asset &  State 1 & State 2 \\
+\midrule
+1 (``bond'')    &  1    &   1  \\
+2 (``equity'')  &  2    &   5  \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\medskip
+The prices of the two assets are $q^1 = 0.7$ and $q^e = 2$.
+
+\begin{parts}
+\part What is the mean return on Asset 1?  Asset 2?
+The risk premium on Asset 2?
+(15~points)
+\part How can you decompose each asset into Arrow securities?
+What are the implied prices of Arrow securities?
+(15~points)
+%\part If risk aversion is $\alpha = 2$,
+%what fraction of your wealth does Merton's formula tell you to invest in equity?
+%(10~points)
+\end{parts}
+
+\begin{solution}
+\begin{parts}
+\part The bond has a sure return $ r^1 = 1/0.7 = 1.43 $.
+Equity has returns
+\begin{eqnarray*}
+    r^e(z) &=&
+        \left\{
+        \begin{array}{ll}
+        2/2 = 1 &  \mbox{for } z=1 \\
+        5/2 = 2.5 &  \mbox{for } z=2
+        \end{array}
+        \right.
+\end{eqnarray*}
+The states have probability one-half each (``equally likely''), so its
+expected return is 1.75.
+Its risk premium is $1.75 - 1.43 = 0.32$.
+
+\part The bond pays one in each state, so it consists of the two Arrow securities.
+Equity pays 2 in state 1 and 5 in state 2, so it consists of 2 units of the state-1 Arrow securities
+and 5 units of the state-2 Arrow security.
+If the prices of Arrow securities are denoted by $Q(z)$,
+then we have
+\begin{eqnarray*}
+    0.7 &=&  Q(1) + Q(2) \\
+    2   &=& 2 Q(1) + 5 Q(2) .
+\end{eqnarray*}
+That gives us $Q(1) = 0.5$ and $Q(2) = 0.2$.
+
+\end{parts}
+\end{solution}
+
+
+\pagebreak \phantom{xx} \pagebreak
+%-----------------------------------------------------------------------
+\question {\it Saving and investment (20 points).}
+Consider the Pareto problem of choosing $(c_0,k)$ to maximize
+\begin{eqnarray*}
+    U &=& u(c_0) + \beta \sum_z p(z) u[c_1(z)],
+\end{eqnarray*}
+subject to the resource constraints
+\begin{eqnarray*}
+    c_0 + k &\leq& y_0 \\
+    c_1(z)  &\leq& z f(k) .
+\end{eqnarray*}
+There is one of the second constraint for each state $z$.
+Here $k$ is capital --- plant and equipment --- produced at date 0 and used
+to produce output $z f(k)$ at date 1.
+The amount of output is random and depends on the state $z$.
+
+\begin{parts}
+\part What is the associated Lagrangian?
+(10~points)
+\part What are the first-order conditions for $c_0$ and $k$?
+(10~points)
+\end{parts}
+
+\begin{solution}
+\begin{parts}
+\part If we use $q_0$ and $q_1(z)$ as multipliers on the constraints,
+the Lagrangian is
+\begin{eqnarray*}
+    \mathcal{L} &=& u(c_0) + \beta \sum_z p(z) u[c_1(z)]
+        + q_0 (y_0 - c_0 - k) + \sum_z q_1(z) [z f(k) - c_1(z)] .
+\end{eqnarray*}
+\part The first-order conditions are
+\begin{eqnarray*}
+    c_0: &&  u'(c_0) - q_0 \;\;=\;\; 0\\
+    k:   &&  - q_0 + \sum_z q_1(z) z f'(k) .
+\end{eqnarray*}
+\end{parts}
+\end{solution}
+
+\pagebreak \phantom{xx} %\pagebreak
+\end{questions}
+
+%\phantom{xx}
+\vfill \centerline{\it \copyright \ \number\year \
+NYU Stern School of Business}
+\end{document}
+
+
+

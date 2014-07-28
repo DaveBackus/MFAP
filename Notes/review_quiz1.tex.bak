@@ -1,0 +1,356 @@
+\documentclass[11pt]{article}
+
+\oddsidemargin=0.25truein \evensidemargin=0.25truein
+\topmargin=-0.5truein \textwidth=6.0truein \textheight=8.75truein
+
+%\usepackage{graphicx}
+\usepackage{verbatim}
+%\usepackage{booktabs}
+\usepackage{comment}
+\usepackage{hyperref}
+\urlstyle{rm}   % change fonts for url's (from Chad Jones)
+\hypersetup{
+    colorlinks=true,        % kills boxes
+    allcolors=blue,
+    pdfsubject={ECON-UB233, Macroeconomic foundations for asset pricing},
+    pdfauthor={Dave Backus @ NYU},
+    pdfstartview={FitH},
+    pdfpagemode={UseNone},
+%    pdfnewwindow=true,      % links in new window
+%    linkcolor=blue,         % color of internal links
+%    citecolor=blue,         % color of links to bibliography
+%    filecolor=blue,         % color of file links
+%    urlcolor=blue           % color of external links
+% see:  http://www.tug.org/applications/hyperref/manual.html
+}
+
+\usepackage{verbatim}
+%\usepackage{booktabs}
+\usepackage[small, compact]{titlesec}
+
+% list spacing
+\usepackage{enumitem}
+\setitemize{leftmargin=*, topsep=0pt}
+\setenumerate{leftmargin=*, topsep=0pt}
+
+\usepackage{needspace}
+% example:  \needspace{4\baselineskip} makes sure we have four lines available before pagebreak
+
+\renewcommand{\thefootnote}{\fnsymbol{footnote}}
+
+% document starts here
+\begin{document}
+\parskip=\bigskipamount
+\parindent=0.0in
+\thispagestyle{empty}
+{\large ECON-UB 233 \hfill Dave Backus @ NYU}
+
+\bigskip\bigskip
+\centerline{\Large \bf Review for Quiz \#1}
+\centerline{Revised: \today}
+
+\bigskip
+I'll focus on the big picture to give you a sense of
+what we've done and how it fits together.
+Everything is leading up to our central equation,
+$ E(mr) = 1$, and its many variants.
+
+As you work through this, I suggest you construct examples that
+illustrate each concept and result.
+If you're stuck, start with the Lab Reports.
+
+
+\section*{Random variables}
+
+Random variables.  They're the input to everything we do.
+Formally, we start with a state $z$, associated probabilities $p(z)$,
+and random variables $x(z)$.
+Probabilities $p(z)$ are nonnegative and sum or integrate to one.
+
+Generating functions.
+We used the moment generating function $h(s) = E (e^{sx})$
+and cumulant generating function $k(s) = \log h(s)$ to
+generate moments and cumulants, resp, of a random variable $x$.
+This looks mysterious the first time, but it's incredibly convenient.
+One use is in identifying departures from normality.
+Measures of skewness and excess kurtosis are
+indications that the distribution is something other than normal.
+
+Common distributions:  Bernoulli, Poisson, normal, exponential.
+All are commonly used in economics and finance.
+
+Connections between random variables.
+If we have two or more random variables, we need ways to describe
+their connection, if any.
+If there's no connection, we say they're independent.
+More formally, two random variables are independent if the pdf factors:
+$ p_{12}(x_1, x_2) = p_1(x_1) p_2(x_2) $.
+Otherwise, there's no limit to the kinds of connections we might have.
+We often start with the simplest connection,
+the covariance or correlation, which is a measure of linear connection.
+
+Sums and mixtures.
+Both are useful tools for getting distributions that are something other than normal.
+With sums, we add independent normal and nonnormal components together,
+with the result that the nonnormality of the latter carries over to the sum.
+A mixture has a pdf that's a weighted average
+of pdf's, hence the mgf is the weighted average of mgf's.
+This leads to nonnormal behavior even if the components are normal.
+This is so concise as to be mystifying; you should write down examples
+to remind yourself what it means.
+
+
+\section*{Risk and risk aversion}
+
+We'll use expected utility with a power function most of the time,
+but the more general treatment sets up
+the possibility of more complex preferences.
+
+The central feature is risk aversion.
+In general settings, we identified risk aversion by
+comparing the certainty equivalent to mean consumption.
+Put directly:  you are risk averse if you prefer a constant consumption
+level $\mu$ (the certainty equivalent) that is smaller than $\bar{c} = E(c)$ (the mean)
+of your consumption.
+We measure the combination of risk and risk aversion with the risk penalty,
+defined by $ \mbox{\it rp} = \log (\bar{c}/\mu)$.
+
+Also important is the role of high-order moments and cumulants,
+which we'll see again when we look at risk premiums and options.
+One example is Samuelson's expansion, in which we express
+expected utility in terms of derivatives of utility and the moments of consumption.
+Another example is our expansion for power utility in terms
+of the cumulants of $\log c$.
+Again, we see that it's not only the variance that matters:
+high-order terms also show up.
+Power utility agents generally like positive skewness and dislike
+kurtosis.
+
+
+\section*{Consumption, saving, and portfolio choice}
+
+Asset pricing starts with portfolio choice.
+We worked our way up to a two-period example
+with dates 0 and 1 and a number of different states $z$ at date 1.
+[Draw the appropriate event tree.]
+
+One approach was based on {\it Arrow securities\/}:
+claims to one unit of the good in a specific state $z$ at date 1.
+We denote the prices of these securities, in units of the date-0 good, by
+$Q(z)$, which we call the {\it state prices\/}.
+The first-order conditions of a utility-maximizing agent  imply
+\begin{eqnarray}
+    Q(z) &=& p(z) \beta u'[c_1(z)]/u'(c_0) .
+    \label{eq:state-prices=mrs}
+\end{eqnarray}
+Here the equation is interpreted as a demand function: given a price $Q(z)$,
+how much do we want to consume at date 1 in state $z$ (ie, $c_1(z)$)?
+[It's a little more complicated than that, since it includes $c_0$ as well,
+but that's the basic idea.]
+
+Another approach is to consider an arbitrary collection of assets.
+At date 0, we buy asset $j$ at price $q^j$ in units of the date 0 good.
+At date 1, we get dividend $d^j(z)$, which depends, in general,
+on which state $z$ occurs.
+The (gross) return is $r^j(z) = d^j(z)/q^j$.
+It's often useful to decompose an asset into its state-specific components ---
+into Arrow securities.
+Recall that Arrow security $z$ gives us one unit of output at date 1 in state $z$,
+zero in all other states.
+That means that the dividend $d^j(z)$ in a specific state $z$ can be replicated with the same number
+of Arrow securities.
+We can replicate the dividend in all states by purchasing the appropriate number of units
+of each Arrow security.
+Its price is then the sum of the prices of the Arrow securities that replicate the
+pattern of dividends.
+This is just bookkeeping, there's no maximization involved.
+Suggestion:  make up a two-state example and show how this works.
+
+
+The consumer maximization problem with an arbitrary  collection of assets
+leads (again) to (\ref{eq:state-prices=mrs}).
+The first-order conditions also imply
+\begin{eqnarray}
+    \sum_z p(z) \{ \beta u'[c_1(z)]/u'(c_0) \} r^j(z) &=&
+        E(m r^j) \;\;=\;\; 1 ,
+        \label{eq:Emr}
+\end{eqnarray}
+for all traded assets $j$.
+This equation determines consumptions:  given returns $r^j$, choose consumptions to make this hold.
+Later on the same equation will reappear as an asset pricing relation:
+given $m$, find the price and return of an asset.
+
+
+Clean solutions to portfolio choice problems are a rarity, but we saw that a theoretical agent
+holds less of the risky asset when we increase her risk aversion.
+In Merton's formula, the share $a$ invested in the risky asset is
+\begin{eqnarray*}
+    a &=& \frac{1}{\alpha} \frac{E (r^e - r^1)}{\mbox{Var}(r^e)} ,
+\end{eqnarray*}
+a function of risk (the variance of the risky asset's return),
+return (the expected excess return), and risk aversion ($\alpha$).
+We won't use this again, but it's a a good sign that things sometimes work
+out so nicely, even if it's a special case.
+
+
+
+\section*{Two-period economies}
+
+General equilibrium models are a basic tool of economics.
+The representative agent version is a useful starting point:
+simple enough to be manageable, flexible enough to generate some clear insights.
+It's the predominant model in macro-finance,
+even as people work on extensions with more complex preferences
+or multiple agents.
+
+The ingredients of a general equilibrium model include:
+\begin{itemize}
+\item List of commodities.
+\item List of agents.
+\item Preferences and endowments of agents.
+\item Technologies for transforming some commodities into others.
+\item Resource constraints limiting consumption to endowments plus net production.
+\end{itemize}
+%Most economic models have these components.
+Once we have these ingredients, we can
+look at a competitive equilibrium:
+a set of prices and quantities in which
+agents maximize utility given prices,
+firms maximize profits given prices,
+and supply equals demand (the resource constraints are satisfied).
+The equilibrium is competitive in the sense that agents and firms
+take prices as given.
+
+We find a competitive equilibrium in reverse:
+we find an optimal allocation, and infer prices from
+marginal rates of substitution.
+It's a useful shortcut in models with a single ``representative'' agent.
+
+In asset pricing applications, it's convenient
+to use an exchange economy, in which the single agent simply consumes
+the endowment.
+Prices of {\it Arrow securities\/} then come from the marginal rate of substitution
+of the agent:
+\begin{eqnarray*}
+    Q(z) &=& p(z) \beta u'[c_1(z)]/u'(c_0) \;\;=\;\; p(z) \beta u'[y_1(z)]/u'(y_0) .
+\end{eqnarray*}
+It's the same equation we saw before, but this time causality goes the
+other way:  endowments $y$ generate prices $Q$.
+We see, for example, that in states where the endowment $y_1(z)$ is high,
+the price is low.
+Why?  Because $u'$ is decreasing:  the more we have, the less an additional
+unit is worth to us.
+In that sense, assets that pay off mostly in good times will have less value
+than assets that pay off mostly in bad times.
+
+
+\end{document}
+
+
+\section*{Asset pricing}
+
+We change perspectives here.
+In the portfolio choice problem,
+asset prices and returns are given,
+agents simply decide how much of each asset to buy.
+In the general equilibrium problem,
+both prices and quantities are endogenous:
+they come out of the model.
+Both paths lead to (\ref{eq:Emr}), but the interpretation is different.
+Here we don't worry about where (\ref{eq:Emr}) comes from.
+We simply say that if we know $m$, we can compute asset prices and returns.
+
+%We have three versions, each of which gives us a different perspective.
+The first result, which I regard as one of the central accomplishment of modern finance,
+is the no-arbitrage theorem:
+We can price assets as collections of Arrow securities if the economy is ``arbitrage-free.''
+If asset $j$ has dividends $d^j(z)$, its price satisfies
+\begin{eqnarray}
+    q^j &=& \sum_z Q(z) d^j(z) .
+    \label{eq:qj-state-price}
+\end{eqnarray}
+The theorem says we can always find positive state prices $Q(z)$ that satisfy this
+equation for every traded asset $j$.
+We haven't said anything about what the state prices are
+or where they come from,
+only that there must be some that satisfy (\ref{eq:qj-state-price}).
+
+We have two other versions of this result that we'll use repeatedly.
+The first version is based on a {\it pricing kernel\/} $m$,
+defined implicitly by $ Q(z) = p(z) m(z)$.
+(Write $m(z) = Q(z)/p(z)$ if you prefer.)
+The pricing relation (\ref{eq:qj-state-price}) becomes
+\begin{eqnarray}
+    q^j &=& \sum_z p(z) m(z) d^j(z) \;\;=\;\; E (m d^j) .
+    \label{eq:q=Emd}
+\end{eqnarray}
+This turns into (\ref{eq:Emr})
+if we divide by $q^j$ and
+note that the return is $r^j(z) = d^j(z)/q^j$.
+We can breathe some life into $m$ by equating it to the
+marginal rate of substitution of a representative agent,
+as in (\ref{eq:Emr}).
+The second version is based on
+{\it risk-neutral probabilities\/} $p^*$,
+defined implicitly by $ Q(z) = p(z) m(z) = q^1 p^*(z)$.
+Here
+\begin{eqnarray*}
+    q^1 &=& \sum_z p(z) m(z) \;\;=\;\; E(m)
+\end{eqnarray*}
+is the price of a one-period riskfree bond.
+The pricing relation (\ref{eq:qj-state-price}) turns into
+\begin{eqnarray*}
+    q^j &=& q^1 \sum_z p^*(z) d^j(z)  \;\;=\;\; q^1 E^* (d^j) ,
+\end{eqnarray*}
+where $E^*$ means the expectation computed from the risk-neutral probabilities.
+
+
+\section*{Risk and return}
+
+We've barely touched on this, but the pricing kernel
+version (\ref{eq:q=Emd}) contains an explanation for why some assets have
+higher expected returns than others.
+There are two levels to this explanation:
+the covariance of the return with $m$ and the
+connection between $m$ and consumption.
+
+To keep things simple, let's scale the units of
+every asset so that they have the same expected dividend $E(d^j)$.
+Then any difference in expected return must come from the price:
+$ E(r^j) = E(d^j)/q^j$.
+The price of an asset follows from
+\begin{eqnarray*}
+    q^j &=& E (m d^j)
+            \;\;=\;\; E(m) E(d^j) + \mbox{Cov}(m,d^j) .
+\end{eqnarray*}
+The first term is the same for all assets,
+but the second need not be.
+Evidently assets whose dividends have the greatest negative covariance
+with $m$ have the lowest prices, hence the highest expected returns.
+Put differently:  assets are penalized, in terms of price and return,
+for having high payoffs in states when $m$ is low.
+
+The second level tells us what states those are.
+It stems from the connection
+in representative agent models between
+the pricing kernel and consumption:
+\begin{eqnarray*}
+    m(z) &=& \beta u'[c_1(z)]/u'(c_0) .
+\end{eqnarray*}
+Here we see that states with high $c_1(z)$ have low $m(z)$.
+Why?  Because marginal utility is decreasing.
+It says, in words, that payoffs when consumption is high
+are less valuable than payoffs when consumption is low.
+That's a good rationale for high average returns on assets like equity,
+whose payoffs are highest in good times,
+when consumption is high and the value of an additional
+unit of consumption is low.
+
+Similar logic follows from risk-neutral probabilities.
+Here risk premiums arise from applying pessimistic
+probabilities to outcomes.
+
+
+\vfill \centerline{\it \copyright \ \number\year \
+NYU Stern School of Business}
+\end{document}

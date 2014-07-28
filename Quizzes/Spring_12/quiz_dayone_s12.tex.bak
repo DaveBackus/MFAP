@@ -1,0 +1,74 @@
+\documentclass[11pt]{exam}
+
+\oddsidemargin=0.25truein \evensidemargin=0.25truein
+\topmargin=-0.5truein \textwidth=6.0truein \textheight=8.75truein
+
+%\RequirePackage{graphicx}
+\usepackage[hypertex]{hyperref}
+\usepackage{comment}
+%\usepackage{amssymb}
+%\usepackage{amsfonts}
+\usepackage{booktabs}
+
+\renewcommand{\thefootnote}{\fnsymbol{footnote}}
+
+% document starts here
+\begin{document}
+\parskip=2\bigskipamount
+\parindent=0.0in
+\thispagestyle{empty}
+{\large ECON-UB 233 \hfill Dave Backus @ NYU}
+
+\bigskip\bigskip
+\centerline{\Large \bf Quiz \#0:  Math Tools}
+\centerline{(Started: July 19, 2011; Revised: \today)}
+
+{\it Please write your name in the upper right corner.  
+This won't affect your grade, but it's an accurate guide to the kinds of tools
+we'll be using and a useful guide to me about your preparation.  
+Please write your answers in the space provided.
+If you don't know an answer, perhaps you could suggest a way to get started.}
+
+\begin{questions}
+\question Consider the value of a consol,
+a bond that pays a coupon $C$ at the end of every year, forever,
+beginning next year.
+If $q = 1/(1+r)$ is the discount factor (that's the term we'll use),
+what is the present discounted value
+\begin{eqnarray*}
+    q C + q^2 C + q^3 C + \cdots \; ?
+\end{eqnarray*}
+What happens if $C=r$?
+
+\vspace{2.5in}
+\question Let consumption $c$ be positive and utility
+$u(c) = c^{1-\alpha}/(1-\alpha)$ for some parameter $\alpha \geq 0$.
+What is the derivative of $u$?
+The second derivative?
+What are their signs?
+
+\pagebreak
+\question Consider a random variable $x$ that takes on the value one with probability $p$
+and zero with probability $1-p$.
+What is the expected value or mean of $x$?
+The variance?  The standard deviation?
+
+\vspace{3in}
+\question Suppose you have two matrices,
+\begin{eqnarray*}
+A \;\;=\;\; \left[
+            \begin{array}{cc}
+            1 & 2 \\ 2 & 1
+            \end{array}
+            \right], \;\;\;\;
+B \;\;=\;\; \left[
+            \begin{array}{ccc}
+            1 & 2 & 3 \\ 4 & 5 & 6
+            \end{array}
+            \right] .
+\end{eqnarray*}
+What is AB?  BA?
+Extra credit: what are the eigenvalues of $A$?
+\end{questions}
+
+\end{document}

@@ -1,0 +1,315 @@
+\documentclass[11pt]{exam}
+
+\oddsidemargin=0.25truein \evensidemargin=0.25truein
+\topmargin=-0.5truein \textwidth=6.0truein \textheight=8.75truein
+
+%\RequirePackage{graphicx}
+\usepackage{comment}
+\usepackage{hyperref}
+\urlstyle{rm}   % change fonts for url's (from Chad Jones)
+\hypersetup{
+    colorlinks=true,        % kills boxes
+    allcolors=blue,
+    pdfsubject={ECON-UB233, Macroeconomic foundations for asset pricing},
+    pdfauthor={Dave Backus @ NYU},
+    pdfstartview={FitH},
+    pdfpagemode={UseNone},
+%    pdfnewwindow=true,      % links in new window
+%    linkcolor=blue,         % color of internal links
+%    citecolor=blue,         % color of links to bibliography
+%    filecolor=blue,         % color of file links
+%    urlcolor=blue           % color of external links
+% see:  http://www.tug.org/applications/hyperref/manual.html
+}
+
+\renewcommand{\thefootnote}{\fnsymbol{footnote}}
+\newcommand{\var}{\mbox{\it Var\/}}
+
+\printanswers
+
+% document starts here
+\begin{document}
+\parskip=\bigskipamount
+\parindent=0.0in
+\thispagestyle{empty}
+{\large ECON-UB 233 \hfill Dave Backus @ NYU}
+
+\bigskip\bigskip
+\centerline{\Large \bf Quiz \#1}
+\centerline{Spring 2012}
+
+\bigskip
+{\it Please write your name below.
+Then complete the exam in the space provided.
+There are THREE questions.
+You may refer to one page of notes:
+standard paper, both sides, any content you wish.}
+
+\bigskip
+\begin{flushleft}
+\rule{4in}{0.5pt} \\ (Name and signature)
+\end{flushleft}
+
+
+\begin{questions}
+%-----------------------------------------------------------------------
+\question (3-state ``Bernoulli'') (30 points)
+Consider a 3-state distribution
+in which we can explore the impact of high-order cumulants.
+This is sometimes called a ``categorical distribution.''
+
+Let us say, to be concrete, that the state $z$ takes on the values
+ $\{-1, 0, 1\}$ with
+ probabilities $\{\omega, 1-2\omega, \omega \}$.
+ A random variable $x$ is defined by $x(z) = \delta z$.
+
+\begin{parts}
+\part Does $x$ have a legitimate probability distribution?
+(5~points)
+\part What is the moment generating of $x$?  The cumulant generating function?
+(10~points)
+\part What are the mean and variance of $x$?
+(5~points)
+\part What are the measures of skewness and excess kurtosis,
+$\gamma_1$ and $\gamma_2$?
+Under what conditions is $\gamma_2$ large?
+(5~points)
+\part Is there a value of $\omega$ that reproduces the values
+of $\gamma_1$ and $\gamma_2$ of a normal random variable?
+(5~points)
+\end{parts}
+
+\begin{solution}
+\begin{parts}
+\part Probabilities are positive (maybe greater than or equal to zero)
+and sum to one.
+So we're all set if $ 0 < \omega < 1$
+(or weak inequalities if you prefer).
+
+\part The mgf is
+\begin{eqnarray*}
+    h(s) &=& \omega (e^{-\delta s} + e^{\delta s}) + (1-2p)
+\end{eqnarray*}
+The cgf is $k(s) = \log h(s)$.
+The mean and variance are
+\begin{eqnarray*}
+    \kappa_1  &=& 0 \\
+    \kappa_2  &=& 2 \delta^2 p .
+\end{eqnarray*}
+One way to find them is from the derivatives of the cgf.
+
+\part Skewness and excess kurtosis are
+\begin{eqnarray*}
+    \gamma_1  &=& 0 \\
+    \gamma_2  &=& 1/(2 \omega) - 3 .
+\end{eqnarray*}
+The first is clear, because the distribution is symmetric.
+The second one is a calculation based on cumulants.
+Or you could compute the 4th central moment directly,
+\begin{eqnarray*}
+    \mu_4 &=&  \omega (-\delta)^4 + \omega \delta^4 \;\;=\;\;
+        2 \omega \delta^4 ,
+\end{eqnarray*}
+which implies $\gamma_2 = \mu_4 /(\mu_2)^2 - 3  = 1/2\omega - 3 $.
+Evidently $\gamma_2$ is large is $\omega    `$ is small.
+
+\part The normal has $\gamma_1 = \gamma_2 = 0$.
+We get the first automatically, and the second if $p = 1/6$.
+\end{parts}
+\end{solution}
+
+%\pagebreak \phantom{xx} \pagebreak
+%-----------------------------------------------------------------------
+\question (3-state ``Bernoulli,'' continued)
+(20~points)
+For a representative agent economy based on the same state and random variable,
+suppose $x$ is log consumption growth,
+$x(z) = \log c_1(z) - \log c_0 $,
+and utility has the additive form,
+\begin{eqnarray*}
+    u(c_0) + \beta \sum_z p(z) u[c_1(z)] ,
+\end{eqnarray*}
+with
+$u(c) = c^{1-\alpha}/(1-\alpha)$.
+\begin{parts}
+\part What is the pricing kernel?
+(5~points)
+\part What are the state prices?
+(5~points)
+\part What are the risk-neutral probabilities?
+How do they vary with risk aversion $\alpha$?
+(5~points)
+\part Which is more valuable, a claim to one unit of the good in state $z=-1$
+or one unit in state $z=+1$?
+Why?
+(5~points)
+\end{parts}
+
+\begin{solution}
+\begin{parts}
+\part The pricing kernel is
+\begin{eqnarray*}
+    m[x(z)] &=& \beta e^{-\alpha x}
+            \;\;=\;\;  \beta e^{-\alpha \delta z} .
+\end{eqnarray*}
+It's decreasing in $x$ and $z$.
+\part The state prices are
+\begin{eqnarray*}
+    q(z) &=& p(z) m(z)
+            \;\;=\;\;  p(z) \beta e^{-\alpha \delta z} ,
+\end{eqnarray*}
+with $p(z)$ given in the previous question.
+
+\item Risk-neutral probabilities are
+\begin{eqnarray*}
+    p^*(z) &=& p(z) m(z) /q^1
+            \;\;=\;\;
+            \left\{
+            \begin{array}{ll}
+            \omega \beta e^{\alpha \delta}/q^1 & \mbox{ for } z=-1 \\
+            (1-2\omega) \beta/q^1          & \mbox{ for } z=0    \\
+            \omega \beta e^{-\alpha \delta}/q^1 & \mbox{ for } z=1 \\
+            \end{array}
+            \right.
+\end{eqnarray*}
+where
+\begin{eqnarray*}
+    q^1 &=& \sum_z p(z) m(z)
+        \;\;=\;\; \beta \left[ \omega (e^{\alpha \delta} + e^{-\alpha \delta}) + (1-2 \omega) \right] .
+\end{eqnarray*}
+If risk aversion $\alpha$ is zero,
+then $m(z) = \beta$ in all states.
+Otherwise, higher values of $\alpha$ raise the value
+of the bad state and lower it in the good state.
+
+
+\part The only difference is the term $e^{\pm \alpha \delta}$.
+If $\delta > 0$, then $e^{\alpha \delta} > e^{-\alpha \delta}$
+and we have $p(-1) > p(1)$:
+state $z=-1$ is more valuable than state $z=1$.
+That's the usual result, that bad states are more valuable than good states.
+If $\delta < 0$ the answer's the same, but
+$z=1$ is the bad state.
+\end{parts}
+\end{solution}
+
+
+%\pagebreak \phantom{xx} \pagebreak
+%-----------------------------------------------------------------------
+\question (short answers) (40 points)
+Give short answers to the following questions:
+\begin{parts}
+%\part What is this function?
+%\begin{eqnarray*}
+%    p(x) &=& (2\pi \sigma^2)^{-1/2} \exp[-(x-\mu)^2/2 \sigma^2 ]
+%\end{eqnarray*}
+%What do $\mu$ and $\sigma$ represent?  (5~points)
+\part Suppose $x \sim \mathcal{N}(\kappa_1,\kappa_2)$.
+What are $\kappa_1$ and $\kappa_2$?
+What is the distribution of $\log \beta - \alpha x$?
+(5~points)
+\part How would you compute skewness in a sample of data,
+$x_t$ for $t=1,2,\ldots,T$?
+(5~points)
+\part What determines whether skewness raises or lowers expected utility?
+Which applies to power utility?
+(5~points)
+\part What is a resource constraint?  How does it differ from a budget constraint?
+(5~points)
+\part What are the prices of Arrow securities for this collection of
+asset prices and dividends?
+\begin{eqnarray*}
+    \mbox{Asset 1:}&&  q^1 = 1.0, \;\; d^1(1) = 2, \;\; d^1(2) = 1 \\
+    \mbox{Asset 2:}&&  q^2 = 1.5, \;\; d^2(1) = 2, \;\; d^2(2) = 2.
+\end{eqnarray*}
+*Is this a ``no-arbitrage'' environment? How do you know?
+(10~points)
+\part *In our usual two-period setup, suppose the representative agent
+has power utility and
+$x(z) = \log c_1(z) - \log c_0 $ has an exponential distribution:
+\begin{eqnarray*}
+    p(x) &=& \lambda e^{-\lambda x} ,
+\end{eqnarray*}
+for $x \geq 0$ and $\lambda > 0$.
+What is the risk-neutral distribution of $x$?
+(10~points)
+\end{parts}
+
+\begin{solution}
+\begin{parts}
+\part Linear combinations of normals.
+If $ x \sim \mathcal{N}(\kappa_1,\kappa_2)$,
+then $\log \beta - \alpha x \sim
+\mathcal{N}(\log \beta - \alpha \kappa_1, \alpha^2 \kappa_2)$.
+We can show this using the mgf or cgf, but that's not part
+of the question.
+\part The $j$th central sample moment is
+\begin{eqnarray*}
+    \mu_j &=& T^{-1} \sum_t (x_t - \bar{x})^j ,
+\end{eqnarray*}
+where $\bar{x} = \sum_t x_t /T $ is the sample mean.
+Sample skewness is
+\begin{eqnarray*}
+    \gamma_1 &=& \mu_3 / (\mu_2)^{3/2} .
+\end{eqnarray*}
+
+\part In the Samuelson expansion, the skewness term depends on
+the third derivative of utility.
+If the third is positive, raising skewness raises expected utility.
+If negative, the reverse.
+With power utility, the third derivative is positive.
+
+\part Resource constraints concern quantities of goods:
+for any particular good, you can't consume more than the endowment
+plus (net) production.
+Budget constraints concerns values of goods:
+the value of consumption (the sum across goods of price times quantity)
+can't be more than the value of income (a similar sum).
+
+\part Each asset is a combination of Arrow securities, with weights
+corresponding to dividends.
+Doing it by hand, so to speak, you might notice that
+a long position of one unit in asset 2 and
+a short position of one unit in asset 1 has a payoff of
+zero in state 1 and one in state 2.
+In other words, it's the state-2 Arrow security.
+Its cost is 0.5.
+The rest of the price of asset 1 must come from the first state,
+so the price of the state-1 Arrow security must be 0.25.
+You can verify that these prices deliver the asset prices in the problem.
+
+How do we know that the given asset prices and dividends are
+``arbitrage free''?
+The theorem goes both ways.
+Since we've found positive state prices consistent
+with observed asset prices and dividends,
+the economy must be free of arbitrage opportunities.
+
+\part There are a couple ways to do this.  One is to write
+the risk-neutral probability as the product of
+the true probability and the pricing kernel,
+with $q^1$ serving to make sure they integrate to one.
+Here we get
+\begin{eqnarray*}
+    p^*(x) &=& p(x) m(x)
+        \;\;=\;\; \lambda e^{-\lambda x} \beta e^{-\alpha x}
+                \;\;=\;\; \mbox{constant} \times e^{-(\lambda + \alpha) x} .
+\end{eqnarray*}
+The constant must be $\lambda + \alpha$ if the probabilities are
+to integrate to one.
+
+You could also use the cgf.
+We didn't do this in class, but it's in the notes.
+\end{parts}
+\end{solution}
+
+%\pagebreak \phantom{xx} \pagebreak
+\end{questions}
+
+%\phantom{xx}
+\vfill \centerline{\it \copyright \ \number\year \
+NYU Stern School of Business}
+\end{document}
+
+
+

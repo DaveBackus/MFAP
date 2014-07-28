@@ -1,0 +1,1132 @@
+\documentclass[11pt]{article}
+
+\oddsidemargin=0.25truein \evensidemargin=0.25truein
+\topmargin=-0.5truein \textwidth=6.0truein \textheight=8.75truein
+
+\usepackage{comment}
+\usepackage{hyperref}
+\urlstyle{rm}   % change fonts for url's (from Chad Jones)
+\hypersetup{
+    colorlinks=true,        % kills boxes
+    allcolors=blue,
+    pdfsubject={ECON-UB233, Macroeconomic foundations for asset pricing},
+    pdfauthor={Dave Backus @ NYU},
+    pdfstartview={FitH},
+    pdfpagemode={UseNone},
+%    pdfnewwindow=true,      % links in new window
+%    linkcolor=blue,         % color of internal links
+%    citecolor=blue,         % color of links to bibliography
+%    filecolor=blue,         % color of file links
+%    urlcolor=blue           % color of external links
+% see:  http://www.tug.org/applications/hyperref/manual.html
+}
+
+\usepackage{verbatim}
+%\usepackage{booktabs}
+\usepackage[small, compact]{titlesec}
+
+% list spacing
+\usepackage{enumitem}
+\setitemize{leftmargin=*, topsep=0pt}
+\setenumerate{leftmargin=*, topsep=0pt}
+
+\usepackage{needspace}
+% example:  \needspace{4\baselineskip} makes sure we have four lines available before pagebreak
+
+\renewcommand{\thefootnote}{\fnsymbol{footnote}}
+
+% document starts here
+\begin{document}
+\parskip=\bigskipamount
+\parindent=0.0in
+\thispagestyle{empty}
+{\large ECON-UB 233 \hfill Dave Backus @ NYU}
+
+\bigskip\bigskip
+\centerline{\Large \bf Two-Period Macroeconomic Models}
+\centerline{Revised: \today}
+
+\bigskip
+Our next step is to look at equilibrium prices and quantities
+in the same two-period setting we used earlier.
+The idea is to combine the consumption,
+saving, and portfolio decisions of agents we studied earlier
+with the production and investment decisions of firms
+and find the prices and quantities that clear markets.
+We simplify each of these things as much as we can
+to see how this might work.
+The result is a relatively simple environment in which
+we can talk, for the first time, about the sources
+of risk premiums on assets.
+%Later on, we can ask ourselves which of these simplifications
+%was essential, and which were not.
+
+\section{Keep it simple}
+
+Einstein is reported to have said:
+``Make things as simple as possible, but not simpler.''
+It's not clear exactly what that means, or even whether Einstein said it,
+but I'd like to think he'd agree we should keep things simple.
+Economics, in any case, is a blend of realism and simplicity,
+with most of the weight on simplicity.
+Some people find the apparent lack of realism of economic models puzzling,
+but it's often necessary to gain sharp insights.
+The idea is to focus on the things that matter,
+and simplify or ignore the things that don't.
+The artist Georgia O'Keeffe said something similar:
+``Nothing is less real than realism. Details are confusing. It is only by
+selection, by elimination, by emphasis that we get to the real meaning of
+things.''
+
+Here's another version of the same sentiment,
+an exchange between economist Robert Mundell and banker Alex McLeod.
+The paper in question helped Mundell get the Nobel prize,
+but McLeod thought it was unrealistic.
+As a banker, he knew how things worked in the real world.
+%(We have common friends, and I've been assured he's a reasonable guy.)
+I've taken some liberty with the quotations, but the exchange went something like this:
+
+McLeod:
+\begin{quote}
+Mundell's article [includes] a number of incongruous assumptions.
+One is that complications associated with speculation in the forward market do not exist.
+It can only bring discredit on the economics profession to leave unchallenged
+his attempt to draw from the model policy conclusions that are applicable in the real world.
+\end{quote}
+Mundell:
+\begin{quote}
+Theory is the poetry of science.
+It is simplification, abstraction, the exaggeration of truth.
+Through simplification, theory creates a caricature of reality.
+The caricature itself is not the real world --- it mocks it.
+Yet mind true things by their mockeries!
+
+Dr McLeod does not like my caricature; he calls my assumptions unrealistic.
+I certainly hope he is right.  I hope my assumptions are unrealistic.
+%If they were not, I could not have made a contribution to theory.
+I left out a million variables that made my caricature of reality unrealistic.
+At the same time, it enabled me to find fruitful empirical generalizations.
+\end{quote}
+%
+[From:  {\it Canadian Journal of Economics and Political Science\/}, vol 30, 1964, pp 413-414, 419-421.]
+
+The theory of Mundell's paper is a long way from anything
+we'll do in this class,
+but you have to like a guy who has the nerve to say
+``theory is the poetry of science.''
+The substantive point is that our goal isn't realism, it's insight.
+The art of economics lies in making unrealistic simplifying assumptions that
+deliver clear results that we believe generalize to more complex environments.
+The art lies in making that distinction ---
+in understanding which assumptions are crucial and
+which simply make the analysis easier.
+
+
+\section{General equilibrium models}
+
+In the 1950s, economists formalized some ideas that date back to Adam Smith and before.
+Lots of people were involved, but the central players
+were Kenneth Arrow, Gerhard Debreu, and Lionel McKenzie.
+The first idea is to consider equilibrium (think: supply equals demand)
+for all markets at once ---
+what economists refer to as general equilibrium.
+That's missing in the usual supply and demand diagram,
+one of the reasons we don't stop there.
+The second is to address the welfare properties of general equilibrium.
+Is the equilibrium allocation of resources a good one in some sense?
+Does Smith's invisible hand work?
+We'll do a quick summary of the principle results.
+
+{\it Ingredients.\/}  Here are the ingredients of a general equilibrium model ---
+what we might term the physical environment, which includes
+the objects involved but says nothing about how they interact.
+The list would include:
+%
+\begin{itemize}
+\item List of commodities.   What's produced?  What's consumed?
+\item List of agents.  Who are the people in the model?  How many are there?
+\item Preferences and endowments.  Each agent has a utility function
+that describes her preferences over commodities.
+Also a vector of endowments:  quantities of the various commodities that she starts with.
+\item Technologies.  Production functions that transform combinations of some commodities (inputs)
+into other commodities (outputs).
+\item Resource constraints.  Uses (consumption) of each commodity are limited by
+its sources (endowment net of other uses plus production).
+\end{itemize}
+Most theoretical economies consist of these ingredients in one form or other.
+If there are no technologies, we refer to it as an {\it exchange economy\/};
+since production is ruled out, all agents can do is exchange their endowments.
+
+\needspace{2\baselineskip}
+{\it Equilibrium.\/}
+A {\it competitive equilibrium\/} for an environment like this consists of
+%
+\begin{itemize}
+\item Agents  maximize.
+Agents choose consumption quantities that maximize utility given
+prices and budget constraints.
+\item Firms maximize.
+Firms choose inputs and outputs to maximize profits given prices and technologies.
+\item Markets clear.
+Sources (``supply'') equal uses (``demand'') for every commodity.
+\end{itemize}
+That sounds simple, but it was a significant achievement to formalize it
+and prove (under suitable conditions on preferences and technologies)
+that an equilibrium exists.
+Note that it's a {\it competitive\/} equilibrium:
+agents and firms take prices as given,
+which my industrial organization colleagues find amusing.
+(Equilibrium when agents or firms can influence prices
+is a much more demanding problem,
+not one we can leave to macroeconomists, I'm told.)
+
+{\it Welfare.\/}  Now the invisible hand:
+Is there a sense in which a competitive equilibrium delivers a
+good allocation of resources?
+It depends what you mean by ``good.''
+Suppose we have two agents and consider two allocations,
+one in which agent 1 gets a lot and one in which agent 2 gets a lot,
+with the other getting what's left in each case.
+Which one do we think is better?
+We generally resist making comparisons between allocations like
+this, because it forces us to decide which agent we like best.
+Like parents, we care about all our agents equally.
+We settle for a weaker definition of good:
+we say an allocation is {\it Pareto optimal\/} (ie, good)
+if we can't make one agent better off without making at least one
+other agent worse.
+This leaves some allocations noncomparable,
+but seems like a useful condition to apply to an economy.
+If we can make someone better off without hurting anyone,
+surely the allocation isn't all that good.
+
+With that background, we have two classical results:
+%
+\begin{itemize}
+\item First welfare theorem.  A competitive equilibrium produces
+a Pareto optimal allocation of resources.
+\item Second welfare theorem.
+A Pareto optimal allocation of resources can be reproduced
+as a competitive equilibrium for some allocation
+of endowments.
+\end{itemize}
+The first is the modern version of Adam Smith's invisible hand.
+The second is (among other things) a useful shortcut for computing
+a competitive equilibrium:  we compute a Pareto optimum instead.
+
+All of this might seem like excess formalism.
+On the contrary, I find it extremely helpful to keep track
+of the ingredients and how they fit together.
+
+
+\section{Finding an equilibrium as a Pareto problem}
+
+
+We'll generally attack equilibrium indirectly by finding a Pareto optimum.
+By the second welfare theorem, this corresponds to a competitive equilibrium for some
+allocation of endowments.
+In much of macroeconomics, finding the right allocation of endowments is easy
+because we only have one agent, who therefore owns everything.
+
+{\it Example (exchange economy).\/}
+Let's see how this works in an example, a simple one.
+The ingredients are:
+%
+\begin{itemize}
+\item List of commodities.   Two:  apples and bananas.
+\item List of agents.  One.
+\item Preferences and endowments.  The utility function is
+\begin{eqnarray*}
+    U(c_a,c_b) &=& \beta \log c_a + (1-\beta) \log c_b ,
+\end{eqnarray*}
+where $(c_a,c_b)$ is consumption.
+The endowment is $(y_a,y_b)$.
+\item Technologies.  None, this is an exchange economy.
+\item Resource constraints.  They are
+\begin{eqnarray*}
+    c_a &\leq& y_a \\
+    c_b &\leq& y_b .
+\end{eqnarray*}
+\end{itemize}
+That's the environment:  one agent, two goods, no production.
+You can't get much simpler than that,
+but it serves to illustrate our approach.
+
+The Pareto problem for this economy consists of maximizing utility subject
+to the resource constraints:
+\begin{eqnarray*}
+    \max_{c_a,c_b} &&  \beta \log c_a + (1-\beta) \log c_b \\
+    \mbox{s.t.}   &&  c_a \;\;\leq\;\; y_a \\
+                  &&  c_b \;\;\leq\;\; y_b .
+\end{eqnarray*}
+The solution is obvious (consume the endowment),
+but we'll solve it by Lagrangean methods using
+multipliers $q_a$ and $q_b$ on the two constraints.
+(This notation suggests we know something about the answer,
+which we do:  the multipliers $q_a$ and $q_b$ are the market prices
+in the competitive equilibrium associated with this Pareto optimum.)
+The Lagrangean is
+\begin{eqnarray*}
+    \mathcal{L} &=&  \beta \log c_a + (1-\beta) \log c_b
+                + q_a (y_a - c_a) + q_b (y_b - c_b) .
+\end{eqnarray*}
+The first-order conditions are
+\begin{eqnarray*}
+    \beta/c_a - q_a &=& 0 \\
+   (1-\beta)/c_b - q_b &=& 0 .
+\end{eqnarray*}
+The constraints tell us to consume the endowments.
+
+The nice thing about this approach is that
+we get the prices, too:
+$q_a = \beta/y_a$ and $q_b = (1-\beta)/y_b $.
+It's not hard to see that these are, in fact, the prices 
+we'd get in a competitive equilibrium.  
+
+
+We could recast the problem as a competitive equilibrium
+with these prices.
+Note first that the agent's budget constraint
+is satisfied:
+\begin{eqnarray*}
+    q_a c_a + q_b c_b &\leq& q_a y_a + q_b y_b .
+\end{eqnarray*}
+This is kind of obvious, since the quantities are the same, but it's a start.
+Next, consider the agent's utility maximization problem.
+If we use $\lambda$ as the Lagrange multiplier on the budget constraint,
+then the first-order conditions are
+\begin{eqnarray*}
+    \beta/c_a - \lambda q_a &=& 0 \\
+   (1-\beta)/c_b - \lambda q_b &=& 0 .
+\end{eqnarray*}
+Which leaves us pretty close to what we had above.
+Both give us the essential condition, that the
+ratio of marginal utilities equals the ratio of prices:
+\begin{eqnarray*}
+    \frac{(1-\beta)/c_b}{\beta/c_a} &=& \frac{q_b}{q_a} .
+\end{eqnarray*}
+The bottom line:  when we solve a Pareto problem,
+we not only get the equilibrium quantities,
+we get the equilibrium prices, too,
+as Lagrange multipliers on the resource constraints.
+
+
+[Draw picture:  indifference curves, endowment point,
+slope of tangent line.]
+
+{\it Example (production economy).\/}
+We can easily modify this economy to incorporate production.
+Suppose we have no endowment of bananas ($y_b=0$),
+but can transform apples into bananas with the
+production function $f(k) = k^\theta$.
+If we use $k$ to denote use of apples to produce bananas,
+the Pareto problem becomes
+\begin{eqnarray*}
+    \max_{c_a,k,c_b} &&  \beta \log c_a + (1-\beta) \log c_b \\
+    \mbox{s.t.}   &&  c_a + k \;\;\leq\;\; y_a \\
+                  &&  c_b \;\;\leq\;\; k^\theta ,
+\end{eqnarray*}
+with parameters $ 0 < \beta,\theta < 1$.
+The Lagrangean is
+\begin{eqnarray*}
+    \mathcal{L} &=&  \beta \log c_a + (1-\beta) \log c_b
+                + q_a (y_a - c_a - k) + q_b (k^\theta - c_b ) .
+\end{eqnarray*}
+The first-order conditions are
+\begin{eqnarray*}
+    \beta/c_a - q_a &=& 0 \\
+    - q_a + q_b \theta k^{\theta-1} &=& 0 \\
+   (1-\beta)/c_b - q_b &=& 0 .
+\end{eqnarray*}
+They imply
+\begin{eqnarray*}
+    (y_a - k) \beta /(1-\beta) &=& k / \theta ,
+\end{eqnarray*}
+which we can solve for $k$.
+Consumption quantities $(c_a,c_b)$ then follow from the
+constraints.
+
+[Update picture, add production possibilities frontier.]
+
+
+
+\section{Two-period deterministic economies}
+
+In macroeconomics, a useful starting point is an
+economy with a single agent and some form of dynamics.
+We keep the dynamics simple here with two periods,
+dates 0 and 1.
+Then we develop a series of examples of increasing complexity
+to illustrate how the approach works and what it implies for asset pricing.
+The insight is to treat consumption now and consumption next period
+as different commodities, just as we treated apples and bananas separately above.
+
+If we follow the formalism described above, we have the following ingredients:
+%
+\begin{itemize}
+\item List of commodities.  Two:  the consumption good at dates 0 and 1.
+\item List of agents.  One: a ``representative'' agent.
+\item Preferences and endowments.  The utility function is
+\begin{eqnarray*}
+    U(c_0,c_1) &=& u(c_0) + \beta u(c_1) .
+\end{eqnarray*}
+Endowments are $(y_0,y_1)$.
+\item Technologies.  The production function $f$ transforms input of the date-0 good
+(label this $k$)
+into output of the date-1 good.
+\item Resource constraints.  For the two commodities,
+we have
+\begin{eqnarray*}
+    c_0 + k &\leq& y_0 \\
+    c_1 &\leq&  y_1 + f(k) .
+\end{eqnarray*}
+The idea is that investment $k$ produces future output.
+\end{itemize}
+That's the physical environment.
+%If we keep track of consumption quantities,
+%that gives us $c_0 = y_0 - k$
+%and $ c_1 = f(k) + y_1$.
+
+%[?? direct method first?]
+
+We could compute a competitive equilibrium directly,
+but it's easier to compute a Pareto optimum and
+use the second welfare theorem to tell us it's also
+an equilibrium.
+With only one agent, a Pareto optimum is the solution to:
+\begin{eqnarray*}
+    \max_{c_0,k,c_1} && u(c_0) + \beta u(c_1) \\
+    \mbox{s.t.}   &&  c_0 + k \;\;\leq\;\; y_0 \\
+                  &&  c_1 \;\;\leq\;\;  y_1 + f(k) .
+\end{eqnarray*}
+We could simply substitute the constraints into the objective
+function and maximize, but using Lagrange multipliers gives us
+the prices, too.
+The Lagrangean is
+\begin{eqnarray*}
+    \mathcal{L} &=&  u(c_0) + \beta u(c_1) + q_0 (y_0 - c_0 - k)
+                    + q_1 ( y_1 + f(k) - c_1)  .
+\end{eqnarray*}
+The first-order conditions are
+\begin{eqnarray*}
+    c_0: &&  u'(c_0) - q_0 \;\;=\;\; 0 \\
+    k: &&  - q_0 + q_1 f'(k)  \;\;=\;\; 0 \\
+    c_1: &&  \beta u'(c_1) - q_1 \;\;=\;\; 0 .
+\end{eqnarray*}
+They imply that the marginal rate of substitution (mrs)
+and marginal rate of transformation (mrt)
+equal the price ratio:
+\begin{eqnarray*}
+    \frac{\beta u'(c_1)}{u'(c_0)} &=& \frac{q_1}{q_0} \;\;=\;\; \frac{1}{f'(k)} .
+\end{eqnarray*}
+If we define $Q = q_1/q_0$ and the (gross) interest rate $r$ by $Q = 1/r$,
+then we also have $ [\beta u'(c_1)/u'(c_0)] r = 1$ and $f'(k) = r$.
+This differs from the consumption-saving problem in (possibly) having curvature
+in $f$, so that $f'(k) = r$ isn't constant.
+
+[Draw indifference curves and ppf again.]
+
+Where does the interest rate $r$ come from?
+It depends on preferences ($u$ and $\beta$) and technology ($f$).
+A high interest rate is associated with productive capital
+and high date-1 consumption.
+
+
+\section{Two-period stochastic economies:  exchange version}
+
+Now let's add uncertainty to the model, so that we can give a general
+equilibrium interpretation of asset prices.
+We deal with uncertainty as we did with consumption and portfolio choice.
+We make decisions at date 0.
+At date 1, any of a number of states $z$ can occur.
+[Draw our usual event tree.]
+If there are $Z$ states (a finite number), the ingredients of
+an exchange economy with a single representative agent are
+\begin{itemize}
+\item List of commodities.  $Z+1$:  the consumption good at date 0
+and in each state $z$ at date 1.
+\item List of agents.  One: a ``representative'' agent.
+\item Preferences and endowments.  Preferences are governed by the utility function
+\begin{eqnarray*}
+    U(c_0,c_1) &=& u(c_0) + \beta \sum_z p(z) u[c_1(z)] .
+\end{eqnarray*}
+Endowments are $\{y_0,y_1(z)\}$.
+\item Technologies.  None.
+\item Resource constraints.  For the two commodities,
+we have
+\begin{eqnarray*}
+    c_0 &\leq& y_0 \\
+    c_1(z) &\leq& y_1(z), \mbox{ for each } z .
+\end{eqnarray*}
+\end{itemize}
+This has what we call {\it complete markets\/}:  we have one market for every state $z$.
+
+The Pareto problem has a similar form:  maximize utility subject to
+resource constraints.
+The main difference from the previous section is that we have lots of resource
+constraints, one for each state.
+The problem is
+\begin{eqnarray*}
+    \max_{c_0,c_1(z)} && u(c_0) + \beta \sum_z p(z) u[c_1(z)] \\
+    \mbox{s.t.}   &&  c_0  \;\;\leq\;\; y_0 \\
+                  &&  c_1(z) \;\;\leq\;\; y_1(z) .
+\end{eqnarray*}
+The Lagrangean is
+\begin{eqnarray*}
+    \mathcal{L} &=&  u(c_0) + \beta \sum_z p(z) u[c_1(z)] + q_0 (y_0 - c_0)
+                    + \sum_z q_1(z)  [ y_1(z) - c_1(z)]  .
+\end{eqnarray*}
+As before, we represent the Lagrange multipliers by $q$'s:
+$q_0$ for the date-0 constraint and $q_1(z)$ for the date-1 constraint in state $z$.
+The first-order conditions are
+\begin{eqnarray*}
+    c_0: &&  u'(c_0) - q_0 \;\;=\;\; 0 \\
+    c_1(z): &&  \beta p(z) u'[c_1(z)] - q_1(z) \;\;=\;\; 0 .
+\end{eqnarray*}
+The solution, of course, is to consume the endowment in all states,
+but this gives us the prices too.
+
+[Draw indifference curves between states and endowment point.]
+
+If we take the ratio of the second equation to the first,
+we have
+\begin{eqnarray}
+    \frac{\beta p(z) u'[c_1(z)]}{u'(c_0)} &=&
+    \frac{\beta p(z) u'[y_1(z)]}{u'(y_0)}
+    \;\;=\;\; \frac{q_1(z)}{q_0} \;\;=\;\; Q(z) .
+    \label{eq:state-price}
+\end{eqnarray}
+The first equality substitutes the equilibrium consumption quantities:
+the endowments.
+The subsequent equalities connect them to prices.
+The ratio $Q(z) = q_1(z)/q_0$ is the price at date 0 of one unit in state $z$ at date 1:
+what we have called the {\it state price\/}, the price of an Arrow security.
+Note that the state price is connected to the agent's marginal rate of substitution,
+just as it was in the portfolio choice problem.
+More formally, we can write
+$ Q(z) = \beta p(z) u'[c_1(z)]/u'(c_0) = p(z) m(z) $,
+with $m$ defined by $m(z) = \beta u'[c_1(z)]/u'(c_0)$.
+We will typically refer to $m(z)$ as the mrs in state $z$,
+rather than $p(z) m(z)$, but that's a story for another time.
+
+How do prices differ across states?
+Consider the role of probability.
+The state price formula (\ref{eq:state-price})
+tells us that states with higher probability have higher prices,
+other things equal.
+More interesting is the role of the date-1 endowment.
+The same equations tell us that states with higher output have lower prices
+and higher returns.
+Why?  Because $u'[c_1(z)] = u'[y_1(z)]$ is a decreasing function.
+If we increase $y_1(z)$, then we decrease marginal utility $u'[y_1(z)]$,
+the marginal rate of substitution $m(z) = \beta u'[y_1(z)]/u'(y_0)$,
+and the state price $Q(z) = p(z) m(z)$.
+In words: a payoff of one unit is more valuable when output is scarce
+than when output is plentiful.
+Securities that pay off in good states (high endowment) are therefore
+cheaper than those that pay off in bad states (low endowment).
+We'll see later that this provides a basis for risk premiums.
+Securities that pay off mostly in good states have lower prices
+and higher average returns than those that pay off mostly in bad states.
+
+% ?? tighten up?
+
+
+\section{Asset pricing in the exchange economy: an example}
+
+We can be more specific about asset prices and returns
+if we put more structure on the economy.
+We apply two kinds of structure:  we give the agent power utility
+and make the date-1 endowment lognormal (that is, the log of the
+endowment is normal).
+This is our first look at a collection of equations we'll
+see over and over again.
+
+Here's how asset pricing works in settings like this.
+An asset consists, in general,
+of a state-dependent dividend or payoff $d(z)$.
+If its price is $q$, its return is $ r(z) = d(z)/q$.
+We typically value assets in this order:
+specify the dividend, compute its price, then calculate its return.
+Given a marginal rate of substitution $m(z)$ and probabilities $p(z)$,
+pricing follows from
+\begin{eqnarray*}
+    1 &=& E (mr) \;\;=\;\; \sum_z p(z) m(z) [d(z)/q] \;\;=\;\;  E [m (d/q)]] .
+\end{eqnarray*}
+Since $q$ doesn't depend on $z$, we can take it outside the expectation.
+If we multiply both sides by $q$, we have
+\begin{eqnarray*}
+    q &=& E (md)  .
+\end{eqnarray*}
+Hence the term asset ``pricing.''
+
+Since we'll be using normal and lognormal random variables,
+it's helpful to remind ourselves of some of their properties.
+Let us say that $x = \log y$ is normal;
+in short-hand notation, $ x \sim \mathcal{N}(\kappa_1,\kappa_2)$.
+Then we say $y = \exp(x) $ is lognormal (its log is normal).
+Result 1:  The mgf of $x$ is
+$h(s) = E(e^{sx}) = e^{s \kappa_1 + s^2\kappa_2/2}$.
+Result 2:  If $x = \log y$, the mean of
+$y = e^x$ is $E(y) = E(e^x) = e^{\kappa_1 + \kappa_2/2}$.
+This also follows from the mgf of $x$:  evaluate $h$ at $s=1$.
+We say $ y$ is lognormal (its log is normal).
+Result 3:  Linear functions of $x$ are also normal.
+Specifically:  $ y = a + b x \sim \mathcal{N}(a + b \kappa_1, b^2 \kappa_2)$.
+(If you have any question about this, write down the definition of the mgf of $y$.)
+%Alternatively, let $\log y = x$ be normal.
+%Then we say $y$ is lognormal.
+
+
+Now the example.
+Let $u(c) = c^{1-\alpha}/(1-\alpha)$ with $\alpha>0$ (power utility)
+and
+$\log y_1(z) \sim \mathcal{N}(\kappa_1,\kappa_2)$
+(lognormal endowment).
+For convenience, we set $y_0 = 1$ so that it drops out of
+calculations.
+With power utility, the mrs is
+\begin{eqnarray*}
+        m(z) \;\;=\;\; {\beta u'[y_1(z)]}/{u'(y_0)} &=&  \beta [y_1(z)/y_0]^{-\alpha} ,
+\end{eqnarray*}
+a function of the growth rate of the endowment.
+Since $y_0 = 1$, $\log m(z)$ is
+\begin{eqnarray*}
+    \log m(z) &=& \log \beta - \alpha \log y_1(z)
+        \;\;\sim\;\; \mathcal{N}(\log \beta - \alpha \kappa_1, \alpha^2 \kappa_2).
+\end{eqnarray*}
+The second step follows from Result 3 for lognormals.
+
+Now consider two specific assets:  a ``bond'' that pays one in every state
+and a share of ``equity'' that pays a dividend equal to the endowment in each state.
+If the bond has price $q^1$ then its return is $r^1 = 1/q^1$.
+The price satisfies
+\begin{eqnarray*}
+     q^1 &=& E(m \cdot 1) \;\;=\;\; \exp(\log \beta - \alpha \kappa_1 + \alpha^2 \kappa_2/2 )
+            \;\;=\;\; \beta \exp(- \alpha \kappa_1 + \alpha^2 \kappa_2/2 ),
+\end{eqnarray*}
+which gives us the return
+\begin{eqnarray*}
+     r^1 &=& 1/q^1
+            \;\;=\;\; \beta^{-1} \exp( \alpha \kappa_1 - \alpha^2 \kappa_2/2 ) .
+\end{eqnarray*}
+Higher mean growth $\kappa_1$ is associated with a lower price
+and therefore a higher interest rate.
+The greater is risk aversion the greater is this effect.
+The same is true in the deterministic case,
+which corresponds to $\kappa_2 = 0$.
+An increase in the variance $\kappa_2$ raises the price and lowers the interest rate.
+
+Now consider equity, a claim to the dividend $d^e(z) = y_1(z)$.
+Its return is $r^e(z) = d^e(z)/q^e = y_1(z)/q^e$.
+Its price is therefore $q^e = E( m d^e) = E( m y_1)$.
+Taking logs and collecting terms, we have
+\begin{eqnarray*}
+    \log m(z) + \log d^e(z) &=& \log \beta  + (1-\alpha) \log y_1(z)
+    \;\;\sim\;\; \mathcal{N}(\log \beta + (1-\alpha) \kappa_1, (1-\alpha)^2 \kappa_2).
+\end{eqnarray*}
+Result 1 for lognormals gives us the price:
+\begin{eqnarray*}
+    q^e &=& E \left( m d^e\right) \\
+        &=& \exp[\log \beta + (1- \alpha) \kappa_1 + (1-\alpha)^2 \kappa_2/2 ] \\
+        &=& \beta \exp[(1- \alpha) \kappa_1 + (1-\alpha)^2 \kappa_2/2 ] .
+\end{eqnarray*}
+The return is
+\begin{eqnarray*}
+    r^e(z) \;\;=\;\; y_1(z)/q^e &=&
+        y_1(z) \beta^{-1} \exp[-(1- \alpha) \kappa_1 - (1-\alpha)^2 \kappa_2/2 ] .
+\end{eqnarray*}
+
+The expected return is (using Result 1 again)
+\begin{eqnarray*}
+    E(r^e)  &=&
+    \exp(\kappa_1 + \kappa_2/2)  \beta^{-1}
+            \exp[-(1- \alpha) \kappa_1 - (1-\alpha)^2 \kappa_2/2 ]  \\
+    &=& \beta^{-1} \exp\{\alpha \kappa_1 + [1 - (1-\alpha)^2] \kappa_2/2 \} .
+\end{eqnarray*}
+(Hang in there, we're making progress.)
+
+Now the question:  Does equity have a higher or lower expected return than the bond?
+We refer to the difference as a risk premium.
+We suggested that an asset that pays off mostly in good states,
+as equity does, would demand a higher return as a result.
+We would say, then, that equity has a positive risk premium.
+Let's see if that's true here.
+In general we have $E(r^e) > r^1$ if
+\begin{eqnarray*}
+    \exp\{ [1 - (1-\alpha)^2] \kappa_2/2 \}
+            &>& \exp(-\alpha^2 \kappa_2/2) \\
+     (-\alpha^2 + 2 \alpha) \kappa_2/2 &>& -\alpha^2 \kappa_2/2  .
+\end{eqnarray*}
+So it's true since $\alpha$ and $\kappa_2$ are positive.
+When either is zero, the expected difference in returns
+is also zero.
+
+
+In loglinear models like this,
+including some of the most common ones in finance,
+it's simpler to compute the expected difference in returns in logs;
+namely, $ E \log r^e - \log r^1 $.
+Here we get
+\begin{eqnarray*}
+    E  \log r^e - \log r^1  &=& (2 \alpha - 1) \kappa_2 /2 ,
+\end{eqnarray*}
+which is positive if $\alpha > 1/2$.
+
+
+\section{Two-period stochastic economies 2:  production version}
+
+We can do the same thing with production, which here means
+we allow investment at date 0 to increase output and consumption
+at date 1.
+The standard version
+is the same as above, except:
+\begin{itemize}
+\item Technologies.  An input of $k$ units of the date-0 good
+produces $ a(z) f(k)$ units of the date-1 good.
+The output of this investment is, therefore, uncertain.
+\item Resource constraints.  They become
+\begin{eqnarray*}
+    c_0 &\leq& y_0 - k \\
+    c_1(z) &\leq& y_1(z) + a(z) f(k), \mbox{ for each } z .
+\end{eqnarray*}
+\end{itemize}
+The idea is that investment is risky:  the marginal product
+of an additional unit of capital is $a(z) f'(k)$,
+which depends on the date-1 state $z$.
+
+
+With these changes, the Pareto problem is
+\begin{eqnarray*}
+    \max_{c_0,k, c_1(z)} && u(c_0) + \beta \sum_z p(z) u[c_1(z)] \\
+    \mbox{s.t.}   &&  c_0  + k \;\;\leq\;\; y_0 \\
+                  &&  c_1(z) \;\;\leq\;\; y_1(z) + a(z) f(k) .
+\end{eqnarray*}
+The Lagrangean is
+\begin{eqnarray*}
+    \mathcal{L} &=&  u(c_0) + \beta \sum_z p(z) u[c_1(z)] + q_0 (y_0 - c_0 - k)
+                    + \sum_z q_1(z)  [ y_1(z) + a(z) f(k) - c_1(z)]  .
+\end{eqnarray*}
+(As before, we've used $q$'s for the Lagrange multipliers,
+because we know that they'll end up being the same as the market prices.)
+The first-order conditions are
+\begin{eqnarray*}
+    c_0: &&  u'(c_0) - q_0 \;\;=\;\; 0 \\
+    c_1(z): &&  \beta p(z) u'[c_1(z)] - q_1(z) \;\;=\;\; 0 \\
+     k:   && - q_0 + \sum_z q_1(z) a(z) f'(k) \;\;=\;\; 0 .
+\end{eqnarray*}
+That gives us, in every state $z$,
+\begin{eqnarray*}
+    \frac{\beta p(z) u'[c_1(z)]}{u'(c_0)} &=& \frac{q_1(z)}{q_0}
+    \;\;=\;\; Q(z)
+    \;\;=\;\; \frac{1}{a(z) f'(k)} .
+\end{eqnarray*}
+The first part is the same as the exchange economy:
+the marginal rate of substitution $\beta u'[c_1(z)]/u'(c_0)$
+equals the state price $Q(z)$.
+The second part concerns production:
+the marginal rate of transformation $ 1 / [a(z) f'(k)]$ also equals the state price.
+
+{\it Example.\/}
+We can solve this by hand for a special case.
+Let $u(c) = \log c$ and $f(k) = k^\theta$, with
+$0 \leq \theta \leq 1$,
+and $a(z) \sim \mathcal{N}(\kappa_1,\kappa_2)$.
+Equity is a claim to $d(z) = a(z) f'(k) k$:
+Each unit of capital is paid its marginal product $a(z) f'(k)$.
+I'll leave it to you to derive its expected excess return.
+
+
+What's useful about this model is that we can say where
+aggregate dividends come from:
+they're payments to capital.
+At the margin,
+an increase in $k$ at date 0 generates $z f'(k)$ units of
+output at date 1 in state $z$.
+Since $z$ is uncertain, so is the dividend.
+
+
+\section*{Bottom line}
+
+General equilibrium models are useful devices for thinking
+about where prices and quantities come from.
+From a macro-finance perspective,
+even simple models give us some insights.
+Among them I'd include:
+%
+\begin{itemize}
+\item Asset prices and returns reflect the marginal rates of substitution
+of the people who buy them.
+Our old favorite, $E(mr) = 1$, is a good example.
+\item That gives us a connection between returns and dividends.
+Assets that pay off mostly in good states have less value
+and higher returns, on average,
+than either a riskfree asset that has the same payoff in all states
+or an asset that pays off mostly in bad states.
+Why?  Because marginal utility is lower in good states than bad.
+%The intuition bears some resemblance to the CAPM,
+%but the mechanics are different.
+\end{itemize}
+
+\section*{Practice problems}
+
+\begin{enumerate}
+%-----------------------------------------------------------------------
+\item {\it A three-good economy.\/}
+Consider a static economy with three goods,
+labelled 1, 2, and 3.
+A representative agent has utility over consumption
+of the three goods of
+\begin{eqnarray*}
+    U(c_1,c_2, c_3) &=& \log c_1 + \beta \log c_2 + \gamma \log c_3 .
+\end{eqnarray*}
+The same agent's endowments are $(y_1, y_2, y_3)$.
+\begin{enumerate}
+\item What are the ``ingredients'' for this economy?
+\item What is the Lagrangian problem associated with a Pareto optimum?
+\item What are its first-order conditions?
+\item What are the optimal values of consumption?
+What are the prices that support this as a competitive equilibrium?
+\end{enumerate}
+%
+\needspace{2\baselineskip}
+Answer.
+\begin{enumerate}
+\item The ingredients are
+\begin{itemize}
+\item List of commodities:  1, 2, and 3.
+\item List of agents:  one.
+\item Preferences and endowments:  see above.
+\item Technology:  none.
+\item Resource constraints:  $c_i \leq y_i$ for each good $i$.
+\end{itemize}
+\item The Lagrangian is
+\begin{eqnarray*}
+    \mathcal{L} &=& \log c_1 + \beta \log c_2 + \gamma \log c_3
+            + \sum_i q_i (y_i - c_i) .
+\end{eqnarray*}
+The $q_i$'s are Lagrange multipliers on the resource constraints.
+\item The first-order conditions are
+\begin{eqnarray*}
+    0 &=& 1/c_1 - q_1  \\
+    0 &=& \beta/c_2 - q_2 \\
+    0 &=& \gamma/c_3 - q_3 .
+\end{eqnarray*}
+\item Obviously we consume the whole endowment:  $c_i = y_i$ for $i=1,2,3$.
+Why?  Because more is better, and that's the most we can consume.
+The first-order conditions then give us the multipliers:
+$ q_1 = 1/y_1$, $q_2 = \beta/y_2$, and $q_3 = \gamma/y_3 $.
+\end{enumerate}
+
+%-----------------------------------------------------------------------
+\item {\it A two-good economy with power utility.\/}
+Consider a static economy with two goods,
+labelled 1 and 2.
+A representative agent has utility
+\begin{eqnarray*}
+    U(c_1,c_2) &=& c_1^{1-\alpha}/(1-\alpha) + \beta c_1^{1-\alpha}/(1-\alpha).
+\end{eqnarray*}
+The endowments are $(y_1, y_2)$.
+\begin{enumerate}
+\item What are the ``ingredients'' for this economy?
+\item What is the Lagrangian problem associated with a Pareto optimum?
+\item What are its first-order conditions?
+\item What are the optimal values of consumption?
+What are the prices that support this as a competitive equilibrium?
+\end{enumerate}
+%
+\needspace{2\baselineskip}
+Answer.
+\begin{enumerate}
+\item The ingredients are
+\begin{itemize}
+\item List of commodities:  1 and 2.
+\item List of agents:  one.
+\item Preferences and endowments:  see above.
+\item Technology:  none.
+\item Resource constraints:  $c_i \leq y_i$ for each good $i$.
+\end{itemize}
+\item The Lagrangian is
+\begin{eqnarray*}
+    \mathcal{L} &=& c_1^{1-\alpha}/(1-\alpha) + \beta c_1^{1-\alpha}/(1-\alpha)
+            + \sum_i q_i (y_i - c_i) .
+\end{eqnarray*}
+\item The first-order conditions are
+\begin{eqnarray*}
+    0 &=& c_1^{-\alpha} - q_1  \\
+    0 &=& \beta c_2^{-\alpha} - q_2 .
+\end{eqnarray*}
+\item We consume the whole endowment: $c_i = y_i$ for $i=1,2$.
+The prices are $ q_1 = y_1^{-\alpha}$ and $q_2 = \beta y_2^{-\alpha}$.
+\end{enumerate}
+
+
+%-----------------------------------------------------------------------
+\item {\it Consumption and leisure.\/}
+Most macroeconomic models include a role for work.
+Our agent (let's stick with one) has one unit of time.
+She supplies $n$ units to firms, who use it to produce output.
+That leaves her with $1-n$ units to consume a leisure,
+which includes here everything other than paid work:
+sleeping, cleaning, watching television, biking, and so on.
+Let us say, to be concrete, that the agent has utility function
+\begin{eqnarray*}
+    U(c,1-n) &=& \log c + \theta \log (1-n) ,
+\end{eqnarray*}
+and that each unit of labor hired by a firm generates $a$ units of output.
+The overall resource constraint is therefore
+\begin{eqnarray*}
+        c &\leq& a n .
+\end{eqnarray*}
+Your mission is to find a Pareto optimum for this economy.
+\begin{enumerate}
+\item What are the ``ingredients'' for this economy?
+\item What is the Lagrangian problem associated with a Pareto optimum?
+\item What are its first-order conditions?
+\item What are the optimal values of $c$ and $n$?
+\end{enumerate}
+%
+\needspace{2\baselineskip}
+Answer.
+\begin{enumerate}
+\item The ingredients are
+\begin{itemize}
+\item List of commodities:  the consumption good, labor.
+\item List of agents:  one.
+\item Preferences:  see utility function above.
+Endowment:  one unit of labor.
+\item Technology:  $y = an$, where $y$ is output of the consumption good.
+\item Resource constraints:  for leisure we have $1-n$ of leisure plus $n$ of work
+is no greater than one; for consumption, we have the constraint listed above.
+\end{itemize}
+\item The Lagrangian is
+\begin{eqnarray*}
+    \mathcal{L} &=& \log c + \theta \log (1-n) + \lambda (an - c)
+\end{eqnarray*}
+\item The first-order conditions are
+\begin{eqnarray*}
+    0 &=& 1/c - \lambda \\
+    0 &=& - \theta/(1-n) + \lambda a .
+\end{eqnarray*}
+\item The first-order conditions plus the constraint give us
+$ n = 1/(1+\theta) $ and $ c = an = a/(1+\theta) $.  \\
+It wasn't asked, but this environment gives us prices, too.
+This is a little terse, but we read them from the first-order conditions:
+the price of consumption of $\lambda$, the price of labor is $\lambda a $.
+\end{enumerate}
+
+%-----------------------------------------------------------------------
+\item {\it Asset pricing with production and dividends.\/}
+Consider a two-period economy with a linear technology.
+What is equilibrium consumption growth?
+What are the state prices?
+What is a claim to one unit of capital worth?
+
+To address these questions,
+we use a variant of our two-period economy,
+with dates 0 and 1 and states $z$ at date 1 that occur with probability $p(z)$.
+The representative agent has utility function
+\begin{eqnarray*}
+    u(c_0) + \beta \sum_z p(z) u[c_1(z)] ,
+\end{eqnarray*}
+with $u(c) = c^{1-\alpha}/(1-\alpha)$ for $\alpha > 0$
+(power utility).
+She is endowed with $y_0$ units of the date-0 good, nothing at date 1.
+The technology is linear:  $k$ units of the date-0 good invested in capital
+generate $z k$ units of the good in state $z$ at date 1.
+The resource constraints are therefore
+\begin{eqnarray*}
+    c_0 + k &=& y_0  \\
+    c_1(z) &=& z k ,
+\end{eqnarray*}
+with one of the latter for each state $z$.
+Think of the productivity factor $z$ as $a(z)$ with $a(z) = z$.
+
+\begin{enumerate}
+\item What are the classical ``ingredients'' of this economy?
+\item What is the associated Pareto problem?
+What are its first-order conditions?
+\item Suppose $z$ is lognormal:  that is,
+$\log z \sim \mathcal{N}(\kappa_1,\kappa_2)$.
+Use the properties of lognormal random variables to show
+that $E(z^a) = \exp( a \kappa_1 + a^2 \kappa_2/2)$
+for any real number $a$.
+\item Use this result to find the optimal values of $c_0$ and $k$.
+Given these values, what is saving?
+\item What is $c_1(z)$?
+% ?? next part a little tough
+What are the state prices?
+\item What is the value of one unit of capital,
+that is, a claim to $z$ units of output in each state $z$?
+%What are the effects of the parameters $(\alpha, \kappa_1,\kappa_2)$?
+\end{enumerate}
+%
+\needspace{2\baselineskip}
+Answer.
+\begin{enumerate}
+\item Commodities:  the good at date 0 plus the good in each state at date 1. \\
+Agents:  one \\
+Preferences, endowment, and technologies:  given above. \\
+Resource constraints:  ditto.
+\item Pareto problem based on the Lagrangean:
+\begin{eqnarray*}
+    \mathcal{L}  &=&  \log c_0  + \beta \sum_z p(z) \log c_1(z)
+          + q_0 (y_0 - c_0 - k)
+            + \sum_z q_1(z) [z k - c_1(z)] .
+\end{eqnarray*}
+We choose $c_0$, $k$, and $c_1(z)$ (one for each $z$) to maximize this.
+The first-order conditions are
+\begin{eqnarray*}
+    c_0: &&  c_0^{-\alpha} \;\;=\;\; q_0 \\
+    k:   &&  q_0 \;\;=\;\; \sum_z q_1(z) z \\
+    c_1(z): &&  \beta p(z) c_1(z)^{-\alpha} \;\;=\;\; q_1(z)
+\end{eqnarray*}
+
+\item Define $x=\log z$.
+Its mgf is $e^{sx} = E(e^{s\log z}) = E(z^s) = e^{s\kappa_1 + s^2 \kappa_2/2}$.
+Setting $s=a$ gives us the answer.
+
+\item This is moderately demanding, but here's how it works.
+With apologies for mixing sums and integrals,
+we use the first and third first-order conditions to substitute
+for $q_0$ and $q_1(z)$ in the second:
+\begin{eqnarray*}
+        1 &=& \sum_z \frac{q_1(z)}{q_0} z
+            \;\;=\;\; \sum_z \frac{\beta p(z) c_1(z)^{-\alpha}}{c_0^{-\alpha}} \; z
+            \;\;=\;\; \sum_z \beta p(z) \frac{(zk)^{-\alpha}}{(y_0-k)^{-\alpha}} \; z \\
+          &=& \beta (y_0-k)^\alpha k^{-\alpha} \sum_z  p(z)  z^{1-\alpha}
+             \;\;=\;\;  \beta (y_0-k)^\alpha k^{-\alpha} E (z^{1-\alpha} ) .
+\end{eqnarray*}
+To simplify, denote $ E(z^{1-\alpha}) = Z$.
+Then consumption and capital are
+\begin{eqnarray*}
+    k &=& \frac{(\beta Z)^{1/\alpha}}{1+ (\beta Z)^{1/\alpha}} \; y_0,
+        \;\;\;  c_0 \;\;=\;\; \frac{1}{1+ (\beta Z)^{1/\alpha}} \; y_0
+\end{eqnarray*}
+Using the lognormal result, we have
+\begin{eqnarray*}
+    Z &=& E(z^{1-\alpha}) \;\;=\;\; e^{(1-\alpha)\kappa_1 + (1-\alpha)^2 \kappa_2/2}
+\end{eqnarray*}
+
+\item Evidently
+\begin{eqnarray*}
+    c_1(z) &=& z k \;\;=\;\; z y_0 \frac{(\beta Z)^{1/\alpha}}{1+ (\beta Z)^{1/\alpha}} .
+\end{eqnarray*}
+The big part at the end is a constant, so it's ugly but innocuous.
+The state prices are (more tedious substitution)
+\begin{eqnarray*}
+    q(z) &=& p(z) \beta [c_1(z)/c_0]^{-\alpha}
+            \;\;=\;\; p(z) z^{-\alpha}/Z .
+\end{eqnarray*}
+As usual, the state price is the product of
+a pricing kernel [here $m(z) = z^{-\alpha}/Z$]
+and a probability [the normal density for $\log z$,
+which we haven't bothered to write out].
+
+\item
+This is claim to $z$ next period,
+with value at date 0 of
+\begin{eqnarray*}
+    q^e &=& E (z^{1-\alpha})/Z \;\;=\;\; 1.
+\end{eqnarray*}
+Hmmmm...
+Why does this make sense?
+Because one unit of capital is one unit of the good
+at date 0, whose price is one since we're valuing
+assets in units of the date-0 good.
+\end{enumerate}
+
+\begin{comment}
+\item {\it Pricing contingent claims.\/}
+Consider a two-period exchange economy with power utility
+and endowment growth
+and $\log c_1 - \log c_0 = \log y_1 - \log y_0 = z \sim \mathcal{N}(\kappa_1,\kappa_2)$
+and $y_0 = 1$.
+We'll compute the prices of equity and two equity derivatives
+using a representative agent's marginal rate of substitution
+as a pricing kernel.
+
+\begin{enumerate}
+\item What is the marginal rate of substitution for this economy?
+\item What is the price $q^1$ of a bond
+that pays one in each state?
+Express it as a function of $\alpha$, $\beta$, $\kappa_1$, and $\kappa_2$.
+\item What is the price $q^e$ of ``equity,''
+a claim to the date-1 endowment $y_1(z) = e^z$?
+What is its return? Expected return?
+\item Consider an ``upside'' derivative that pays
+$y_1 $ if $y_1 \geq b$
+and a ``downside'' derivative that pays
+$y_1 $ if $y_1 \leq b$.
+Show that the prices (call them $q^u$ and $q^d$)
+sum to the price of equity.
+
+\item What is the price of the downside derivative
+for the lognormal case?
+Hint:  this involves integrating the normal distribution
+as we did when we computed the normal mgf.
+The difference is that we only integrate over the region in
+which the dividend is positive.
+\end{enumerate}
+%
+\needspace{2\baselineskip}
+Answer.
+\begin{enumerate}
+\item The mrs is
+\begin{eqnarray*}
+    m(z) &=& \beta [c_1(z)/c_0]^{-\alpha}
+        \;\;=\;\; \beta e^{-\alpha z} ,
+\end{eqnarray*}
+so $\log m \sim \mathcal{N}(\log \beta - \alpha \kappa_1, \alpha^2 \kappa_2) $.
+\item The lognormal result again:
+\begin{eqnarray*}
+    q^1 &=& E(m) \;\;=\;\; \beta e^{-\alpha \kappa_1 + \alpha^2 \kappa_2/2} .
+\end{eqnarray*}
+The return is $r^1 = 1/q^1 $.
+
+\item With our distributional assumptions, we have
+\begin{eqnarray*}
+    q^e  &=& E(m y_1) \;\;=\;\; \beta E ( e^{-\alpha z} e^z )
+        \;\;=\;\; \beta E( e^{(1-\alpha) z}) \\
+             &=&
+             \beta e^{(1-\alpha)\kappa_1 + (1-\alpha)^2 \kappa_2/2 }.
+\end{eqnarray*}
+This should look familiar.
+
+\item We're splitting the dividends in two --- upside and downside ---
+so a claim to one unit of each is equivalent to a claim to equity.
+
+\item This is moderately demanding, too,
+but it's exactly the kind of math we'll use later to price options.
+The price of the downside derivative is
+\begin{eqnarray*}
+    q^d &=&  \int_{-\infty}^{z^*} m(z) y_1(z) p(z) dz
+\end{eqnarray*}
+with $z^* = \log b$ the upper bound on $z$ corresponding to
+$y_1 = b$.
+Now we're back to the same math we used to compute the mgf for a normal
+random variable:
+\begin{eqnarray*}
+     m(z) y_1(z) p(z)  &=& \beta e^{-\alpha z} e^z (2 \pi \kappa_2)^{-1/2}
+        e^{-(z-\kappa_1)^2/2\kappa_2} \\
+            &=& \beta e^{ (1-\alpha) \kappa_1 + (1-\alpha)^2 \kappa_2/2}
+                (2 \pi \kappa_2)^{-1/2}
+        e^{-(z + (1-\alpha) \kappa_2-\kappa_1)^2/2\kappa_2}  \\
+        &=& q^e  (2 \pi \kappa_2)^{-1/2}
+        \exp[-(w-\kappa_1)^2/2\kappa_2] ,
+\end{eqnarray*}
+where $ w = z + (1-\alpha)\kappa_2$.
+The integral is therefore
+\begin{eqnarray*}
+    (2 \pi \kappa_2)^{-1/2} \int_{-\infty}^{\log b + (1-\alpha) \kappa_2}
+            \exp[-(w-\kappa_1)^2/2\kappa_2] dw .
+\end{eqnarray*}
+More on this another time.
+\end{enumerate}
+\end{comment}
+
+\end{enumerate}
+
+\vfill \centerline{\it \copyright \ \number\year \
+NYU Stern School of Business}
+\end{document}

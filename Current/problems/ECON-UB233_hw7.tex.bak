@@ -1,0 +1,302 @@
+\documentclass[11pt]{exam}
+
+\oddsidemargin=0.25truein \evensidemargin=0.25truein
+\topmargin=-0.5truein \textwidth=6.0truein \textheight=8.75truein
+
+%\RequirePackage{graphicx}
+\usepackage{comment}
+\usepackage{verbatim}
+\usepackage{booktabs}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\urlstyle{rm}   % change fonts for url's (from Chad Jones)
+\hypersetup{
+    colorlinks=true,        % kills boxes
+    allcolors=blue,
+    pdfsubject={ECON-UB233, Macroeconomic foundations for asset pricing},
+    pdfauthor={Dave Backus @ NYU},
+    pdfstartview={FitH},
+    pdfpagemode={UseNone},
+%    pdfnewwindow=true,      % links in new window
+%    linkcolor=blue,         % color of internal links
+%    citecolor=blue,         % color of links to bibliography
+%    filecolor=blue,         % color of file links
+%    urlcolor=blue           % color of external links
+% see:  http://www.tug.org/applications/hyperref/manual.html
+}
+
+\renewcommand{\thefootnote}{\fnsymbol{footnote}}
+\newcommand{\var}{\mbox{\it Var\/}}
+
+\printanswers
+
+% document starts here
+\begin{document}
+\parskip=\bigskipamount
+\parindent=0.0in
+\thispagestyle{empty}
+{\large ECON-UB 233 \hfill Dave Backus @ NYU}
+
+\bigskip\bigskip
+%\centerline{\Large \bf Lab Report \#7:  Stochastic Processes}
+\centerline{\Large \bf Lab Report \#7:  Dynamics in Theory and Data}
+\centerline{Revised: \today}
+
+\bigskip
+{\it Due at the start of class.
+You may speak to others, but whatever you hand in should be your own work.
+Please include your Matlab code.}
+
+%\begin{solution}
+%Brief answers follow,
+%but see also the attached Matlab program;
+%download the pdf, open, click on pushpin:
+%%\attachfile{../Matlab/hw/hw7_f13.m}
+%\end{solution}
+
+\begin{questions}
+%-----------------------------------------------------------------------
+\question {\it Linear models.\/}
+Consider the models
+\begin{eqnarray*}
+(a) &&  x_t \;\;=\;\; 0.9 x_{t-1} +  w_t \phantom{xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx}\\
+(b) &&  y_t \;\;=\;\; x_t + 2, \mbox{ with $x_t$ defined in (a)} \\
+(c) &&  x_t \;\;=\;\; 0 \cdot w_t + 1 \cdot w_{t-1} \\
+(d) &&  x_t \;\;=\;\; \varphi x_{t-1} + w_t + \theta  w_{t-1} \\
+(e) &&  x_t \;\;=\;\; 1.2 x_{t-1} + 0.1 x_{t-2} +  w_t
+\end{eqnarray*}
+%[The idea behind (b) is to take $x_t$ from (a) and add 2.]
+The disturbances $w_t$ are independent standard normals.
+
+For each model,  answer the questions:
+\begin{enumerate}
+\item [(i)] Is the model Markov?  For what definition of the state? %\\
+\item [(ii)] What is the conditional distribution of $x_{t+1}$ given
+the state at date $t$? %\\
+\item [(iii)] Is the model stable?
+\item [(iv)] If it's stable, what is the stationary distribution?
+\end{enumerate}
+
+
+\begin{solution}
+All of these are Markov.
+The state ($z_t$, say) is whatever you need to know at date $t-1$ to
+know the conditional distribution of $x_t$.
+\begin{parts}
+\item This is an AR(1).
+(i)~It's Markov with state $x_{t-1}$.
+(ii)~Conditional distribution:  normal with mean $0.9 x_{t-1}$ and variance one.
+(iii)~Yes, stable, because 0.9 is less than one in absolute value.
+(iv)~The stationary distribution is normal with mean zero and variance
+$1/(1-0.9^2) = 5.2632$.
+The autocorrelation function is
+\begin{eqnarray*}
+    \rho(k) &=& 0.9^k .
+\end{eqnarray*}
+This includes $\rho(1) = 0.9$, $\rho(2) = 0.9^2 = 0.81$, and so on.
+
+\item Still an AR(1).
+(i)~Doing the substitution $x_t = y_t - 2$ gives us
+\begin{eqnarray*}
+    y_t &=& (1-0.9) \cdot 2 + 0.9 y_{t-1} + w_t .
+\end{eqnarray*}
+So it's Markov with state $y_{t-1}$.
+(ii)~Conditional distribution:  normal with mean $0.2 + 0.9 y_{t-1}$ and variance one.
+(iii)~Yes, stable, because 0.9 is less than one in absolute value.
+(iv)~The stationary distribution is normal with mean two and variance
+$1/(1-0.9^2) = 5.2632$.
+All we've done here is shift the mean up by two.
+The autocorrelation function doesn't depend on the mean, so it's the same
+as before.
+
+\item This is an MA(1).
+(i)~It's Markov with state $w_{t-1}$.
+(ii)~Conditional distribution:  normal with mean $w_{t-1}$ and variance zero.
+(This is an unusual setup:  since the coefficient of $w_t$ is zero,
+we learn $x_t$ one period ahead of time.)
+(iii)~Yes, stable.  For a moving average, all we need is that
+the coefficients are square summable.
+That's always true if there's a finite number of terms.
+(iv)~The stationary distribution is normal with mean zero and variance one.
+
+\item This is an ARMA(1,1).
+(i)~It's Markov with state $(x_{t-1}, w_{t-1})$.
+(ii)~Conditional distribution:  normal with mean $\varphi x_{t-1} + \theta w_{t-1}$ and variance one.
+(iii)~It's stable if $|\varphi| < 1$.
+You can see this from the moving average representation, outlined in the notes:
+\begin{eqnarray*}
+    x_t &=&   w_t + (\varphi+ \theta) w_{t-1}
+                + (\varphi+ \theta)\varphi w_{t-2}
+                +  (\varphi+ \theta)\varphi^2 w_{t-3} + \cdots .
+\end{eqnarray*}
+The first two moving average coefficients are arbitrary,
+then they decline at rate $\varphi$.
+(iv)~The stationary distribution is normal with mean zero and variance
+equal to the sum of squared moving average coefficients:
+\begin{eqnarray*}
+    \gamma(0) &=& 1 + (\varphi + \theta)^2/(1-\varphi^2) .
+\end{eqnarray*}
+The autocovariances are
+\begin{eqnarray*}
+    \gamma(k) &=& \varphi^{k-1} (\varphi + \theta)
+            \left[1 + (\varphi+\theta)\varphi/(1-\varphi^2) \right].
+\end{eqnarray*}
+The autocorrelations are $\rho(k) = \gamma(k)/\gamma(0)$.
+They decline at rate $\varphi$ after the first one.
+
+\item This is an AR(2).
+(i)~It's Markov with state $(x_{t-1},x_{t-2})$.
+(ii)~The conditional distribution is normal with mean $\varphi x_{t-1} + \varphi x_{t-2}$
+and variance one.
+(iii,iv)~It's not stable.  You can see this by substituting for a few periods and
+seeing how the impact of lagged $x$'s works.  So there's no stationary distribution,
+autocorrelation function, and so on.
+
+\end{parts}
+\end{solution}
+
+%-----------------------------------------------------------------------
+\question {\it Combination models.\/}
+Consider the two-equation model
+\begin{eqnarray*}
+    y_{t+1}   &=&  x_t + \lambda w_{t+1} \\
+    x_{t}     &=& \varphi x_{t-1} + \sigma w_{t}  ,
+\end{eqnarray*}
+where $w_t$ is our usual iid normal disturbance.
+The parameters are $\sigma>0$, $| \varphi| < 1$, and $\lambda$ (any sign).
+
+\begin{parts}
+\item Express $x$ as an infinite moving average; that is, an equation of the form
+\begin{eqnarray*}
+    x_t = \theta_0 w_t + \theta_1 w_{t-1} + \theta_2 w_{t-2} + \cdots .
+\end{eqnarray*}
+What are the moving average coefficients $\theta_j$?
+\item What is the acf of $x$?
+\item Now express $y$ as an infinite moving average.
+What are its moving average coefficients?
+\item What is the acf of $y$?  How does it depend on $\lambda$?
+\item What kind of ARMA model is $y$?
+\end{parts}
+
+\begin{solution}
+\begin{parts}
+\item Repeated substitution gives us 
+\begin{eqnarray*}
+    x_t &=& \sigma (w_t + \varphi w_{t-1} + \varphi^2 w_{t-2} + \cdots) .
+\end{eqnarray*}
+The coefficients are evidently $\theta_j = \sigma \varphi^j$.  
+\item The variance of $x_t$ (the variance of its stationary distribution)
+is the sum of the squared MA coefficients:
+\begin{eqnarray*}
+    \mbox{Var}(x_t) &=& \sigma^2 /(1-\varphi^2) .
+\end{eqnarray*}
+The autocovariances are 
+\begin{eqnarray*}
+    \mbox{Cov}(x_t,x_{t-k}) &=& \sigma^2 \varphi^k /(1-\varphi^2) ,
+\end{eqnarray*}
+which makes the autocorrelation function 
+\begin{eqnarray*}
+    \rho(k) &=& \varphi^k 
+\end{eqnarray*}
+for integers $k \geq 0$. 
+
+\item Here we have 
+\begin{eqnarray*}
+    y_{t+1} &=& \lambda w_{t+1} + \sigma (w_t + \varphi w_{t-1} + \varphi^2 w_{t-2} + \cdots) .
+\end{eqnarray*}
+
+\item [(d,e)] This is another ARMA(1,1), see the previous question.  
+
+\end{parts}
+\end{solution}
+
+%-----------------------------------------------------------------------
+\question {\it Dynamics of US interest rates.\/}
+We'll look at the autocorrelations of interest rates to get a sense
+of their dynamics.
+The first step is to download some data from the Fed.
+Go to
+
+\url{http://www.federalreserve.gov/releases/h15/data.htm}
+
+and download monthly data for Treasury constant maturities,
+specifically the 3-month and 10-year maturities,
+for the period 1985 to present.
+%Once you have the numbers, read them into Matlab.
+The second step is to download the function
+{\tt acf.m} posted on the course website:
+
+\url{http://pages.stern.nyu.edu/~dbackus/233/acf.m}.
+
+It's my program, not part of Matlab.
+You need to save it in whatever Matlab thinks is the current working directory.
+The command {\tt acf(x,n)} computes the first {\tt n} terms of
+the sample acf of the vector of data {\tt x}.
+To see how it works, look at
+
+\url{http://pages.stern.nyu.edu/~dbackus/233/business_cycles.m}.
+
+Once you've done all this:
+%
+\begin{parts}
+\item Compute the mean, standard deviation,
+and autocorrelation function (acf) for the 3-month
+interest rate for lags $k$ from 0 to 24 months.
+
+\item Graph the acf.
+
+\item Describe the acf for the AR(1):
+\begin{eqnarray*}
+    x_t &=&  \varphi x_{t-1} + \sigma w_t ,
+\end{eqnarray*}
+where $ \{ w_t \}$ is a sequence of standard normal random variables.
+How does the sample acf compare to the acf of a suitably chosen AR(1)?
+
+\item Compute the mean, standard deviation,
+autocorrelation function for the 10-year interest rate.
+How do they compare to those of the 3-month rate?
+\end{parts}
+
+\begin{solution}
+\begin{enumerate}
+\item [(a,c,d)]
+I didn't get a chance to update this.  Last spring, the relevant statistics were 
+
+\begin{center}
+\begin{tabular}{lccc}
+\toprule
+        &  Mean & Std Dev & Autocorr \\
+\midrule
+3-month  &   4.00 & 2.52 & 0.989  \\
+10-year  &   5.79 & 2.17 & 0.978  \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+They reflect some standard features of interest rates, including:
+(i)~rates increase with maturity, on average;
+(ii)~standard deviations decline with maturity;
+and (iii)~all of them are very persistent.
+Which is the point of the exercise.
+
+%We can see more of the autocorrelation functions in the Matlab figure
+%(run the code to see it).
+
+\item[(b)] With an AR(1), the autocorrelation has the form
+$\rho(k) = \varphi^k$:  it declines geometrically.
+If we set $\varphi = \rho(1)$, we can compute
+estimated acf's corresponding to AR(1)s.
+They're plotted as the dashed lines above.
+You can see they're somewhat different from the AR(1).
+Whether this represents sampling variability of some more
+basic difference between the data and the AR(1) model isn't clear.
+\end{enumerate}
+\end{solution}
+
+\end{questions}
+
+\vfill \centerline{\it \copyright \ \number\year \
+NYU Stern School of Business}
+
+\end{document}
+

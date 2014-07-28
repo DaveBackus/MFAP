@@ -1,0 +1,74 @@
+\documentclass[11pt]{article}
+
+\oddsidemargin=0.25truein \evensidemargin=0.25truein
+\topmargin=-0.5truein \textwidth=6.0truein \textheight=8.75truein
+
+\usepackage{comment}
+\usepackage{booktabs}
+\usepackage{hyperref}
+\urlstyle{rm}   % change fonts for url's (from Chad Jones)
+\hypersetup{
+    colorlinks=true,        % kills boxes
+    allcolors=blue,
+    pdfsubject={ECON-UB233, Macroeconomic foundations for asset pricing},
+    pdfauthor={Dave Backus @ NYU},
+    pdfstartview={FitH},
+    pdfpagemode={UseNone},
+%    pdfnewwindow=true,      % links in new window
+%    linkcolor=blue,         % color of internal links
+%    citecolor=blue,         % color of links to bibliography
+%    filecolor=blue,         % color of file links
+%    urlcolor=blue           % color of external links
+% see:  http://www.tug.org/applications/hyperref/manual.html
+}
+
+\usepackage{verbatim}
+%\usepackage{booktabs}
+\usepackage[small]{titlesec}
+
+\renewcommand{\thefootnote}{\fnsymbol{footnote}}
+
+% document starts here
+\begin{document}
+\parskip=\bigskipamount
+\parindent=0.0in
+\thispagestyle{empty}
+{\large ECON-UB 233 \hfill Dave Backus @ NYU}
+
+\bigskip\bigskip
+\centerline{\Large \bf Guide to Notation}
+\centerline{Revised: \today}
+
+\bigskip
+\begin{center}
+%\tabcolsep=2.25em
+\begin{tabular}{ll}
+\toprule
+Object    &  Definition    \\
+\midrule
+\multicolumn{2}{l}{\it Random variables}   \\
+$z$ & state \\
+$p(z)$ \hspace*{5em} & probability of state $z$\\
+$x(z)$ & random variable's value in state $z$ \\
+$E$ & expectation:  $E[f(x)] = \sum_x f(x) p(x) \mbox{ or } \int f(x) p(x) dx $ \\ %or the equivalent\\
+$\mu_j^\prime$ & raw moment: $ E(x^j)$ \\
+$\mu_j$         & central moment: $ E[(x-\mu_1^\prime)^j]$ \\
+$h$         &  moment generating function:  $h(s) = E(e^{sx})$ \\
+$k$         &  cumulant generating function:  $k(s) = \log h(s) $ \\
+$\kappa_j$      & cumulant:  $j$th derivative of $k$ at $s=0$ \\
+
+$\gamma_1$ & skewness:  $\kappa_3 /(\kappa_2)^{3/2} = \mu_3 /(\mu_2)^{3/2}$ \\
+$\gamma_2$ & excess kurtosis:  $\kappa_3 /(\kappa_2)^{2} = \mu_4 /(\mu_2)^{2} - 3$ \\
+
+\multicolumn{2}{l}{\it Risk and risk aversion}   \\
+$\alpha$    &  risk aversion parameter \\
+$c$         & consumption \\
+$U$         & overall utility \\
+$u$         & utility in each state:  $ U = E [u(c)] $ \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\vfill \centerline{\it \copyright \ \number\year \
+NYU Stern School of Business}
+\end{document}

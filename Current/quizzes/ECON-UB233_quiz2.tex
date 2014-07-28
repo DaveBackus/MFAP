@@ -1,0 +1,266 @@
+\documentclass[11pt]{exam}
+
+\oddsidemargin=0.25truein \evensidemargin=0.25truein
+\topmargin=-0.5truein \textwidth=6.0truein \textheight=8.75truein
+
+%\RequirePackage{graphicx}
+\usepackage{verbatim}
+\usepackage{booktabs}
+\usepackage{comment}
+\usepackage{hyperref}
+\urlstyle{rm}   % change fonts for url's (from Chad Jones)
+\hypersetup{
+    colorlinks=true,        % kills boxes
+    allcolors=blue,
+    pdfsubject={ECON-UB233, Macroeconomic foundations for asset pricing},
+    pdfauthor={Dave Backus @ NYU},
+    pdfstartview={FitH},
+    pdfpagemode={UseNone},
+%    pdfnewwindow=true,      % links in new window
+%    linkcolor=blue,         % color of internal links
+%    citecolor=blue,         % color of links to bibliography
+%    filecolor=blue,         % color of file links
+%    urlcolor=blue           % color of external links
+% see:  http://www.tug.org/applications/hyperref/manual.html
+}
+
+\renewcommand{\thefootnote}{\fnsymbol{footnote}}
+\newcommand{\var}{\mbox{\it Var\/}}
+
+\printanswers
+
+% document starts here
+\begin{document}
+\parskip=\bigskipamount
+\parindent=0.0in
+\thispagestyle{empty}
+{\large ECON-UB 233 \hfill Dave Backus @ NYU}
+
+\bigskip\bigskip
+\centerline{\Large \bf Quiz \#2}
+\centerline{Revised: \today}
+
+\bigskip
+{\it Please write your name below.
+Then complete the exam in the space provided.
+There are THREE questions.
+You may refer to one page of notes:
+standard paper, both sides, any content you wish.}
+
+\bigskip
+\begin{flushleft}
+\rule{4in}{0.5pt} \\ (Name and signature)
+\end{flushleft}
+
+\begin{questions}
+%-----------------------------------------------------------------------
+\item covariances.
+Financial economist Scott Richard once said:
+``I learned two basic lessons about financial mathematics
+that I've always found useful.
+One is that risk premiums stem from the covariance, not the variance.
+The other is that it's the risk-neutral probabilities that matter.''
+\begin{parts}
+\item Explain his first lesson in terms we have used in class.
+\item Explain his second lesson. 
+\item In what sense are the two lessons in contradiction to each other?  
+\end{parts}
+
+\question {\it State prices and related objects (30 points).\/}
+Consider a world with two dates ($t=0$ and $t=1$)
+and two states at date $t=1$ ($z=1$ and $z=2$).
+The probabilities of the two states are $p(1) = 1/4$ and $p(2) = 3/4$.
+State prices are $Q(1) = 1/3$ and $Q(2) = 2/3$.
+%
+\begin{parts}
+\item What is the price of a one-period bond in this world?
+(5~points)
+\item What is the pricing kernel in each state?
+(5~points)
+\item If this were a representative agent economy,
+which state would be the good one for the agent?
+Why?
+(5~points)
+\item What are the risk-neutral probabilities?
+(5~points)
+\item What is the maximum Sharpe ratio these state prices can generate?
+(10~points)
+\end{parts}
+
+\begin{solution}
+\begin{parts}
+\item A bond consists of one unit of each Arrow security.
+Its price is $q^1 = Q(1) + Q(2) = 1$.
+\item The pricing kernel $m(z)$ is $ m(z) = Q(z)/p(z)$,
+which gives us $m(1) = 4/3$ and $m(2) = 8/9$.
+\item In the good state, the pricin kernel is low: payoffs
+have low value when consumption is high.
+Here that's state 2.
+\item The risk-neutral probabilities are
+$ p^*(z) = Q(z)/q^1 $,
+which gives us back the state prices in this case:
+$p^*(1) = 1/3$ and $p^*(2) = 2/3 $.
+\item The Hansen-Jagannathan bound gives us the maximum Sharpe ratio
+as the ratio of the standard deviation of the pricing kernel to its mean,
+the price of a (one-period) bond.
+Here the bond price is one, so all we need is the standard deviation.
+The usual calculations give us
+\begin{eqnarray*}
+    \mbox{Var}(m) &=& E(m^2) - E(m)^2
+            \;\;=\;\; 4/9 + 16/27 - 1 \;\;=\;\; 0.03704.
+\end{eqnarray*}
+The standard deviation is the square root,  $0.1925$,
+which is the largest Sharpe ratio possible in this world.
+
+\end{parts}
+\end{solution}
+
+%\pagebreak \phantom{xx} \pagebreak
+%-----------------------------------------------------------------------
+\question {\it Entropy with gamma risks (30 points).\/}
+Consider our usual representative agent economy with power utility
+and log consumption growth $ \log g = x$.
+The log pricing kernel is therefore $\log m(x) = \log \beta -\alpha x $.
+Log consumption growth $x$ has a gamma distribution with
+cgf $ k(s; x) = - \theta \log (1-s/\lambda) $
+and
+density function $p(x) = x^{\theta-1} e^{-\lambda x} [\lambda^\theta/\Gamma(\theta)] $.
+The parameters $(\lambda,\theta)$ are positive.
+
+You may recall from earlier work that $x$ has mean and variance
+\begin{eqnarray*}
+    \kappa_1 &=& \theta /\lambda \\
+    \kappa_2 &=& \theta /\lambda^2
+\end{eqnarray*}
+and skewness and excess kurtosis
+\begin{eqnarray*}
+    \gamma_1 &=& 2/\theta^{1/2} \\
+    \gamma_2 &=& 6/\theta .
+\end{eqnarray*}
+%
+\begin{parts}
+\item What is the cgf of the log pricing kernel?
+(10~points)
+\item What is the entropy of the pricing kernel?
+(10~points)
+\item How does entropy compare to a lognormal benchmark
+with the same mean and variance?
+(10~points)
+\end{parts}
+
+\begin{solution}
+\begin{parts}
+\item Since it's a linear transformation of $x$, we have
+\begin{eqnarray*}
+    k(s; \log m) &=& s \log \beta + k(-\alpha s; x)
+        \;\;=\;\; s \log \beta - \theta \log (1 + \alpha s/\lambda) .
+\end{eqnarray*}
+[Recall: if $y = a + bx$, then
+$E(e^{sy}) = e^{sa} E(e^{sbx}) $.]
+
+\item The term $ \log E(m) $ is just the cgf of $\log m$
+evaluated at $s = 1$, namely
+\begin{eqnarray*}
+    \log E(m) &=& \log E (e^{\log m})
+            \;\;=\;\; \log \beta - \theta \log (1+\alpha/\lambda) .
+\end{eqnarray*}
+The mean of $\log m$ is $ \log \beta - \alpha \theta/\lambda $.
+The difference is entropy:
+\begin{eqnarray*}
+    H(m) &=& \log E (m) - E (\log m)
+            \;\;=\;\; - \theta \log (1+\alpha/\lambda) + \alpha \theta/\lambda.
+\end{eqnarray*}
+
+\item In the lognormal case, entropy is the variance of $\log m$ over two,
+which here is $ \alpha^2 \theta /(2 \lambda^2)$.
+The expressions aren't particularly friendly,
+but if you do a Taylor series expansion of the previous
+expression, you find
+\begin{eqnarray*}
+    H(m) &=& - \theta \left[ (\alpha/\lambda) - (\alpha/\lambda)^2/2
+        + (\alpha/\lambda)^3/3! + \cdots \right]
+        + \alpha \theta/\lambda \\
+        &=& - \theta \left[ - (\alpha/\lambda)^2/2
+        + (\alpha/\lambda)^3/3! + \cdots \right] .
+\end{eqnarray*}
+So the variance term corresponds to the lognormal case,
+but we have other terms after that.
+\end{parts}
+% ?? Dmitry f(lambda) = log normal - gamma, positive...
+\end{solution}
+
+%\pagebreak \phantom{xx} \pagebreak
+%-----------------------------------------------------------------------
+\question {\it Option on mixture of exponentials (40 points).\/}
+Suppose the risk-neutral distribution of the future value of the underlying
+is a mixture of $x_1$ and $x_2$:
+\begin{eqnarray*}
+    s_{t+1} &=&
+        \left\{
+        \begin{array}{ll}
+            x_1 & \mbox{with probability } 1-\omega \\
+            x_2 & \mbox{with probability } \omega
+        \end{array}
+        \right.
+\end{eqnarray*}
+for some $\omega$ between zero and one.
+Each $x_j$ is exponential with density
+\begin{eqnarray*}
+    p(x_j) &=& \lambda_j \exp(-\lambda_j x_j)
+\end{eqnarray*}
+for $x_j \geq 0$ and $\lambda_j > 0$.
+Each $x_j$ has a mean of $1/\lambda_j$.
+
+\begin{parts}
+\item What is the no-arbitrage condition for this asset?
+(10~points)
+\item Consider a put option giving the owner the right to sell
+the asset for price $k$ at $t+1$.
+What cash flow is generated by this option?
+(10~points)
+\item Suppose $\omega = 0$.
+What is the option's value?
+(10~points)
+\item What is the option's value for some arbitrary value of $\omega$?
+(10~points)
+\end{parts}
+
+\begin{solution}
+\begin{parts}
+\item We have
+\begin{eqnarray*}
+    s_t &=& q^1_t E^* (s_{t+1}) \\
+            &=& q^1_t [(1-\omega) E^*(x_1) + \omega E^*(x_2)]
+            \;\;=\;\; q^1_t [(1-\omega)/\lambda_1 + \omega /\lambda_2] .
+\end{eqnarray*}
+\item The cash flow is (as usual) $ (k-s_{t+1})^+ $.
+\item If $\omega=0$ we can skip the second term.
+The put price is
+\begin{eqnarray*}
+    q^p_t &=& q^1_t E^* (k-s_{t+1})^+  \\
+            &=& q^1_t \int_{0}^{k} (k-x) \lambda_1 e^{-\lambda_1 x } dx
+            \;\;=\;\;  q^1_t \big[ k - ( 1-e^{-\lambda_1 k})/\lambda_1 \big] .
+\end{eqnarray*}
+\item Here we have, by the same logic,
+\begin{eqnarray*}
+    q^p_t &=& q^1_t \Big\{
+        (1-\omega) \big[ k - ( 1-e^{-\lambda_1 k})/\lambda_1 \big]
+        + \omega \big[ k - ( 1-e^{-\lambda_2 k})/\lambda_2 \big]
+        \Big\} .
+\end{eqnarray*}
+
+\end{parts}
+\end{solution}
+
+%\pagebreak %\phantom{xx} \pagebreak
+\end{questions}
+
+\phantom{xx}
+\vfill \centerline{\it \copyright \ \number\year \
+NYU Stern School of Business}
+\end{document}
+
+Option on $s^2$.
+
+
+

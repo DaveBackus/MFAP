@@ -1,0 +1,488 @@
+\documentclass[11pt]{article}
+
+\oddsidemargin=0.25truein \evensidemargin=0.25truein
+\topmargin=-0.5truein \textwidth=6.0truein \textheight=8.75truein
+
+%\usepackage{graphicx}
+\usepackage{verbatim}
+\usepackage{booktabs}
+\usepackage{comment}
+\usepackage[small, compact]{titlesec}
+
+\usepackage{hyperref}
+\urlstyle{rm}   % change fonts for url's (from Chad Jones)
+\hypersetup{
+    colorlinks=true,        % kills boxes
+    allcolors=blue,
+    pdfsubject={ECON-UB233, Macroeconomic foundations for asset pricing},
+    pdfauthor={Dave Backus @ NYU},
+    pdfstartview={FitH},
+    pdfpagemode={UseNone},
+%    pdfnewwindow=true,      % links in new window
+%    linkcolor=blue,         % color of internal links
+%    citecolor=blue,         % color of links to bibliography
+%    filecolor=blue,         % color of file links
+%    urlcolor=blue           % color of external links
+% see:  http://www.tug.org/applications/hyperref/manual.html
+}
+
+% list spacing
+\usepackage{enumitem}
+\setitemize{leftmargin=*, topsep=0pt}
+\setenumerate{leftmargin=*, topsep=0pt}
+
+\usepackage{needspace}
+% example:  \needspace{4\baselineskip} makes sure we have four lines available before pagebreak
+
+\renewcommand{\thefootnote}{\fnsymbol{footnote}}
+
+% document starts here
+\begin{document}
+\parskip=\bigskipamount
+\parindent=0.0in
+\thispagestyle{empty}
+{\large ECON-UB 233 \hfill Dave Backus @ NYU}
+
+\bigskip\bigskip
+\centerline{\Large \bf Forward-Looking Models}
+\centerline{Revised: \today}
+
+\bigskip
+Lots of things in economics and finance are forward-looking:
+decisions made now depend on things we expect to happen in the future.
+%Education is a classic example:  you're investing in skills you expect to have
+%value in the future.
+We'll take what we might call a classical approach to this issue,
+illustrating in one-dimensional linear models how expectations of
+the future affect the present.
+%The core example is hyperinflation, but the idea is a general one.
+This builds on work done in the 1970s by lots of people,
+Tom Sargent and Neil Wallace among them.
+In one respect, it's a step backwards for us:  we'll focus on the conditional mean
+and ignore risk.
+No need to panic, we'll bring back risk in the next chapter.
+
+Our leading example here is inflation.
+It's an introduction of sorts to bond yields.
+Since bonds are claims to money in the future,
+the inflation rate is a central component.
+
+
+\section{Hyperinflation and the quantity theory}
+
+{\it Hyperinflation\/} is the term we use for high rates of inflation:
+over one hundred percent a year.
+There have been many examples of inflation rates above a thousand percent.
+See, for example, the
+\href{http://en.wikipedia.org/wiki/Hyperinflation}{Wikipedia entry}.
+
+So where do hyperinflations come from?
+As economists, we're incredibly pleased with ourselves that we figured this one out.
+Tom Sargent put it this way in an interview:
+\begin{quote}
+%I wrote a paper a long time ago about how to start and stop a hyperinflation
+The way to start a hyperinflation is run sustained government deficits and then have the monetary authority print money to pay for it.  That always works.  How do you stop a hyperinflation?  You stop doing it.  This isn't high economic theory.
+\end{quote}
+You can find the whole interview
+\href{http://youtu.be/bVIOClT4Rws}{here}.
+The comments about hyperinflation come at 23:40.
+
+The ``print money'' step of this process is often interpreted with the
+{\it quantity theory of money\/}:
+\begin{eqnarray*}
+    M V &=& P Y .
+\end{eqnarray*}
+Here $M$ is the quantity of money (currency, for example) in circulation,
+$V$ is ``velocity'' (more shortly),
+$P$ is the price level, and $Y$ is GDP.
+This is a description of how money is used to make transactions.
+The dollar value of transactions is $PY$, the product of the price and the quantity.
+Velocity $V$ is a measure of how quickly a unit of  money is reused in another transaction.
+In a hyperinflation, rapid growth in money is associated
+with rapid growth in prices --- inflation, in other words.
+
+This theory works reasonably well in the sense that we always see high money growth in periods
+of high inflation.
+We also see government deficits, as Sargent suggested.
+In these respects the theory works pretty well.
+But it misses on the timing at both the start and the end.
+Often hyperinflations break out before money growth picks up,
+and they end before money growth stops.
+The question is why.
+
+
+\section{Digression:  the law of iterated expectations}
+
+Consider a stochastic process $x$ that evolves somehow over time.
+What is the expectation of $x_{t+k}$ conditional on whatever we know at date $t$?
+If $I_t$ is the information available at date $t$, we might write
+\begin{eqnarray*}
+    E_t (x_{t+k}) &=&  E \left( x_{t+k} | I_t \right) .
+\end{eqnarray*}
+The left side here is shorthand notation for the right side.
+In a Markovian environment with state $z_t$, we can replace $I_t$ with $z_t$.
+
+The {\it law of iterated expectations\/} says that we can compute this one period at
+a time.
+If $k=2$, we have
+\begin{eqnarray*}
+    E_t (x_{t+2}) &=&  E_t \big[ E_{t+1} (x_{t+2} ) \big].
+\end{eqnarray*}
+And so on for longer time horizons $k$.
+[Write this out to make sure you're following.]
+
+{\it Example.\/}
+Let's see how this works for an AR(1):
+\begin{eqnarray*}
+    x_{t+1} &=& \varphi x_t + \sigma w_{t+1} ,
+\end{eqnarray*}
+where $\{ w_t \}$ is (as usual) a sequence of iid standard normal random variables.
+Here
+\begin{eqnarray*}
+    E_{t+1} (x_{t+2}) &=&  \varphi x_{t+1} ,
+\end{eqnarray*}
+so
+\begin{eqnarray*}
+    E_{t} (x_{t+2}) &=&  E_t \big[ E_{t+1} (x_{t+2})\big]
+        \;\;=\;\; E_t (\varphi x_{t+1})
+        \;\;=\;\; \varphi^2 x_{t} .
+\end{eqnarray*}
+You get the idea.  We do this one period at a time, but end up with the same
+answer we had before.
+
+
+
+\section{Forward-looking models}
+
+Now let's think about forward-looking models.
+There are lots of things in economics in which current decisions are based on
+what people expect to happen in the future:
+consumption (what is future income?), investment (what is future demand for my product?
+what are future tax rates?),
+asset valuation (what are future cash flows?), and so on.
+
+A canonical version looks like this:
+\begin{eqnarray}
+    y_t &=& \lambda E_t y_{t+1} + x_t .
+    \label{eq:canonical}
+\end{eqnarray}
+This idea here is that $y_t$ depends on the variable $x_t$,
+and also on the expectation of itself at $t+1$.
+That leads to the question: What drives $y_t$?
+Is it $x_t$ or the expectation $E_t y_{t+1}$?
+%If the latter, don't we get into an infinite loop?
+
+{\it Example.\/}
+Here's an example that shows up in finance classes: equity as a claim to future dividends.
+Suppose the price of equity is
+\begin{eqnarray*}
+    q_t = \delta (d_t + E_t q_{t+1} ) .
+\end{eqnarray*}
+Here $\delta$ is the discount factor we apply to future cash flows,
+something you might write $1/(1+i)$ in a finance or accounting class.
+So we see that today's stock price depends on dividends, but also
+on what we expect the stock price to be next period.
+So we wonder:  Is the price is high today because we expect it to be high tomorrow?
+How do we get out of this circular reasoning?
+
+
+Let's go back to our canonical example.
+In the deterministic version, with no uncertainty,
+equation (\ref{eq:canonical}) becomes
+\begin{eqnarray*}
+    y_t &=&  \lambda y_{t+1} + x_{t} .
+\end{eqnarray*}
+If we substitute, we get
+\begin{eqnarray*}
+    y_t &=&  x_t + \lambda x_{t+1} + \lambda^2 y_{t+2}  \\
+        &=&  x_t + \lambda x_{t+1} + \cdots \lambda^k x_{t+k} + \lambda^{k+1} y_{t+k+1} .
+\end{eqnarray*}
+If $|\lambda | < 1$ and $y$ doesn't explode somehow (we're glossing over some technical details here),
+then we have
+\begin{eqnarray*}
+    y_t &=&  \sum_{j=0}^\infty \lambda^j x_{t+j} .
+\end{eqnarray*}
+That is:  $y_t$ depends on the current and future values of $x_t$.
+That's the sense in which this is a forward-looking model.
+
+In the stochastic version, the same logic (repeated substitution)
+plus the law of iterated expectations gives us
+\begin{eqnarray}
+    y_t &=&  \sum_{j=0}^\infty \lambda^j E_t (x_{t+j}) .
+    \label{eq:canonical-solution}
+\end{eqnarray}
+Thus we have connected the price to expectations of future dividends,
+discounted back to the present.
+We might say that the variable $y$ responds to changes in expected fundamentals $x$.
+
+
+{\it Example.\/}
+With some structure on $x$, we can be more specific.
+Suppose, for example, that $x$ is AR(1):
+$ x_{t+1} = \varphi x_t + \sigma w_{t+1}$.
+Then $ E_t (x_{t+j}) = \varphi^j x_t $ and
+\begin{eqnarray*}
+    y_t &=&  \sum_{j=0}^\infty \lambda^j \varphi^j x_t
+            \;\;=\;\; x_t /(1- \lambda \varphi).
+\end{eqnarray*}
+This works as long as $ |\lambda \varphi | < 1$.
+
+There's a more direct route that you might have run across in
+a differential equations course:  the {\it method of undetermined coefficients\/}.
+Continuing with the same example,
+we guess a linear solution:  $ y_t = a x_t$ for some parameter $a$ to be determined.
+Then (\ref{eq:canonical}) becomes
+\begin{eqnarray*}
+    a x_t &=& \lambda a (\varphi x_t) + x_t .
+\end{eqnarray*}
+Since this holds for all $x_t$, we must have
+$ a = \lambda \varphi a + 1 $ or $ a = 1/(1-\lambda \varphi)$.
+This works, but since it shortcuts the infinite sum it doesn't remind
+us that we need $ |\lambda \varphi | < 1 $.
+
+
+
+\section{Hyperinflation revisited}
+
+So what does this have to do with hyperinflation?
+There's a more sophisticated version of the quantity theory in which
+velocity varies with the expected inflation rate.
+In logs, the quantity theory is
+\begin{eqnarray*}
+    m_t + v_t &=& p_t + y_t .
+\end{eqnarray*}
+Now add velocity:
+\begin{eqnarray*}
+    v_t &=& \alpha (E_t p_{t+1} - p_t )
+\end{eqnarray*}
+for some $\alpha > 0$.
+Here we see that as expected inflation rises,
+velocity rises, too.
+The idea is that money loses value through inflation.
+At faster rates of inflation people work harder to get rid of money,
+which raises velocity.
+
+Putting these two pieces together, we have
+\begin{eqnarray*}
+    m_t + \alpha (E_t p_{t+1} - p_t ) &=& p_t + y_t
+\end{eqnarray*}
+or
+\begin{eqnarray*}
+    p_t  &=& [\alpha/(1+\alpha)] E_t (p_{t+1})  + (1+\alpha)^{-1} (m_t- y_t).
+\end{eqnarray*}
+This has the same form as (\ref{eq:canonical}),
+so we can apply the solution (\ref{eq:canonical-solution}).
+As a result, the price level $p$ depends not only on the current money
+supply, it also depends on expectations of the future money supply.
+Anything that changes expectations of future $m$ will change current $p$.
+This line of reasoning offers hope, and perhaps more,
+of fixing up the timing problems noted earlier.
+
+\section{The Taylor rule}
+
+
+**** ??
+
+
+\section{Bubbles}
+
+We've noted that Shiller often sees bubbles in asset markets,
+while Fama says he doesn't know what a bubble is.
+Oddly enough, both make useful points.
+The term bubble is often used to describe a market in which prices
+seem to have lost connection to ``fundamentals.''
+We might think that equity prices, for example, should be connected to dividends.
+Shiller argues that the loose connection between the two suggests we need another model,
+perhaps one in which investors are ``irrational,''
+or even a ``bubble.''
+%To be sure, a lot of what we observe in equity prices remains mysterious.
+Fama argues instead that the term bubble is typically used to mean ``we don't know,''
+which is hardly a theory of anything.
+
+Whether any particular situation is a bubble is hard to say,
+but we do have mathematical theories in which the behavior of asset prices is
+disconnected from fundamentals.
+The most popular version gives us solutions to (\ref{eq:canonical})
+other than (\ref{eq:canonical-solution}).
+The idea?
+Solving a difference equation like (\ref{eq:canonical}) is analogous to solving a differential
+equation, where we have a constant of integration to think about.
+
+Here's how that works.
+We add a term $c \lambda^{-t}$ to the solution, turning (\ref{eq:canonical-solution}) into
+\begin{eqnarray*}
+    y_t &=&  \sum_{j=0}^\infty \lambda^j E_t (x_{t+j}) + c \lambda^{-t}
+\end{eqnarray*}
+for some constant $c$.
+Does this satisfy (\ref{eq:canonical})?
+We have
+\begin{eqnarray*}
+    y_{t+1} &=& \sum_{j=0}^\infty \lambda^{j} E_{t+1} (x_{t+j+1}) + c \lambda^{-(t+1)} \\
+    \lambda E_t(y_{t+1})
+        &=& \sum_{j=0}^\infty \lambda^{j+1} E_t (x_{t+j+1}) + c \lambda^{-t}
+        \;\;=\;\; \sum_{j=1}^\infty \lambda^{j} E_t (x_{t+j}) + c \lambda^{-t} .
+\end{eqnarray*}
+Subtracting this from $y_t$ gives us zero, so our new solution satisfies
+(\ref{eq:canonical}) for any constant $c$.
+
+How does this new solution behave?  The term $c \lambda^{-t}$ tends to grow,
+since $ |\lambda| < 1$.  The traditional approach is to set $c=0$, since
+any other solution blows up.
+Since we don't see asset prices growing forever, or turning negative,
+that seems persuasive.
+
+But here's a variant that avoids this problem.
+Consider the term $c_t \lambda^{-t}$.
+The same logic as before tells us that this satisfies (\ref{eq:canonical})
+as long as
+\begin{eqnarray*}
+    E_t (c_{t+1} \lambda^{-t}) &=& c_{t} \lambda^{-t} .
+\end{eqnarray*}
+This is true if
+\begin{eqnarray*}
+    E_t (c_{t+1}) &=& c_t .
+\end{eqnarray*}
+This condition defines $c_t$ as a {\it martingale\/}:  a stochastic process
+whose conditional mean is its current value.
+
+Here's an example.  Suppose
+\begin{eqnarray*}
+    c_{t+1} &=&
+            \left\{
+            \begin{array}{ll}
+            \lambda^{-1} c_t & \mbox{with probability } \lambda \\
+            0       &  \mbox{with probability } 1-\lambda .
+            \end{array}
+            \right.
+\end{eqnarray*}
+It should be clear that this is a martingale.
+This is like the previous example, in which prices rise at rate $1/\lambda$.
+But eventually the bubble pops, as the term goes to zero.
+[Graph this term over time.]
+
+
+[This section is adapted from Tom Sargent's
+\href{https://files.nyu.edu/ts43/public/teaching/NYU_course_all_2011.pdf}{course notes},
+pages 27-29 and 55-58.]
+
+
+\section*{Bottom line}
+
+Solutions to forward-looking models connect current decisions
+to the expected future values of fundamentals.
+Bubbles add an extra term to these solutions.
+
+
+\section*{Practice problems}
+
+\begin{enumerate}
+\item {\it Ex-dividend stock prices.\/}
+Suppose stock prices are ex-dividend, so that
+\begin{eqnarray*}
+    q_t = \delta E_t (d_{t+1} + q_{t+1}) .
+\end{eqnarray*}
+What is the forward-looking solution for $q_t$?
+%
+\needspace{2\baselineskip}
+Answer. The same logic we used earlier gives us
+\begin{eqnarray*}
+    q_t &=&  \sum_{j=1}^\infty \delta^j E_t (d_{t+j}) .
+\end{eqnarray*}
+That is:  we start the sum at $j=1$ rather than $j=0$.
+
+\item {\it ARMA(1,1) fundamentals.\/}
+Suppose, in our canonical model (ref{eq:canonical}), that
+$x_t$ is ARMA(1,1):
+\begin{eqnarray*}
+    x_{t+1} &=& \varphi x_t + w_{t+1} + \theta w_t ,
+\end{eqnarray*}
+with $| \varphi| < 1$ and $\{ w_t \}$ the usual sequence of independent
+standard normals.
+What is the solution?
+%
+\needspace{2\baselineskip}
+Answer.
+The simplest approach is to use the method of undetermined coefficients.
+The state here is $z_t = (x_t, w_t)$.
+We guess a solution of the form
+$ y_t = a x_t + b w_t $.
+Since $ E_t (x_{t+1}) = \varphi x_t + \theta w_t $,
+we have
+\begin{eqnarray*}
+    E_t (y_{t+1}) &=& a (\varphi x_t + \theta w_t )
+\end{eqnarray*}
+Equation (\ref{eq:canonical}) then implies
+\begin{eqnarray*}
+    \varphi x_t + \theta w_t &=& \lambda a (\varphi x_t + \theta w_t ) + x_t .
+\end{eqnarray*}
+Lining up terms gives us $a = 1/(1-\lambda\varphi)$ and
+$b = \lambda a \theta = \lambda \theta /(1-\lambda\varphi)$.
+
+
+%-----------------------------------------------------------------------
+\item  {\it Inflation and government deficits.\/}
+Here's a variant of our forward-looking inflation model.
+We have, as usual, the quantity theory plus a velocity equation:
+\begin{eqnarray*}
+    m_t + v_t &=& p_t + y_t \\
+    v_t &=& \alpha \left( E_t p_{t+1} - p_t \right) .
+\end{eqnarray*}
+Then we set $y_t = 0$ (to keep things simple) and connect the money supply $m_t$
+to the government deficit $d_t$:
+\begin{eqnarray*}
+        m_{t} &=& \delta d_t \\
+        d_{t+1} &=& \varphi d_t + \sigma w_{t+1} .
+\end{eqnarray*}
+%
+\begin{enumerate}
+\item Express this model as a forward-looking difference equation in
+which the price level $p_t$ is a function of its expected future value
+and the deficit.
+\item How is the price level connected to the current deficit?
+\end{enumerate}
+%
+\needspace{2\baselineskip}
+Answer.
+\begin{enumerate}
+\item Substitutions give us
+\begin{eqnarray*}
+    p_t &=& [\alpha/(1+\alpha)] E_t p_{t+1} + [\delta/(1+\alpha)] d_t \\
+        &=& \lambda E_t p_{t+1} + \delta^\prime d_t ,
+\end{eqnarray*}
+where the second line is compact notation for the first.
+\item This has the usual forward-looking solution in which $p_t$
+is connected to expected future deficits.
+We could grind through this, but it's easier to use the method of undetermined
+coefficients.
+If we guess the solution has the form $ p_t = a d_t$ for some coefficient $a$ to be determined,
+then
+\begin{eqnarray*}
+    p_{t+1} &=& a d_{t+1} \;\;=\;\; a (\varphi d_t + \sigma w_{t+1}) \\
+   E_t (  p_{t+1})  &=&  a \varphi d_t .
+\end{eqnarray*}
+If we substitute into the difference equation above and collect coefficients
+of $d_t$, we get
+\begin{eqnarray*}
+    a &=& \frac{\delta'}{1-\lambda \varphi}  \;\;=\;\; \frac{\delta}{1+\alpha(1-\varphi)} .
+\end{eqnarray*}
+In words:  the impact of the current deficit on the price is larger if
+(i)~money is more strongly tied to deficits (large $\delta$),
+(ii)~deficits are more persistent (large $\varphi$),
+and (iii)~velocity is less sensitive to expected inflation (small $\alpha$).
+\end{enumerate}
+
+%\item {\it Taylor rule.\/}
+%%
+%\needspace{2\baselineskip}
+%Answer.
+
+\end{enumerate}
+
+
+\vfill \centerline{\it \copyright \ \number\year \ NYU Stern School of Business}
+
+
+
+\end{document}
+
+

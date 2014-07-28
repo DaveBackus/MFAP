@@ -1,0 +1,282 @@
+\documentclass[11pt]{exam}
+
+\oddsidemargin=0.25truein \evensidemargin=0.25truein
+\topmargin=-0.5truein \textwidth=6.0truein \textheight=8.75truein
+
+%\RequirePackage{graphicx}
+\usepackage{comment}
+\usepackage{verbatim}
+\usepackage{booktabs}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\urlstyle{rm}   % change fonts for url's (from Chad Jones)
+\hypersetup{
+    colorlinks=true,        % kills boxes
+    allcolors=blue,
+    pdfsubject={ECON-UB233, Macroeconomic foundations for asset pricing},
+    pdfauthor={Dave Backus @ NYU},
+    pdfstartview={FitH},
+    pdfpagemode={UseNone},
+%    pdfnewwindow=true,      % links in new window
+%    linkcolor=blue,         % color of internal links
+%    citecolor=blue,         % color of links to bibliography
+%    filecolor=blue,         % color of file links
+%    urlcolor=blue           % color of external links
+% see:  http://www.tug.org/applications/hyperref/manual.html
+}
+
+\renewcommand{\thefootnote}{\fnsymbol{footnote}}
+\newcommand{\var}{\mbox{\it Var\/}}
+
+\printanswers
+
+% document starts here
+\begin{document}
+\parskip=\bigskipamount
+\parindent=0.0in
+\thispagestyle{empty}
+{\large ECON-UB 233 \hfill Dave Backus @ NYU}
+
+\bigskip\bigskip
+\centerline{\Large \bf Lab Report \#6: Sums \& Mixtures}
+\centerline{(Started: March 26, 2012; Revised: \today)}
+
+\bigskip
+{\it Due at the start of class.
+You may speak to others, but whatever you hand in should be your own work.}
+
+\bigskip
+We'll look at a Bernoulli mixture and show that it
+can generate signficant departures from the lognormal model
+and the Black-Scholes-Merton formula.
+The good news is that it's simpler than the Poisson mixture.
+The bad news is that it doesn't scale easily
+to different time intervals, so we'll stick with a time interval of one year.
+
+\begin{questions}
+
+\begin{solution}
+Answers follow.  See Matlab code at the end for calculations.
+\end{solution}
+
+%-----------------------------------------------------------------------
+\question (sums and mixtures)
+Let us say that the log-price of the underlying has two components:
+\begin{eqnarray*}
+    \log s_{t+1} &=& y_{t+1} \;\;=\;\; x_{1t+1} + x_{2t+1},
+\end{eqnarray*}
+with $( x_{1t+1}, x_{2t+1})$ independent.
+The first component is normal:
+$ x_{1t+1} \sim \mathcal{N}(\mu,\sigma^2)$.
+The second component, the ``jump,'' is a mixture:
+with probability $1-\omega$, $ x_{2t+1} = 0$,
+and with probability $\omega$,
+$ x_{2t+1} \sim \mathcal{N}(\theta,\delta^2)$.
+
+With these inputs, the pdf for $y$ is a weighted average of normals:
+\begin{eqnarray}
+    p(y) &=& (1-\omega) \cdot ( 2 \pi \sigma^2)^{-1/2} \exp[ - (y-\mu)^2/2\sigma^2]
+            \nonumber \\
+    && + \; \omega \cdot [ 2 \pi (\sigma^2+\delta^2)]^{-1/2}
+            \exp[ - [y-(\mu+\theta)]^2/2(\sigma^2 + \delta^2)] .
+            \label{eq:bernoulli-mixture}
+\end{eqnarray}
+If $\omega = 0$, the second component drops out.
+Otherwise, we have a weighted average of two normal densities.
+
+\begin{parts}
+\part Show that the cumulant generating function for $x_{1t+1}$ is
+\begin{eqnarray*}
+    k (s; x_1) &=&  \mu s + \sigma^2 s^2 / 2 .
+\end{eqnarray*}
+
+\part Show that the cumulant generating function for $x_{2t+1}$ is
+\begin{eqnarray*}
+    k (s; x_2) &=& \log \left[ (1-\omega) + \omega e^{ \theta s + \delta^2 s^2 / 2 }
+            \right] .
+\end{eqnarray*}
+\part What is the cgf for $y_{t+1}$?
+What are its mean, variance, skewness, and excess kurtosis?
+What parameters determine the sign of skewness?
+
+\part Suppose we started with (\ref{eq:bernoulli-mixture}).
+How do we know it integrates to one?
+What is its cgf?
+\end{parts}
+
+\begin{solution}
+The overall idea here is that this construction
+can give us useful departures from a normal distribution.
+Details follow from applying the usual methods.
+\begin{parts}
+\part  The usual normal cgf.
+\part This is a Bernoulli mixture with one twist:
+the ``$\omega$ branch'' has a normal mgf in it.
+If $\delta = 0$, it's just like the Bernoulli we looked at in
+Lab Report \#1.
+Otherwise, we get some additional terms.
+
+\part The cgf of the sum is the sum of the cgfs:
+\begin{eqnarray*}
+        k (s; y) &=& k (s; x_1) + k (s; x_2) \\
+             &=& ( \mu s + \sigma^2 s^2 / 2 ) +
+              \log \left[ (1-\omega) + \omega e^{ \theta s + \delta^2 s^2 / 2 }
+            \right] .
+\end{eqnarray*}
+We find it cumulants from derivatives, which are conveniently
+computed by Matlab.
+The mean and variance are
+\begin{eqnarray*}
+    \kappa_1 &=& \mu + \omega \theta \\
+    \kappa_2 &=& \sigma^2 + \omega (1-\omega) \theta^2 + \omega \delta^2 .
+\end{eqnarray*}
+Each has terms from each component.
+The third and fourth cumulants come only from $x_2$, because the normal
+component has zero cumulants beyond the first two.
+The third one is
+\begin{eqnarray*}
+    \kappa_3 &=& \omega (1-\omega) \theta [ 3 \delta^2 + (1-2\omega) \theta^2]  \\
+    \kappa_4 &=& \omega (1-\omega)
+        \{  \theta^4 [1 - 6 \omega(1-\omega)] + 3 \delta^4 + (1-2 \omega) 6 \delta^2 \theta^2
+        \}
+\end{eqnarray*}
+This is a bit of a mess, but for $\omega$ small,
+$\kappa_3$ depends on the sign of $\theta$
+and $\kappa_4 >0 $,
+so the mixture introduces skewness and excess kurtosis,
+both of which are absent from normal random variables.
+
+\part We know normal pfd's integrate to one.
+The is a weighted average of normal pdf's, so it must
+integrate to one as well.
+\end{parts}
+\end{solution}
+
+
+%-----------------------------------------------------------------------
+\question (Merton-like option pricing)
+With the same setup, we can illustrate the value of mixtures in
+generating nonnormal distributions and
+their impact on option prices and volatility smiles.
+
+\begin{parts}
+\part Risk-neutral asset pricing tells us, in general, that
+\begin{eqnarray*}
+    s_t &=& q^1_t E^* (s_{t+1} )
+            \;\;=\;\; q^1_t E^* \left( e^{y_{t+1}}\right)
+            \;\;=\;\; q^1_t  e^{k(1; y)}  .
+\end{eqnarray*}
+We refer to this as the no-arbitrage condition.
+What is the no-arbitrage condition for our example?
+
+We'll use this condition to set $\mu$:
+given values for everything else, we'll choose $\mu$ to satisfy this condition.
+
+\part Recall that if the risk-neutral distribution is
+ $\log s_{t+1} = y_{t+1} \sim \mathcal{N}(\kappa_1,\kappa_2)$,
+ then the put price at strike $k$ is
+\begin{eqnarray*}
+    f(k; \kappa_1, \kappa_2) &=& q^1_t k N(d) - q^1_t e^{\kappa_1 + \kappa_2/2}
+            N(d-\kappa_2^{1/2}) \\
+            d&=& (\log k - \kappa_1)/\kappa_2^{1/2} .
+\end{eqnarray*}
+(Note:  this isn't quite the usual $d$.)
+What is the call price?
+
+\part
+Use (b) to show that the put price in the mixture model is a weighted average:
+\begin{eqnarray*}
+    q^p_t &=& (1-\omega) \cdot f(k; \mu, \sigma^2) +
+        \omega \cdot f(k; \mu+\theta, \sigma^2 + \delta^2) .
+\end{eqnarray*}
+
+\part Consider these inputs:
+$\sigma = 0.04$, $\omega = 0.01$,
+$\theta = -0.3$, $\delta = 0.15$,
+$s_t = 100$, and $q^1_t = 1$.
+What is $\mu$?
+What are the prices of put options with strikes
+$ k = (80, 90, 100, 110, 120)$?
+(Use a finer grid if you have this automated.)
+What are the implied volatilities?
+
+\part What happens to the volatility smile when you set
+\begin{itemize}
+\item $\theta = 0$?
+\item $\theta = + 0.3$?
+\item $\delta = 0.25$?
+\end{itemize}
+Make sure you adjust $\mu$ in each case.
+\end{parts}
+
+\begin{solution}
+\begin{parts}
+\part The condition is
+\begin{eqnarray*}
+    s_t &=& q^1_t \exp( \mu + \sigma^2 / 2 )
+            \left[ (1-\omega) + \omega e^{ \theta + \delta^2 / 2 } \right] .
+\end{eqnarray*}
+It's not pretty, but given values of the other inputs we can use it to set $\mu$.
+
+\part This is a question of integrating over the distribution,
+as we did in class.
+We find the call price from put-call parity.
+
+\part If the pdf is a sum, then when we integrate we can integrate
+over each term separately:  the integral of a sum is the sum of the integrals.
+Each integral gives us a BSM-like formula, but with different mean and variance.
+The put price is the weighted average of the two formulas, as stated.
+
+\part Now we can put all this to work.
+With these inputs, the arbitrage condition gives us $ \mu = 4.6069$.
+The put prices are (I chose a slightly different range):
+
+\begin{center}
+\tabcolsep=0.15in
+\begin{tabular}{rr}
+\toprule
+Strike    &  Put Price  \\
+\midrule
+  90   & 0.1606   \\
+   94  &  0.2806  \\
+   98  &  0.9285  \\
+  102  &  2.8801  \\
+  106  &  6.1523  \\
+  110  & 10.0147 \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+It may be asking too much to compute the implied vols, too,
+but they give us a clearer picture.
+The Matlab code is a little quirky, you need to play with the
+starting values to get it to work.
+But you'll find that there's a distinct downward slope to the smile.
+That disappears if we set $\theta = 0$, since $\theta$ is the source
+of skewness in the model.
+Instead we get a u-shape.
+When we increase $\delta$, the u is more pronounced.
+
+In short, the Bernoulli mixture is capable of giving us a wide range of shapes
+for the smile.
+
+\end{parts}
+\end{solution}
+
+\end{questions}
+
+\vfill \centerline{\it \copyright \ \number\year \
+NYU Stern School of Business}
+
+%\end{document}
+
+\pagebreak
+Matlab program:
+\verbatiminput{../Matlab/hw6_s12.m}
+
+\end{document}
+
+
+%  EXTRA STUFF
+
+

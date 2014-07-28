@@ -1,0 +1,264 @@
+\documentclass[11pt]{exam}
+
+\oddsidemargin=0.25truein \evensidemargin=0.25truein
+\topmargin=-0.5truein \textwidth=6.0truein \textheight=8.75truein
+
+%\RequirePackage{graphicx}
+\usepackage{verbatim}
+\usepackage{booktabs}
+\usepackage{comment}
+\usepackage{hyperref}
+\urlstyle{rm}   % change fonts for url's (from Chad Jones)
+\hypersetup{
+    colorlinks=true,        % kills boxes
+    allcolors=blue,
+    pdfsubject={ECON-UB233, Macroeconomic foundations for asset pricing},
+    pdfauthor={Dave Backus @ NYU},
+    pdfstartview={FitH},
+    pdfpagemode={UseNone},
+%    pdfnewwindow=true,      % links in new window
+%    linkcolor=blue,         % color of internal links
+%    citecolor=blue,         % color of links to bibliography
+%    filecolor=blue,         % color of file links
+%    urlcolor=blue           % color of external links
+% see:  http://www.tug.org/applications/hyperref/manual.html
+}
+
+\renewcommand{\thefootnote}{\fnsymbol{footnote}}
+\newcommand{\var}{\mbox{\it Var\/}}
+
+\printanswers
+
+% document starts here
+\begin{document}
+\parskip=\bigskipamount
+\parindent=0.0in
+\thispagestyle{empty}
+{\large ECON-UB 233 \hfill Dave Backus @ NYU}
+
+\bigskip\bigskip
+\centerline{\Large \bf Quiz \#2}
+\centerline{(Revised: \today)}
+
+\bigskip
+{\it Please write your name below.
+Then complete the exam in the space provided.
+There are THREE questions.
+You may refer to one page of notes:
+standard paper, both sides, any content you wish.}
+
+\bigskip
+\begin{flushleft}
+\rule{4in}{0.5pt} \\ (Name and signature)
+\end{flushleft}
+
+\begin{questions}
+%-----------------------------------------------------------------------
+\question {\it Approaches to asset pricing (40~points).\/}
+Consider a two-period representative agent economy.
+Consumption growth $g$ is Bernoulli:
+\begin{eqnarray*}
+    g &=&
+        \left\{
+        \begin{array}{lll}
+            1.00    &  \mbox{with probability } 1-\omega & \mbox{(state 1)} \\
+            1.10    &  \mbox{with probability } \omega   & \mbox{(state 2)}
+        \end{array}
+        \right.
+\end{eqnarray*}
+with $\omega = 1/2$.
+The representative agent has power utility with discount factor $\beta = 0.98$
+and risk aversion $\alpha = 5$.
+Equity is a claim to $g$.
+
+\begin{parts}
+\part What are the mean and standard deviation of $\log g$?
+(10~points)
+
+\part What are the state prices?
+Which state has greater value?  Why?
+(10~points)
+
+\part What are the price and return of a one-period riskfree bond?
+(10~points)
+
+\part What are the risk-neutral probabilities?
+How do they compare to the true probabilities?
+Why?
+(10~points)
+
+\end{parts}
+
+\begin{solution}
+\begin{parts}
+\part With $\omega = 1/2$, the mean and standard deviation are both 0.0477.
+The easiest way to get this is to write it in the form $\log g = \mu \pm \sigma$.  
+The Matlab code has a more direct calculation.  
+
+\part Here we need the pricing kernel:  $m(z) = \beta g(z)^{-\alpha} $.
+We get $ m(1) = 0.9800$ and $m(2) = 0.6085 $.
+State prices are therefore $Q(z) = p(z) m(z) $:
+$ Q(1) = 0.4900$ and $Q(2) = 0.3043$.
+Note that the pricing kernel is lower in state 2:
+in the good state, marginal utility is lower ---
+you'd pay less for an extra unit of the consumption good when consumption is high.
+That carries over to state prices because the probabilities
+are the same in the two states.
+So the reason the price of state 2 is lower is that the good is less valuable in the good state.
+
+\part The price of a one-period bond is
+\begin{eqnarray*}
+    q^1 &=& \sum p(z) m(z) \;\;=\;\; 0.7943,
+\end{eqnarray*}
+which implies $r^1 = 1/q^1 = 1.2590$.
+
+\part Risk-neutral probabilities are defined by $ p^*(z) = p(z)m(z)/q^1 = Q(z)/q^1$.
+Here we have $p^*(1) = 0.6169$ and $p^*(2) = 0.3831$.
+Why?  Same answer as before:
+the state price is lower in the good state.
+\end{parts}
+Matlab program:
+\verbatiminput{../Matlab/quiz2_s13.m}
+\end{solution}
+
+%\pagebreak \phantom{xx} \pagebreak
+%-----------------------------------------------------------------------
+\question {\it The high-return asset (10~points).\/}
+Consider a similar representative agent economy.
+Log consumption growth $\log g$ is normal with mean $\kappa_1$
+and variance $\kappa_2$.
+The representative agent has power utility with $\beta =1$ and $\alpha=10$.
+Equity is a claim to $g^\lambda$.
+
+\begin{parts}
+\part What is the price of a claim to equity?  What is the expected return?
+(10~points)
+\part Denote the expected log return on equity by $ E\log r^e$.
+For what value of $\lambda$ is this return highest?
+(10~points)
+\part What is the entropy of the pricing kernel in this economy?
+(10~points)
+\end{parts}
+
+\begin{solution}
+\begin{parts}
+\part This has several steps, all use the familiar expectation of lognormal
+random variables.
+The equity price solves
+$q^e = E(mg) = E (\beta g^{-\alpha}g^{\lambda}) = E (\beta g^{\lambda-\alpha})$.
+With $\beta = 1$, we have
+\begin{eqnarray*}
+    (\lambda-\alpha) \log g &\sim& \mathcal{N}[(\lambda-\alpha)\kappa_1,
+        (\lambda-\alpha)^2 \kappa_2 ] ,
+\end{eqnarray*}
+so
+\begin{eqnarray*}
+    \log q^e &=& (\lambda-\alpha)\kappa_1 + (\lambda-\alpha)^2 \kappa_2/2 .
+\end{eqnarray*}
+The expected return in levels is
+\begin{eqnarray*}
+    E(r^e) &=& E (g^\lambda)/q^e \;\;=\;\;
+        \exp[ \alpha \kappa_1 + \alpha (2 \lambda-\alpha) \kappa_2/2 .
+\end{eqnarray*}
+The expected return in logs is
+\begin{eqnarray*}
+    E(\log r^e) &=& E (\lambda \log g) - \log q^e
+            \;\;=\;\; \alpha \kappa_1 - (\lambda-\alpha)^2 \kappa_2/2 .
+\end{eqnarray*}
+Either answer is ok.
+
+\part See above.  You can see from the last term that the maximum value is
+when $\lambda = \alpha = 10$.
+You may recall that the ``high-return asset'' defined this way is $-\log m$,
+which is what we have here.
+
+\end{parts}
+\end{solution}
+
+
+%\pagebreak \phantom{xx} \pagebreak
+%-----------------------------------------------------------------------
+\question {\it Digital options (30 points).\/}
+A digital or binary option either pays some fixed amount or not.
+Consider, for example, a digital option on the underlying $s_{t+1}$.
+A digital call with strike $k$ pays 100 if $s_{t+1} > k$.
+A digital put with strike $k$ pays 100 if $s_{t+1} \leq k$.
+
+Such options can be attacked using the same methods we've used
+to price traditional options.
+Suppose $\log s_{t+1}$ has a normal risk-neutral distribution
+with mean $\kappa_1$ and variance $\kappa_2$.
+
+\begin{parts}
+\part What is the no-arbitrage condition for this situation?
+(10~points)
+\part What is the analog of put-call parity?
+(10~points)
+\part What is the price of a put with strike $k$?
+(10~points)
+\end{parts}
+
+\begin{solution}
+%\url{http://en.wikipedia.org/wiki/Binary_option}
+\begin{parts}
+\part This is the same as the one we used for BSM.
+The idea in general is that we must choose a risk-neutral distribution
+that's consistent with the current price of the asset.
+In this case we have
+\begin{eqnarray*}
+    s_t &=& q^1_t E^* s_{t+1} \;\;=\;\; q^1_t e^{\kappa_1 + \kappa_2/2} ,
+\end{eqnarray*}
+which should look familiar.
+
+\part The idea behind put-call parity is that if we know the price of a put,
+we can use it to find the price of a call.  And vice versa.
+Here the payoffs are constant, so the form is different.
+But you see that a put gives us 100 if $s_{t+1} \leq k$,
+and a call gives us 100 if $s_{t+1} > l$, so if we buy one of each we get
+100 for sure.
+Therefore we have
+\begin{eqnarray*}
+    q^p_t + q^c_t &=& q^1_t \cdot 100 .
+\end{eqnarray*}
+
+\part The payoff from a put option is
+\begin{eqnarray*}
+    d_{t+1} &=&
+        \left\{
+        \begin{array}{rl}
+            100    &  \mbox{if } s_{t+1} \leq k  \\
+            0      &  \mbox{otherwise} .
+        \end{array}
+        \right.
+\end{eqnarray*}
+The price is therefore
+\begin{eqnarray*}
+    q^p_t &=& q^1_t E^* (d_{t+1})  \\
+            &=& q^1_t \mbox{Prob}(s_{t+1}\leq k) 100 \\
+            &=& q^1_t \mbox{Prob}(\log s_{t+1}\leq \log k) 100 \\
+            &=& q^1_t N [ (\log k-\kappa_1)/\kappa_2^{1/2}] 100 .
+\end{eqnarray*}
+The last line uses the lognormal (risk-neutral) distribution, but
+the others hold in general.
+In practice, we would use the no-arbitrage condition to eliminate $\kappa_1$,
+as we did when we derived the BSM formula:
+\begin{eqnarray*}
+    (\log k - \kappa_1)/\kappa_2^{1/2} &=&
+            [\log (q^1_t k/s_t) + \kappa_2/2]/\kappa_2^{1/2} .
+\end{eqnarray*}
+There's a similar formula in BSM.
+
+
+\end{parts}
+\end{solution}
+
+%\pagebreak
+\end{questions}
+
+\phantom{xx}
+\vfill \centerline{\it \copyright \ \number\year \
+NYU Stern School of Business}
+\end{document}
+
+
+

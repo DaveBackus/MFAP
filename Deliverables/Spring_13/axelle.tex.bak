@@ -1,0 +1,105 @@
+\documentclass[11pt]{exam}
+
+\oddsidemargin=0.25truein \evensidemargin=0.25truein
+\topmargin=-0.5truein \textwidth=6.0truein \textheight=8.75truein
+
+\usepackage{comment}
+\usepackage[dvipdfm]{hyperref}
+\urlstyle{rm}   % change fonts for url's (from Chad Jones)
+\hypersetup{
+    colorlinks=true,        % kills boxes
+    allcolors=blue,
+    pdfsubject={ECON-UB233, Macroeconomic foundations for asset pricing},
+    pdfauthor={Dave Backus @ NYU},
+    pdfstartview={FitH},
+    pdfpagemode={UseNone},
+%    pdfnewwindow=true,      % links in new window
+%    linkcolor=blue,         % color of internal links
+%    citecolor=blue,         % color of links to bibliography
+%    filecolor=blue,         % color of file links
+%    urlcolor=blue           % color of external links
+% see:  http://www.tug.org/applications/hyperref/manual.html
+}
+
+%\usepackage{amssymb}
+%\usepackage{amsfonts}
+%\usepackage{booktabs}
+
+\renewcommand{\thefootnote}{\fnsymbol{footnote}}
+%\newcommand{\bv}{\begin{verbatim}}
+%\newcommand{\ev}{\end{verbatim}}
+
+% document starts here
+\begin{document}
+\parskip=\bigskipamount
+\parindent=0.0in
+\thispagestyle{empty}
+{\large ECON-UB 233 \hfill Dave Backus @ NYU}
+
+\bigskip\bigskip
+\centerline{\Large \bf Lab Report \#0:  Risk and Return}
+\centerline{Revised: \today}
+
+\bigskip
+{\it I used the old template, ignore and go to the problems.}
+
+\begin{questions}
+\question {\it Asset returns.\/}
+The canonical asset pricing relation can be expressed, variously, as  
+\begin{eqnarray*}
+    q^j &=& E ( m d^j)  \phantom{\sum_s} \\
+        &=& \sum_s p(s) m(s) d^j(s)\\
+        &=& \sum_s \theta(s) d^j(s) .  
+\end{eqnarray*}
+Here $q^j$ is the price ``today'' of asset $j$, a claim to the dividend $d^j$ ``tomorrow.''
+States $s$ occur with probability $p(s)$.  
+In each state $s$, the pricing kernel is $m(s)$ 
+and the state price is $\theta(s)$.
+
+Suppose we have two states, $s=1$ and $s=2$, 
+which occur with equal probabilities $\theta(1) = 2/3$ and $\theta(2) = 1/3$. 
+State prices are $\theta(1) = 1$ and $\theta(2) = 2$.
+\begin{parts}
+\part Draw the event tree that corresponds to this environment.
+\part What are the pricing kernel's values in the two states?  
+\part Consider an asset with $d(1) = 1$ and $d(2) = 2$.
+Compute its price $q$ using state prices and the pricing kernel.
+Verify that you get the same answer.  
+\part How is the (gross) return $r$ related, in general, to $q$ and $d$?  
+The mean return?  
+\part What are the returns in each state on the asset in part (c)?
+What is the mean return?   
+\part Consider a second asset with dividends $d(1) = 2$ and $d(2) = 1$.
+What are its price and mean return? 
+Why is its mean return different from the asset in (b)?  
+\end{parts}
+
+
+\question {\it Risk and risk aversion.\/}
+In the same setting as the previous equation, we'll
+consider the pricing implied by a representative agent 
+with power utility.  
+Here the pricing kernel is related to consumption growth $g$ by 
+$m = \beta g^{-\alpha}$.  Here $m$ is the intertemporal marginal rate of substitution,
+$\beta$ is the discount factor, and $\alpha \geq 0$ is the coefficient of relative
+risk aversion.  
+
+\begin{parts}
+\part Suppose $\beta = 0.95 $ and $\alpha = 2$.  
+Using the pricing kernel from the previous question,
+what is consumption growth in the two states?  
+\part In addition to the other assets, compute the riskfree return:
+the return on an asset with dividends $d(1) = d(2) = 1$.  
+\part What is the risk premium on the asset in part (c) above?   
+\part Now increase risk aversion to $\alpha = 5$.  
+What is the expected return on the asset on part (c)? 
+Its risk premium?  
+What do you think is happening here?  
+\end{parts}
+ 
+\end{questions}
+
+\vfill \centerline{\it \copyright \ \number\year \
+NYU Stern School of Business}
+
+\end{document}

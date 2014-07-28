@@ -1,0 +1,210 @@
+\documentclass[11pt]{exam}
+
+\oddsidemargin=0.25truein \evensidemargin=0.25truein
+\topmargin=-0.5truein \textwidth=6.0truein \textheight=8.75truein
+
+%\RequirePackage{graphicx}
+\usepackage{verbatim}
+\usepackage{booktabs}
+\usepackage{comment}
+\usepackage{hyperref}
+\urlstyle{rm}   % change fonts for url's (from Chad Jones)
+\hypersetup{
+    colorlinks=true,        % kills boxes
+    allcolors=blue,
+    pdfsubject={ECON-UB233, Macroeconomic foundations for asset pricing},
+    pdfauthor={Dave Backus @ NYU},
+    pdfstartview={FitH},
+    pdfpagemode={UseNone},
+%    pdfnewwindow=true,      % links in new window
+%    linkcolor=blue,         % color of internal links
+%    citecolor=blue,         % color of links to bibliography
+%    filecolor=blue,         % color of file links
+%    urlcolor=blue           % color of external links
+% see:  http://www.tug.org/applications/hyperref/manual.html
+}
+
+\renewcommand{\thefootnote}{\fnsymbol{footnote}}
+\newcommand{\var}{\mbox{\it Var\/}}
+
+\printanswers
+
+% document starts here
+\begin{document}
+\parskip=\bigskipamount
+\parindent=0.0in
+\thispagestyle{empty}
+{\large ECON-UB 233 \hfill Dave Backus @ NYU}
+
+\bigskip\bigskip
+\centerline{\Large \bf Quiz \#3}
+\centerline{Revised: \today}
+
+\bigskip
+{\it Please write your name below.
+Then complete the exam in the space provided.
+There are TWO questions.
+You may refer to one page of notes:
+standard paper, both sides, any content you wish.}
+
+\bigskip
+\begin{flushleft}
+\rule{4in}{0.5pt} \\ (Name and signature)
+\end{flushleft}
+
+
+\begin{questions}
+%-----------------------------------------------------------------------
+\question {\it Linear models (60 points).\/}
+Consider the linear time series model
+\begin{eqnarray*}
+    x_{t} &=& \varphi x_{t-1} +  w_t ,
+\end{eqnarray*}
+with $\{ w_t \}$ independent normal random variables with mean zero and variance one.
+Now consider a second random variable $y_t$ built from $x_t$ and
+the same disturbance $w_t$ by
+\begin{eqnarray*}
+    y_{t} &=& x_{t} + \theta w_t .
+\end{eqnarray*}
+The question is how this combination behaves.
+
+\begin{parts}
+\part Is there a state variable for which $x_t$ is Markov?
+What is the distribution of $x_{t+1}$ conditional on the state at date $t$?
+(10~points)
+\part Express $x_t$ as a moving average.
+What are its coefficients?
+(5~points)
+\part Is there a state variable for which $y_t$ is Markov?
+What is the distribution of $y_{t+1}$ conditional on the state at date $t$?
+(10~points)
+\part Express $y_t$ as a moving average.
+What are its coefficients?
+(5~points)
+\part Under what conditions is $y_t$ stable?
+That is: under what conditions does the distribution of $y_{t+k}$,
+conditional on the state at $t$, converge as $k$ gets large?
+(10~points)
+\part What is the equilibrium or stationary distribution of $y_t$?
+(10~points)
+\part What is the first autocorrelation of $y_t$?
+(10~points)
+\end{parts}
+
+\begin{solution}
+\begin{parts}
+\part It's Markov with $x_t$.
+The distribution of $x_{t+1}$:
+\begin{eqnarray*}
+    x_{t+1} &=& \varphi x_{t} + w_{t+1}
+\end{eqnarray*}
+is conditionally normal with mean $\varphi x_t $
+and variance one.
+\part The moving average representation is
+\begin{eqnarray*}
+    x_{t} &=& w_t + \varphi w_{t-1} + \varphi^2 w_{t-2}  + \cdots .
+\end{eqnarray*}
+The coefficients are $(1,\varphi, \varphi^2, \ldots )$.
+\part Two answers, both work:  the state can be $x_t$ or (more commonly)
+the vector $(y_t,w_t)$.
+The distribution of $y_{t+1}$:
+\begin{eqnarray*}
+    y_{t+1} &=& \varphi x_t + (1+\theta) w_{t+1}
+                \;\;=\;\; \varphi (y_t - \theta w_t) + (1+\theta) w_{t+1}
+\end{eqnarray*}
+is (conditionally) normal with mean $\varphi x_t = \varphi (y_t - \theta w_t)$
+and variance $(1+\theta)^2)$.
+\part If we add $\theta w_t$ to the expression for $x_t$ above, we get
+\begin{eqnarray*}
+    y_{t} &=& (1+\theta) w_t + \varphi w_{t-1} + \varphi^2 w_{t-2}  + \cdots .
+\end{eqnarray*}
+\part It's stable if $|\varphi| < 1$:  we need the moving average coefficients
+ to approach zero.
+ \part Stationary distribution:  $x_t$ is normal with mean zero
+ and variance
+ \begin{eqnarray*}
+    \mbox{Var}(x_t) &=& (1+\theta)^2 + \varphi^2 + \varphi^4 + \cdots
+            \;\;=\;\; (1+\theta)^2 + \varphi^2/(1-\varphi^2) .
+ \end{eqnarray*}
+\end{parts}
+\end{solution}
+
+%\pagebreak \phantom{xx} \pagebreak
+%-----------------------------------------------------------------------
+\question {\it Stochastic volatility and equity pricing (40 points).\/}
+The Cox-Ingersoll-Ross model of bond pricing consists of the equations
+\begin{eqnarray*}
+    \log m_{t+1} &=& -(1+\lambda^2/2) x_{t} + \lambda x_t^{1/2} w_{t+1} \\
+        x_{t+1}  &=& (1-\varphi)\delta + \varphi x_t + \sigma x_t^{1/2} w_{t+1} ,
+\end{eqnarray*}
+with the usual independent standard normal disturbances $w_t$.
+We add to it an equation governing the dividend $d_t$ paid by a one-period
+equity-like claim:
+\begin{eqnarray*}
+    \log d_{t+1} &=& \alpha + \beta x_t + \gamma x_t^{1/2} w_{t+1} .
+\end{eqnarray*}
+Here $x_t$ plays the role of the state:  if we know $x_t$, we know the conditional
+distributions of $ (m_{t+1}, x_{t+1}, d_{t+1})$.
+
+\begin{parts}
+\part Conditional on $x_t$,
+what are the mean and variance of $\log m_{t+1}$?
+What is its distribution?
+(10~points)
+\part What is the price $q^1_t$ of a one-period bond?
+What is its return $ r^1_{t+1} = 1/q^1_t$?
+(10~points)
+\part What is the price $q^e_t$ of equity, a claim to the dividend
+$d_{t+1}$?
+What is its return $r^e_{t+1}$?
+(10~points)
+\part Conditional on $x_t$, what is the expected log excess return on equity,
+$E_t (\log r^e_{t+1} - \log r^1_{t+1})$?
+%How does it vary with $x_t$?
+(10~points)
+\end{parts}
+
+\begin{solution}
+\begin{parts}
+\part Conditional on $x_t$, $\log m_{t+1}$ is normal with mean and variance
+\begin{eqnarray*}
+    E_t (\log m_{t+1}) &=& -(1+\lambda^2/2) x_{t} \\
+    \mbox{Var}_t (\log m_{t+1}) &=& \lambda^2 x_t .
+\end{eqnarray*}
+
+\part The price uses the ``mean plus variance over two'' formula:
+\begin{eqnarray*}
+    \log q^1_t  &=& - x_{t} .
+\end{eqnarray*}
+The log return is $\log r^1_{t+1} = x_t$.
+
+\part The price of equity is
+\begin{eqnarray*}
+    \log q^e_t &=& \log E_t (m_{t+1} d_{t+1} ) \\
+            &=& \alpha + [\beta - (1+\lambda^2/2)] x_t
+                + [(\gamma+\lambda)^2/2 ]  x_t \\
+            &=& \alpha + (\beta - 1 + \gamma^2/2 + \gamma\lambda) x_t .
+\end{eqnarray*}
+The return is
+\begin{eqnarray*}
+    \log r^e_{t+1} &=& \log d_{t+1} - \log q^e_t
+            \;\;=\;\; (1 - \gamma^2/2 - \gamma\lambda) x_t
+                + \gamma x_t^{1/2} w_{t+1} .
+\end{eqnarray*}
+\part Conditional on $x_t$, the expected excess return is
+\begin{eqnarray*}
+    E_t (\log r^e_{t+1} - \log r^1_{t+1} )
+            &=& - (\gamma^2/2 + \gamma\lambda) x_t .
+\end{eqnarray*}
+\end{parts}
+\end{solution}
+
+\end{questions}
+%\pagebreak \phantom{xx}
+
+\vfill \centerline{\it \copyright \ \number\year \
+NYU Stern School of Business}
+\end{document}
+
+
+
