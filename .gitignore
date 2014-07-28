@@ -6,6 +6,7 @@
 *.bak
 *.synctex
 Current/
+Other_courses/
 
 *.pydevproject
 .project
