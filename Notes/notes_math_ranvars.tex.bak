@@ -54,7 +54,7 @@
 %
 %\vspace*{2\parskip} %\bigskip\bigskip
 
-\input{../LaTeX/notes_template.tex} 
+\input{../LaTeX/notes_template.tex}
 
 \centerline{\Large \bf Math Tools:  Random Variables}
 \centerline{Revised: \today}
@@ -127,12 +127,11 @@ For each state $z$, we assign a number $\mbox{Prob}(z) = p(z)$
 that we refer to as the {\it probability\/} of $z$.
 Here $\mbox{Prob}(A)$ means (literally) the probability of
 some arbitrary subset $A$ of $\mathcal{Z}$
-and $p$ is a function of of the state $z$.
+and $p$ is a function of the state $z$.
 We call the complete collection of $p(z)$'s
 the {\it probability distribution\/}.
 Not every set of numbers works.
 Legimate probabilities must be nonnegative and sum to one.
-
 
 \item {\it Random variables.\/}
 A {\it random variable\/} is a function that
@@ -462,6 +461,8 @@ a function of the real number $s$.
 (It's common to use $t$ instead of $s$, but we need $t$ for time.)
 Note that $h(0) = 1$.
 [Ask yourself why.]
+You might also run across references to the characteristic function 
+$ 
 
 The mgf is a tool, like a hammer, and we can hammer things with it.
 If we hammer probability distributions, we get moments as a byproduct.
