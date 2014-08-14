@@ -110,7 +110,8 @@ If you find mistakes, please tell me, I'll correct them immediately.
 We will use software extensively.
 The default is Matlab, a popular user-friendly high-level language that's described
 in  Lab Report \#0.
-A second option is Python.  It's less user-friendly for novices,
+A second option is Python:  Whenever you see Matlab, you are free to substitute Python. 
+It's less user-friendly for novices,
 so I suggest you stick
 with Matlab unless you have prior programming experience.
 

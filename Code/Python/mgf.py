@@ -28,7 +28,7 @@ mgf = exp(mu*s + (sigma*s)**2/2)
 # a number, a symbol, or even another expression
 mean = diff(mgf, s).subs(s, 0)
 # This should print 'μ'
-print "The mean is ", mean
+print "The mean is ",  mean
 
 # To calculate moments about the mean, it's easier to use the cumulant
 # generating function, which is the log of the mgf
