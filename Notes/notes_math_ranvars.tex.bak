@@ -1,59 +1,3 @@
-%\documentclass[11pt]{article}
-%
-%\oddsidemargin=0.25truein \evensidemargin=0.25truein
-%\topmargin=-0.5truein \textwidth=6.0truein \textheight=8.75truein
-%
-%\usepackage{comment}
-%\usepackage{hyperref}
-%\urlstyle{rm}   % change fonts for url's (from Chad Jones)
-%\hypersetup{
-%    colorlinks=true,        % kills boxes
-%%    allcolors=blue,
-%    pdfsubject={ECON-UB233, Macroeconomic foundations for asset pricing},
-%    pdfauthor={Dave Backus @ NYU},
-%    pdfstartview={FitH},
-%    pdfpagemode={UseNone},
-%%    pdfnewwindow=true,      % links in new window
-%%    linkcolor=blue,         % color of internal links
-%%    citecolor=blue,         % color of links to bibliography
-%%    filecolor=blue,         % color of file links
-%%    urlcolor=blue           % color of external links
-%% see:  http://www.tug.org/applications/hyperref/manual.html
-%}
-%
-%%\usepackage{amsmath}
-%\usepackage{verbatim}
-%% failed attempt to kill space at top:
-%%  http://tex.stackexchange.com/questions/43331/control-vertical-space-before-and-after-verbatim-environment
-%%\usepackage{etoolbox}
-%%\makeatletter
-%%\preto{\@verbatim}{\topsep=0pt \partopsep=0pt}
-%%\makeatother
-%
-%%\usepackage{booktabs}
-%\usepackage[small, compact]{titlesec}
-%
-%% list spacing
-%\usepackage{enumitem}
-%\setitemize{leftmargin=*, topsep=0pt}
-%\setenumerate{leftmargin=*, topsep=0pt}
-%
-%\usepackage{needspace}
-%% example:  \needspace{4\baselineskip} makes sure we have four lines available before pagebreak
-%
-%
-%\renewcommand{\thefootnote}{\fnsymbol{footnote}}
-%\newcommand{\var}{\mbox{\it Var\/}}
-%
-%% document starts here
-%\begin{document}
-%\parskip=\bigskipamount
-%\parindent=0.0in
-%\thispagestyle{empty}
-%{\large ECON-UB 233 \hfill Dave Backus @ NYU}
-%
-%\vspace*{2\parskip} %\bigskip\bigskip
-
 \input{../LaTeX/notes_template.tex}
 
 \centerline{\Large \bf Math Tools:  Random Variables}
@@ -191,8 +135,8 @@ Our probabilities have  a similar form:
 So they are, in fact, legitimate probabilities. % for the state space $\mathcal{Z}$.
 
 \item {\it Normal (Gaussian).\/}
-Here we'll let the state space be the real line
-and set $x=z$, which allows us to ignore $z$ from now on.
+Here we'll let the state space be the real line.
+We'll also set $x=z$, which allows us to ignore $z$.
 We refer to such random variables as continuous,
 to distinguish them from random variables that
 based on a discrete set of states, such as the two we just looked at.
@@ -233,6 +177,7 @@ We'll see shortly what these parameters do.
 %which I guess is obvious from the formula.
 The so-called {\it standard normal\/} refers to the case
 $\mu = 0$ and $\sigma = 1$.
+[Graph $p(x)$ and show how it changes when we change $\mu$ and $\sigma$.]
 \end{itemize}
 
 There are lots of other common distributions of random variables,
@@ -264,7 +209,7 @@ For a continuous random variable,
 %one for which the state space $Z$ is a part of the real line --- % ??
 we replace the sum with an integral.
 The notation is a little cumbersome, which is why
-we'll just write $E(x)$ most of the time.
+we just write $E(x)$ most of the time.
 
 We can extend this concept to any function of $x$:
 \begin{eqnarray}
@@ -292,7 +237,7 @@ is the same linear function of its expectation:
 \begin{eqnarray*}
     E(a + bx) &=& a + b E(x) .
 \end{eqnarray*}
-We'll use these properties repeatedly.
+We'll use these properties so often they'll become second nature.
 
 
 Here's a well-known application.
@@ -303,7 +248,7 @@ A {\it moment\/} is the expectation of a power of $x$:
 for $j$ a positive integer.
 The first one ($\mu_1^\prime$) is known as the {\it mean\/}.
 It's a measure of the ``location'' of the probability distribution.
-If we change the mean,  the probability distribution shifts left and right.
+If we change the mean,  the probability distribution shifts left or right.
 Think about graphing the probability distribution
 of $x+a$ for different values of $a$.
 If the mean of $x$ is $\mu^\prime_1$, then the mean of $x+a$ is
@@ -325,15 +270,10 @@ The first central moment is zero by construction:
 \end{eqnarray*}
 (Here and elsewhere: If any of these steps seem mysterious,
 write out the calculation of the expectation for the discrete case.)
-%What we see here is an example of a more general feature of expectations:
-%expectations of linear functions of $x$ are the same linear functions of expectations.
-%In equations,
-%\begin{eqnarray*}
-%    E(a + b x) &=& a + b E(x) .
-%\end{eqnarray*}
 
-The second central moment is called the {\it variance\/},
-a measure of ``dispersion'':  how spread out or dispersed the distribution is.
+
+The second central moment is called the {\it variance\/}.
+It's a measure of dispersion:  how spread out or dispersed the distribution is.
 We denote it by
 \begin{eqnarray*}
     \mbox{Var}(x)  &=&  E [(x-\mu_1^\prime)^2] .
@@ -349,18 +289,38 @@ we see it can be expressed in terms of (noncentral or raw) moments:
 If we wanted to, we could compute the variance this way.
 That's pretty common, but we'll see shortly there's a
 better (by which I mean easier) way.
-
 The {\it standard deviation\/} is the (positive) square root of the variance
 and is often used the same way.
-It measures the ``scale'' of a random variable
-in the following sense:
-If the standard deviation of $x$ is $\sigma>0$,
-then the standard deviation of $ax$ is $| a | \sigma$.
-Why absolute value?  The variance of $ax$ is $a^2 \sigma^2$.
-The standard deviation is the positive square root.
 
-Let's try to compute the mean and variance for the distributions
-we looked at earlier:
+Let's see how the mean and standard deviation reflect
+location and scale, respectively.
+Suppose $x$ has given mean and standard deviation.
+What are the mean and standard deviation of $y = a + b x$?
+The mean is $ E(y) = a + b E(x)$,
+so $a$ moves it up and down.
+The variance is
+\begin{eqnarray*}
+    \mbox{Var}(x) &=& E \left\{ [y - E(y)]^2 \right\}
+        \;\;=\;\; E \left\{ [a + b x - a - b E(x)]^2 \right\} \\
+        &=& E \left\{  [ b x - b E(x)]^2 \right\}
+        \;\;=\;\; b^2 E \left\{ [ x - E(x)]^2 \right\}
+        \;\;=\;\; b^2 \mbox{Var}(x) .
+\end{eqnarray*}
+The standard deviation is the positive square root.
+If $\sigma$ is the standard deviation of $x$,
+then $|b| \sigma$ is the standard deviation of $y$.
+(Why absolute value?  The standard deviation is the positive square root of the variance.)
+Note that all of this follows from applying definitions.
+
+%It measures the ``scale'' of a random variable
+%in the following sense:
+%If the standard deviation of $x$ is $\sigma>0$,
+%then the standard deviation of $ax$ is $| a | \sigma$.
+%Why absolute value?  The variance of $ax$ is $a^2 \sigma^2$.
+%The standard deviation is the positive square root.
+
+
+Let's go back to our examples and see what the mean and variance are:
 %
 \begin{itemize}
 \item {\it Bernoulli.\/}
@@ -418,19 +378,18 @@ The idea is to use sample weights rather than probabilities.
 Given a sample of $x_t$'s for $t=1,2,\ldots,T$,
 the sample mean is
 \begin{eqnarray*}
-         \bar{x} &=& T^{-1} \sum_{t=1}^T x_t
+         \bar{x} &=& T^{-1} \sum_{t=1}^T x_t .
 \end{eqnarray*}
-and the $j$th sample moment is
+Similarly, the $j$th sample moment is
 \begin{eqnarray*}
          T^{-1} \sum_{t=1}^T x_t^j .
 \end{eqnarray*}
-Sample central moments are the same, but we subtract the sample mean
-from $x_t$ first:
+The $j$th sample {\it central\/} moment is
 \begin{eqnarray*}
          T^{-1} \sum_{t=1}^T (x_t-\bar{x})^j .
 \end{eqnarray*}
 If $j=2$ we get the sample variance.
-If we take the square root, we get the sample standard deviation.
+And if we take the square root, we get the sample standard deviation.
 (And yes, we divide by $T$, not $T-1$ or something else.)
 
 We use sample moments the same way we use moments:  to describe the distribution.
@@ -461,16 +420,16 @@ a function of the real number $s$.
 (It's common to use $t$ instead of $s$, but we need $t$ for time.)
 Note that $h(0) = 1$.
 [Ask yourself why.]
-You might also run across references to the characteristic function 
-$ 
+% ?? [You might also run across references to the characteristic function
+%$ h(is) = E ( e^{is x} ) $, where $i$ is the square root of $-1$. Ignore them.]
 
-The mgf is a tool, like a hammer, and we can hammer things with it.
+The mgf is a tool, like a hammer, and we hammer things with it.
 If we hammer probability distributions, we get moments as a byproduct.
 Recall the Taylor series expansion (\ref{eq:eofx-powerseries}) of the exponential function.
 If we expand $e^{sx}$ the same way and take expectations,
 the moments pop out:
 \begin{eqnarray*}
-    h(s) &=& E \left( 1 + (sx) + (sx)^2/2 + (sx)^3/3! + \cdots \right) \\
+    h(s) &=& E \left[ 1 + (sx) + (sx)^2/2 + (sx)^3/3! + \cdots \right] \\
             &=&  1 + \mu_1^\prime s + \mu_3^\prime (s^2/2)  + \mu_3^\prime (s^3/3!)  + \cdots .
 \end{eqnarray*}
 With a little more insight, we see that we can recover the moments by differentiating
@@ -531,6 +490,21 @@ We start with the definition:
         h(s) &=& (2\pi \sigma^2)^{-1/2} \int_{-\infty}^\infty e^{sx} e^{-(x-\mu)^2/2\sigma^2} dx .
 \end{eqnarray*}
 The exponents are
+
+% see http://www.physicsforums.com/showthread.php?t=276669
+\smallskip
+\newlength{\oldfrule}
+\setlength{\oldfrule}{\fboxrule}
+\setlength{\fboxrule}{3\fboxrule}
+\newlength{\lll}
+\setlength{\lll}{\textwidth}
+\addtolength{\lll}{-2\fboxsep}
+\addtolength{\lll}{-2\fboxrule}
+\noindent
+\fbox{%
+\begin{minipage}{\lll}
+\vspace{-0.75\abovedisplayskip}
+%\vspace{0.0in}
 \begin{eqnarray}
         sx - (x-\mu)^2/2\sigma^2 &=&
                 -(1/2\sigma^2) \left[ -2 \sigma^2 s x + x^2 - 2 \mu x + \mu^2  \right]
@@ -538,8 +512,13 @@ The exponents are
             &=& \mu s + \sigma^2 s^2/2 - [x-(\mu+s \sigma^2)]^2/2\sigma^2 .
             \label{eq:complete-the-square}
 \end{eqnarray}
+\vspace{-1.25\abovedisplayskip}
+\end{minipage}}
+\setlength{\fboxrule}{\oldfrule}
+
 This may take you a couple minutes,  but try expanding both expressions and lining up terms.
-%It's an important equation, we'll come across it again.
+I put a box around it, because it's an equation we'll see again,
+specifically when we come to option prices.
 
 When we plug the result into the integral and rearrange terms,
 we have
@@ -601,13 +580,14 @@ the mean and variance.
 Note that the second cumulant ``centralizes'' the second moment:
 we get the variance directly, rather than the second noncentral moment.
 That's an example of a more general property.
-The cgf of $y = a+bx$ is (apply the definition)
+The cgf of $y = a+bx$ is
 \begin{eqnarray*}
     k(s; y) &=& a s + k(sb; x) .
 \end{eqnarray*}
-We say $a$ changes the {\it location\/} of the random variable and
-$b$ changes the {\it scale\/}.
-The cumulants of $y$ are connected to those of $x$ by
+[This may look mysterious, but just apply the definition:
+$ h(s; y) = E[\exp(a s + bs x)] = \exp(as) E[\exp(bs x)] = \exp(as) h(bs; y)$ and take logs.]
+As we've seen, $a$ changes the location and $b$ changes the scale.
+The cumulants of $y$ are therefore connected to those of $x$ by
 \begin{eqnarray*}
     \kappa_1 (y) &=& a + b \kappa_1 (x) \\
     \kappa_j (y) &=& b^j \kappa_j (x) \;\;\; \mbox{ for } j=2,3,\ldots
@@ -617,10 +597,11 @@ and scale shows up as a power.
 
 After the mean and variance, the most useful moments/cumulants
 are the third and fourth measuring, respectively,
-skewness and kurtosis.
+{\it skewness\/} and {\it kurtosis\/}.
 Skewness refers to the asymmetry of the distribution:
 odd cumulants (and central moments) are zero after the first
 for any symmetric distribution.
+[Can you show this?]
 Kurtosis (sort of) refers to how much weight is in the tails of the density;
 holding the mean and variance constant, a distribution
 with greater kurtosis will have more weight in the tails and,
@@ -628,7 +609,7 @@ to keep the variance constant, more near the center as well.
 There's no theorem to that effect, but it's a useful statement nonetheless.
 [Draw a picture.]
 
-Two standard measures of skewness and kurtosis
+The standard measures of skewness and kurtosis
 are based on the third and fourth cumulants:
 \begin{eqnarray*}
     \gamma_1 &=& \kappa_3 /(\kappa_2)^{3/2} \;\;\; \mbox{(skewness)}\\
@@ -732,7 +713,7 @@ is the product of the mgf's of the components.
 
 
 The cgf's of sums are even simpler.
-The cgf of the sum is
+The cgf of the sum is the sum of the cgf's:
 \begin{eqnarray}
     k_y(s) &=& \log h_y(s)
             \;\;=\;\; \log h_1(s) + \log h_2(s)
@@ -746,7 +727,7 @@ From this it follows that the cumulants of the sum $y$
 are the sums of the cumulants of the components $x_1$ and $x_2$.
 That is:  If component $x_i$ has $j$th cumulant  $\kappa_{ij}$,
 then the $j$th cumulant of $y = x_1 + x_2$ is $ \kappa_{1j} + \kappa_{2j}$.
-[If this isn't clear, look at (\ref{eq:cumulant-expansion}) and (\ref{eq:cgf-sum}).]
+[If this isn't clear, stare at (\ref{eq:cgf-sum}) and (\ref{eq:cumulant-expansion}).]
 
 
 We can run through our usual list of examples and see how this works.
@@ -787,21 +768,20 @@ then so is the sum.
 A  mixture is a more complicated object,
 but also a more interesting one.
 A mixture is often defined as a weighted average of probability densities.
-Suppose we have a bunch of pdf's $p_i(y)$.
-Then a mixture $y$ is a random variable whose pdf is a weighted average
-of the pdf's of the components:
+Suppose we have a bunch of pdf's $p_i(x)$.
+Then a mixture is a random variable whose pdf is a weighted average of pdf's:
 \begin{eqnarray*}
-    p_y(y) &=& \sum_i \omega_i p_i(y) ,
+    p(x) &=& \sum_i \omega_i p_i(x) ,
 \end{eqnarray*}
 with weights $\{\omega_i\}$ that are positive and sum to one.
-From this we see that $p_y$ is a legitimate pdf.
+From this we see that $p$ is a legitimate pdf.
 [Think about it.]
-%How?  Because we can sum/integrate them one at a time, getting one each time,
-%and the weights themselves sum to one.
-We'll give a physical interpretation.
-First we draw a number $i$ from a distribution where the probability of each $i$
-is $\omega_i$.
-Given a draw for $i$, we then draw from the distribution of $y$.
+
+I regard mixing as a device for generate interesting distributions,
+but we could give it a physical interpretation as a two-stage random variable.
+First we draw a number $i$ from a distribution with probabilities $\omega_i$.
+Given a draw for $i$, we then draw from the distribution of $p_i(x)$.
+[Draw two-stage event tree.]
 
 Let's see how this works when we mix two distributions:
 with probability $1-\omega$ $x$ has pdf $p_1(x)$
@@ -819,7 +799,7 @@ From this it follows that its mgf is also a weighted average:
 where $E_j$ means the expectation computed from $p_j(x)$.
 The cgf is the log of this.
 This gives us the log of a sum, which in some ways is a mess,
-but that's the source of some interesting properties.
+but we'll see that it produces some interesting properties.
 
 It's less obvious, perhaps, but this is also a device for introducing nonnormality.
 That's true here even if the components are normal.
@@ -846,9 +826,9 @@ which we define shortly.
 The setup for ``multivariate'' (more than one) random variables
 is similar to what we've seen.
 The probability density function for a two-dimensional random variable
-$(x_1,x_2)$ might be expressed $p_{12}(x_1,x_2)$.
+$(x_1,x_2)$ might be expressed $p(x_1,x_2)$.
 We say $x_1$ and $x_2$ are independent if this factors into separate functions:
-$p_{12}(x_1,x_2) = p_1(x_1) p_2(x_2) $.
+$p(x_1,x_2) = p_1(x_1) p_2(x_2) $.
 You might think of coin flips.
 If two flips are independent, then the probability of two heads (say)
 is just the product of each head separately.
@@ -856,8 +836,8 @@ If the probability of heads is one-half each time,
 then the probability of two heads is one-fourth.
 That's what independence is.
 
-Interdependence  ---
-or whatever we call the opposite of independence ---
+Dependence  ---
+ the opposite of independence ---
 comes in many forms.
 The most direct connection is a linear one,
 which we can document with {\it covariances\/}
@@ -866,28 +846,28 @@ The covariance between two  random variables $x_1$ and $x_2$ is
 \begin{eqnarray*}
     \mbox{Cov} (x_1,x_2) &=& E [x_{1} - E({x}_1)] [x_{2} - E({x}_2)] .
 \end{eqnarray*}
-It's an example of a ``cross moment,''
+It's an example of a ``joint moment,''
 a moment that involves two or more random variables.
 If the covariance is positive, high values of $x_1$ are associated,
 more often than not, with high values of $x_2$.
 If negative, the reverse.
 Their correlation is a scale-free version:
-\begin{eqnarray*}
+\begin{eqnarray}
     \mbox{Corr}(x_1,x_2) &=&
             \frac {\mbox{Cov}(x_1,x_2)} {\mbox{Var}(x_1)^{1/2} \mbox{Var}(x_2)^{1/2} } ,
-\end{eqnarray*}
+    \label{eq:correlation}
+\end{eqnarray}
 a number between minus one and one.
 You might verify for yourself that if we look instead at the
 variables $a + bx_1$ and $c + dx_2$, the correlation is the same:
-$a$ and $c$ drop out when we subtract the means, and
-$b$ and $d$ cancel when we calculate the ratio.
+$a$ and $c$ drop out when we subtract the means and,
+except for sign, $b$ and $d$ cancel when we calculate the ratio.
 
-
-For now we'll focus on the sample analogs.
+Sample analogs are more or less predictable.
 The sample means and variances, of course, are
 \begin{eqnarray*}
-    \bar{x}_i &=& T^{-1} \sum_{t=1}^T x_{it} \\
-    \mbox{Var} (x_i) &=& T^{-1}
+    \bar{x}_i &=& T^{-1} \sum_{t=1}^T x_{it}, \;\;\;
+    \mbox{Var} (x_i) \;\;=\;\; T^{-1}
             \sum_{t=1}^T (x_{it} - \bar{x}_i)^2
 \end{eqnarray*}
 for variables $i=1,2$.
@@ -896,12 +876,15 @@ The sample covariance of $x_1$ and $x_2$ is
     \mbox{Cov} (x_1,x_2) &=& T^{-1}
             \sum_{t=1}^T (x_{1t} - \bar{x}_1) (x_{2t} - \bar{x}_2)
 \end{eqnarray*}
-and the sample correlation is
-\begin{eqnarray*}
-    \mbox{Corr}(x_1,x_2) &=&
-            \frac {\mbox{Cov}(x_1,x_2)} {\mbox{Var}(x_1)^{1/2} \mbox{Var}(x_2)^{1/2} } .
-\end{eqnarray*}
+and the sample correlation is constructed from the sample variances and covariance by
+(\ref{eq:correlation}).
+%
+%\begin{eqnarray*}
+%    \mbox{Corr}(x_1,x_2) &=&
+%            \frac {\mbox{Cov}(x_1,x_2)} {\mbox{Var}(x_1)^{1/2} \mbox{Var}(x_2)^{1/2} } .
+%\end{eqnarray*}
 You can generally get the idea from a scatterplot of the two variables.
+If you're taken by this possibility, search ``Anscombe's quartet.''
 
 
 Correlation is a measure of linear association.
@@ -952,7 +935,7 @@ Answer.
 $z=0$ for no payoff, $z=1$ for a payoff of one hundred.
 \item With this choice of states, the payoff is a random variable $x(z) = 100 z$.
 \item Probabilities must be positive and sum to one.
-If they sum to one, we have $(1-\theta, \theta)$,
+If they sum to one, we have probabilities $(1-\theta, \theta)$,
 so $\theta$ must be between zero and one.
 \item The mean is $ (1-\theta) \cdot 0 + \theta \cdot 100 = \theta \cdot 100 $.
 \item The variance is (I'm using the formula for a Bernoulli random variable)
@@ -963,7 +946,7 @@ The standard deviation is the square root.
 
 \item {\it Sample moments.\/}
 Consider the following observations of a random variable $x$:
- $ (1,5,3,-2)$.
+ $ (2, -1, 4, 3)$.
  Write a Matlab script to answer the following:
 \begin{enumerate}
 \item What are the first two sample moments?
@@ -1027,9 +1010,16 @@ so the variance is one.
 \end{eqnarray*}
 That gives us $k_y = s \mu + (s \sigma)^2/2 $.
 Its first and second derivatives give us a mean of $\mu$ and a variance of $\sigma^2$.
-\end{enumerate}
+This bit of Matlab code does the work:
+\begin{verbatim}
+syms s mu sigma                     % defines these as symbols
+cgf_x = s^2/2;
+cgf_y = s*mu + subs(cgf_x, s, s*sigma);
 
-*** ?? Here's a script:  ??
+kappa1 = subs(diff(cgf_y,s,1),s,0)  % mean
+kappa2 = subs(diff(cgf_y,s,2),s,0)  % variance
+\end{verbatim}
+\end{enumerate}
 
 \item {\it Cumulants and moments.\/}
 Moments are clearly defined as expectations of powers of random variables, $E(x^j)$.
@@ -1098,7 +1088,7 @@ Answer.
 \begin{enumerate}
 \item Probabilities are positive (maybe greater than or equal to zero)
 and sum to one.
-So we're all set if $ 0 < \omega < 1$
+So we're all set if $ 0 < \omega < 1/2$
 (or weak inequalities if you prefer).
 
 \item The mgf is
@@ -1132,6 +1122,21 @@ Evidently $\gamma_2$ is large when $\omega$ is small.
 \item The normal has $\gamma_1 = \gamma_2 = 0$.
 We get the first automatically and the second if $p = 1/6$.
 \end{enumerate}
+Matlab code:
+\begin{verbatim}
+syms s omega delta % defines these as symbols
+mgf = omega*(exp(-s*delta)+exp(s*delta)) + (1-2*omega);
+cgf = log(mgf);
+
+kappa1 = subs(diff(cgf,s,1),s,0)    % mean
+kappa2 = subs(diff(cgf,s,2),s,0)    % variance
+kappa3 = subs(diff(cgf,s,3),s,0)
+kappa4 = subs(diff(cgf,s,4),s,0)
+
+gamma1 = kappa3/kappa2^(3/2)
+gamma2 = kappa4/kappa2^2
+simplify(gamma2)                    % sometimes this helps
+\end{verbatim}
 
 
 \item {\it Exponential random variables.\/}
@@ -1180,9 +1185,7 @@ Both are zero for normal random variables.
 $ a + 1/\lambda $ and $1/\lambda$.
 We hit the given targets if $\lambda = 1/2 $ and $ a = 8$.
 \end{enumerate}
-
-*** ?? Here's a script:  ??
-
+Matlab code:  adapt from earlier problems.
 
 %\item {\it Gamma random variables.\/} ??
 % gamma as sum of exponentials
@@ -1288,7 +1291,7 @@ Bernoulli mixtures and normal mgf's.
 \end{eqnarray*}
 Here's the code:
 \begin{verbatim}
-syms s theta omega  % defines these as symbols
+syms s theta omega                  % defines these as symbols
 mgf = (1-omega)*exp(s^2/2) + omega*exp(theta*s + s^2/2);
 cgf = log(mgf);
 kappa1 = subs(diff(cgf,s,1),s,0)    % mean
@@ -1296,8 +1299,10 @@ kappa2 = subs(diff(cgf,s,2),s,0)    % variance
 kappa3 = subs(diff(cgf,s,3),s,0)
 factor(kappa3)  % sometimes cleans up the expression
 \end{verbatim}
-\item The key is the third cumulant $\kappa_3$, which is zero for normals
-but takes the sign of $\theta$ here: if $\theta<0$ we have negative skewness.
+\item It's obviously not normal, but the key is the third cumulant $\kappa_3$,
+which is zero for normals
+but takes the sign of $\theta$ here.
+%If $\theta<0$ we have negative skewness.
 The rest is similar to the Bernoulli on its own.
 \end{enumerate}
 
@@ -1330,7 +1335,6 @@ Sample Matlab code:
 \begin{verbatim}
 x = [2,-1,4,3]'
 y = [10, -5, 3, 0]'
-%y = 3*y+17;
 xbar = mean(x)
 ybar = mean(y)
 varx = mean((x-xbar).^2)
@@ -1339,8 +1343,6 @@ covxy = mean((x-xbar).*(y-ybar))
 corrxy = covxy/sqrt(varx*vary)
 \end{verbatim}
 \end{enumerate}
-
-
 
 \end{enumerate}
 

@@ -168,6 +168,8 @@ $y_t$ rather than $z_t$.
 This works for any finite history, although it undercuts some
 of the simplification we were looking for.
 
+?? change to $Prob$ and $p_n$...
+
 Another kind of structure is to use the same conditional
 probabilities $p(z_{t+1} | z_t)$ at all dates.
 We would refer to such a process as {\it stationary\/}
@@ -540,6 +542,13 @@ the conditional variance converges to $\sigma^2/(1-\varphi^2)$,
 the same answers we had before.
 %This approach has the advantage of describing how we approach the
 %equilibrium distribution.
+
+
+*** Law of iterated expecations...  
+
+*** Var is var of cond mean plus forecast error
+
+*** Multistep forecasting...  
 
 We can do the same for high-order autoregressions:
 versions of (\ref{eq:ar1}) with additional lags of $x_{t+1}$ on the right.

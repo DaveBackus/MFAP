@@ -1,44 +1,6 @@
 \documentclass[11pt]{article}
 
-\oddsidemargin=0.25truein \evensidemargin=0.25truein
-\topmargin=-0.5truein \textwidth=6.0truein \textheight=8.75truein
-
-%\RequirePackage{graphicx}
-\usepackage{comment}
-\usepackage{hyperref}
-\urlstyle{rm}   % change fonts for url's (from Chad Jones)
-\hypersetup{
-    colorlinks=true,        % kills boxes
-%    allcolors=blue,
-    pdfsubject={ECON-UB233, Macroeconomic foundations for asset pricing},
-    pdfauthor={Dave Backus @ NYU},
-    pdfstartview={FitH},
-    pdfpagemode={UseNone},
-%    pdfnewwindow=true,      % links in new window
-%    linkcolor=blue,         % color of internal links
-%    citecolor=blue,         % color of links to bibliography
-%    filecolor=blue,         % color of file links
-%    urlcolor=blue           % color of external links
-% see:  http://www.tug.org/applications/hyperref/manual.html
-}
-
-\usepackage{verbatim}
-\usepackage{booktabs}
-\usepackage[small,compact]{titlesec}
-%\titleformat{\section}{\large\bfseries\sffamily}{\thesection}{1em}{}  % edited by LC
-
-% list spacing
-\usepackage{enumitem}
-\setitemize{leftmargin=*, topsep=0pt}
-\setenumerate{leftmargin=*, topsep=0pt}
-
-\usepackage{needspace}
-% example:  \needspace{4\baselineskip} makes sure we have four lines available before pagebreak
-
-\renewcommand{\thefootnote}{\fnsymbol{footnote}}
-\newcommand{\var}{\mbox{\it Var\/}}
-\newcommand{\rp}{\mbox{\it rp\/}}
-\newcommand{\cbar}{\bar{c}}
+\input{../LaTeX/notes_template.tex}
 
 % document starts here
 \begin{document}
@@ -273,6 +235,9 @@ with equality if $\kappa_2 = 0$ ($x$ is constant at $\mu$).
 (i)~Where does the first relation come from?
 (ii)~What does the second have to do with Jensen's inequality?]
 
+**** Add:  mean preserving spreads.  An increase in risk lowers value of concave function.
+(Raise for convex...)
+
 
 \section{Expected utility with rational expectations}
 
@@ -402,9 +367,9 @@ The parameter $\alpha$ controls sensitivity to risks of all kinds
 and is often referred to (for reasons we won't go into)
 as the {\it coefficient of relative risk aversion\/}.
 Larger values of $\alpha$ are associated with stronger aversion to risk.
-A small technical point:  with this utility function, 
+A small technical point:  with this utility function,
 and most others we'll use in this class,
-we'll restrict consumption $c$ to be positive.  
+we'll restrict consumption $c$ to be positive.
 
 What about its derivatives?
 The first two are

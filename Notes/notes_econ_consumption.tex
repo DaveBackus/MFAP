@@ -1,53 +1,5 @@
-\documentclass[11pt]{article}
+\input{../LaTeX/notes_template.tex}
 
-\oddsidemargin=0.25truein \evensidemargin=0.25truein
-\topmargin=-0.5truein \textwidth=6.0truein \textheight=8.75truein
-
-%\RequirePackage{graphicx}
-\usepackage{comment}
-\usepackage{hyperref}
-\urlstyle{rm}   % change fonts for url's (from Chad Jones)
-\hypersetup{
-    colorlinks=true,        % kills boxes
-    allcolors=blue,
-    pdfsubject={ECON-UB233, Macroeconomic foundations for asset pricing},
-    pdfauthor={Dave Backus @ NYU},
-    pdfstartview={FitH},
-    pdfpagemode={UseNone},
-%    pdfnewwindow=true,      % links in new window
-%    linkcolor=blue,         % color of internal links
-%    citecolor=blue,         % color of links to bibliography
-%    filecolor=blue,         % color of file links
-%    urlcolor=blue           % color of external links
-% see:  http://www.tug.org/applications/hyperref/manual.html
-}
-
-\usepackage{verbatim}
-\usepackage{booktabs}
-\usepackage[small,compact]{titlesec}
-%\titleformat{\section}{\large\bfseries\sffamily}{\thesection}{1em}{}  % edited by LC
-
-% list spacing
-\usepackage{enumitem}
-\setitemize{leftmargin=*, topsep=0pt}
-\setenumerate{leftmargin=*, topsep=0pt}
-
-\usepackage{needspace}
-% example:  \needspace{4\baselineskip} makes sure we have four lines available before pagebreak
-
-\renewcommand{\thefootnote}{\fnsymbol{footnote}}
-\newcommand{\var}{\mbox{\it Var\/}}
-\newcommand{\rp}{\mbox{\it rp\/}}
-\newcommand{\cbar}{\bar{c}}
-
-% document starts here
-\begin{document}
-\parskip=\bigskipamount
-\parindent=0.0in
-\thispagestyle{empty}
-{\large ECON-UB 233 \hfill Dave Backus @ NYU}
-
-\bigskip\bigskip
 \centerline{\Large \bf Consumption, Saving, \& Portfolio Choice}
 \centerline{Revised: \today}
 
@@ -449,11 +401,11 @@ but it illustrates the underlying unity of what we're doing.
 Here's a version with more explicit portfolio choice
 and an arbitrary set of assets which in principle could
 look more like the assets we see in modern economies.
-We start with a description of assets and returns.  
+We start with a description of assets and returns.
 
-{\it Assets and returns.\/} 
+{\it Assets and returns.\/}
 We need to be clear about what we mean by an asset.
-An asset here is a claim to a random ``dividend,'' 
+An asset here is a claim to a random ``dividend,''
 with dividend defined broadly to include anything the asset is a claim to.
 Let us say, to be concrete, that one unit of asset $j$ is a claim to $d^j(z)$ units
 of the consumption good at date 1 in state $z$.
@@ -462,12 +414,12 @@ To complete the notation,
 let us say that asset $j$ sells at date 0
 for $q^j$ units of the date-0 consumption good.
 So we pay $q^j$ at date 0 for $d^j(z)$ at date 1 in state $z$.
-Uncertainty over the payoff is built into the dependence 
-the $d^j$ on the state $z$.  
+Uncertainty over the payoff is built into the dependence
+the $d^j$ on the state $z$.
 
 [Draw event tree. Show when prices are quoted, and when dividends are paid.]
 
-The gross {\it return\/} on asset $j$ between dates 0 and 1 
+The gross {\it return\/} on asset $j$ between dates 0 and 1
 is the ratio of the dividend to the price: $r^j(z) = d^j(z)/q^j$.
 Since $d^j(z)$ and $r^j(z)$ are functions of the state $z$,
 they're random variables as we defined them earlier.
@@ -491,12 +443,12 @@ In this case the dividend is the return:  $r^j(z) = d^j(z)/q^j = d^j(z)$.
 
 We generally define the {\it excess return\/} on asset $j$ as the difference
 between its return and the return on the riskfree bond:
-$ x^j(z) = r^j(z) - r^1 $. 
+$ x^j(z) = r^j(z) - r^1 $.
 The mean excess return, $ E[x^j(z)]$ is typically referred
 to as the {\it risk premium\/}.
 
 
-{\it Portfolio choice.\/} 
+{\it Portfolio choice.\/}
 Now that we know what assets are, we can describe portfolio choice.
 Here the problem consists of the same preferences,
 equation (\ref{eq:utility-2period-stochastic}),

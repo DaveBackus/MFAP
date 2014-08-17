@@ -453,20 +453,26 @@ We start with a description of assets and returns.
 
 {\it Assets and returns.\/} 
 We need to be clear about what we mean by an asset.
-An asset here is a claim to a random dividend.
-Let us say, to be concrete, that one unit of asset $j$ pays $d^j(z)$ units
+An asset here is a claim to a random ``dividend,'' 
+with dividend defined broadly to include anything the asset is a claim to.
+Let us say, to be concrete, that one unit of asset $j$ is a claim to $d^j(z)$ units
 of the consumption good at date 1 in state $z$.
 Different dividend streams constitute different assets.
 To complete the notation,
 let us say that asset $j$ sells at date 0
 for $q^j$ units of the date-0 consumption good.
-It therefore has a gross return between dates 0 and 1 of $r^j(z) = d^j(z)/q^j$.
+So we pay $q^j$ at date 0 for $d^j(z)$ at date 1 in state $z$.
+Uncertainty over the payoff is built into the dependence 
+the $d^j$ on the state $z$.  
+
+[Draw event tree. Show when prices are quoted, and when dividends are paid.]
+
+The gross {\it return\/} on asset $j$ between dates 0 and 1 
+is the ratio of the dividend to the price: $r^j(z) = d^j(z)/q^j$.
 Since $d^j(z)$ and $r^j(z)$ are functions of the state $z$,
 they're random variables as we defined them earlier.
 We reserve $j=1$ for the (one period) riskfree asset,
 which has constant dividend $d^1(z) = 1$ and price $q^1$.
-
-[Draw event tree. Show when prices are quoted, and when dividends are paid.]
 
 In most applications, asset prices are arbitrary but returns are not.
 What on earth could that mean?
@@ -483,7 +489,15 @@ In the next section, we'll use this to define
 units so that the price is one.
 In this case the dividend is the return:  $r^j(z) = d^j(z)/q^j = d^j(z)$.
 
-Now back to portfolio choice.
+We generally define the {\it excess return\/} on asset $j$ as the difference
+between its return and the return on the riskfree bond:
+$ x^j(z) = r^j(z) - r^1 $. 
+The mean excess return, $ E[x^j(z)]$ is typically referred
+to as the {\it risk premium\/}.
+
+
+{\it Portfolio choice.\/} 
+Now that we know what assets are, we can describe portfolio choice.
 Here the problem consists of the same preferences,
 equation (\ref{eq:utility-2period-stochastic}),
 and a suitably modified budget constraint.

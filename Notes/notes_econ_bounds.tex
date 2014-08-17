@@ -52,7 +52,7 @@
 \centerline{Revised: \today}
 
 \bigskip
-We return now to asset pricing models with macroeconomic foundations ---
+We return to asset pricing models with macroeconomic foundations ---
 macro-finance, for short ---
 retracing some of the key steps of the last thirty years.
 The term macro-finance means
@@ -79,12 +79,12 @@ by entropy, something we'll define when we get to it.
 %
 In short, when we observe high excess returns or Sharpe ratios,
 they tell us that there must be a lot of dispersion in the pricing kernel ---
-dispersion being here a suitable vague term that we'll define more precisely later.
+dispersion being here a suitably vague term that we'll define more precisely later on.
 Any model lacking such dispersion is dead from the start.
 With power utility, that typically means high risk aversion,
 which brings us back to what degree of risk aversion is reasonable.
 The evident problems with the representative agent power utility model
-has led to all kinds of interesting work.
+is the key driving work in this area.  
 
 In all of this, we'll use a timing convention in which $t$ is now
 and $t+1$ is later.
@@ -92,7 +92,7 @@ With time measured in years, $t+1$ would be one year from now.
 That's similar to what we've done so far,
 but with $t$ taking the place of date 0 and $t+1$ taking the place of date 1.
 The change is superficial, but makes the comparison with data
-seem more natural.
+more natural.
 
 
 \section{The nature of research}
@@ -159,8 +159,8 @@ This is the question addressed by Mehra and Prescott,
 one we'll address ourselves in much the same way they did.
 
 More generally, why do some assets have higher returns, on average, than others?
-Should I invest more in them?  Can I make money doing this for others?
-All of these things have, to me, both practical and intellectual interest.
+Should we invest more in them?  Can we make money doing this for others?
+Each of these questions has both practical and intellectual interest.
 \end{itemize}
 %
 What questions appeal to you?
@@ -173,9 +173,9 @@ and, sometimes, to make progress in your understanding of them.
 
 \section{Properties of excess returns and consumption growth}
 
-Let's start with the evidence on asset returns.
-We'll use US data over the last 100+ years.
-Some of the features of this data are summarized in Table 1 and Figure 1.
+We'll start with the evidence on asset returns, 
+specifically US assets over the last 100+ years.
+We summarize the basic features of such returns in Table 1 and Figure 1.
 Table 1 includes some of the properties of
 real (inflation-adjusted) returns on equity (the S\&P 500)
 and bonds (one-year Treasuries) for the period 1889-2009.
@@ -192,14 +192,24 @@ We compute them in levels of returns ($r^1$ and $r^e$)
 and logs ($\log r^1$ and $\log r^e$).
 The same with consumption growth:  $g_{t+1} = c_{t+1}/c_t$
 and $\log g_{t+1}$.
+You might be asking yourself:  Why logs?  
+The answer is that it fits nicely with some theory we'll do shortly. 
+Which is a reminder:  the concept of an excess return is a definition,
+and we get to decide which definition to use.  
+If logs are more convenient, then we go back (as we did here)
+and compute excess returns in logs.  
+
+Here are the numbers, computed both ways.  
 In levels, the mean short or riskfree rate is 2\% ($r^1 = 1.02$).
 The mean excess return on equity is 5.7\% ($r^e - r^1 = 0.057$).
 For later reference, the {\it Sharpe ratio\/}
 is the mean excess return divided by its standard deviation.
+(That's another definition, also useful in some contexts.) 
 For equity, that's $ 0.0571/0.1873 = 0.3049$.
-(That's way too many digits, but I wanted to be clear about the calculation.)
+(That's way too many digits, but I want to be clear about the calculation.)
 These numbers, or something like them, are targets for numerical examples
 of theoretical models.
+
 
 Since many of our models are loglinear, we report similar numbers in logs.
 In logs, the mean short rate is 1.8\% ($\log r^1 = 0.018$)
@@ -443,7 +453,7 @@ The idea in most applications is that entropy is a measure of dispersion.
 
 We define the pricing kernel's entropy $H(m)$ by
 \begin{eqnarray*}
-    H(m) &=& \log E(m) - E \log m .
+    H(m) &=& \log E(m) - E (\log m) .
 \end{eqnarray*}
 Since $\log$ is a concave function,
 Jensen's inequality assures us that $H(m) \geq 0$,
@@ -490,7 +500,7 @@ If we take the log of $mr$, Jensen's inequality tells us
 \end{eqnarray*}
 Rearranging terms gives us
 \begin{eqnarray*}
-    E  \log r^j  &\leq& - E \log m . %\;\;=\;\; E \log m^{-1} . %\;\;=\;\; - E \log m.
+    E (\log r^j)  &\leq& - E (\log m ). %\;\;=\;\; E \log m^{-1} . %\;\;=\;\; - E \log m.
 \end{eqnarray*}
 The highest possible mean log return, in other words, is $\log r = - \log m$.
 
@@ -502,7 +512,7 @@ We have
 \end{eqnarray*}
 Together we have
 \begin{eqnarray}
-    E  \log r^j - \log r^1  &\leq& \log E(m) - E \log m  \;\;=\;\; H(m) .
+    E  (\log r^j) - \log r^1  &\leq& \log E(m) - E (\log m)  \;\;=\;\; H(m) .
     \label{eq:entropy-bound}
 \end{eqnarray}
 In words: excess returns place a lower bound on the entropy
@@ -570,11 +580,12 @@ that implies $\alpha \geq 8.08$.
 This is lower than our equity premium calculation,
 but then it's a lower bound.
 
-\section{Another take on risk premiums} 
 
-****** ???? *****
-
-Derive risk premiums from co-entropy ...  
+%\section{Another take on risk premiums}
+%
+%****** ???? *****
+%
+%Derive risk premiums from co-entropy ...
 
 
 \section*{Bottom line}
@@ -582,6 +593,8 @@ Derive risk premiums from co-entropy ...
 The representative agent model has one big strength:
 it associates risk premiums with the cyclical behavior
 of output, profits, and dividends, which seems roughly right.
+Put simply: Assets that pay off most in good times, when consumption is high, 
+have positive risk premiums. 
 The numbers, however, are off.
 The equity premium, the Hansen-Jagannathan bound, and the entropy bound
 all point to variability of the pricing kernel as the key issue for asset pricing models.
@@ -592,9 +605,9 @@ lots of other assets with nonzero risk premiums.
 Perhaps for this reason, financial professionals often
 use arbitrary pricing kernels designed to fit a set
 of asset prices well.
-These models don't tell us where the risk premiums comes from,
+These models don't tell us where risk premiums comes from,
 but they approximate observed asset prices reasonably well.
-We'll see examples of this when we turn to option and bond pricing.
+We'll see examples of this kind of thing when we turn to option and bond pricing.
 
 
 \section*{Practice problems}
@@ -603,7 +616,7 @@ We'll see examples of this when we turn to option and bond pricing.
 
 \item {\it Equity premium with Bernoulli consumption growth.\/}
 We work through a bunch of the computations from this chapter
-in a simple setting to make sure we know how they work.
+in a simple setting to make sure we understand how they work.
 We'll use the Bernoulli example from Section \ref{sec:equity-premium},
 where  $ z $  takes on the values $\{-1, 1\}$ with probabilities $\{ 1/2, 1/2 \}$.
 Log consumption growth is $ \log g(z) = \mu + \sigma z$.
@@ -656,13 +669,13 @@ see entropy bound.
 
 \item {\it Sharpe ratios.\/}
 We'll look at Sharpe ratios in a two-period representative agent economy.
-Endowment growth $g$ is Bernoulli:
+Endowment growth $g$ is Bernoulli,
 \begin{eqnarray*}
     g &=&
         \left\{
         \begin{array}{ll}
             1.00    &  \mbox{with probability } 1-\omega \\
-            1.10    &  \mbox{with probability } \omega
+            1.10    &  \mbox{with probability } \omega ,
         \end{array}
         \right.
 \end{eqnarray*}
@@ -718,7 +731,7 @@ Don't worry if that seems obscure to you.
 
 \item {\it Sharpe ratios and leverage.\/}
 One of the convenient properties of Sharpe ratios is that they're invariant to leverage.
-Consider a portfolio consisting of fraction $a$ in asset with return $r^j$ and
+Consider a portfolio consisting of fraction $a>0$ in asset with return $r^j$ and
 fraction $1-a$ in a safe asset with return $r^1$.
 %
 \begin{enumerate}
@@ -727,6 +740,7 @@ The excess return over the riskfree rate $r^1$?
 \item How does the excess return vary with $a$?
 \item What is the Sharpe ratio?
 How does the Sharpe ratio depend on $a$?
+What happens if $a<0$?
 \end{enumerate}
 %
 \needspace{2\baselineskip}
@@ -742,6 +756,9 @@ As a result, $a$ drops out of the Sharpe ratio.
 If we double $a$, we double the expected excess return,
 but we also double its standard deviation,
 so the Sharpe ratio stays the same.
+If $a<0$, we reverse the sign of the Sharpe ratio.
+In words:  if we have an asset with a negative Sharpe ratio, 
+we simply reverse the trade and short the asset.
 \end{enumerate}
 
 \item {\it Entropy bound revisited.\/}
@@ -805,16 +822,16 @@ but this is more constructive.
 
 \item The entropy bound says
 \begin{eqnarray*}
-    E (\log r - \log r^1) &\leq& H(m) \;\;=\;\; \log E(m) - E \log m .
+    E (\log r - \log r^1) &\leq& H(m) \;\;=\;\; \log E(m) - E (\log m) .
 \end{eqnarray*}
 All we need to do is substitute.
 We have $r = 1/m$, so
-$ E \log r = - E \log m$.
+$ E (\log r) = E (\log m^{-1}) = - E (\log m)$.
 The one-period rate is $ r^1 = 1/ E(m)$, so
 $ \log r^1 = - \log E(m)$.
 That gives us
 \begin{eqnarray*}
-    E (\log r - \log r^1) &=& - E \log m + \log E(m) \;\;=\;\; H(m) .
+    E (\log r - \log r^1) &=& - E (\log m) + \log E(m) \;\;=\;\; H(m) .
 \end{eqnarray*}
 (The $E$ in front of $r^1$ is irrelevant here, because $r^1$ is a constant.)
 \end{enumerate}
@@ -869,7 +886,8 @@ Excess return $\log r^e - \log r^1$ &  0.0407 & 0.1812 & --0.7157 & 0.9065 \\
 \bottomrule
 \end{tabular}
 
-Source:  Shiller, website, updated.
+Source:  Shiller's 
+\href{http://www.econ.yale.edu/~shiller/data.htm}{website}, updated.
 Data covers the period 1889-2009, annual.
 Returns are real:  nominal returns minus inflation.
 Equity is the S\&P 500 and its predecessors.
@@ -881,7 +899,7 @@ posted on the course website.
 \pagebreak
 {\large\bf Figure 1 \\ US real asset returns v. consumption growth, 1889-2009}
 
-\includegraphics[width=\textwidth]{../Matlab/scatter_gxr.pdf}
+\includegraphics[width=\textwidth]{../Code/Matlab/scatter_gxr.pdf}
 
 \vfill \centerline{\it \copyright \ \number\year \
 NYU Stern School of Business}

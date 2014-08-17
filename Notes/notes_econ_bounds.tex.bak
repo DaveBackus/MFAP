@@ -17,6 +17,7 @@
     pdfauthor={Dave Backus @ NYU},
     pdfstartview={FitH},
     pdfpagemode={UseNone},
+    bookmarksopen=false,
 %    pdfnewwindow=true,      % links in new window
 %    linkcolor=blue,         % color of internal links
 %    citecolor=blue,         % color of links to bibliography
@@ -569,11 +570,11 @@ that implies $\alpha \geq 8.08$.
 This is lower than our equity premium calculation,
 but then it's a lower bound.
 
-\section{Another take on risk premiums} 
+\section{Another take on risk premiums}
 
 ****** ???? *****
 
-Derive risk premiums from co-entropy ...  
+Derive risk premiums from co-entropy ...
 
 
 \section*{Bottom line}
@@ -880,7 +881,7 @@ posted on the course website.
 \pagebreak
 {\large\bf Figure 1 \\ US real asset returns v. consumption growth, 1889-2009}
 
-\includegraphics[width=\textwidth]{../Matlab/scatter_gxr.pdf}
+\includegraphics[width=\textwidth]{../Code/Matlab/scatter_gxr.pdf}
 
 \vfill \centerline{\it \copyright \ \number\year \
 NYU Stern School of Business}
