@@ -1,11 +1,17 @@
 """
-Cumulant expansions for normal and Poisson mixtures, univariate and bivariate.
+Cumulant expansions for Poisson mixtures of normals.  
 The program is organized in several subprograms (cells) that can/should be run 
 separately.
 Also some messing around to check syntax.  
 
-Prepared for the NYU Course "Macroeconomic Foundations for Asset Pricing," 
-ECO-UB-233.  
+Prepared for the NYU Course "Macroeconomic Foundations for Asset Prices," 
+ECO-UB-233.  More at
+* https://sites.google.com/site/nyusternmacrofoundations/home
+* https://github.com/DaveBackus/MFAP
+
+References
+* sympy:  http://sympy.org/
+* subs:  http://docs.sympy.org/latest/modules/core.html#sympy.core.basic.Basic.subs
 
 Written by Dave Backus @ NYU 
 """
@@ -13,13 +19,14 @@ Written by Dave Backus @ NYU
 # 1. Compute cumulants symbolically from cumulant generating function
 # uses the SymPy library:  http://sympy.org/
 # comes automatically with most scientific code distributions 
-from sympy import symbols, diff, exp   # subs not needed? 
+from sympy import symbols, diff, exp   
 s, omega, theta, delta = symbols('s omega theta delta')
 
 # cgf formula for Poisson mixture of normals 
 cgf = omega*(exp(s*theta+(delta*s)**2/2)-1) 
 
 # crude version 
+
 kappa1 = diff(cgf, s, 1).subs(s, 0)
 kappa2 = diff(cgf, s, 2).subs(s, 0)
 kappa3 = diff(cgf, s, 3).subs(s, 0)
