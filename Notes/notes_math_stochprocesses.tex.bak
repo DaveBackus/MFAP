@@ -61,6 +61,8 @@
 stationary = time-homogeneous
 
 \bigskip
+Hansen and Sargent:  an economic model is a stochastic process...  
+
 We look at some simple examples of {\it stochastic processes\/},
 which combine randomness with dynamics.
 Stochastic processes are a fundamental tool of modern macroeconomics and finance,
@@ -148,15 +150,16 @@ What kind of tree, for example, corresponds to the behavior of the short-term
 interest rate?  Or the growth rate of consumption?
 
 
-\section{Stationary Markov processes}
+\section{Well-behaved stochastic processes}
 
 
 We will use stochastic processes with a lot more structure
 on them than this.
-Why?  Because it's simpler and, as a result, gives us sharper insights.
+Why?  Lots of reasons, but mainly because they're simpler, 
+a give us a clear link between models and evidence.  
 
 One kind of structure is what is called the {\it Markov property\/}:
-that the probabilities of possible outcomes next period
+the probabilities of possible outcomes next period
 depend on this period's state, but not the complete history.
 Formally, we would write
 $p(z_{t+1} | z^t ) = p(z_{t+1} | z_t ) $.

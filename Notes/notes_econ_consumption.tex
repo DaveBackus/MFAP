@@ -1,5 +1,14 @@
-\input{../LaTeX/notes_template.tex}
+\documentclass[11pt]{article}
 
+\input{../LaTeX/preamble.tex}
+
+\begin{document}
+\parskip=\bigskipamount
+\parindent=0.0in
+\thispagestyle{empty}
+\input{../LaTeX/header.tex}
+
+\bigskip\bigskip
 \centerline{\Large \bf Consumption, Saving, \& Portfolio Choice}
 \centerline{Revised: \today}
 
@@ -12,8 +21,7 @@ and how that saving is allocated across assets.
 We'll see how this works in a two-period setting,
 which captures the essential ideas in a relatively simple way.
 
-This will seem obscure the first time you see it,
-but fundamental result is the equation
+This gives us our first glimpse of the central equation in this course, 
 \begin{eqnarray}
     E (mr) &=& 1 .
     \label{eq:E(mr)=1}
@@ -21,7 +29,8 @@ but fundamental result is the equation
 Variants of this equation account for
 an embarrassingly large part of macroeconomics and finance,
 including virtually all of modern asset pricing.
-We'll see it a lot.
+Don't bother to memorize it, 
+you'll soon find that it's impossible to forget. 
 
 
 \section{Kuhn-Tucker conditions}
@@ -154,7 +163,7 @@ Log utility $u(c) = \log c$ corresponds to $\alpha = 1$.
 [This is a tricky one, ask me if you're interested.]
 
 We're going to think about the problem of choosing
-$c_0$ and $c_1$ now, at date 0.
+$c_0$ and $c_1$ all at once, at date 0.
 At date 1, we simply execute our plan:
 we consume current income and the proceeds of any saving we do at date 0.
 More on that shortly.
@@ -198,8 +207,10 @@ We'll ignore saving from now on, but it's there behind the scenes.
 We now have the pieces of the consumption-saving problem:
 the utility function (\ref{eq:utility-2period})
 and the budget constraint (\ref{eq:budget-2period}).
-We attack it with the usual Lagrangian methods.
-The first-order conditions for utility maximization are
+We attack it with the usual Lagrangian methods 
+using $\lambda$ as the Lagrange multiplier on the constraint.
+[What is the Lagrangian function?]
+The first-order conditions are
 \begin{eqnarray*}
         u'(c_0)  &=& \lambda  \\
        \beta u'(c_1)  &=& \lambda Q
@@ -221,10 +232,11 @@ If we denote the marginal rate of substitution or mrs by $m$, we have
        \frac{\beta u'(c_1)}{u'(c_0)} \ r  &=& m r \;\;=\;\;  1 .
        \label{eq:euler-deterministic}
 \end{eqnarray}
-We'll see variants of this equation throughout the course.
+This is a variant of (\ref{eq:E(mr)=1});
+since there's no risk, we don't need the expectation $E$.  
 
 [Draw budget line and indifference curves, show tangency.
-Budget line is $c_0 + c_1/r = Y$, so slope in $(c_0,c_1)$ space
+Budget line is $c_0 + c_1/r = Y$, so slope in $(c_0,c_1)$-space
 is $-r = - 1/Q$.]
 
 So what do we have here?  We have a connection between
@@ -234,7 +246,7 @@ then for a given interest rate we'll choose
 more consumption now and less later.
 This is implied because $u'$ is decreasing (recall $u''<0$).
 Makes sense:  if we put less weight on the future,
-we'll allocate less of our income to future consumption.
+we allocate less of our income to future consumption.
 The interest rate works the same way.
 If we raise $r$, which makes future consumption cheaper,
 we'll do more of it.
@@ -261,6 +273,7 @@ when the economy (including consumption) is growing quickly
 and low when it's not.
 
 
+{\it Example (log utility).\/} 
 Let's return to our problem and solve it explicitly
 for the case of log utility.
 We solve the first-order conditions for consumption:
@@ -317,7 +330,7 @@ We refer to $Q(z)$ as the {\it state price\/}:
 for $Q(z)$ units of date-0 consumption today, we get one
 unit of date-1 consumption if state $z$ occurs --- and nothing otherwise.
 Another way to think about $Q(z)$ is that it's the price of a risky asset
-which we'll call an {\it Arrow security\/}.
+that we call an {\it Arrow security\/}.
 It's like a digital option:  fixed payoff in some situations, nothing in others.
 If you're familiar with linear algebra,
 you might guess that {Arrow securities}
@@ -329,7 +342,7 @@ we can generally do this with assets, too:  decompose them
 into collections of Arrow securities and value them with state prices.
 More on that in a couple weeks.
 
-{\it Example.\/}
+{\it Example (``complete markets'').\/}
 Suppose we have two states and two assets.
 Asset 1 is a riskfree bond, paying one in each state.
 Asset 2 we'll call equity.  It pays one in state 1, two in state 2.
@@ -353,8 +366,25 @@ we can also do the reverse:  if we know the prices of the assets,
 we can find the prices of the Arrow securities.
 
 
-
-
+{\it Example  (``incomplete markets'').\/}
+Here's another example, which makes a subtle point we'll come
+back to later on.  
+Suppose we have three states and two assets.
+Asset 1 is the riskfree bond and pays one in each state.
+Asset 2 is equity and pays one in state 1, two in state 2, and one in state 3.
+Replication here gives us 
+\begin{eqnarray*}
+    q^1 &=& Q(1) + Q(2) + Q(3) \\
+    q^e &=& Q(1) + 2 Q(2) + Q(3) .
+\end{eqnarray*}
+Is there a solution?  
+Well, we have more unknowns than equations, so there 
+should be lots of solutions.
+Suppose, for example, $q^1 = 1 $ and $q^e = 4/3$. 
+Then $ Q(1) = Q(2) = Q(3) = 1/3$ is a solution.   
+But so is $Q(2) = 1/3$ and any combination of $Q(1)$ and $Q(3)$ that sums to 1/3. 
+Some of these solutions give us negative state prices, 
+which we'll have to think about, but not all of them. 
 
 Back to our problem:  choose $\{c_0, c_1(z)\}$ to maximize
 utility (\ref{eq:utility-2period-stochastic}) subject to the budget constraint
@@ -367,9 +397,10 @@ the first-order conditions are
 \end{eqnarray*}
 with a version of the second equation for every value of $z$.
 The ratio of the second equation to the first is
-\begin{eqnarray*}
+\begin{eqnarray}
     \beta p(z) u'[c_1(z)]/u'(c_0) &=& Q(z) ,
-\end{eqnarray*}
+    \label{eq:con-stateprices}
+\end{eqnarray}
 a convenient expression relating consumption to state prices.
 This is the usual condition equating the marginal rate of substitution
 to the relative price, but here we do it in every state.
@@ -409,22 +440,29 @@ An asset here is a claim to a random ``dividend,''
 with dividend defined broadly to include anything the asset is a claim to.
 Let us say, to be concrete, that one unit of asset $j$ is a claim to $d^j(z)$ units
 of the consumption good at date 1 in state $z$.
-Different dividend streams constitute different assets.
+Different dividends constitute different assets.
 To complete the notation,
 let us say that asset $j$ sells at date 0
 for $q^j$ units of the date-0 consumption good.
 So we pay $q^j$ at date 0 for $d^j(z)$ at date 1 in state $z$.
 Uncertainty over the payoff is built into the dependence
-the $d^j$ on the state $z$.
+of $d^j$ on the state $z$.
 
 [Draw event tree. Show when prices are quoted, and when dividends are paid.]
 
-The gross {\it return\/} on asset $j$ between dates 0 and 1
+The (gross) {\it return\/} on asset $j$ between dates 0 and 1
 is the ratio of the dividend to the price: $r^j(z) = d^j(z)/q^j$.
 Since $d^j(z)$ and $r^j(z)$ are functions of the state $z$,
 they're random variables as we defined them earlier.
 We reserve $j=1$ for the (one period) riskfree asset,
 which has constant dividend $d^1(z) = 1$ and price $q^1$.
+
+We generally define the {\it excess return\/} on asset $j$ as the difference
+between its return and the return on the riskfree bond:
+$ x^j(z) = r^j(z) - r^1 $.
+The mean excess return, $ E[x^j(z)]$ is typically referred
+to as the {\it risk premium\/}.
+
 
 In most applications, asset prices are arbitrary but returns are not.
 What on earth could that mean?
@@ -440,13 +478,6 @@ that the units --- the definition of a share --- don't matter.
 In the next section, we'll use this to define
 units so that the price is one.
 In this case the dividend is the return:  $r^j(z) = d^j(z)/q^j = d^j(z)$.
-
-We generally define the {\it excess return\/} on asset $j$ as the difference
-between its return and the return on the riskfree bond:
-$ x^j(z) = r^j(z) - r^1 $.
-The mean excess return, $ E[x^j(z)]$ is typically referred
-to as the {\it risk premium\/}.
-
 
 {\it Portfolio choice.\/}
 Now that we know what assets are, we can describe portfolio choice.
@@ -492,9 +523,10 @@ The ratio of the second to the first gives us, for each state $z$,
     \beta p(z) u'[c_1(z)] / u'(c_0) &=& \lambda(z)/\lambda_0 .
 \end{eqnarray*}
 If we relabel by $Q(z) = \lambda(z)/\lambda_0$, we have the same relation
-we had earlier connecting  the marginal rate of substitution to state prices.
+we had earlier connecting  the marginal rate of substitution to state prices, 
+equation (\ref{eq:con-stateprices}).
 Evidently there are state prices hiding behind the scenes here,
-even though we do not have explicit Arrow securities.
+even though we made no mention of Arrow securities when we set up the problem.
 
 We can also express asset prices in terms of state prices.
 The third equation can be written
@@ -502,7 +534,7 @@ The third equation can be written
     q^j &=& \sum_z Q(z) d^j(z) ,
 \end{eqnarray*}
 which is another equation we'll run across again.
-It decomposes the price of the asset into pieces attributed to each state.
+It decomposes the price of the asset into pieces associated with each state.
 We did this by example in the previous section.
 
 Finally, we can write the solution in the form of
@@ -608,7 +640,7 @@ $r^e-r^1 = r^1 (e^x-1)$.
 
 \section*{Bottom line}
 
-We derived the fundamental equation for the course:
+We derived the fundamental equation of the course for the first time:
 \begin{eqnarray*}
     E \left( \frac{\beta u'(c_1)}{u'(c_0)}\; r^j \right) &=&
         E \left( m r^j \right) \;\;=\;\;  1
@@ -617,6 +649,9 @@ for (gross) returns $r^j$ on all assets $j$.
 Here it's the first-order condition for a consumer's portfolio choice
 problem.
 Later on it will show up as an asset pricing relation.
+We also defined Arrow securities and state prices, 
+two theoretical concepts that reappear even in practical
+situations.  
 
 
 \section*{Practice problems}
@@ -794,12 +829,16 @@ $r^1 = 1.1$,
 $r^e(1) = 1.0$, $r^e(2) = 1.4$,
 $ y_0 = 1$.
 
+{\it Note:  Utility isn't defined
+if $c_1(z)$ is negative.  
+That restricts your portfolio choice.\/} 
+
 \begin{enumerate}
 \item What are the mean and variance of the return on equity?
 \item What are the implied prices of Arrow securities?
-Hint:  Recall that Arrow securities pay off in one state only.
-Our assets are combinations of Arrow securities,
-so it's a question of unbundling them.
+%Hint:  Recall that Arrow securities pay off in one state only.
+%Our assets are combinations of Arrow securities,
+%so it's a question of unbundling them.
 \item What are the first-order conditions for $c_0$ and $a$?
 Show that with power utility,
 the latter can be determined without knowing $c_0$.
@@ -811,7 +850,7 @@ What values do you get for $a$, $c_0$, $c_1(1)$, and $c_1(2)$?
 %and choose the one that works best.
 \item How does your answer change if you use $\alpha = 2$?
 Does the difference make sense to you?
-\item How do your answers compare to those of Merton's portfolio formula?
+\item How do your answers compare to Merton's portfolio formula?
 \end{enumerate}
 %
 \needspace{2\baselineskip}

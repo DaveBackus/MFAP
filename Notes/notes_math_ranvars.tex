@@ -1,5 +1,14 @@
-\input{../LaTeX/notes_template.tex}
+\documentclass[11pt]{article}
 
+\input{../LaTeX/preamble.tex}
+
+\begin{document}
+\parskip=\bigskipamount
+\parindent=0.0in
+\thispagestyle{empty}
+\input{../LaTeX/header.tex}
+
+\bigskip\bigskip
 \centerline{\Large \bf Math Tools:  Random Variables}
 \centerline{Revised: \today}
 
@@ -1304,7 +1313,7 @@ which is zero for normals
 but takes the sign of $\theta$ here.
 %If $\theta<0$ we have negative skewness.
 The rest is similar to the Bernoulli on its own.
-If you'd like a picture, try this:  
+If you'd like a picture, try this:
 \begin{verbatim}
 x = [-4:0.1:4]';
 
@@ -1318,7 +1327,7 @@ plot(x,p1,'b')
 hold on
 plot(x,pmix,'m')
 text(0.4, 0.38, 'blue=std normal, magenta=mixture')
-\end{verbatim} 
+\end{verbatim}
 \end{enumerate}
 
 %\item {\it Poisson mixtures.\/}

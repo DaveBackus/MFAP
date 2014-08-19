@@ -1,15 +1,14 @@
 \documentclass[11pt]{article}
 
-\input{../LaTeX/notes_template.tex}
+\input{../LaTeX/preamble.tex}
 
-% document starts here
 \begin{document}
 \parskip=\bigskipamount
 \parindent=0.0in
 \thispagestyle{empty}
-{\large ECON-UB 233 \hfill Dave Backus @ NYU}
+\input{../LaTeX/header.tex}
 
-\bigskip\bigskip
+\bigskip\bigskip 
 \centerline{\Large \bf Risk \& Risk Aversion}
 \centerline{Revised: \today}
 

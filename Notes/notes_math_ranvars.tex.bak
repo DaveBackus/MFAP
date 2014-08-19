@@ -1,4 +1,14 @@
+
+
 \input{../LaTeX/notes_template.tex}
+
+% document starts here
+\begin{document}
+\parskip=\bigskipamount
+\parindent=0.0in
+\thispagestyle{empty}
+\input{../LaTeX/header.tex}
+
 
 \centerline{\Large \bf Math Tools:  Random Variables}
 \centerline{Revised: \today}
@@ -1265,7 +1275,7 @@ Let's see.
 \item What are the first three cumulants?
 \item How does this differ from a normal random variable?
 \end{enumerate}
-Suggestion:  Let Matlab do most of the work here.
+Suggestion:  Let Matlab do most of the work.
 
 \needspace{4\baselineskip}
 Answer.
@@ -1304,6 +1314,21 @@ which is zero for normals
 but takes the sign of $\theta$ here.
 %If $\theta<0$ we have negative skewness.
 The rest is similar to the Bernoulli on its own.
+If you'd like a picture, try this:
+\begin{verbatim}
+x = [-4:0.1:4]';
+
+p1 = exp(-x.^2/2)./sqrt(2*pi);
+mu = -2; sigma = 1;
+p2 = exp(-(x-mu).^2/(2*sigma^2))./sqrt(2*pi*sigma^2);
+omega = 0.2;
+pmix = (1-omega)*p1 + omega*p2;
+
+plot(x,p1,'b')
+hold on
+plot(x,pmix,'m')
+text(0.4, 0.38, 'blue=std normal, magenta=mixture')
+\end{verbatim}
 \end{enumerate}
 
 %\item {\it Poisson mixtures.\/}
