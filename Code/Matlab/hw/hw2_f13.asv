@@ -18,15 +18,14 @@ cgf = log(mgf);
 
 kappa1 = subs(diff(mgf,s,1),s,0)
 kappa2 = subs(diff(cgf,s,2),s,0)
-kappa3 = subs(diff(cgf,s,3),s,0);
-kappa3 = simplify(kappa3)
-kappa4 = subs(diff(cgf,s,4),s,0);
-kappa4 = simplify(kappa4) 
+kappa3 = subs(diff(cgf,s,3),s,0)
+kappa4 = subs(diff(cgf,s,4),s,0)
+simplify(kappa4) 
 
-gamma1 = (kappa3)/(kappa2)^(3/2);
-gamma1 = simplify(gamma1) 
-gamma2 = (kappa4)/(kappa2)^2;
-gamma2 = simplify(gamma2) 
+gamma1 = (kappa3)/(kappa2)^(3/2)
+simplify(gamma1) 
+gamma2 = (kappa4)/(kappa2)^2
+simplify(gamma2) 
 
 %check_gamma2 = subs(gamma2, [omega delta], [0.05 4.05])
 
