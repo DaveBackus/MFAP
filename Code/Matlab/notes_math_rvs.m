@@ -1,9 +1,31 @@
 %  notes_math_rvs 
 %  Calculations to accompany notes on random variables
 %  For:  "Macro-foundations for asset prices"
-%  Written by:  Dave Backus, NYU, August 2013 and after 
+%  Written by:  Dave Backus, NYU, August 2013 
 clear all 
 format compact
+
+%%
+disp('Poisson probabilities')
+j = [0:8]';
+jfac = gamma(j+1);
+
+% calculate probabilities
+omega = 0.1;
+p1 = exp(-omega)*omega.^j./jfac;
+omega = 1.5;
+p2 = exp(-omega)*omega.^j./jfac;
+
+clf                             % clear figure 
+bar(j, [p1 p2])                 % draw bar chart 
+% color controls, only for experts 
+cmap = [0 0 1; 1 0 1];          % sets colors as blue and magenta ("rgb")
+colormap(cmap) 
+% add title and axis labels 
+title('Poisson probabilities', 'FontSize', 12)  % title, large font 
+xlabel('Value of random variable j') 
+ylabel('Probability p(j)') 
+
 
 %%
 disp('Normal density functions')
@@ -17,9 +39,13 @@ mu = 0;
 sigma = 1.5;
 p2 = exp(-(x-mu).^2/(2*sigma^2))./sqrt(2*pi*sigma^2);
 
-plot(x,p1,'b')
+clf 
+plot(x, p1, 'b', 'LineWidth', 2)
 hold on
-plot(x,p2,'m')
+plot(x, p2, 'm', 'LineWidth', 2)
+xlabel('Value of random variable x') 
+ylabel('Density function p(x)') 
+title('Normal density functions', 'FontSize', 12)
 
 
 %%

@@ -110,7 +110,8 @@ If you find mistakes, please tell me, I'll correct them immediately.
 We will use software extensively.
 The default is Matlab, a popular user-friendly high-level language that's described
 in  Lab Report \#0.
-A second option is Python:  Whenever you see Matlab, you are free to substitute Python. 
+A second option is Python:  Whenever the class calls for Matlab,
+you are free to substitute Python.
 It's less user-friendly for novices,
 so I suggest you stick
 with Matlab unless you have prior programming experience.
@@ -150,7 +151,17 @@ A note about quizzes:  You can bring one page of notes, standard letter paper,
 both sides, with anything on it you like.
 This will save you from having to memorize things.
 It's also a good study tool:  when you decide what to include,
-you'll be organizing your thoughts about the course.
+you'll be organizing your thoughts about what you've learned.
+
+\section*{Expectations}
+
+I expect ***
+\begin{itemize}
+\item Come to class
+\item Ask questions 
+\item Do the assignments 
+\item Have fun...  
+\end{itemize} 
 
 
 \section*{Policies}

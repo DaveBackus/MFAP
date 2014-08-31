@@ -6,6 +6,27 @@ clear all
 format compact
 
 %%
+disp('Poisson probabilities')
+j = [0:8]';
+jfac = gamma(j+1);
+
+omega = 0.1;
+p1 = exp(-omega)*omega.^j./jfac;
+
+omega = 1.5;
+p2 = exp(-omega)*omega.^j./jfac;
+
+p = [p1 p2];
+
+clf 
+bar(j, p) 
+title('Poisson probabilities', 'FontSize', 12)
+% color controls, ignore 
+cmap = [0 0 1; 1 0 1];
+colormap(cmap) 
+
+
+%%
 disp('Normal density functions')
 x = [-4:0.1:4]';
 
@@ -17,9 +38,13 @@ mu = 0;
 sigma = 1.5;
 p2 = exp(-(x-mu).^2/(2*sigma^2))./sqrt(2*pi*sigma^2);
 
-plot(x,p1,'b')
+clf 
+plot(x, p1, 'b', 'LineWidth', 2)
 hold on
-plot(x,p2,'m')
+plot(x, p2, 'm', 'LineWidth', 2)
+xlabel('Value of Random Variable x') 
+ylabel('Density Function p(x)') 
+title('Normal density functions', 'FontSize', 12)
 
 
 %%
@@ -50,6 +75,39 @@ gamma2 = kappa4/kappa2^2
 
 
 %%
+disp('More generating functions')
+syms s mu sigma                     % defines these as symbols 
+
+cgf_x = s^2/2; 
+cgf_y = s*mu + subs(cgf_x, s, s*sigma); 
+
+% differentiate cumulant generating function 
+kappa1 = subs(diff(cgf_y,s,1),s,0)  % mean
+kappa2 = subs(diff(cgf_y,s,2),s,0)  % variance 
+
+
+%%
+% 3-state moments 
+syms s omega delta % defines these as symbols 
+
+mgf = omega*(exp(-s*delta)+exp(s*delta)) + (1-2*omega);
+cgf = log(mgf);
+
+disp(' ')
+kappa1 = subs(diff(cgf,s,1),s,0)    % mean
+kappa2 = subs(diff(cgf,s,2),s,0)    % variance 
+kappa3 = subs(diff(cgf,s,3),s,0)
+factor(kappa3)  % sometimes this cleans up the expression; see also simplify
+kappa4 = subs(diff(cgf,s,4),s,0)
+factor(kappa4)
+
+disp(' ')
+gamma1 = kappa3/kappa2^(3/2)
+gamma2 = kappa4/kappa2^2
+simplify(gamma2)
+
+
+%%
 disp('Gram-Charlier examples of skewness and kurtosis')
 
 % arbitrary state grid 
@@ -73,6 +131,7 @@ subplot(3,1,2), bar(z,p2,'b')
 title('skewness')
 subplot(3,1,3), bar(z,p3,'b')
 title('kurtosis')
+
 
 %% 
 disp('Normal mixture pictures')
@@ -122,7 +181,7 @@ stddev = sqrt(varx)
 disp('Practice: multivariate sample moments')  
 x = [2,-1,4,3]'
 y = [10, -5, 3, 0]'
-y = 3*y+17;
+
 xbar = mean(x)
 ybar = mean(y) 
 
@@ -130,6 +189,7 @@ varx = mean((x-xbar).^2)
 vary = mean((y-ybar).^2) 
 covxy = mean((x-xbar).*(y-ybar))
 corrxy = covxy/sqrt(varx*vary)
+
 
 %%
 % Bernoulli mixture of normals
@@ -154,3 +214,19 @@ gamma2 = kappa4/kappa2^2
 simplify(gamma2)
 
 subs(gamma2, [omega delta], [0.05 4])
+
+% plot 
+x = [-4:0.1:4]';
+p1 = exp(-x.^2/2)./sqrt(2*pi);
+
+mu = -2; sigma = 1;
+p2 = exp(-(x-mu).^2/(2*sigma^2))./sqrt(2*pi*sigma^2);
+omega = 0.2;
+pmix = (1-omega)*p1 + omega*p2;
+
+plot(x,p1,'b')
+hold on
+plot(x,pmix,'m')
+text(0.4, 0.38, 'blue=std normal, magenta=mixture') 
+
+
