@@ -1,5 +1,5 @@
 SyncTeX Version:1
-Input:1:C:\Users\dbackus\Dropbox\Documents\Classes\MFAP\Notes\notes_econ_bonds.tex
+Input:1:C:\Users\dbackus\Dropbox\Documents\Classes\MFAP\Notes\notes_econ_predictable.tex
 Input:2:C:\Program Files (x86)\MiKTeX 2.9\tex\latex\base\article.cls
 Input:3:C:\Program Files (x86)\MiKTeX 2.9\tex\latex\base\size11.clo
 Input:4:C:\Users\dbackus\Dropbox\Documents\Classes\MFAP\LaTeX\preamble.tex
@@ -30,14 +30,14 @@ Input:28:C:\Program Files (x86)\MiKTeX 2.9\tex\latex\booktabs\booktabs.sty
 Input:29:C:\Program Files (x86)\MiKTeX 2.9\tex\latex\titlesec\titlesec.sty
 Input:30:C:\Program Files (x86)\MiKTeX 2.9\tex\latex\enumitem\enumitem.sty
 Input:31:C:\Program Files (x86)\MiKTeX 2.9\tex\latex\needspace\needspace.sty
-Input:32:C:\Users\dbackus\Dropbox\Documents\Classes\MFAP\Notes\TeXAux\notes_econ_bonds.aux
+Input:32:C:\Users\dbackus\Dropbox\Documents\Classes\MFAP\Notes\TeXAux\notes_econ_predictable.aux
 Input:33:C:\Program Files (x86)\MiKTeX 2.9\tex\context\base\supp-pdf.mkii
 Input:34:C:\Program Files (x86)\MiKTeX 2.9\tex\latex\graphics\color.sty
 Input:35:C:\Program Files (x86)\MiKTeX 2.9\tex\latex\00miktex\color.cfg
 Input:36:C:\Program Files (x86)\MiKTeX 2.9\tex\latex\hyperref\nameref.sty
 Input:37:C:\Program Files (x86)\MiKTeX 2.9\tex\generic\oberdiek\gettitlestring.sty
-Input:38:C:\Users\dbackus\Dropbox\Documents\Classes\MFAP\Notes\TeXAux\notes_econ_bonds.out
-Input:39:C:\Users\dbackus\Dropbox\Documents\Classes\MFAP\Notes\TeXAux\notes_econ_bonds.out
+Input:38:C:\Users\dbackus\Dropbox\Documents\Classes\MFAP\Notes\TeXAux\notes_econ_predictable.out
+Input:39:C:\Users\dbackus\Dropbox\Documents\Classes\MFAP\Notes\TeXAux\notes_econ_predictable.out
 Input:40:C:\Users\dbackus\Dropbox\Documents\Classes\MFAP\LaTeX\header.tex
 Output:pdf
 Magnification:1000
@@ -45,7 +45,7 @@ Unit:1
 X Offset:0
 Y Offset:0
 Content:
-!3124
+!3148
 {1
 [1,98:4736286,48201563:29601791,43465277,0
 v1,98:4736286,4736286:0,0,0
@@ -85,16 +85,11 @@ g1,10:34338077,5513871
 g1,10:34338077,5513871
 )
 (1,12:5920357,7978025:28417720,655359,0
-k1,12:14846036,7978025:8925679
-x1,12:16383947,7978025
-x1,12:18201368,7978025
-g1,12:18555262,7978025
-x1,12:19410506,7978025
-g1,12:19764400,7978025
-x1,12:22229643,7978025
-g1,12:22583537,7978025
-x1,12:25412398,7978025
-k1,12:34338077,7978025:8925679
+k1,12:15442633,7978025:9522276
+x1,12:20740666,7978025
+g1,12:21094560,7978025
+x1,12:24815802,7978025
+k1,12:34338078,7978025:9522276
 )
 (1,13:5920357,8869315:28417720,498346,139537
 k1,13:15765689,8869315:9845332
@@ -1376,7 +1371,7 @@ h1,98:5920357,48201563:28417720,0,0
 ]
 ]
 ]
-!33100
+!32985
 }1
 !10
 {2
@@ -32612,9 +32607,9 @@ k1,1480:34338077,48201563:13850050
 )
 !25209
 }22
-Input:42:C:\Users\dbackus\Dropbox\Documents\Classes\MFAP\Notes\TeXAux\notes_econ_bonds.aux
-!102
+Input:42:C:\Users\dbackus\Dropbox\Documents\Classes\MFAP\Notes\TeXAux\notes_econ_predictable.aux
+!108
 Postamble:
-Count:20630
+Count:20628
 !28
 Post scriptum:

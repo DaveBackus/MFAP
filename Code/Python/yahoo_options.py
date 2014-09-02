@@ -34,12 +34,17 @@ import matplotlib.pylab as plt
 ticker = 'spy' 
 
 # get stock price first (most recent date) 
-start = dt.datetime(2014, 8, 1)     
-today = dt.datetime(2014, 8, 29)
+start = dt.datetime(2014, 8, 22)     
+# It would be cool if we could use this to get today as the most recent
+# stock quote, but if today's a weekend you get an empty set of prices.
+# So what we do is pick an old date and then choose the last observation.
+today = dt.date.today()
 
-stock = web.DataReader(ticker, 'yahoo', today) 
-# take last close 
-atm = stock.ix[-1,'Close']  # last obs 
+stock = web.DataReader(ticker, 'yahoo', start) 
+# take last closing prices 
+atm = stock.ix[-1,'Close']      # the -1 takes the last observation   
+
+#%%
 
 # get option prices for same ticker 
 option = Options(ticker, 'yahoo')

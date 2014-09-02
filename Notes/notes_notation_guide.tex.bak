@@ -47,15 +47,15 @@
 Object    &  Definition    \\
 \midrule
 \multicolumn{2}{l}{\it Random variables}   \\
-$z$ & state \\
-$p(z)$ \hspace*{5em} & probability of state $z$\\
-$x(z)$ & random variable's value in state $z$ \\
+$z$ \hspace*{5em}& state \\
+$p$ & probability \\
+$x$ & random variable \\
 $E$ & expectation:  $E[f(x)] = \sum_x f(x) p(x) \mbox{ or } \int f(x) p(x) dx $ \\ %or the equivalent\\
-$\mu_j^\prime$ & raw moment: $ E(x^j)$ \\
+$\mu_j^\prime$ & raw moment: $ E(x^j)$ for positive integer $j$ \\
 $\mu_j$         & central moment: $ E[(x-\mu_1^\prime)^j]$ \\
 $h$         &  moment generating function:  $h(s) = E(e^{sx})$ \\
 $k$         &  cumulant generating function:  $k(s) = \log h(s) $ \\
-$\kappa_j$      & cumulant:  $j$th derivative of $k$ at $s=0$ \\
+$\kappa_j$      & cumulant:  $j$th derivative of $k$ evaluated at $s=0$ \\
 
 $\gamma_1$ & skewness:  $\kappa_3 /(\kappa_2)^{3/2} = \mu_3 /(\mu_2)^{3/2}$ \\
 $\gamma_2$ & excess kurtosis:  $\kappa_3 /(\kappa_2)^{2} = \mu_4 /(\mu_2)^{2} - 3$ \\

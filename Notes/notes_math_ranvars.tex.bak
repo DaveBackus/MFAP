@@ -699,6 +699,95 @@ That's what $\gamma_2$ does.
 
 
 
+\section{Relations between random variables}
+
+So far we've looked at single random variables.
+But economics and finance --- and lots of other things as well ---
+are concerned not with the properties
+of single random variables, but with relations among two or more of them.
+It's not enough to know the distributions of GDP growth
+and equity returns,
+we'd also like to know if they're related, and if so, how.
+We need a language for talking about that.
+%We'll use the simplest available --- covariances and correlations ---
+%
+
+We start with {\it independent\/} random variables,
+which we define shortly.
+The setup for ``multivariate'' (more than one) random variables
+is similar to what we've seen.
+The probability density function for a two-dimensional random variable
+$(x_1,x_2)$ might be expressed $p(x_1,x_2)$.
+We say $x_1$ and $x_2$ are independent if this factors into separate functions:
+$p(x_1,x_2) = p_1(x_1) p_2(x_2) $.
+You might think of coin flips.
+If two flips are independent, then the probability of two heads (say)
+is just the product of each head separately.
+If the probability of heads is one-half each time,
+then the probability of two heads is one-fourth.
+That's what independence is.
+
+Dependence  ---
+ the opposite of independence ---
+comes in many forms.
+The most direct connection is a linear one,
+which we can document with {\it covariances\/}
+and {\it correlations\/}.
+The covariance between two  random variables $x_1$ and $x_2$ is
+\begin{eqnarray*}
+    \mbox{Cov} (x_1,x_2) &=& E [x_{1} - E({x}_1)] [x_{2} - E({x}_2)] .
+\end{eqnarray*}
+It's an example of a ``joint moment,''
+a moment that involves two or more random variables.
+If the covariance is positive, high values of $x_1$ are associated,
+more often than not, with high values of $x_2$.
+If negative, the reverse.
+Their correlation is a scale-free version:
+\begin{eqnarray}
+    \mbox{Corr}(x_1,x_2) &=&
+            \frac {\mbox{Cov}(x_1,x_2)} {\mbox{Var}(x_1)^{1/2} \mbox{Var}(x_2)^{1/2} } ,
+    \label{eq:correlation}
+\end{eqnarray}
+a number between minus one and one.
+You might verify for yourself that if we look instead at the
+variables $a + bx_1$ and $c + dx_2$, the correlation is the same:
+$a$ and $c$ drop out when we subtract the means and,
+except for sign, $b$ and $d$ cancel when we calculate the ratio.
+
+Sample analogs are more or less predictable.
+The sample means and variances, of course, are
+\begin{eqnarray*}
+    \bar{x}_i &=& T^{-1} \sum_{t=1}^T x_{it}, \;\;\;
+    \mbox{Var} (x_i) \;\;=\;\; T^{-1}
+            \sum_{t=1}^T (x_{it} - \bar{x}_i)^2
+\end{eqnarray*}
+for variables $i=1,2$.
+The sample covariance of $x_1$ and $x_2$ is
+\begin{eqnarray*}
+    \mbox{Cov} (x_1,x_2) &=& T^{-1}
+            \sum_{t=1}^T (x_{1t} - \bar{x}_1) (x_{2t} - \bar{x}_2)
+\end{eqnarray*}
+and the sample correlation is constructed from the sample variances and covariance by
+(\ref{eq:correlation}).
+%
+%\begin{eqnarray*}
+%    \mbox{Corr}(x_1,x_2) &=&
+%            \frac {\mbox{Cov}(x_1,x_2)} {\mbox{Var}(x_1)^{1/2} \mbox{Var}(x_2)^{1/2} } .
+%\end{eqnarray*}
+You can generally get the idea from a scatterplot of the two variables.
+If you're taken by this possibility, search ``Anscombe's quartet.''
+
+
+Correlation is a measure of linear association.
+It's entirely possible for two variables to be related
+in a nonlinear way but have a zero covariance and correlation.
+Consider this example:
+Let $x_1$ take on the values $\{-1,0,1\}$ with probability one-third each.
+Then let $x_2 = (x_1)^2$.
+The two variables are clearly related, but their covariance is zero.
+
+
+
 \section{Sums and mixtures}
 
 We'll sometimes create random variables from combinations, either
@@ -815,94 +904,6 @@ That's true here even if the components are normal.
 Some of the most popular models in finance start with mixtures like this.
 Most applications of (one of several things called) the Merton option pricing model,
 for example, use Poisson mixtures of normals.
-
-
-\section{Relations between random variables}
-
-So far we've looked at single random variables.
-But economics and finance --- and lots of other things as well ---
-are concerned not with the properties
-of single random variables, but with relations among two or more of them.
-It's not enough to know the distributions of GDP growth
-and equity returns,
-we'd also like to know if they're related, and if so, how.
-We need a language for talking about that.
-%We'll use the simplest available --- covariances and correlations ---
-%
-
-We start with {\it independent\/} random variables,
-which we define shortly.
-The setup for ``multivariate'' (more than one) random variables
-is similar to what we've seen.
-The probability density function for a two-dimensional random variable
-$(x_1,x_2)$ might be expressed $p(x_1,x_2)$.
-We say $x_1$ and $x_2$ are independent if this factors into separate functions:
-$p(x_1,x_2) = p_1(x_1) p_2(x_2) $.
-You might think of coin flips.
-If two flips are independent, then the probability of two heads (say)
-is just the product of each head separately.
-If the probability of heads is one-half each time,
-then the probability of two heads is one-fourth.
-That's what independence is.
-
-Dependence  ---
- the opposite of independence ---
-comes in many forms.
-The most direct connection is a linear one,
-which we can document with {\it covariances\/}
-and {\it correlations\/}.
-The covariance between two  random variables $x_1$ and $x_2$ is
-\begin{eqnarray*}
-    \mbox{Cov} (x_1,x_2) &=& E [x_{1} - E({x}_1)] [x_{2} - E({x}_2)] .
-\end{eqnarray*}
-It's an example of a ``joint moment,''
-a moment that involves two or more random variables.
-If the covariance is positive, high values of $x_1$ are associated,
-more often than not, with high values of $x_2$.
-If negative, the reverse.
-Their correlation is a scale-free version:
-\begin{eqnarray}
-    \mbox{Corr}(x_1,x_2) &=&
-            \frac {\mbox{Cov}(x_1,x_2)} {\mbox{Var}(x_1)^{1/2} \mbox{Var}(x_2)^{1/2} } ,
-    \label{eq:correlation}
-\end{eqnarray}
-a number between minus one and one.
-You might verify for yourself that if we look instead at the
-variables $a + bx_1$ and $c + dx_2$, the correlation is the same:
-$a$ and $c$ drop out when we subtract the means and,
-except for sign, $b$ and $d$ cancel when we calculate the ratio.
-
-Sample analogs are more or less predictable.
-The sample means and variances, of course, are
-\begin{eqnarray*}
-    \bar{x}_i &=& T^{-1} \sum_{t=1}^T x_{it}, \;\;\;
-    \mbox{Var} (x_i) \;\;=\;\; T^{-1}
-            \sum_{t=1}^T (x_{it} - \bar{x}_i)^2
-\end{eqnarray*}
-for variables $i=1,2$.
-The sample covariance of $x_1$ and $x_2$ is
-\begin{eqnarray*}
-    \mbox{Cov} (x_1,x_2) &=& T^{-1}
-            \sum_{t=1}^T (x_{1t} - \bar{x}_1) (x_{2t} - \bar{x}_2)
-\end{eqnarray*}
-and the sample correlation is constructed from the sample variances and covariance by
-(\ref{eq:correlation}).
-%
-%\begin{eqnarray*}
-%    \mbox{Corr}(x_1,x_2) &=&
-%            \frac {\mbox{Cov}(x_1,x_2)} {\mbox{Var}(x_1)^{1/2} \mbox{Var}(x_2)^{1/2} } .
-%\end{eqnarray*}
-You can generally get the idea from a scatterplot of the two variables.
-If you're taken by this possibility, search ``Anscombe's quartet.''
-
-
-Correlation is a measure of linear association.
-It's entirely possible for two variables to be related
-in a nonlinear way but have a zero covariance and correlation.
-Consider this example:
-Let $x_1$ take on the values $\{-1,0,1\}$ with probability one-third each.
-Then let $x_2 = (x_1)^2$.
-The two variables are clearly related, but their covariance is zero.
 
 
 \section*{Bottom line}

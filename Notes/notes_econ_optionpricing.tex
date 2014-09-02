@@ -1,52 +1,12 @@
 \documentclass[11pt]{article}
 
-\oddsidemargin=0.25truein \evensidemargin=0.25truein
-\topmargin=-0.5truein \textwidth=6.0truein \textheight=8.75truein
+\input{../LaTeX/preamble.tex}
 
-%\usepackage{graphicx}
-\usepackage{verbatim}
-\usepackage{amsmath}
-\usepackage{booktabs}
-\usepackage{comment}
-
-\usepackage{hyperref}
-\urlstyle{rm}   % change fonts for url's (from Chad Jones)
-\hypersetup{
-    colorlinks=true,        % kills boxes
-    allcolors=blue,
-    pdfsubject={ECON-UB233, Macroeconomic foundations for asset pricing},
-    pdfauthor={Dave Backus @ NYU},
-    pdfstartview={FitH},
-    pdfpagemode={UseNone},
-%    pdfnewwindow=true,      % links in new window
-%    linkcolor=blue,         % color of internal links
-%    citecolor=blue,         % color of links to bibliography
-%    filecolor=blue,         % color of file links
-%    urlcolor=blue           % color of external links
-% see:  http://www.tug.org/applications/hyperref/manual.html
-}
-
-\usepackage{verbatim}
-%\usepackage{booktabs}
-\usepackage[small, compact]{titlesec}
-
-% list spacing
-\usepackage{enumitem}
-\setitemize{leftmargin=*, topsep=0pt}
-\setenumerate{leftmargin=*, topsep=0pt}
-
-\usepackage{needspace}
-% example:  \needspace{4\baselineskip} makes sure we have four lines available before pagebreak
-
-\renewcommand{\thefootnote}{\fnsymbol{footnote}}
-
-
-% document starts here
 \begin{document}
 \parskip=\bigskipamount
 \parindent=0.0in
 \thispagestyle{empty}
-{\large ECON-UB 233 \hfill Dave Backus @ NYU}
+\input{../LaTeX/header.tex}
 
 \bigskip\bigskip
 \centerline{\Large \bf Option Pricing: Black-Scholes-Merton \& Beyond}
@@ -900,7 +860,7 @@ so the impact of volatility is different.
 Suppose the risk-neutral distribution of the future value of the underlying
 $s_{t+1} = x$ has pdf
 \begin{eqnarray*}
-    p(x) &=& \lambda e^{-\lambda x} 
+    p(x) &=& \lambda e^{-\lambda x}
 \end{eqnarray*}
 for $x \geq 0$ and $\lambda > 0$.
 In  words: $x$ has an exponential distribution.
@@ -973,7 +933,7 @@ Answer.
 \item The put price is
 \begin{eqnarray*}
     q^p_t &=& q^1_t \Big\{
-        (1-\omega) \big[ k - ( 1-e^{-\lambda_1 k})/\lambda_1 \big] 
+        (1-\omega) \big[ k - ( 1-e^{-\lambda_1 k})/\lambda_1 \big]
         + \omega \big[ k - ( 1-e^{-\lambda_2 k})/\lambda_2 \big]
         \Big\} .
 \end{eqnarray*}
@@ -1282,11 +1242,6 @@ Answer.  This one's all yours, too.
 \end{enumerate}
 
 
+\input{../LaTeX/footer.tex}
 
-
-\vfill
-{\vspace*{0.2in}
-\centerline{\it \copyright \ \number\year \
-NYU Stern School of Business}
-}
 \end{document}

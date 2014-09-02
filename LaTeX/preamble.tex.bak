@@ -3,13 +3,6 @@
 \topmargin=-0.5truein \textwidth=6.0truein \textheight=8.75truein
 
 \usepackage{comment}
-\usepackage{graphicx}
-\usepackage{amssymb}
-\usepackage{amsmath}
-
-\usepackage[margin=0pt, labelsep=period, font=large, labelfont=bf]{caption}
-%\usepackage{float}
-
 \usepackage{hyperref}
 \urlstyle{rm}   % change fonts for url's (from Chad Jones)
 \hypersetup{
@@ -42,7 +35,7 @@
 \setenumerate{leftmargin=*, topsep=0pt}
 
 \usepackage{needspace}
-% \needspace{4\baselineskip} makes sure we have four lines available before a pagebreak
+% example:  \needspace{4\baselineskip} makes sure we have four lines available before pagebreak
 
 %\renewcommand{\thefootnote}{\fnsymbol{footnote}}
 %\newcommand{\var}{\mbox{\it Var\/}}

@@ -900,7 +900,7 @@ so the impact of volatility is different.
 Suppose the risk-neutral distribution of the future value of the underlying
 $s_{t+1} = x$ has pdf
 \begin{eqnarray*}
-    p(x) &=& \lambda \exp(-\lambda x)
+    p(x) &=& \lambda e^{-\lambda x}
 \end{eqnarray*}
 for $x \geq 0$ and $\lambda > 0$.
 In  words: $x$ has an exponential distribution.
@@ -927,8 +927,8 @@ Answer.
 \item The put price is
 \begin{eqnarray*}
     q^p_t &=& q^1_t E^* (k-s_{t+1})^+  \\
-            &=& q^1_t \int_{0}^{k} (k-x) \lambda \exp(-\lambda x ) dx
-            \;\;=\;\;  q^1_t [1-\exp(-\lambda k) ] .
+            &=& q^1_t \int_{0}^{k} (k-x) \lambda e^{-\lambda x } dx
+            \;\;=\;\;  q^1_t \big[ k - ( 1-e^{-\lambda k})/\lambda \big] .
 \end{eqnarray*}
 \end{enumerate}
 
@@ -947,7 +947,7 @@ is a Bernoulli mixture of $x_1$ and $x_2$:
 for some $\omega$ between zero and one.
 Each $x_j$ is exponential with density
 \begin{eqnarray*}
-    p(x_j) &=& \lambda_j \exp(-\lambda_j x_j)
+    p(x_j) &=& \lambda_j e^{-\lambda_j x_j}
 \end{eqnarray*}
 for $x_j \geq 0$ and $\lambda_j > 0$.
 Each $x_j$ has a mean of $1/\lambda_j$.
@@ -973,7 +973,8 @@ Answer.
 \item The put price is
 \begin{eqnarray*}
     q^p_t &=& q^1_t \Big\{
-        (1-\omega) [1-\exp(-\lambda_1 k) + \omega [1-\exp(-\lambda_2 k)]
+        (1-\omega) \big[ k - ( 1-e^{-\lambda_1 k})/\lambda_1 \big]
+        + \omega \big[ k - ( 1-e^{-\lambda_2 k})/\lambda_2 \big]
         \Big\} .
 \end{eqnarray*}
 The logic follows the previous problem.
@@ -1281,11 +1282,6 @@ Answer.  This one's all yours, too.
 \end{enumerate}
 
 
+\input{../LaTeX/footer.tex}
 
-
-\vfill
-{\vspace*{0.2in}
-\centerline{\it \copyright \ \number\year \
-NYU Stern School of Business}
-}
 \end{document}

@@ -1,50 +1,15 @@
 \documentclass[11pt]{article}
 
-\oddsidemargin=0.25truein \evensidemargin=0.25truein
-\topmargin=-0.5truein \textwidth=6.0truein \textheight=8.75truein
+\input{../LaTeX/preamble.tex}
 
-\usepackage{comment}
-\usepackage{booktabs}
-\usepackage{hyperref}
-\urlstyle{rm}   % change fonts for url's (from Chad Jones)
-\hypersetup{
-    colorlinks=true,        % kills boxes
-    allcolors=blue,
-    pdfsubject={ECON-UB233, Macroeconomic foundations for asset pricing},
-    pdfauthor={Dave Backus @ NYU},
-    pdfstartview={FitH},
-    pdfpagemode={UseNone},
-%    pdfnewwindow=true,      % links in new window
-%    linkcolor=blue,         % color of internal links
-%    citecolor=blue,         % color of links to bibliography
-%    filecolor=blue,         % color of file links
-%    urlcolor=blue           % color of external links
-% see:  http://www.tug.org/applications/hyperref/manual.html
-}
-
-\usepackage{verbatim}
-%\usepackage{booktabs}
-\usepackage[small, compact]{titlesec}
-
-% list spacing
-\usepackage{enumitem}
-\setitemize{leftmargin=*, topsep=0pt}
-\setenumerate{leftmargin=*, topsep=0pt}
-
-\usepackage{needspace}
-% example:  \needspace{4\baselineskip} makes sure we have four lines available before pagebreak
-
-\renewcommand{\thefootnote}{\fnsymbol{footnote}}
-
-% document starts here
 \begin{document}
 \parskip=\bigskipamount
 \parindent=0.0in
 \thispagestyle{empty}
-{\large ECON-UB 233 \hfill Dave Backus @ NYU}
+\input{../LaTeX/header.tex}
 
 \bigskip\bigskip
-\centerline{\Large \bf Approaches to Asset Pricing}
+\centerline{\Large \bf Fundamentals of Asset Pricing}
 \centerline{Revised: \today}
 
 
@@ -503,7 +468,7 @@ assets that pay off more in good times ($\lambda>0$) have positive risk premiums
 
 \section{Risk-neutral probabilities with power utility 1}
 
-{\bf *** Mention no-arb condition...} 
+{\bf *** Mention no-arb condition...}
 
 This is just a change in notation, but it's a common one in finance.
 As we noted, risk-neutral probabilities $p^*$ are defined implicitly by
@@ -958,16 +923,13 @@ Ross's classic paper is also a good read, esp Section 9.3.
 I scanned and posted it
 \href{http://pages.stern.nyu.edu/~dbackus/233/SteveRoss_risk-arb_chapter_1977.pdf}{here}.
 
-\vfill
-{\bigskip \centerline{\it \copyright \ \number\year \
-NYU Stern School of Business}
-}
+\input{../LaTeX/footer.tex}
+
 
 \end{document}
 
 \pagebreak
 \verbatiminput{../Matlab/risk_neutral_probs.m}
-
 
 
 \end{document}

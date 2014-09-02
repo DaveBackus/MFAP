@@ -8,7 +8,7 @@
 \thispagestyle{empty}
 \input{../LaTeX/header.tex}
 
-\bigskip\bigskip 
+\bigskip\bigskip
 \centerline{\Large \bf Risk \& Risk Aversion}
 \centerline{Revised: \today}
 
@@ -123,7 +123,7 @@ outcome $\{ c(z)\}$:
 \begin{itemize}
 \item The certainty equivalent $\mu$, defined by (\ref{eq:certequiv-def}).
 
-\item The mean consumption outcome, 
+\item The mean consumption outcome,
 \begin{eqnarray*}
     \cbar &=& \sum_z p(z) c(z) \;\;=\;\; E(c) .
 \end{eqnarray*}
@@ -133,7 +133,7 @@ compute the mean outcome $\cbar$.
 
 
 Comparing the certainty equivalent $\mu$ and the mean outcome $\cbar$
-tells us how much we dislike risk --- whatever risk is built into the outcomes $c(z)$. 
+tells us how much we dislike risk --- whatever risk is built into the outcomes $c(z)$.
 If $\mu = \cbar$,
 then we don't care about risk at all.
 Why?
@@ -205,9 +205,9 @@ The last one you might recognize as the payoff from
 a call option on $x$ with strike price $k$.
 
 
-We'll use two results about concave (convex) functions $f$ 
-of a random variable $x$. 
-The first is {\it Jensen's inequality\/}: 
+We'll use two results about concave (convex) functions $f$
+of a random variable $x$.
+The first is {\it Jensen's inequality\/}:
 If $f$ is concave, then
 \begin{eqnarray}
     E [f(x)] &\leq& f [E(x)] ,
@@ -217,20 +217,20 @@ with equality only if $x$ is constant.
 [Draw a concave function $f$ and show what this looks like.]
 If $f$ is convex, the inequality goes the other way.
 You should see a parallel here with (\ref{eq:jensen}), at least in the two-state case:
-think of the weight $w$ as a probability.  
+think of the weight $w$ as a probability.
 The difference between the left and right sides of (\ref{eq:jensen}) reflects
 the impact of risk, so you can see that this might be
-an essential tool in thinking about risk aversion.  
+an essential tool in thinking about risk aversion.
 
 Our second result describes the impact of increasing risk.
 It's trickier than you think to describe an increase in risk.
-We say $ x+y$ is riskier than $x$ if $y$ is not constant and has zero mean. 
-(You might hear people refer to a {\it mean-preserving spread\/} or 
-{\it second-order stochastic dominance\/}.) Then if $f$ is concave, 
+We say $ x+y$ is riskier than $x$ if $y$ is not constant and has zero mean.
+(You might hear people refer to a {\it mean-preserving spread\/} or
+{\it second-order stochastic dominance\/}.) Then if $f$ is concave,
 \begin{eqnarray*}
     E[ f(x + y)] &<& E[f(x)] .
 \end{eqnarray*}
-If $f$ is convex, the inequality goes the other way. 
+If $f$ is convex, the inequality goes the other way.
 
 {\it Example (normal)\/}.
 Suppose $x$ is normal with mean $\kappa_1$ and variance $\kappa_2>0$.
@@ -246,10 +246,10 @@ with equality if $\kappa_2 = 0$ ($x$ is constant at $\mu$).
 
 {\it Example 2 (options).\/}
 Consider the option payoff $ f(x) = \max \{ 0, x-k \} $.
-How does $E(f(x)]$ change if we add a mean-preserving spread to $x$?  
+How does $E(f(x)]$ change if we add a mean-preserving spread to $x$?
 Answer: Since $f$ is convex, its expected value goes up.
-This is a classic feature of options: 
-the more risk there is, the more they're worth.  
+This is a classic feature of options:
+the more risk there is, the more they're worth.
 
 
 
@@ -305,7 +305,7 @@ This is a little abstract at this point, but we'll put it to work
 in the next section.
 
 
-Risk aversion is more complicated so 
+Risk aversion is more complicated so
 we'll look at it a couple different ways.
 Both tell us that $u$ is concave,
 which here means  $u''(c) < 0$.
@@ -391,7 +391,7 @@ The first two are
     u''(c) &=& -\alpha c^{-\alpha-1} \;\;<\;\; 0 ,
 \end{eqnarray*}
 which have the signs we want.
-[Ask yourself why.] 
+[Ask yourself why.]
 The third and fourth derivatives are
 \begin{eqnarray*}
     u'''(c)  &=& \alpha (\alpha+1) c^{-\alpha-2} \;\;>\;\; 0 \\
@@ -488,7 +488,7 @@ That gives us
 This is a little mysterious, but it's nice compact notation,
 which is generally a good thing.
 
-Putting our two calculations together gives us the risk penalty (\ref{eq:rp-def}): 
+Putting our two calculations together gives us the risk penalty (\ref{eq:rp-def}):
 \begin{eqnarray*}
     \rp &=& \log (\cbar/\mu)  \;\;=\;\; k(1) - (1-\alpha)^{-1} k(1-\alpha) .
 \end{eqnarray*}
@@ -524,7 +524,7 @@ And so on.
 
 In risky environments, utility depends
 on the complete set of consumption outcomes.
-With expected utility, we assign separate roles to the probability 
+With expected utility, we assign separate roles to the probability
 and utility of each outcome.
 Expected utility depends potentially on all of the moments and cumulants
 of outcomes:
@@ -769,13 +769,10 @@ In a sense, the lognormal case misleads us into thinking this has to be simple.
 
 % ?? \item {\it Gamma risks.  (or normal mixture?).\/}
 
-
 \end{enumerate}
 
 
-
-\vfill \centerline{\it \copyright \ \number\year \
-NYU Stern School of Business}
+\input{../LaTeX/footer.tex}
 
 
 \end{document}

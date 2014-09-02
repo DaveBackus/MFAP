@@ -102,6 +102,8 @@ This is easier to do than say, so let's charge ahead.
 
 ??? Change $p$ to $Prob$ ...
 
+*** Change in perspective:  things are functions of state, and state varies through time.
+
 We can expand the concept of an event tree to more than the two
 dates we've used so far.
 An example is Figure 1, but we can imagine extending it further.
@@ -1431,13 +1433,7 @@ absolute value.
 
 \end{enumerate}
 
-
 \end{enumerate}
-
-
-\bigskip
-\vfill \centerline{\it \copyright \ \number\year \
-NYU Stern School of Business}
 
 
 \pagebreak
@@ -1497,6 +1493,8 @@ all possible 2-period histories is therefore $\{ (z_0,1,1),
 nodes'' on the right.
 Not shown are conditional probabilities of particular branches,
 from which we can construct probabilities for each node/history.
+
+\input{../LaTeX/footer.tex}
 
 
 \end{document}

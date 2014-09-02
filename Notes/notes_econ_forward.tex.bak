@@ -1,47 +1,12 @@
 \documentclass[11pt]{article}
 
-\oddsidemargin=0.25truein \evensidemargin=0.25truein
-\topmargin=-0.5truein \textwidth=6.0truein \textheight=8.75truein
+\input{../LaTeX/preamble.tex}
 
-%\usepackage{graphicx}
-\usepackage{verbatim}
-\usepackage{booktabs}
-\usepackage{comment}
-\usepackage[small, compact]{titlesec}
-
-\usepackage{hyperref}
-\urlstyle{rm}   % change fonts for url's (from Chad Jones)
-\hypersetup{
-    colorlinks=true,        % kills boxes
-    allcolors=blue,
-    pdfsubject={ECON-UB233, Macroeconomic foundations for asset pricing},
-    pdfauthor={Dave Backus @ NYU},
-    pdfstartview={FitH},
-    pdfpagemode={UseNone},
-%    pdfnewwindow=true,      % links in new window
-%    linkcolor=blue,         % color of internal links
-%    citecolor=blue,         % color of links to bibliography
-%    filecolor=blue,         % color of file links
-%    urlcolor=blue           % color of external links
-% see:  http://www.tug.org/applications/hyperref/manual.html
-}
-
-% list spacing
-\usepackage{enumitem}
-\setitemize{leftmargin=*, topsep=0pt}
-\setenumerate{leftmargin=*, topsep=0pt}
-
-\usepackage{needspace}
-% example:  \needspace{4\baselineskip} makes sure we have four lines available before pagebreak
-
-\renewcommand{\thefootnote}{\fnsymbol{footnote}}
-
-% document starts here
 \begin{document}
 \parskip=\bigskipamount
 \parindent=0.0in
 \thispagestyle{empty}
-{\large ECON-UB 233 \hfill Dave Backus @ NYU}
+\input{../LaTeX/header.tex}
 
 \bigskip\bigskip
 \centerline{\Large \bf Forward-Looking Models}
@@ -60,7 +25,7 @@ This builds on work done in the 1970s by lots of people,
 Tom Sargent and Neil Wallace among them.
 In one respect, it's a step backwards for us:  we'll focus on the conditional mean
 and ignore risk.
-No need to panic, we'll bring back risk in the next chapter.
+No need to panic, we'll bring back risk in the next section.
 
 Our leading example here is inflation.
 It's an introduction of sorts to bond yields.
@@ -288,7 +253,7 @@ of fixing up the timing problems noted earlier.
 
 We've noted that Shiller often sees bubbles in asset markets,
 while Fama says he doesn't know what a bubble is.
-Oddly enough, both make useful points.
+Oddly enough, I'd say both make useful points.
 The term bubble is often used to describe a market in which prices
 seem to have lost connection to ``fundamentals.''
 We might think that equity prices, for example, should be connected to dividends.

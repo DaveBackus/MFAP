@@ -63,112 +63,112 @@ some description of the current situation, which we refer to as the {\it state\/
 The simplest example is a tree.
 A state in this case is a node in the tree.
 The outcomes next period are branches from the node.
-The conditional distribution consists of the probabilities of these branches. 
+The conditional distribution consists of the probabilities of these branches.
 We construct probabilities of longer paths by multiplying the probabilities of individual branches.
 
 Trees are easy to describe but cumbersome to use;
-the description of a state --- the node in a tree --- is essentially the complete 
-history of outcomes to that point.  
-Generally we impose more structure than this. 
+the description of a state --- the node in a tree --- is essentially the complete
+history of outcomes to that point.
+Generally we impose more structure than this.
 We proposed stochastic processes with three properties:
 \begin{itemize}
 \item {\it Markov.\/} There's a (hopefully simple) description of the state
 that tells us all we need to know about the current situation.
-\item {\it Stationary.\/} 
+\item {\it Stationary.\/}
 The distribution one next period's outcomes conditional on this period's state
-has the same structure at all dates.  
+has the same structure at all dates.
 \item {\it Stable.\/}
-The conditional distribution over states in the distant future settles down 
-to a unique equilibrium distribution.  
+The conditional distribution over states in the distant future settles down
+to a unique equilibrium distribution.
 \end{itemize}
 
 There are lots of examples of such processes, but we'll use
-examples that are linear:  AR, MA, and ARMA models. 
+examples that are linear:  AR, MA, and ARMA models.
 An example is an ARMA(1,1):
 \begin{eqnarray*}
     x_{t+1} &=& \varphi x_{t} + \sigma ( w_{t+1} + \theta w_t ) ,
 \end{eqnarray*}
-where $ w_t$ is a sequence of independent standard normal random variables.  
+where $ w_t$ is a sequence of independent standard normal random variables.
 This is Markov with state $z_t = (x_t,w_t)$.
 Conditional on $z_t$, $x_{t+1}$ is normal with mean $\varphi x_t + \sigma\theta w_t$
-and variance $\sigma^2$.  
-If $| \varphi < 1$, 
+and variance $\sigma^2$.
+If $| \varphi < 1$,
 the distribution of $x_{t+k}$ conditional on $z_t$ settles down:
-it's normal with mean zero and variance $ \sigma^2 + (\varphi+\theta)^2/(1-\varphi^2) $. 
+it's normal with mean zero and variance $ \sigma^2 + (\varphi+\theta)^2/(1-\varphi^2) $.
 
 We can describe the properties of a stationary, stable, Markov process
 with the autocovariance and autocorrelation functions:
-covariances and correlations, respectively, 
+covariances and correlations, respectively,
 of a variable $x_t$ and its own future $x_{t-k} $.
 We say $x$ is persistent if the autocorrelations $\rho(k)$ are ``large.''
 Interest rates are a good example:
-the first autocorrelation $\rho(1)$ is well above 0.9 for monthly data.  
+the first autocorrelation $\rho(1)$ is well above 0.9 for monthly data.
 
 
 
 \section{Forward-looking models}
 
 There's a sense in which time runs backwards in economics:
-current decisions depend on what we expect to happen in the future. 
-It doesn't really run backwards, because what we expect depends on the past and present, 
+current decisions depend on what we expect to happen in the future.
+It doesn't really run backwards, because what we expect depends on the past and present,
 but {\it expectations\/} of future outcomes show up in lots of places:
-in valuing assets (what do we expect dividends to be?), 
-in deciding how much to consume (what will our future income be?), 
-and so on.  
+in valuing assets (what do we expect dividends to be?),
+in deciding how much to consume (what will our future income be?),
+and so on.
 
 The simplest example of this is the linear model
 \begin{eqnarray*}
     y_t &=& \lambda E_t (y_{t+1}) + x_t .
 \end{eqnarray*}
-Here $y_t$ is the variable of interest (the stock price, for example) 
-and $x_t$ is the ``fundamental'' the drives it (the dividend).  
-We generally solve this forward in time and apply the law of iterated 
-expectations to get 
+Here $y_t$ is the variable of interest (the stock price, for example)
+and $x_t$ is the ``fundamental'' the drives it (the dividend).
+We generally solve this forward in time and apply the law of iterated
+expectations to get
 \begin{eqnarray*}
     y_t &=& \sum_{j=0}^\infty \lambda^j E_t (x_{t+j}) .
 \end{eqnarray*}
 This works as long as $|\lambda | < 1$ and $x$ is stable.
 Some models of bubbles add an extra term to the solution:
-$ c_t \lambda^{-t}$ where $ c_t$ is a martingale.    
+$ c_t \lambda^{-t}$ where $ c_t$ is a martingale.
 
 
 \section{Bond pricing}
 
-We started with definitions:  given the prices of zero coupon bonds 
-(the prices at date $t$ of a payoff of one at date $t+n$), 
-we define continuously-compounded yields and forward rates.  
+We started with definitions:  given the prices of zero coupon bonds
+(the prices at date $t$ of a payoff of one at date $t+n$),
+we define continuously-compounded yields and forward rates.
 Prices, yields, and forward rates are different ways of presenting
-the same information:  given one, we can compute the other two.  
+the same information:  given one, we can compute the other two.
 
-We value assets as we always do:  the no-arbitrage theorem 
-tells us there exists a positive pricing kernel that values cash flows. 
+We value assets as we always do:  the no-arbitrage theorem
+tells us there exists a positive pricing kernel that values cash flows.
 With bonds, the cash flows are constant, the pricing kernel
-is all we need.  
-We do this recursively:  
+is all we need.
+We do this recursively:
 \begin{eqnarray*}
-    q^{n+1}_t &=& E_t \big( m_{t+1} q^n_{t+1} \big) 
+    q^{n+1}_t &=& E_t \big( m_{t+1} q^n_{t+1} \big)
 \end{eqnarray*}
-starting with $q^0_t = 1$ (the price of one today is one).  
+starting with $q^0_t = 1$ (the price of one today is one).
 In words:  an $(n+1)$-period bond is a claim to an $n$-period bond
-in one period. 
+in one period.
 
 
 
-The approach in finance is to find a pricing kernel 
+The approach in finance is to find a pricing kernel
 that delivers realistic bond prices --- in a sense, we reverse
-engineer it.  
+engineer it.
 
 What might such a pricing kernel look like?
 We showed that an iid pricing kernel generated a constant interest rate
-and a constant flat yield curve.  
-So that can't be it.  
+and a constant flat yield curve.
+So that can't be it.
 Evidently we need some dynamics in the pricing kernel.
 
 
-We focused our attention on loglinear models, 
+We focused our attention on loglinear models,
 which sometimes go by the label ``exponential-affine.''
-We can illustrate the idea with the Vasicek model, 
-which we'll express here by 
+We can illustrate the idea with the Vasicek model,
+which we'll express here by
 \begin{eqnarray*}
     \log m_{t+1} &=& - \lambda^2/2 - x_t + \lambda w_{t+1} \\
          x_{t+1} &=& (1-\varphi) \delta + \varphi x_t + \sigma w_{t+1} .
@@ -176,57 +176,57 @@ which we'll express here by
 [You might ask yourself what the dynamics of $\log m$ look like once
 we've substituted for $x$.]
 With this structure, bond prices are loglinear in the state variable $x_t$.
-We can express them by 
+We can express them by
 \begin{eqnarray*}
-    \log q^n_t &=& A_n + B_n x_t 
+    \log q^n_t &=& A_n + B_n x_t
 \end{eqnarray*}
-for some constants $(A_n,B_n)$.  
-[As practice, you might derive recursions that connect 
+for some constants $(A_n,B_n)$.
+[As practice, you might derive recursions that connect
 $(A_{n+1},B_{n+1})$ to $(A_n,B_n)$.
-What is the one-period yield?]  
+What is the one-period yield?]
 
 
-Given such a model, we can choose parameters to approximate the 
-salient features of interest rates.  
+Given such a model, we can choose parameters to approximate the
+salient features of interest rates.
 We chose four such features and linked them to the four parameters
 of the model:
 the mean, variance, and autocorrelation of the short rate;
-and the mean slope of the yield curve.  
-The Vasicek model is the simplest such example.  
+and the mean slope of the yield curve.
+The Vasicek model is the simplest such example.
 
 There are a couple conceptual issues here worth noting.
 \begin{itemize}
-\item Expectations of the future.  
-This model is forward-looking, but there's a changing in perspective from our earlier work, 
-where the conditional mean was all that mattered. 
-There we had terms like 
+\item Expectations of the future.
+This model is forward-looking, but there's a changing in perspective from our earlier work,
+where the conditional mean was all that mattered.
+There we had terms like
 $y_t = E_t (x_{t+1}) $
-(not literally, we're making a conceptual point). 
-Here we have, in the case of a one-period bond, 
+(not literally, we're making a conceptual point).
+Here we have, in the case of a one-period bond,
 \begin{eqnarray*}
     \log q^1_t &=& \log E_t \left( e^{\log m_{t+1}} \right) .
 \end{eqnarray*}
 This has a similar form to the cumulant generating function of $\log m_{t+1}$,
-and will introduce all of its cumulants into the solution, 
-not just its mean. 
-\item Markov structure. 
-As long as the model has a stationary Markov structure, 
+and will introduce all of its cumulants into the solution,
+not just its mean.
+\item Markov structure.
+As long as the model has a stationary Markov structure,
 bond prices of all maturities will be functions of the state.
-Here the function is loglinear, which is convenient 
-but not (you might guess) a general result.  
+Here the function is loglinear, which is convenient
+but not (you might guess) a general result.
 \end{itemize}
 
 We also touched on two other loglinear models
-and showed how they can be used to address the observed predictability of 
-forward rates.  
+and showed how they can be used to address the observed predictability of
+forward rates.
 Predictability of asset returns and related objects is a central issue
 in finance.
 Wee establish such patterns with regressions, portfolios sorted on observed variables,
  and other means.
 Our emphasis was on models that reproduce known patterns
-of predictability.  
+of predictability.
 
 
-\vfill \centerline{\it \copyright \ \number\year \
-NYU Stern School of Business}
+\input{../LaTeX/footer.tex}
+
 \end{document}

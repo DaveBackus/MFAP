@@ -176,9 +176,10 @@ We can think of the first term in entropy as the cgf of $\log m$
 evaluated at $s=1$:
 \begin{eqnarray*}
    \log E(m) &=& \log E \left( e^{\log m}\right)
+        \;\;=\;\; k(1; \log m)
         \;\;=\;\; \kappa_1 + \kappa_2/ 2 + \kappa_3/3! + \kappa_4/4! + \cdots .
 \end{eqnarray*}
-When we subtract the mean, we get entropy:
+When we subtract the mean, $E \log m = \kappa_1$, we get entropy:
 \begin{eqnarray*}
    H(m)  &=& \log E(m) - E \log m
         \;\;=\;\; \kappa_2/ 2 + \kappa_3/3! + \kappa_4/4! + \cdots .
@@ -259,11 +260,14 @@ Suppose $x_{t+1} = \log s_{t+1} \sim \mathcal{N}(\kappa_1, \kappa_2)$
 (remember:  this is the risk-neutral distribution).
 Then the pricing relation implies
 \begin{eqnarray*}
-    s_t &=& q^1_t E^* (e^{x+{t+1})} \;\;=\;\; q^1_t  e^{\kappa_1 + \kappa_2/2} .
+    s_t &=& q^1_t E^* (e^{x_{t+1}}) \;\;=\;\; q^1_t  e^{\kappa_1 + \kappa_2/2} .
 \end{eqnarray*}
 Usually we choose $\kappa_1$ to satisfy the equation given information
 about the other components.
 
+*****
+{\it Option prices as integrals.\/}
+Show how this works, in general.  ???
 
 {\it BSM from lognormal risk-neutral underlying.\/}
 With these ingredients, we can derive the BSM formula using

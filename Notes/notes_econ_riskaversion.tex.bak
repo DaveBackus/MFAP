@@ -44,7 +44,7 @@ The risk we care about is the risk of outcomes,
 which we'll describe with our basic setup for random variables:
 states $z$ drawn from a set $\mathcal{Z}$ and probabilities $p(z)$.
 Suppose the outcome we care about is a random variable $c(z)$,
-which assigns an outcome ``consumption in state $z$''
+which assigns the outcome ``consumption in state $z$''
 to every state $z$.
 We say the outcome is riskless or riskfree if $c(z)$ is
 the same for all $z$.
@@ -63,8 +63,8 @@ The function tells us the amount of utility (``happiness'')
 the agent gets from any combination of consumption quantities.
 For example, the function $U(a,b)$ might express preferences
 over quantities of apples and bananas.
-We assume --- always! --- that more is always better:
-increasing the quantities $a$ or $b$ increases utility $U$.
+We assume --- always! --- that more is better:
+increasing $a$ or $b$ increases utility $U$.
 Other properties of $U$ it might indicate
 whether the agent prefers apples or bananas,
 how many of one it takes to compensate for the loss of the other,
@@ -104,8 +104,8 @@ that generates exactly the same utility:
 \end{eqnarray}
 The idea is to think about this as an equation that (implicitly) determines $\mu$.
 Given the consumption outcomes, the lhs (left-hand side) is given.
-Then since the utility function $U$ is increasing in all its arguments,
-we can very $\mu$ until it generates the same value.
+Since the utility function $U$ is increasing in all its arguments,
+we can vary $\mu$ until it generates the same value.
 %If we knew the function $U$, we could presumably do the calculation;
 %we'll do exactly that later on once we've been more explicit about $U$.
 In a sense, $\mu$ converts the utility of the risky outcome
@@ -121,19 +121,19 @@ Consider these two objects related to a risky consumption
 outcome $\{ c(z)\}$:
 %
 \begin{itemize}
-\item The certainty equivalent $\mu$.
+\item The certainty equivalent $\mu$, defined by (\ref{eq:certequiv-def}).
 
-\item The mean consumption outcome.  The mean is
+\item The mean consumption outcome, 
 \begin{eqnarray*}
     \cbar &=& \sum_z p(z) c(z) \;\;=\;\; E(c) .
 \end{eqnarray*}
 \end{itemize}
-So far we haven't mentioned probabilities, but we need them here to
+We haven't mentioned probabilities before, but we need them here to
 compute the mean outcome $\cbar$.
 
 
 Comparing the certainty equivalent $\mu$ and the mean outcome $\cbar$
-tells us how much we dislike the risky outcome.
+tells us how much we dislike risk --- whatever risk is built into the outcomes $c(z)$. 
 If $\mu = \cbar$,
 then we don't care about risk at all.
 Why?
@@ -152,7 +152,7 @@ A concrete example of such a measure is the {\it risk penalty\/}
 It tells us how much of a consumption penalty we'd be willing to accept
 relative to the mean to have riskless consumption.
 %It combines the amount of risk and how much we dislike it.
-The log form is arbitrary, but will be convenient later on.
+The log form is arbitrary, but it will be convenient later on.
 
 Here's an example.
 Let's say there are two states with probabilities
@@ -169,7 +169,7 @@ $ \rp = \log (\cbar/\mu) = \log(5/4) = 0.2231$.
 In words: You'd accept a 22\% reduction in average consumption to eliminate the risk.
 
 
-\section{Concave and convex functions}
+\section{Concave functions, Jensen's inequality, and increasing risk}
 
 Here's some terminology we'll use shortly --- it comes up a lot
 in economics and finance.
@@ -178,7 +178,7 @@ if, for any two points $x_1$ and $x_2$,
 a weighted average of the function at the two points
 is less than the function of a weighted average of the points:
 \begin{eqnarray}
-    w f(x_1) + (1-w) f(x_2) &\leq& f[ w x_1 + (1-w) x_2]
+    w f(x_1) + (1-w) f(x_2) &<& f[ w x_1 + (1-w) x_2]
     \label{eq:concave-def}
 \end{eqnarray}
 for any number $w$ between zero and one.
@@ -187,8 +187,8 @@ If $f$ is differentiable, that means $f''(x) < 0$.
 We say $f(x)$ is  {\it convex\/}
 if the inequality goes the other way.
 Equivalently, $f$ is convex if $-f$ is concave.
-Sometimes people use strong inequalities and distinguish
-between strict and weak concavity/convexity.
+Sometimes people use weak inequalities and distinguish
+between strict and weak concavity/convexity, but we generally won't.
 
 {\it Examples.\/}
 Which of the following are concave?  Convex?
@@ -205,37 +205,52 @@ The last one you might recognize as the payoff from
 a call option on $x$ with strike price $k$.
 
 
-Suppose, now, that $x$ is a random variable and $f(x)$ is a function
-of it.
-{\it Jensen's inequality\/} says that if $f$ is concave, then
+We'll use two results about concave (convex) functions $f$ 
+of a random variable $x$. 
+The first is {\it Jensen's inequality\/}: 
+If $f$ is concave, then
 \begin{eqnarray}
-    E f(x) &\leq& f [E(x)] ,
+    E [f(x)] &\leq& f [E(x)] ,
     \label{eq:jensen}
 \end{eqnarray}
-with equality if $x$ is constant.
-If $f$ is convex, the inequality goes the other way.
-You should see a parallel between
-(\ref{eq:concave-def}) and (\ref{eq:jensen}), at least in the two-state case.
-The difference between the left and right sides reflects
-the impact of risk, so you can see that this might be
-an essential tool in quantifying risk.
-If $f$ is convex, the inequality goes the other way.
+with equality only if $x$ is constant.
 [Draw a concave function $f$ and show what this looks like.]
+If $f$ is convex, the inequality goes the other way.
+You should see a parallel here with (\ref{eq:jensen}), at least in the two-state case:
+think of the weight $w$ as a probability.  
+The difference between the left and right sides of (\ref{eq:jensen}) reflects
+the impact of risk, so you can see that this might be
+an essential tool in thinking about risk aversion.  
 
-{\it Example\/}.
-Suppose $x$ is normal with mean $\kappa_1$ and variance $\kappa_2$.
+Our second result describes the impact of increasing risk.
+It's trickier than you think to describe an increase in risk.
+We say $ x+y$ is riskier than $x$ if $y$ is not constant and has zero mean. 
+(You might hear people refer to a {\it mean-preserving spread\/} or 
+{\it second-order stochastic dominance\/}.) Then if $f$ is concave, 
+\begin{eqnarray*}
+    E[ f(x + y)] &<& E[f(x)] .
+\end{eqnarray*}
+If $f$ is convex, the inequality goes the other way. 
+
+{\it Example (normal)\/}.
+Suppose $x$ is normal with mean $\kappa_1$ and variance $\kappa_2>0$.
 Then
 \begin{eqnarray*}
     E \left( e^x \right) &=&  e^{\kappa_1 + \kappa_2/2}
-            \;\;\geq\;\; e^{\kappa_1},
+            \;\;>\;\; e^{\kappa_1},
 \end{eqnarray*}
 with equality if $\kappa_2 = 0$ ($x$ is constant at $\mu$).
 [You should ask yourself:
 (i)~Where does the first relation come from?
 (ii)~What does the second have to do with Jensen's inequality?]
 
-**** Add:  mean preserving spreads.  An increase in risk lowers value of concave function.
-(Raise for convex...)
+{\it Example 2 (options).\/}
+Consider the option payoff $ f(x) = \max \{ 0, x-k \} $.
+How does $E(f(x)]$ change if we add a mean-preserving spread to $x$?  
+Answer: Since $f$ is convex, its expected value goes up.
+This is a classic feature of options: 
+the more risk there is, the more they're worth.  
+
 
 
 \section{Expected utility with rational expectations}
@@ -271,7 +286,7 @@ expected utility and compare its predictions with evidence.
 
 
 The action in expected utility is in the function $u$.
-It controls the certainty equivalent, the solution to
+It controls the certainty equivalent, which here is the solution to
 \begin{eqnarray*}
     \sum_z p(z) u[c(z)]
         &=&  \sum_z p(z) u(\mu)  \;\;=\;\; u(\mu) .
@@ -290,8 +305,8 @@ This is a little abstract at this point, but we'll put it to work
 in the next section.
 
 
-Risk aversion is more complicated.
-We'll look at it a couple different ways.
+Risk aversion is more complicated so 
+we'll look at it a couple different ways.
 Both tell us that $u$ is concave,
 which here means  $u''(c) < 0$.
 The first is to look at the 2-state case.
@@ -314,9 +329,8 @@ Show expected utility and certainty equivalent.]
 
 So we've seen that a concave function $u$ implies risk aversion.
 We get a sharper sense of what properties of $u$ matter with
-a Taylor series expansion,
-a trick devised by Paul Samuelson.
-Recall that the Taylor series expansion (if it exists) of a
+a Taylor series expansion, a trick devised by Paul Samuelson.
+Recall that the Taylor series (if it exists) of a
 function $f$ of a variable $x$ around the point $x^*$ is
 \begin{eqnarray*}
     f(x) &=& f(x^*) + f'(x^*) (x-x^*) + f''(x^*) (x-x^*)^2/2 +
@@ -330,7 +344,7 @@ is
 \end{eqnarray*}
 Expected utility is therefore
 \begin{eqnarray}
-  E u(c) &=& u(\cbar) + u''(\cbar) E (c-\cbar)^2/2
+  E [u(c)] &=& u(\cbar) + u''(\cbar) E (c-\cbar)^2/2
         + u'''(\cbar) E (c-\cbar)^3/3! + \cdots \nonumber \\
         &=& u(\cbar) + u''(\cbar) \mu_2/2
             + u'''(\cbar) \mu_3 /3! + u''''(\cbar) \mu_4 /4! + \cdots ,
@@ -352,12 +366,12 @@ on the third and fourth derivatives of $u$,
 whatever those might be.
 
 
-\section{Power utility}
+\section{Power utility and plausible risk aversion}
 
 Since we have a practical applied interest in this subject,
-we'd like to have a specific function we can put to work.
-That function is the power function;
-applied to utility we would write
+we'd like to have a specific utility function we can put to work.
+That function is the power function.
+Applied to utility we would write
 \begin{eqnarray*}
     u(c) &=& c^{1-\alpha}/(1-\alpha)
 \end{eqnarray*}
@@ -377,6 +391,7 @@ The first two are
     u''(c) &=& -\alpha c^{-\alpha-1} \;\;<\;\; 0 ,
 \end{eqnarray*}
 which have the signs we want.
+[Ask yourself why.] 
 The third and fourth derivatives are
 \begin{eqnarray*}
     u'''(c)  &=& \alpha (\alpha+1) c^{-\alpha-2} \;\;>\;\; 0 \\
@@ -399,7 +414,7 @@ It's a little ugly, but at least we have a formula we can use ---
 and we'll do that right now.
 
 
-One question we might ask ourselves is what values of $\alpha$ are reasonable.
+One question we might ask ourselves is what values of $\alpha$ are plausible.
 That's a tough question,
 but a useful starting point is to consider an example and apply introspection.
 Suppose you are given two choices for your career income, with the same
@@ -441,13 +456,14 @@ which we'll do later in the course.
 
 Here's another take on how we respond to various kinds of risks:
 we examine the impact of cumulants on the risk penalty (\ref{eq:rp-def}).
-We'll use the  mgf and (especially) the cgf of $\log c$.
+We'll use the  mgf and (especially) the cgf of $\log c$
+and focus on the distribution of $\log c$ rather than $c$.
 Let us say, to be concrete,
 that $x = \log c$ has mgf $h(s) = E (e^{sx})$ and cgf $k(s) = \log h(s) = \log E (e^{sx}) $.
 
 The first ingredient of the risk penalty is mean consumption:
 $\cbar = E(c) = E (e^x) = h(1) = \exp[k(1)]$.
-[Are you with me?]
+[Are you with me?  Stop and think if you're not.]
 
 The second ingredient is the certainty equivalent.
 Expected utility is connected to the mgf and cgf by
@@ -472,14 +488,15 @@ That gives us
 This is a little mysterious, but it's nice compact notation,
 which is generally a good thing.
 
-The risk penalty (\ref{eq:rp-def}) is therefore
+Putting our two calculations together gives us the risk penalty (\ref{eq:rp-def}): 
 \begin{eqnarray*}
     \rp &=& \log (\cbar/\mu)  \;\;=\;\; k(1) - (1-\alpha)^{-1} k(1-\alpha) .
 \end{eqnarray*}
 We see, for example, that it's zero when $\alpha = 0$:
 someone who does not dislike risk has no risk penalty,
 whatever that risk might be.
-If we write down the expansion in terms of cumulants,
+[Think for a minute:  What do we need to show this?]
+If we write down the expansion of the cgf in terms of cumulants,
 we can see the effects of individual cumulants:
 \begin{eqnarray}
     \rp &=& k(1) - (1-\alpha)^{-1} k(1-\alpha) \nonumber \\
@@ -507,8 +524,8 @@ And so on.
 
 In risky environments, utility depends
 on the complete set of consumption outcomes.
-With expected utility, we divide that into separate components
-for the probability and (sub)utility of each outcome.
+With expected utility, we assign separate roles to the probability 
+and utility of each outcome.
 Expected utility depends potentially on all of the moments and cumulants
 of outcomes:
 we need the whole distribution to assess risk.
@@ -699,7 +716,6 @@ More on this kind of thing later in the course.
 \end{enumerate}
 
 
-
 \item {\it Exponential utility.\/}
 Another common utility function is $u(c) = -\alpha^{-1} e^{-\alpha c} $,
 with $\alpha > 0$.
@@ -748,7 +764,7 @@ The mean is $ E(c) = \omega\delta $.
 \end{eqnarray*}
 The point is that we have a combination of risk and risk aversion,
 but it's not nearly as simple as in the lognormal case.
-In a sense, the lognormal case misleads us into thinking this will be simple.
+In a sense, the lognormal case misleads us into thinking this has to be simple.
 \end{enumerate}
 
 % ?? \item {\it Gamma risks.  (or normal mixture?).\/}

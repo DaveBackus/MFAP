@@ -21,7 +21,7 @@ and how that saving is allocated across assets.
 We'll see how this works in a two-period setting,
 which captures the essential ideas in a relatively simple way.
 
-This gives us our first glimpse of the central equation in this course, 
+This gives us our first glimpse of the central equation in this course,
 \begin{eqnarray}
     E (mr) &=& 1 .
     \label{eq:E(mr)=1}
@@ -29,8 +29,8 @@ This gives us our first glimpse of the central equation in this course,
 Variants of this equation account for
 an embarrassingly large part of macroeconomics and finance,
 including virtually all of modern asset pricing.
-Don't bother to memorize it, 
-you'll soon find that it's impossible to forget. 
+Don't bother to memorize it,
+you'll soon find that it's impossible to forget.
 
 
 \section{Kuhn-Tucker conditions}
@@ -207,7 +207,7 @@ We'll ignore saving from now on, but it's there behind the scenes.
 We now have the pieces of the consumption-saving problem:
 the utility function (\ref{eq:utility-2period})
 and the budget constraint (\ref{eq:budget-2period}).
-We attack it with the usual Lagrangian methods 
+We attack it with the usual Lagrangian methods
 using $\lambda$ as the Lagrange multiplier on the constraint.
 [What is the Lagrangian function?]
 The first-order conditions are
@@ -233,7 +233,7 @@ If we denote the marginal rate of substitution or mrs by $m$, we have
        \label{eq:euler-deterministic}
 \end{eqnarray}
 This is a variant of (\ref{eq:E(mr)=1});
-since there's no risk, we don't need the expectation $E$.  
+since there's no risk, we don't need the expectation $E$.
 
 [Draw budget line and indifference curves, show tangency.
 Budget line is $c_0 + c_1/r = Y$, so slope in $(c_0,c_1)$-space
@@ -273,7 +273,7 @@ when the economy (including consumption) is growing quickly
 and low when it's not.
 
 
-{\it Example (log utility).\/} 
+{\it Example (log utility).\/}
 Let's return to our problem and solve it explicitly
 for the case of log utility.
 We solve the first-order conditions for consumption:
@@ -368,23 +368,23 @@ we can find the prices of the Arrow securities.
 
 {\it Example  (``incomplete markets'').\/}
 Here's another example, which makes a subtle point we'll come
-back to later on.  
+back to later on.
 Suppose we have three states and two assets.
 Asset 1 is the riskfree bond and pays one in each state.
 Asset 2 is equity and pays one in state 1, two in state 2, and one in state 3.
-Replication here gives us 
+Replication here gives us
 \begin{eqnarray*}
     q^1 &=& Q(1) + Q(2) + Q(3) \\
     q^e &=& Q(1) + 2 Q(2) + Q(3) .
 \end{eqnarray*}
-Is there a solution?  
-Well, we have more unknowns than equations, so there 
+Is there a solution?
+Well, we have more unknowns than equations, so there
 should be lots of solutions.
-Suppose, for example, $q^1 = 1 $ and $q^e = 4/3$. 
-Then $ Q(1) = Q(2) = Q(3) = 1/3$ is a solution.   
-But so is $Q(2) = 1/3$ and any combination of $Q(1)$ and $Q(3)$ that sums to 1/3. 
-Some of these solutions give us negative state prices, 
-which we'll have to think about, but not all of them. 
+Suppose, for example, $q^1 = 1 $ and $q^e = 4/3$.
+Then $ Q(1) = Q(2) = Q(3) = 1/3$ is a solution.
+But so is $Q(2) = 1/3$ and any combination of $Q(1)$ and $Q(3)$ that sums to 1/3.
+Some of these solutions give us negative state prices,
+which we'll have to think about, but not all of them.
 
 Back to our problem:  choose $\{c_0, c_1(z)\}$ to maximize
 utility (\ref{eq:utility-2period-stochastic}) subject to the budget constraint
@@ -523,7 +523,7 @@ The ratio of the second to the first gives us, for each state $z$,
     \beta p(z) u'[c_1(z)] / u'(c_0) &=& \lambda(z)/\lambda_0 .
 \end{eqnarray*}
 If we relabel by $Q(z) = \lambda(z)/\lambda_0$, we have the same relation
-we had earlier connecting  the marginal rate of substitution to state prices, 
+we had earlier connecting  the marginal rate of substitution to state prices,
 equation (\ref{eq:con-stateprices}).
 Evidently there are state prices hiding behind the scenes here,
 even though we made no mention of Arrow securities when we set up the problem.
@@ -649,9 +649,9 @@ for (gross) returns $r^j$ on all assets $j$.
 Here it's the first-order condition for a consumer's portfolio choice
 problem.
 Later on it will show up as an asset pricing relation.
-We also defined Arrow securities and state prices, 
+We also defined Arrow securities and state prices,
 two theoretical concepts that reappear even in practical
-situations.  
+situations.
 
 
 \section*{Practice problems}
@@ -830,8 +830,8 @@ $r^e(1) = 1.0$, $r^e(2) = 1.4$,
 $ y_0 = 1$.
 
 {\it Note:  Utility isn't defined
-if $c_1(z)$ is negative.  
-That restricts your portfolio choice.\/} 
+if $c_1(z)$ is negative.
+That restricts your portfolio choice.\/}
 
 \begin{enumerate}
 \item What are the mean and variance of the return on equity?
@@ -997,10 +997,7 @@ amerton5 = E_rx/(5*var_re)
 
 \end{enumerate}
 
-\vfill
-{\bigskip \centerline{\it \copyright \ \number\year \
-NYU Stern School of Business}
-}
+\input{../LaTeX/footer.tex}
 
 \end{document}
 

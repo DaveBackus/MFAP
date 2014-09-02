@@ -4,39 +4,47 @@ Input:2:C:\Program Files (x86)\MiKTeX 2.9\tex\latex\base\article.cls
 Input:3:C:\Program Files (x86)\MiKTeX 2.9\tex\latex\base\size11.clo
 Input:4:C:\Users\dbackus\Dropbox\Documents\Classes\MFAP\LaTeX\preamble.tex
 Input:5:C:\Program Files (x86)\MiKTeX 2.9\tex\latex\comment\comment.sty
-Input:6:C:\Program Files (x86)\MiKTeX 2.9\tex\latex\hyperref\hyperref.sty
-Input:7:C:\Program Files (x86)\MiKTeX 2.9\tex\generic\oberdiek\hobsub-hyperref.sty
-Input:8:C:\Program Files (x86)\MiKTeX 2.9\tex\generic\oberdiek\hobsub-generic.sty
-Input:9:C:\Program Files (x86)\MiKTeX 2.9\tex\latex\graphics\keyval.sty
-Input:10:C:\Program Files (x86)\MiKTeX 2.9\tex\generic\ifxetex\ifxetex.sty
-Input:11:C:\Program Files (x86)\MiKTeX 2.9\tex\latex\oberdiek\kvoptions.sty
-Input:12:C:\Program Files (x86)\MiKTeX 2.9\tex\latex\hyperref\pd1enc.def
-Input:13:C:\Program Files (x86)\MiKTeX 2.9\tex\latex\00miktex\hyperref.cfg
-Input:14:C:\Program Files (x86)\MiKTeX 2.9\tex\latex\ltxmisc\url.sty
-Input:15:C:\Program Files (x86)\MiKTeX 2.9\tex\latex\hyperref\hpdftex.def
-Input:16:C:\Program Files (x86)\MiKTeX 2.9\tex\latex\oberdiek\rerunfilecheck.sty
-Input:17:C:\Program Files (x86)\MiKTeX 2.9\tex\latex\tools\verbatim.sty
-Input:18:C:\Program Files (x86)\MiKTeX 2.9\tex\latex\booktabs\booktabs.sty
-Input:19:C:\Program Files (x86)\MiKTeX 2.9\tex\latex\titlesec\titlesec.sty
-Input:20:C:\Program Files (x86)\MiKTeX 2.9\tex\latex\enumitem\enumitem.sty
-Input:21:C:\Program Files (x86)\MiKTeX 2.9\tex\latex\needspace\needspace.sty
-Input:22:C:\Users\dbackus\Dropbox\Documents\Classes\MFAP\Notes\TeXAux\notes_econ_consumption.aux
-Input:23:C:\Program Files (x86)\MiKTeX 2.9\tex\latex\graphics\color.sty
-Input:24:C:\Program Files (x86)\MiKTeX 2.9\tex\latex\00miktex\color.cfg
-Input:25:C:\Program Files (x86)\MiKTeX 2.9\tex\latex\pdftex-def\pdftex.def
-Input:26:C:\Program Files (x86)\MiKTeX 2.9\tex\context\base\supp-pdf.mkii
-Input:27:C:\Program Files (x86)\MiKTeX 2.9\tex\latex\hyperref\nameref.sty
-Input:28:C:\Program Files (x86)\MiKTeX 2.9\tex\generic\oberdiek\gettitlestring.sty
-Input:29:C:\Users\dbackus\Dropbox\Documents\Classes\MFAP\Notes\TeXAux\notes_econ_consumption.out
-Input:30:C:\Users\dbackus\Dropbox\Documents\Classes\MFAP\Notes\TeXAux\notes_econ_consumption.out
-Input:31:C:\Users\dbackus\Dropbox\Documents\Classes\MFAP\LaTeX\header.tex
+Input:6:C:\Program Files (x86)\MiKTeX 2.9\tex\latex\graphics\graphicx.sty
+Input:7:C:\Program Files (x86)\MiKTeX 2.9\tex\latex\graphics\keyval.sty
+Input:8:C:\Program Files (x86)\MiKTeX 2.9\tex\latex\graphics\graphics.sty
+Input:9:C:\Program Files (x86)\MiKTeX 2.9\tex\latex\graphics\trig.sty
+Input:10:C:\Program Files (x86)\MiKTeX 2.9\tex\latex\00miktex\graphics.cfg
+Input:11:C:\Program Files (x86)\MiKTeX 2.9\tex\latex\pdftex-def\pdftex.def
+Input:12:C:\Program Files (x86)\MiKTeX 2.9\tex\generic\oberdiek\infwarerr.sty
+Input:13:C:\Program Files (x86)\MiKTeX 2.9\tex\generic\oberdiek\ltxcmds.sty
+Input:14:C:\Program Files (x86)\MiKTeX 2.9\tex\latex\caption\caption.sty
+Input:15:C:\Program Files (x86)\MiKTeX 2.9\tex\latex\caption\caption3.sty
+Input:16:C:\Program Files (x86)\MiKTeX 2.9\tex\latex\hyperref\hyperref.sty
+Input:17:C:\Program Files (x86)\MiKTeX 2.9\tex\generic\oberdiek\hobsub-hyperref.sty
+Input:18:C:\Program Files (x86)\MiKTeX 2.9\tex\generic\oberdiek\hobsub-generic.sty
+Input:19:C:\Program Files (x86)\MiKTeX 2.9\tex\generic\ifxetex\ifxetex.sty
+Input:20:C:\Program Files (x86)\MiKTeX 2.9\tex\latex\oberdiek\kvoptions.sty
+Input:21:C:\Program Files (x86)\MiKTeX 2.9\tex\latex\hyperref\pd1enc.def
+Input:22:C:\Program Files (x86)\MiKTeX 2.9\tex\latex\00miktex\hyperref.cfg
+Input:23:C:\Program Files (x86)\MiKTeX 2.9\tex\latex\ltxmisc\url.sty
+Input:24:C:\Program Files (x86)\MiKTeX 2.9\tex\latex\hyperref\hpdftex.def
+Input:25:C:\Program Files (x86)\MiKTeX 2.9\tex\latex\oberdiek\rerunfilecheck.sty
+Input:26:C:\Program Files (x86)\MiKTeX 2.9\tex\latex\tools\verbatim.sty
+Input:27:C:\Program Files (x86)\MiKTeX 2.9\tex\latex\booktabs\booktabs.sty
+Input:28:C:\Program Files (x86)\MiKTeX 2.9\tex\latex\titlesec\titlesec.sty
+Input:29:C:\Program Files (x86)\MiKTeX 2.9\tex\latex\enumitem\enumitem.sty
+Input:30:C:\Program Files (x86)\MiKTeX 2.9\tex\latex\needspace\needspace.sty
+Input:31:C:\Users\dbackus\Dropbox\Documents\Classes\MFAP\Notes\TeXAux\notes_econ_consumption.aux
+Input:32:C:\Program Files (x86)\MiKTeX 2.9\tex\context\base\supp-pdf.mkii
+Input:33:C:\Program Files (x86)\MiKTeX 2.9\tex\latex\graphics\color.sty
+Input:34:C:\Program Files (x86)\MiKTeX 2.9\tex\latex\00miktex\color.cfg
+Input:35:C:\Program Files (x86)\MiKTeX 2.9\tex\latex\hyperref\nameref.sty
+Input:36:C:\Program Files (x86)\MiKTeX 2.9\tex\generic\oberdiek\gettitlestring.sty
+Input:37:C:\Users\dbackus\Dropbox\Documents\Classes\MFAP\Notes\TeXAux\notes_econ_consumption.out
+Input:38:C:\Users\dbackus\Dropbox\Documents\Classes\MFAP\Notes\TeXAux\notes_econ_consumption.out
+Input:39:C:\Users\dbackus\Dropbox\Documents\Classes\MFAP\LaTeX\header.tex
 Output:pdf
 Magnification:1000
 Unit:1
 X Offset:0
 Y Offset:0
 Content:
-!2482
+!3079
 {1
 [1,84:4736286,48201563:29601791,43465277,0
 v1,84:4736286,4736286:0,0,0
@@ -55,24 +63,23 @@ h1,84:5920357,3154575:28417720,0,0
 ]
 [1,84:5920357,46235483:28417720,41442508,0
 (1,10:5920357,5513871:28417720,546132,0
-h31,1:5920357,5513871:0,0,0
-x31,1:8433273,5513871
-x31,1:9555839,5513871
-g31,1:9812519,5513871
-x31,1:10967579,5513871
-g31,1:11224259,5513871
-k31,1:26930034,5513871:15705775
-x31,1:27903143,5513871
-x31,1:28288163,5513871
-x31,1:28609013,5513871
-g31,1:28865693,5513871
-x31,1:30138262,5513871
-x31,1:31254820,5513871
-g31,1:31511500,5513871
-x31,1:32110420,5513871
-g31,1:32367100,5513871
-x31,1:34098871,5513871
-g31,1:34338077,5513871
+h39,1:5920357,5513871:0,0,0
+x39,1:8433273,5513871
+x39,1:9555839,5513871
+g39,1:9812519,5513871
+x39,1:10967579,5513871
+g39,1:11224259,5513871
+k39,1:27169240,5513871:15944981
+x39,1:28142349,5513871
+x39,1:28527369,5513871
+x39,1:28848219,5513871
+g39,1:29104899,5513871
+x39,1:30377468,5513871
+x39,1:31494026,5513871
+g39,1:31750706,5513871
+x39,1:32349626,5513871
+g39,1:32606306,5513871
+x39,1:34338077,5513871
 g1,10:34338077,5513871
 g1,10:34338077,5513871
 )
@@ -92,15 +99,17 @@ x1,12:29764306,7922722
 k1,12:34338077,7922722:4573771
 )
 (1,13:5920357,8814012:28417720,498346,139537
-k1,13:16113535,8814012:10193178
-x1,13:18738829,8814012
-g1,13:19057770,8814012
-x1,13:21314287,8814012
-g1,13:21553493,8814012
-x1,13:22470452,8814012
-g1,13:22709658,8814012
-x1,13:24144898,8814012
-k1,13:34338076,8814012:10193178
+k1,13:15765689,8814012:9845332
+x1,13:18390983,8814012
+g1,13:18709924,8814012
+x1,13:21022256,8814012
+x1,13:21400999,8814012
+x1,13:22020943,8814012
+g1,13:22260149,8814012
+x1,13:22818298,8814012
+g1,13:23057504,8814012
+x1,13:24492744,8814012
+k1,13:34338076,8814012:9845332
 )
 (1,23:5920357,10843473:28417720,498346,139537
 h1,16:5920357,10843473:0,0,0
@@ -1135,7 +1144,7 @@ h1,84:5920357,48201563:28417720,0,0
 ]
 ]
 ]
-!27738
+!27759
 }1
 !10
 {2
@@ -19977,24 +19986,25 @@ k1,985:34338077,48201563:13850050
 )
 !17354
 }14
-Input:32:C:\Program Files (x86)\MiKTeX 2.9\tex\latex\base\omscmr.fd
-!79
+Input:40:C:\Users\dbackus\Dropbox\Documents\Classes\MFAP\LaTeX\footer.tex
+Input:41:C:\Program Files (x86)\MiKTeX 2.9\tex\latex\base\omscmr.fd
+!153
 {15
-(1,1005:4736286,48201563:29601791,43465277,0
-[1,1005:4736286,48201563:29601791,43465277,0
-[1,1005:4736286,4736286:0,0,0
-(1,1005:4736286,2302362:0,0,0
-k1,1005:4736286,2302362:-1118290
+(1,1002:4736286,48201563:29601791,43465277,0
+[1,1002:4736286,48201563:29601791,43465277,0
+[1,1002:4736286,4736286:0,0,0
+(1,1002:4736286,2302362:0,0,0
+k1,1002:4736286,2302362:-1118290
 )
 ]
-[1,1005:4736286,48201563:29601791,43465277,0
-[1,1005:5920357,48201563:28417720,45833420,0
-[1,1005:5920357,3154575:28417720,786432,0
-(1,1005:5920357,3154575:28417720,0,0
-h1,1005:5920357,3154575:28417720,0,0
+[1,1002:4736286,48201563:29601791,43465277,0
+[1,1002:5920357,48201563:28417720,45833420,0
+[1,1002:5920357,3154575:28417720,786432,0
+(1,1002:5920357,3154575:28417720,0,0
+h1,1002:5920357,3154575:28417720,0,0
 )
 ]
-[1,1005:5920357,46235483:28417720,41442508,0
+[1,1002:5920357,46235483:28417720,41442508,0
 (1,985:5920357,5513871:28417720,498346,159471
 g1,985:6837316,5513871
 h1,985:6837316,5513871:0,0,0
@@ -20136,60 +20146,60 @@ h1,995:16632712,14426771:0,0,0
 k1,995:34338076,14426771:17705364
 g1,995:34338076,14426771
 )
-(1,1002:5920357,46095945:28417720,498346,139537
-k1,1002:13981651,46095945:8061294
-[1,1002:13981651,46095945:717621,330604,139537
-(1,1002:13981651,46095945:717621,330604,0
-g1,1002:13981651,46095945
-(1,1002:13981651,46095945:717621,330604,0
-k1,1002:14180991,46095945:199340
-(1,1002:14180991,46074315:318942,308974,0
-x1,1002:14499933,46074315
+(40,3:5920357,46095945:28417720,498346,139537
+k40,3:13981651,46095945:8061294
+[40,3:13981651,46095945:717621,330604,139537
+(40,3:13981651,46095945:717621,330604,0
+g40,3:13981651,46095945
+(40,3:13981651,46095945:717621,330604,0
+k40,3:14180991,46095945:199340
+(40,3:14180991,46074315:318942,308974,0
+x40,3:14499933,46074315
 )
-k1,1002:14699272,46095945:199339
+k40,3:14699272,46095945:199339
 )
-g1,1002:14699272,46095945
+g40,3:14699272,46095945
 )
-(1,1002:13981651,46095945:717621,498346,139537
-g1,1002:13981651,46095945
-(1,1002:13981651,46095945:717621,498346,139537
-x1,1002:14699272,46095945
+(40,3:13981651,46095945:717621,498346,139537
+g40,3:13981651,46095945
+(40,3:13981651,46095945:717621,498346,139537
+x40,3:14699272,46095945
 )
-g1,1002:14699272,46095945
-)
-]
-g1,1002:14956018,46095945
-x1,1002:16423142,46095945
-g1,1002:16679888,46095945
-x1,1002:18280169,46095945
-g1,1002:18536915,46095945
-x1,1002:20214936,46095945
-g1,1002:20471682,46095945
-x1,1002:21938805,46095945
-x1,1002:22452297,46095945
-g1,1002:22709043,46095945
-x1,1002:23295892,46095945
-g1,1002:23552638,46095945
-x1,1002:26276783,46095945
-k1,1002:34338077,46095945:8061294
+g40,3:14699272,46095945
 )
 ]
-(1,1005:5920357,48201563:28417720,462465,0
-(1,1005:5920357,48201563:28417720,462465,0
-k1,1005:19770407,48201563:13850050
-x1,1005:20488027,48201563
-k1,1005:34338077,48201563:13850050
+g40,3:14956018,46095945
+x40,3:16423142,46095945
+g40,3:16679888,46095945
+x40,3:18280169,46095945
+g40,3:18536915,46095945
+x40,3:20214936,46095945
+g40,3:20471682,46095945
+x40,3:21938805,46095945
+x40,3:22452297,46095945
+g40,3:22709043,46095945
+x40,3:23295892,46095945
+g40,3:23552638,46095945
+x40,3:26276783,46095945
+k40,3:34338077,46095945:8061294
+)
+]
+(1,1002:5920357,48201563:28417720,462465,0
+(1,1002:5920357,48201563:28417720,462465,0
+k1,1002:19770407,48201563:13850050
+x1,1002:20488027,48201563
+k1,1002:34338077,48201563:13850050
 )
 )
 ]
 ]
 ]
 )
-!5201
+!5142
 }15
-Input:33:C:\Users\dbackus\Dropbox\Documents\Classes\MFAP\Notes\TeXAux\notes_econ_consumption.aux
+Input:42:C:\Users\dbackus\Dropbox\Documents\Classes\MFAP\Notes\TeXAux\notes_econ_consumption.aux
 !107
 Postamble:
-Count:12254
+Count:12253
 !28
 Post scriptum:

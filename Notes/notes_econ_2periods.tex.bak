@@ -1,46 +1,12 @@
 \documentclass[11pt]{article}
 
-\oddsidemargin=0.25truein \evensidemargin=0.25truein
-\topmargin=-0.5truein \textwidth=6.0truein \textheight=8.75truein
+\input{../LaTeX/preamble.tex}
 
-\usepackage{comment}
-\usepackage{hyperref}
-\urlstyle{rm}   % change fonts for url's (from Chad Jones)
-\hypersetup{
-    colorlinks=true,        % kills boxes
-    allcolors=blue,
-    pdfsubject={ECON-UB233, Macroeconomic foundations for asset pricing},
-    pdfauthor={Dave Backus @ NYU},
-    pdfstartview={FitH},
-    pdfpagemode={UseNone},
-%    pdfnewwindow=true,      % links in new window
-%    linkcolor=blue,         % color of internal links
-%    citecolor=blue,         % color of links to bibliography
-%    filecolor=blue,         % color of file links
-%    urlcolor=blue           % color of external links
-% see:  http://www.tug.org/applications/hyperref/manual.html
-}
-
-\usepackage{verbatim}
-%\usepackage{booktabs}
-\usepackage[small, compact]{titlesec}
-
-% list spacing
-\usepackage{enumitem}
-\setitemize{leftmargin=*, topsep=0pt}
-\setenumerate{leftmargin=*, topsep=0pt}
-
-\usepackage{needspace}
-% example:  \needspace{4\baselineskip} makes sure we have four lines available before pagebreak
-
-\renewcommand{\thefootnote}{\fnsymbol{footnote}}
-
-% document starts here
 \begin{document}
 \parskip=\bigskipamount
 \parindent=0.0in
 \thispagestyle{empty}
-{\large ECON-UB 233 \hfill Dave Backus @ NYU}
+\input{../LaTeX/header.tex}
 
 \bigskip\bigskip
 \centerline{\Large \bf Two-Period Macroeconomic Models}
@@ -114,19 +80,19 @@ The theory of Mundell's paper is a long way from anything
 we'll do in this class,
 but you have to like a guy who has the nerve to say
 ``theory is the poetry of science.''
-The substantive point is that our goal isn't realism, it's insight.
+The substantive point is that our goal isn't realism, it's insight and understanding.
 The art of economics lies in making unrealistic simplifying assumptions that
 deliver clear results that we believe generalize to more complex environments.
 The art lies in making that distinction ---
-in understanding which assumptions are crucial and
+in deciding which assumptions are crucial and
 which simply make the analysis easier.
 
 
 \section{General equilibrium models}
 
-In the 1950s, economists formalized some ideas that date back to Adam Smith and before.
+In the 1950s, economists formalized ideas that date back to Adam Smith and before.
 Lots of people were involved, but the central players
-were Kenneth Arrow, Gerhard Debreu, and Lionel McKenzie.
+were Kenneth Arrow, Gerard Debreu, and Lionel McKenzie.
 The first idea is to consider equilibrium (think: supply equals demand)
 for all markets at once ---
 what economists refer to as general equilibrium.
@@ -275,40 +241,37 @@ The first-order conditions are
     \beta/c_a - q_a &=& 0 \\
    (1-\beta)/c_b - q_b &=& 0 .
 \end{eqnarray*}
-The constraints tell us to consume the endowments.
+The constraints tell us to consume the endowments,
+which nails down the Lagrange multipliers:
+$ q_a = \beta /y_a$ and $q_b = (1-\beta)/ y_b$.
+
 
 The nice thing about this approach is that
-we get the prices, too:
-$q_a = \beta/y_a$ and $q_b = (1-\beta)/y_b $.
-It's not hard to see that these are, in fact, the prices 
-we'd get in a competitive equilibrium.  
+we get the prices from the Lagrange multipliers.
+It's not hard to show that these are, in fact,
+the competitive equilibrium prices.
+The first condition for a competitive equilibrium is that agents maximize
+utility given their budget constraints.
+Here the budget constraint is
+\begin{eqnarray*}
+    q_a c_a + q_b c_b &\leq& q_a y_a + q_b y_b \;\;=\;\; Y.
+\end{eqnarray*}
+We saw earlier that this leads to the demand functions
+$ c_a = \beta Y/q_a$ and $c_b = (1-\beta) Y/q_b$.
+Does demand equal supply when we substitute the prices we derived
+from the Pareto problem?
+With those prices,
+$ Y = q_a y_a + q_b y_b = \beta + (1-\beta) = 1$.
+Demand for apples is therefore
+\begin{eqnarray*}
+    c_a &=& \beta Y / q_a \;\;=\;\; \beta / (\beta/y_a) \;\;=\;\; y_ a,
+\end{eqnarray*}
+so demand equals supply for apples.
+The same is true for bananas, too.
 
-
-We could recast the problem as a competitive equilibrium
-with these prices.
-Note first that the agent's budget constraint
-is satisfied:
-\begin{eqnarray*}
-    q_a c_a + q_b c_b &\leq& q_a y_a + q_b y_b .
-\end{eqnarray*}
-This is kind of obvious, since the quantities are the same, but it's a start.
-Next, consider the agent's utility maximization problem.
-If we use $\lambda$ as the Lagrange multiplier on the budget constraint,
-then the first-order conditions are
-\begin{eqnarray*}
-    \beta/c_a - \lambda q_a &=& 0 \\
-   (1-\beta)/c_b - \lambda q_b &=& 0 .
-\end{eqnarray*}
-Which leaves us pretty close to what we had above.
-Both give us the essential condition, that the
-ratio of marginal utilities equals the ratio of prices:
-\begin{eqnarray*}
-    \frac{(1-\beta)/c_b}{\beta/c_a} &=& \frac{q_b}{q_a} .
-\end{eqnarray*}
-The bottom line:  when we solve a Pareto problem,
+The bottom line:  When we solve a Pareto problem,
 we not only get the equilibrium quantities,
-we get the equilibrium prices, too,
-as Lagrange multipliers on the resource constraints.
+we get the equilibrium prices, too.
 
 
 [Draw picture:  indifference curves, endowment point,

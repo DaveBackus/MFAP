@@ -244,6 +244,10 @@ In that sense, assets that pay off mostly in good times will have less value
 than assets that pay off mostly in bad times.
 
 
+
+**** Add notation guide *****
+
+
 \end{document}
 
 
@@ -351,6 +355,6 @@ Here risk premiums arise from applying pessimistic
 probabilities to outcomes.
 
 
-\vfill \centerline{\it \copyright \ \number\year \
-NYU Stern School of Business}
+\input{../LaTeX/footer.tex}
+
 \end{document}

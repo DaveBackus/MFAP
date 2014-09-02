@@ -1,51 +1,12 @@
 \documentclass[11pt]{article}
 
-\oddsidemargin=0.25truein \evensidemargin=0.25truein
-\topmargin=-0.5truein \textwidth=6.0truein \textheight=8.75truein
+\input{../LaTeX/preamble.tex}
 
-\usepackage{graphicx}
-%\usepackage{amsmath}
-\usepackage{verbatim}
-\usepackage{booktabs}
-\usepackage{comment}
-\usepackage{hyperref}
-\urlstyle{rm}   % change fonts for url's (from Chad Jones)
-\hypersetup{
-    colorlinks=true,        % kills boxes
-    allcolors=blue,
-    pdfsubject={ECON-UB233, Macroeconomic foundations for asset pricing},
-    pdfauthor={Dave Backus @ NYU},
-    pdfstartview={FitH},
-    pdfpagemode={UseNone},
-    bookmarksopen=false,
-%    pdfnewwindow=true,      % links in new window
-%    linkcolor=blue,         % color of internal links
-%    citecolor=blue,         % color of links to bibliography
-%    filecolor=blue,         % color of file links
-%    urlcolor=blue           % color of external links
-% see:  http://www.tug.org/applications/hyperref/manual.html
-}
-
-\usepackage{verbatim}
-%\usepackage{booktabs}
-\usepackage[small, compact]{titlesec}
-
-% list spacing
-\usepackage{enumitem}
-\setitemize{leftmargin=*, topsep=0pt}
-\setenumerate{leftmargin=*, topsep=0pt}
-
-\usepackage{needspace}
-% example:  \needspace{4\baselineskip} makes sure we have four lines available before pagebreak
-
-\renewcommand{\thefootnote}{\fnsymbol{footnote}}
-
-% document starts here
 \begin{document}
 \parskip=\bigskipamount
 \parindent=0.0in
 \thispagestyle{empty}
-{\large ECON-UB 233 \hfill Dave Backus @ NYU}
+\input{../LaTeX/header.tex}
 
 \bigskip\bigskip
 \centerline{\Large \bf Properties of Pricing Kernels}
@@ -84,7 +45,7 @@ Any model lacking such dispersion is dead from the start.
 With power utility, that typically means high risk aversion,
 which brings us back to what degree of risk aversion is reasonable.
 The evident problems with the representative agent power utility model
-is the key driving work in this area.  
+is the key driving work in this area.
 
 In all of this, we'll use a timing convention in which $t$ is now
 and $t+1$ is later.
@@ -173,7 +134,7 @@ and, sometimes, to make progress in your understanding of them.
 
 \section{Properties of excess returns and consumption growth}
 
-We'll start with the evidence on asset returns, 
+We'll start with the evidence on asset returns,
 specifically US assets over the last 100+ years.
 We summarize the basic features of such returns in Table 1 and Figure 1.
 Table 1 includes some of the properties of
@@ -192,19 +153,19 @@ We compute them in levels of returns ($r^1$ and $r^e$)
 and logs ($\log r^1$ and $\log r^e$).
 The same with consumption growth:  $g_{t+1} = c_{t+1}/c_t$
 and $\log g_{t+1}$.
-You might be asking yourself:  Why logs?  
-The answer is that it fits nicely with some theory we'll do shortly. 
+You might be asking yourself:  Why logs?
+The answer is that it fits nicely with some theory we'll do shortly.
 Which is a reminder:  the concept of an excess return is a definition,
-and we get to decide which definition to use.  
+and we get to decide which definition to use.
 If logs are more convenient, then we go back (as we did here)
-and compute excess returns in logs.  
+and compute excess returns in logs.
 
-Here are the numbers, computed both ways.  
+Here are the numbers, computed both ways.
 In levels, the mean short or riskfree rate is 2\% ($r^1 = 1.02$).
 The mean excess return on equity is 5.7\% ($r^e - r^1 = 0.057$).
 For later reference, the {\it Sharpe ratio\/}
 is the mean excess return divided by its standard deviation.
-(That's another definition, also useful in some contexts.) 
+(That's another definition, also useful in some contexts.)
 For equity, that's $ 0.0571/0.1873 = 0.3049$.
 (That's way too many digits, but I want to be clear about the calculation.)
 These numbers, or something like them, are targets for numerical examples
@@ -593,8 +554,8 @@ but then it's a lower bound.
 The representative agent model has one big strength:
 it associates risk premiums with the cyclical behavior
 of output, profits, and dividends, which seems roughly right.
-Put simply: Assets that pay off most in good times, when consumption is high, 
-have positive risk premiums. 
+Put simply: Assets that pay off most in good times, when consumption is high,
+have positive risk premiums.
 The numbers, however, are off.
 The equity premium, the Hansen-Jagannathan bound, and the entropy bound
 all point to variability of the pricing kernel as the key issue for asset pricing models.
@@ -757,7 +718,7 @@ If we double $a$, we double the expected excess return,
 but we also double its standard deviation,
 so the Sharpe ratio stays the same.
 If $a<0$, we reverse the sign of the Sharpe ratio.
-In words:  if we have an asset with a negative Sharpe ratio, 
+In words:  if we have an asset with a negative Sharpe ratio,
 we simply reverse the trade and short the asset.
 \end{enumerate}
 
@@ -863,7 +824,17 @@ but the terminology always struck me as confusing.
 
 % ----------------------------------------------------------------------
 \pagebreak
-{\large\bf Table 1 \\ Properties of US real asset returns and consumption growth}
+\begin{table}[ht!] 
+\caption{Properties of US real asset returns and consumption growth.
+The numbers are from Shiller's
+\href{http://www.econ.yale.edu/~shiller/data.htm}{website}, updated.
+Data covers the period 1889-2009, annual.
+Returns are real:  nominal returns minus inflation.
+Equity is the S\&P 500 and its predecessors.
+Consumption is per capita.
+The calculations are done with the Matlab program
+{\tt Shiller data.m},
+posted on the course website.}
 
 \bigskip
 \tabcolsep=10pt
@@ -885,23 +856,20 @@ Equity return $\log r^e$     &  0.0587  & 0.1795  & --0.6134  &  0.4311 \\
 Excess return $\log r^e - \log r^1$ &  0.0407 & 0.1812 & --0.7157 & 0.9065 \\
 \bottomrule
 \end{tabular}
+\label{fig:Shiller}
+\end{table} 
 
-Source:  Shiller's 
-\href{http://www.econ.yale.edu/~shiller/data.htm}{website}, updated.
-Data covers the period 1889-2009, annual.
-Returns are real:  nominal returns minus inflation.
-Equity is the S\&P 500 and its predecessors.
-Consumption is per capita.
-The calculations are done with the Matlab program
-{\tt Shiller data.m},
-posted on the course website.
 
+% ----------------------------------------------------------------------
 \pagebreak
-{\large\bf Figure 1 \\ US real asset returns v. consumption growth, 1889-2009}
-
+\begin{figure}[!h]
+\caption{US real asset returns v. consumption growth, 1889-2009.
+Same data as Figure \ref{fig:Shiller}.}
+\centering 
 \includegraphics[width=\textwidth]{../Code/Matlab/scatter_gxr.pdf}
+\end{figure} 
 
-\vfill \centerline{\it \copyright \ \number\year \
-NYU Stern School of Business}
+
+\input{../LaTeX/footer.tex}
 
 \end{document}

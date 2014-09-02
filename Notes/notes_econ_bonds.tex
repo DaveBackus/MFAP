@@ -1,52 +1,15 @@
 \documentclass[11pt]{article}
 
-\oddsidemargin=0.25truein \evensidemargin=0.25truein
-\topmargin=-0.5truein \textwidth=6.0truein \textheight=8.75truein
+\input{../LaTeX/preamble.tex}
 
-%\usepackage{graphicx}
-\usepackage{verbatim}
-\usepackage{booktabs}
-\usepackage{comment}
-\usepackage[small, compact]{titlesec}
-\usepackage{hyperref}
-\urlstyle{rm}   % change fonts for url's (from Chad Jones)
-\hypersetup{
-    colorlinks=true,        % kills boxes
-    allcolors=blue,
-    pdfsubject={ECON-UB233, Macroeconomic foundations for asset pricing},
-    pdfauthor={Dave Backus @ NYU},
-    pdfstartview={FitH},
-    pdfpagemode={UseNone},
-%    pdfnewwindow=true,      % links in new window
-%    linkcolor=blue,         % color of internal links
-%    citecolor=blue,         % color of links to bibliography
-%    filecolor=blue,         % color of file links
-%    urlcolor=blue           % color of external links
-% see:  http://www.tug.org/applications/hyperref/manual.html
-}
-
-% list spacing
-\usepackage{enumitem}
-\setitemize{leftmargin=*, topsep=0pt}
-\setenumerate{leftmargin=*, topsep=0pt}
-
-\usepackage{needspace}
-% example:  \needspace{4\baselineskip} makes sure we have four lines available before pagebreak
-
-\renewcommand{\thefootnote}{\fnsymbol{footnote}}
-\newcommand{\tp}{\mbox{\it tp\/}}
-\newcommand{\bp}{\mbox{\it bp\/}}
-\newcommand{\yp}{\mbox{\it yp\/}}
-
-% document starts here
 \begin{document}
 \parskip=\bigskipamount
 \parindent=0.0in
 \thispagestyle{empty}
-{\large ECON-UB 233 \hfill Dave Backus @ NYU}
+\input{../LaTeX/header.tex}
 
 \bigskip\bigskip
-\centerline{\Large \bf Models of Bond Pricing}
+\centerline{\Large \bf Models of Bond Prices}
 \centerline{Revised: \today}
 
 \bigskip
@@ -138,9 +101,9 @@ yields $y^n_t$, or forward rates $f^n_t$.
 Once we know one, we can compute the others.
 Forwards are mathematically simpler, but yields are more common.
 
-*** Forward contracts 
+*** Forward contracts
 
-*** Coupon bonds 
+*** Coupon bonds
 
 
 One last thing:  bond prices and returns have units.
@@ -1657,11 +1620,7 @@ So what does that tell us?  We can predict changes in term premiums.
 It's not hard to show that this carries over to excess returns.
 
 
-
-
-\vfill \centerline{\it \copyright \ \number\year \
-NYU Stern School of Business}
-
+\input{../LaTeX/footer.tex}
 
 
 \end{document}
