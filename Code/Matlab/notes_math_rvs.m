@@ -35,8 +35,8 @@ mu = 0;
 sigma = 1;
 p1 = exp(-(x-mu).^2/(2*sigma^2))./sqrt(2*pi*sigma^2);
 
-mu = 0;
-sigma = 1.5;
+mu = 1;
+sigma = 1;
 p2 = exp(-(x-mu).^2/(2*sigma^2))./sqrt(2*pi*sigma^2);
 
 clf 
@@ -47,9 +47,62 @@ xlabel('Value of random variable x')
 ylabel('Density function p(x)') 
 title('Normal density functions', 'FontSize', 12)
 
+%%
+disp('Generating functions (Bernoulli)')
+syms s omega                        % defines these as symbols 
+
+% mgf 
+mgf = 1-omega + omega*exp(s);
+cgf = log(mgf);
+
+disp('raw moments')
+% differentiate moment generating function 
+mu1p = subs(diff(mgf,s,1),s,0)      % mean
+mu2p = subs(diff(mgf,s,2),s,0)      % second moment (why not variance?) 
+mu3p = subs(diff(mgf,s,3),s,0)
+mu4p = subs(diff(mgf,s,4),s,0)
+
+disp('cumulants ')
+% differentiate cumulant generating function 
+kappa1 = subs(diff(cgf,s,1),s,0)    % mean
+kappa2 = subs(diff(cgf,s,2),s,0)    % variance 
+kappa3 = subs(diff(cgf,s,3),s,0)
+kappa4 = subs(diff(cgf,s,4),s,0)
+
+disp('skewness and kurtosis')
+gamma1 = kappa3/kappa2^(3/2)
+gamma2 = kappa4/kappa2^2
+
 
 %%
-disp('Generating functions')
+disp('Generating functions (Poisson)')
+syms s omega                        % defines these as symbols 
+
+% normal mgf 
+mgf = exp(omega*(exp(s)-1));
+cgf = log(mgf);
+
+disp('raw moments')
+% differentiate moment generating function 
+mu1p = subs(diff(mgf,s,1),s,0)       % mean
+mu2p = subs(diff(mgf,s,2),s,0)       % second moment (why not variance?) 
+mu3p = subs(diff(mgf,s,3),s,0)
+mu4p = subs(diff(mgf,s,4),s,0)
+
+disp('cumulants ')
+% differentiate cumulant generating function 
+kappa1 = subs(diff(cgf,s,1),s,0)    % mean
+kappa2 = subs(diff(cgf,s,2),s,0)    % variance 
+kappa3 = subs(diff(cgf,s,3),s,0)
+kappa4 = subs(diff(cgf,s,4),s,0)
+
+disp('skewness and kurtosis')
+gamma1 = kappa3/kappa2^(3/2)
+gamma2 = kappa4/kappa2^2
+
+
+%%
+disp('Generating functions (normal)')
 syms s mu sigma                     % defines these as symbols 
 
 % normal mgf 
@@ -76,7 +129,7 @@ gamma2 = kappa4/kappa2^2
 
 
 %%
-disp('More generating functions')
+disp('More generating functions (linear combinations)')
 syms s mu sigma                     % defines these as symbols 
 
 cgf_x = s^2/2; 

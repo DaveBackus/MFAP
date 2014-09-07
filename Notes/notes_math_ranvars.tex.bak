@@ -84,7 +84,7 @@ and $p$ is a function of the state $z$.
 We call the complete collection of $p(z)$'s
 the {\it probability distribution\/}.
 Not every set of numbers works.
-Legimate probabilities must be nonnegative and sum to one.
+Legitimate probabilities must be nonnegative and sum to one.
 
 \item {\it Random variables.\/}
 A {\it random variable\/} is a function that
@@ -505,13 +505,13 @@ The exponents are
 \newlength{\oldfrule}
 \setlength{\oldfrule}{\fboxrule}
 \setlength{\fboxrule}{3\fboxrule}
-\newlength{\lll}
-\setlength{\lll}{\textwidth}
-\addtolength{\lll}{-2\fboxsep}
-\addtolength{\lll}{-2\fboxrule}
+\newlength{\boxwidth}
+\setlength{\boxwidth}{\textwidth}
+\addtolength{\boxwidth}{-2\fboxsep}
+\addtolength{\boxwidth}{-2\fboxrule}
 \noindent
 \fbox{%
-\begin{minipage}{\lll}
+\begin{minipage}{\boxwidth}
 \vspace{-0.75\abovedisplayskip}
 %\vspace{0.0in}
 \begin{eqnarray}
@@ -1134,7 +1134,7 @@ We get the first automatically and the second if $p = 1/6$.
 \end{enumerate}
 Matlab code:
 \begin{verbatim}
-syms s omega delta % defines these as symbols
+syms s omega delta                  % defines these as symbols
 mgf = omega*(exp(-s*delta)+exp(s*delta)) + (1-2*omega);
 cgf = log(mgf);
 
@@ -1386,9 +1386,7 @@ and more.
 Wikipedia's also ok on the underlying mathematics, but you're never sure what
 level you'll get:  too high, too low, or just right.
 
-
-\vfill \centerline{\it \copyright \ \number\year \
-NYU Stern School of Business}
+\input{../LaTeX/footer.tex}
 
 \end{document}
 

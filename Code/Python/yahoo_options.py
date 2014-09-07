@@ -16,41 +16,55 @@ References
 Written by Dave Backus @ NYU, August 2014  
 Created with Python 3.4 
 """
+import pandas as pd
 import pandas.io.data as web
 from pandas.io.data import Options
 import datetime as dt 
+
+# checking versions 
+print(['Matplotlib version ', plt.__version__])
+print(['Pandas version ', pd.__version__])
+! python --version
 
 import matplotlib as mpl
 mpl.rcParams['figure.figsize'] = 6, 4.5  # default is 6, 4
 mpl.rcParams['legend.fontsize'] = 10  
 mpl.rcParams['legend.labelspacing'] = 0.25
-mpl.rcParams['legend.handlelength'] = 3
+mpl.rcParams['legend.handlelength'] = 5
 
 import matplotlib.pylab as plt
+
+#%%
 
 """
 1. Read in Yahoo stock and options prices for SPY (SP 500 "Spyders")  
 """
 ticker = 'spy' 
 
-# get stock price first (most recent date) 
-start = dt.datetime(2014, 8, 22)     
-# It would be cool if we could use this to get today as the most recent
-# stock quote, but if today's a weekend you get an empty set of prices.
-# So what we do is pick an old date and then choose the last observation.
+# stock price first (the underlying) 
+# pick a recent date and subtract seven days to be sure we get a quote  
+# http://pymotw.com/2/datetime/#date-arithmetic
 today = dt.date.today()
-
+one_week = dt.timedelta(days=7)
+start = today - one_week
 stock = web.DataReader(ticker, 'yahoo', start) 
-# take last closing prices 
+print(stock.tail())        # just to see what we have
+
+# take the last close (that's what the -1 does)
 atm = stock.ix[-1,'Close']      # the -1 takes the last observation   
 
 #%%
 
 # get option prices for same ticker 
 option = Options(ticker, 'yahoo')
-expiry = dt.date(2014, 11, 20)
+expiry = dt.date(2014, 12, 20)
 data_calls = option.get_call_data(expiry=expiry)
 data_puts  = option.get_put_data(expiry=expiry)
+
+print(data_calls.tail()) 
+print(data_puts.tail()) 
+
+#%%
 
 # plot puts v strike, call v strike
 calls_bid = data_calls['Bid']

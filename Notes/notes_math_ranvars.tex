@@ -84,7 +84,7 @@ and $p$ is a function of the state $z$.
 We call the complete collection of $p(z)$'s
 the {\it probability distribution\/}.
 Not every set of numbers works.
-Legimate probabilities must be nonnegative and sum to one.
+Legitimate probabilities must be nonnegative and sum to one.
 
 \item {\it Random variables.\/}
 A {\it random variable\/} is a function that
@@ -439,7 +439,7 @@ If we expand $e^{sx}$ the same way and take expectations,
 the moments pop out:
 \begin{eqnarray*}
     h(s) &=& E \left[ 1 + (sx) + (sx)^2/2 + (sx)^3/3! + \cdots \right] \\
-            &=&  1 + \mu_1^\prime s + \mu_3^\prime (s^2/2)  + \mu_3^\prime (s^3/3!)  + \cdots .
+            &=&  1 + \mu_1^\prime s + \mu_2^\prime (s^2/2)  + \mu_3^\prime (s^3/3!)  + \cdots .
 \end{eqnarray*}
 With a little more insight, we see that we can recover the moments by differentiating
 $h$ and setting $s=0$.
@@ -505,13 +505,13 @@ The exponents are
 \newlength{\oldfrule}
 \setlength{\oldfrule}{\fboxrule}
 \setlength{\fboxrule}{3\fboxrule}
-\newlength{\lll}
-\setlength{\lll}{\textwidth}
-\addtolength{\lll}{-2\fboxsep}
-\addtolength{\lll}{-2\fboxrule}
+\newlength{\boxwidth}
+\setlength{\boxwidth}{\textwidth}
+\addtolength{\boxwidth}{-2\fboxsep}
+\addtolength{\boxwidth}{-2\fboxrule}
 \noindent
 \fbox{%
-\begin{minipage}{\lll}
+\begin{minipage}{\boxwidth}
 \vspace{-0.75\abovedisplayskip}
 %\vspace{0.0in}
 \begin{eqnarray}
@@ -1134,7 +1134,7 @@ We get the first automatically and the second if $p = 1/6$.
 \end{enumerate}
 Matlab code:
 \begin{verbatim}
-syms s omega delta % defines these as symbols
+syms s omega delta                  % defines these as symbols
 mgf = omega*(exp(-s*delta)+exp(s*delta)) + (1-2*omega);
 cgf = log(mgf);
 
@@ -1307,7 +1307,7 @@ cgf = log(mgf);
 kappa1 = subs(diff(cgf,s,1),s,0)    % mean
 kappa2 = subs(diff(cgf,s,2),s,0)    % variance
 kappa3 = subs(diff(cgf,s,3),s,0)
-factor(kappa3)  % sometimes cleans up the expression
+factor(kappa3)                      % sometimes works
 \end{verbatim}
 \item It's obviously not normal, but the key is the third cumulant $\kappa_3$,
 which is zero for normals
