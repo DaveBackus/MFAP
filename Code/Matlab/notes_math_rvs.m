@@ -170,7 +170,7 @@ z = [-zmax:dz:zmax]';
 
 % skewness and (excess) kurtosis
 gamma1 = 1
-gamma2 = 0.0 
+gamma2 = 1 
 
 % Gram-Charlier distribution (normal if gamma1 = gamma2 = 0) 
 p1 = exp(-z.^2/2)*dz/sqrt(2*pi);       
