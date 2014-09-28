@@ -1,49 +1,12 @@
 \documentclass[11pt]{article}
 
-\oddsidemargin=0.25truein \evensidemargin=0.25truein
-\topmargin=-0.5truein \textwidth=6.0truein \textheight=8.75truein
+\input{../LaTeX/preamble.tex}
 
-%\usepackage{graphicx}
-\usepackage{verbatim}
-%\usepackage{booktabs}
-\usepackage{comment}
-\usepackage{hyperref}
-\urlstyle{rm}   % change fonts for url's (from Chad Jones)
-\hypersetup{
-    colorlinks=true,        % kills boxes
-    allcolors=blue,
-    pdfsubject={ECON-UB233, Macroeconomic foundations for asset pricing},
-    pdfauthor={Dave Backus @ NYU},
-    pdfstartview={FitH},
-    pdfpagemode={UseNone},
-%    pdfnewwindow=true,      % links in new window
-%    linkcolor=blue,         % color of internal links
-%    citecolor=blue,         % color of links to bibliography
-%    filecolor=blue,         % color of file links
-%    urlcolor=blue           % color of external links
-% see:  http://www.tug.org/applications/hyperref/manual.html
-}
-
-\usepackage{verbatim}
-%\usepackage{booktabs}
-\usepackage[small, compact]{titlesec}
-
-% list spacing
-\usepackage{enumitem}
-\setitemize{leftmargin=*, topsep=0pt}
-\setenumerate{leftmargin=*, topsep=0pt}
-
-\usepackage{needspace}
-% example:  \needspace{4\baselineskip} makes sure we have four lines available before pagebreak
-
-\renewcommand{\thefootnote}{\fnsymbol{footnote}}
-
-% document starts here
 \begin{document}
 \parskip=\bigskipamount
 \parindent=0.0in
 \thispagestyle{empty}
-{\large ECON-UB 233 \hfill Dave Backus @ NYU}
+\input{../LaTeX/header.tex}
 
 \bigskip\bigskip
 \centerline{\Large \bf Review for Quiz \#1}
@@ -124,7 +87,7 @@ of the cumulants of $\log c$.
 Again, we see that it's not only the variance that matters:
 high-order terms also show up.
 Power utility agents generally like positive skewness and dislike
-kurtosis.
+positive excess kurtosis.
 
 
 \section*{Consumption, saving, and portfolio choice}
@@ -144,7 +107,7 @@ The first-order conditions of a utility-maximizing agent  imply
     \label{eq:state-prices=mrs}
 \end{eqnarray}
 Here the equation is interpreted as a demand function: given a price $Q(z)$,
-how much do we want to consume at date 1 in state $z$ (ie, $c_1(z)$)?
+how much do we want to consume at date 1 in state $z$ --- that is, $c_1(z)$?
 [It's a little more complicated than that, since it includes $c_0$ as well,
 but that's the basic idea.]
 
@@ -164,7 +127,7 @@ of each Arrow security.
 Its price is then the sum of the prices of the Arrow securities that replicate the
 pattern of dividends.
 This is just bookkeeping, there's no maximization involved.
-Suggestion:  make up a two-state example and show how this works.
+Suggestion:  make up a two-state example and show how it works.
 
 
 The consumer maximization problem with an arbitrary  collection of assets
@@ -176,12 +139,13 @@ The first-order conditions also imply
         \label{eq:Emr}
 \end{eqnarray}
 for all traded assets $j$.
-This equation determines consumptions:  given returns $r^j$, choose consumptions to make this hold.
+This equation determines consumptions:  given returns $r^j(z)$, 
+choose consumptions to make it hold.
 Later on the same equation will reappear as an asset pricing relation:
 given $m$, find the price and return of an asset.
 
 
-Clean solutions to portfolio choice problems are a rarity, but we saw that a theoretical agent
+Clean solutions to portfolio choice problems are rare, but we saw that a theoretical agent
 holds less of the risky asset when we increase her risk aversion.
 In Merton's formula, the share $a$ invested in the risky asset is
 \begin{eqnarray*}
@@ -198,7 +162,7 @@ out so nicely, even if it's a special case.
 
 General equilibrium models are a basic tool of economics.
 The representative agent version is a useful starting point:
-simple enough to be manageable, flexible enough to generate some clear insights.
+simple enough to be manageable, flexible enough to generate clear insights.
 It's the predominant model in macro-finance,
 even as people work on extensions with more complex preferences
 or multiple agents.
@@ -243,7 +207,57 @@ unit is worth to us.
 In that sense, assets that pay off mostly in good times will have less value
 than assets that pay off mostly in bad times.
 
-**** Add notation guide ***** ???
+\section*{Notation guide} 
+
+%\bigskip
+%\begin{center}
+%\tabcolsep=2.25em
+\begin{tabular}{ll}
+\toprule
+Object    &  Definition    \\
+\midrule
+\multicolumn{2}{l}{\it Random variables}   \\
+\midrule 
+$z$ \hspace*{5em}& state \\
+$p$ & probability \\
+$x$ & random variable \\
+$E$ & expectation:  $E[f(x)] = \sum_x f(x) p(x) \mbox{ or } \int f(x) p(x) dx $ \\ %or the equivalent\\
+$\mu_j^\prime$ & raw moment: $ E(x^j)$ for positive integer $j$ \\
+$\mu_j$         & central moment: $ E[(x-\mu_1^\prime)^j]$ \\
+$h$         &  moment generating function:  $h(s) = E(e^{sx})$ \\
+$k$         &  cumulant generating function:  $k(s) = \log h(s) $ \\
+$\kappa_j$      & cumulant:  $j$th derivative of $k$ evaluated at $s=0$ \\
+
+$\gamma_1$ & skewness:  $\kappa_3 /(\kappa_2)^{3/2} = \mu_3 /(\mu_2)^{3/2}$ \\
+$\gamma_2$ & excess kurtosis:  $\kappa_3 /(\kappa_2)^{2} = \mu_4 /(\mu_2)^{2} - 3$ \\
+
+\midrule 
+\multicolumn{2}{l}{\it Risk and risk aversion}   \\
+\midrule 
+$\alpha$    &  risk aversion parameter \\
+$c$         & consumption \\
+$U$         & overall utility \\
+$u$         & utility in each state:  $ U = E [u(c)] $ \\
+
+\midrule
+\multicolumn{2}{l}{\it Asset prices and returns}   \\
+\midrule 
+$\beta$     & discount factor in utility \\
+$a^j$       & position or share invested in asset $j$ \\
+$d^j$       & dividend paid by asset $j$ \\
+$q_x$       & price of a generic $x$ \\
+$q_0$       & price of consumption at date 0 \\
+$q_1$       & price of consumption at date 1 \\
+$q_1(z)$    & price of consumption at date 1 in state $z$ \\
+$q^j$       & price of generic asset $j$  \\
+$q^1$       & price of one-period riskfree bond \\
+$q^e$       & price of risky claim (``equity'') \\
+$ Q(z) = q_1(z)/q_0$ & price of Arrow security $z$ \\
+$ r^j = d^j/q^j$      & return on asset $j$  \\
+\bottomrule
+\end{tabular}
+%\end{center}
+
 
 \input{../LaTeX/footer.tex}
 

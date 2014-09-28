@@ -20,7 +20,7 @@ saving, and portfolio decisions of agents we studied earlier
 with the production and investment decisions of firms
 and find the prices and quantities that clear markets.
 We simplify each of these things as much as we can
-to see how this might work.
+in the interest of clarity.
 The result is a relatively simple environment in which
 we can talk, for the first time, about the sources
 of risk premiums on assets.
@@ -1090,6 +1090,6 @@ More on this another time.
 
 \end{enumerate}
 
-\vfill \centerline{\it \copyright \ \number\year \
-NYU Stern School of Business}
+\input{../LaTeX/footer.tex}
+
 \end{document}

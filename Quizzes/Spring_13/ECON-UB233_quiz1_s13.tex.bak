@@ -199,7 +199,7 @@ That gives us $Q(1) = 0.5$ and $Q(2) = 0.2$.
 \end{solution}
 
 
-\pagebreak \phantom{xx} \pagebreak
+%\pagebreak \phantom{xx} \pagebreak
 %-----------------------------------------------------------------------
 \question {\it Saving and investment (20 points).}
 Consider the Pareto problem of choosing $(c_0,k)$ to maximize
@@ -239,7 +239,7 @@ the Lagrangian is
 \end{parts}
 \end{solution}
 
-\pagebreak \phantom{xx} %\pagebreak
+%\pagebreak \phantom{xx} %\pagebreak
 \end{questions}
 
 %\phantom{xx}

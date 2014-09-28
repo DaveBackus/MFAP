@@ -1,49 +1,12 @@
 \documentclass[11pt]{article}
 
-\oddsidemargin=0.25truein \evensidemargin=0.25truein
-\topmargin=-0.5truein \textwidth=6.0truein \textheight=8.75truein
+\input{../LaTeX/preamble.tex}
 
-%\usepackage{graphicx}
-\usepackage{verbatim}
-%\usepackage{booktabs}
-\usepackage{comment}
-\usepackage{hyperref}
-\urlstyle{rm}   % change fonts for url's (from Chad Jones)
-\hypersetup{
-    colorlinks=true,        % kills boxes
-    allcolors=blue,
-    pdfsubject={ECON-UB233, Macroeconomic foundations for asset pricing},
-    pdfauthor={Dave Backus @ NYU},
-    pdfstartview={FitH},
-    pdfpagemode={UseNone},
-%    pdfnewwindow=true,      % links in new window
-%    linkcolor=blue,         % color of internal links
-%    citecolor=blue,         % color of links to bibliography
-%    filecolor=blue,         % color of file links
-%    urlcolor=blue           % color of external links
-% see:  http://www.tug.org/applications/hyperref/manual.html
-}
-
-\usepackage{verbatim}
-%\usepackage{booktabs}
-\usepackage[small, compact]{titlesec}
-
-% list spacing
-\usepackage{enumitem}
-\setitemize{leftmargin=*, topsep=0pt}
-\setenumerate{leftmargin=*, topsep=0pt}
-
-\usepackage{needspace}
-% example:  \needspace{4\baselineskip} makes sure we have four lines available before pagebreak
-
-\renewcommand{\thefootnote}{\fnsymbol{footnote}}
-
-% document starts here
 \begin{document}
 \parskip=\bigskipamount
 \parindent=0.0in
 \thispagestyle{empty}
-{\large ECON-UB 233 \hfill Dave Backus @ NYU}
+\input{../LaTeX/header.tex}
 
 \bigskip\bigskip
 \centerline{\Large \bf Review for Quiz \#1}
@@ -243,9 +206,9 @@ unit is worth to us.
 In that sense, assets that pay off mostly in good times will have less value
 than assets that pay off mostly in bad times.
 
+**** Add notation guide ***** ???
 
-
-**** Add notation guide *****
+\input{../LaTeX/footer.tex}
 
 
 \end{document}
@@ -353,7 +316,6 @@ unit of consumption is low.
 Similar logic follows from risk-neutral probabilities.
 Here risk premiums arise from applying pessimistic
 probabilities to outcomes.
-
 
 \input{../LaTeX/footer.tex}
 

@@ -21,13 +21,13 @@ mu = sum(p.*c.^(1-alpha)).^(1/(1-alpha))
 disp('Find your risk aversion -- upside risk version') 
 % inputs 
 c = [100; 200; 1000];
-omega = 0.5; %0.495;
+omega = 0.495;
 p = [omega; omega; 1-2*omega]; 
 
 % calculations 
 cbar = sum(p.*c)
 alpha = 5;
-mu = sum(p.*c.^(1-alpha)).^(1/(1-alpha)) 
+mu = sum(p.*c.^(1-alpha))^(1/(1-alpha)) 
 
 rp = log(cbar/mu) 
 
@@ -44,6 +44,16 @@ syms s alpha delta omega lambda
 mgf = exp(omega*(exp(s*delta)-1))       % Poisson 
 
 cbar = subs(diff(mgf,s,1),s,0) 
+
+%%
+% playing 
+
+alpha = 0.5;
+c = [0.1:0.1:5];
+
+u = c.^(1-alpha)/(1-alpha);
+
+plot(c,u)
 
 
 

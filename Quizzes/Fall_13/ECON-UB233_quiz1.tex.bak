@@ -26,7 +26,7 @@
 \renewcommand{\thefootnote}{\fnsymbol{footnote}}
 \newcommand{\var}{\mbox{\it Var\/}}
 
-\printanswers
+%\printanswers
 
 % document starts here
 \begin{document}
@@ -37,7 +37,7 @@
 
 \bigskip\bigskip
 \centerline{\Large \bf Quiz \#1}
-\centerline{Revised: \today}
+\centerline{Fall 2013}
 
 \bigskip
 {\it Please write your name below,
@@ -106,7 +106,7 @@ Utility is $u(c) = c^{1-\alpha}/(1-\alpha) $ with risk aversion
 parameter $\alpha > 0$.
 Consumption is $ c = e^x$
 for $ x = 0,1,2, \ldots$ with probabilities
-$ p(x) = (1-\omega) \omega^x$ for some parameter $1< \omega < 1$.
+$ p(x) = (1-\omega) \omega^x$ for some parameter $0< \omega < 1$.
 We say that $x$ has a {\it geometric distribution\/}.
 %
 \begin{parts}
@@ -201,7 +201,7 @@ we produce $f(x)$ units of the date-1 good in all states $z$.
 
 \item We want to maximize the utility of the agent subject to the resource constraints.
 You could simply write down the problem:  utility function and resource constraints.
-Or you could report the Lagrangian, 
+Or you could report the Lagrangian,
 {\small
 \begin{eqnarray*}
     \mathcal{L} &=& u(c_0) + \beta \sum_z p(z) u[c_1(z)]
@@ -209,7 +209,7 @@ Or you could report the Lagrangian,
         [y_1(z) + f(x) - c_1(z) ] ,
 \end{eqnarray*}
 }
-which contains the same information.  
+which contains the same information.
 
 \end{parts}
 \end{solution}

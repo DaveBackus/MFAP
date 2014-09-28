@@ -17,7 +17,7 @@ Risk and risk aversion are fundamental building blocks
 for thinking about how risk is priced in markets.
 We say people are {\it risk averse\/} if they
 prefer a sure thing to a risky outcome with the same mean.
-The question is what form this risk aversion takes.
+The question is what form this risk aversion takes --- what kinds of risks matter?
 We'll see that the entire distribution matters.
 If we think about this in terms of moments and cumulants,
 it's not just the variance that's relevant,
@@ -197,14 +197,14 @@ Which of the following are concave?  Convex?
     (b) \;\; f(x) &=& \log x  \\
     (c) \;\; f(x) &=& e^x \\
     (d) \;\; f(x) &=& x^{1-\alpha}/(1-\alpha) \\
-    (e) \;\; f(x) &=& \max \{ 0, x-k \}  \\ 
+    (e) \;\; f(x) &=& \max \{ 0, x-k \}  \\
     (f) \;\; f(x) &=& x^2.
     \phantom{xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx}
 \end{eqnarray*}
 Think about these, maybe draw them to see what they look like.
 Item (e) you might recognize as the payoff from
 a call option on $x$ with strike price $k$.
-Item (f) demonstrates that the variance must be positive.  
+Item (f) demonstrates that the variance must be positive.
 [Why?  Because $\mbox{Var}(x) = E(x^2) - [E(x)]^2$.]
 
 
@@ -384,7 +384,7 @@ and is often referred to (for reasons we won't go into)
 as the {\it coefficient of relative risk aversion\/}.
 Larger values of $\alpha$ are associated with stronger aversion to risk.
 A small technical point:  with this utility function,
-and most others we'll use in this class,
+and most others in this class,
 we'll restrict consumption $c$ to be positive.
 
 What about its derivatives?
@@ -398,15 +398,14 @@ which have the signs we want.
 The third and fourth derivatives are
 \begin{eqnarray*}
     u'''(c)  &=& \alpha (\alpha+1) c^{-\alpha-2} \;\;>\;\; 0 \\
-    u''''(c) &=& - \alpha (\alpha+1) (\alpha+2) c^{-\alpha-2} \;\;<\;\; 0 .
+    u''''(c) &=& - \alpha (\alpha+1) (\alpha+2) c^{-\alpha-3} \;\;<\;\; 0 .
 \end{eqnarray*}
-The Samuelson expansion (\ref{eq:eu-samuelson}) tells us then that
-power expected utility agents like positive skewness
+The Samuelson expansion (\ref{eq:eu-samuelson}) tells us, then,
+that power expected utility agents like positive skewness (lottery tickets?)
 and dislike positive kurtosis.
-[Can you think of examples?]
 
-With power utility,
-the certainty equivalent is
+
+Power utility also allows us to compute the certainty equivalent from a formula:
 \begin{eqnarray}
     \mu &=& \left( \sum_z p(z) c(z)^{1-\alpha} \right)^{1/(1-\alpha)}
         \;\;=\;\; \left[ E (c^{1-\alpha}) \right]^{1/(1-\alpha)} .
@@ -457,58 +456,69 @@ which we'll do later in the course.
 
 \section{Cumulant expansion of risk penalties}
 
-Here's another take on how we respond to various kinds of risks:
-we examine the impact of cumulants on the risk penalty (\ref{eq:rp-def}).
-We'll use the  mgf and (especially) the cgf of $\log c$
-and focus on the distribution of $\log c$ rather than $c$.
-Let us say, to be concrete,
-that $x = \log c$ has mgf $h(s) = E (e^{sx})$ and cgf $k(s) = \log h(s) = \log E (e^{sx}) $.
+With power utility, there's a close connection between expected
+utility and the distribution of $ x = \log c$.
+Why is that?
+Because $c^{1-\alpha} = e^{(1-\alpha) \log c} = e^{(1-\alpha) x }$.
+If $k(s) = \log E (e^{sx})$ is the cumulant generating function of $x$,
+then $E(c^{1-\alpha})$  is $k$ evaluated at $ s = 1-\alpha$.
+This is simply a convenient byproduct of  power utility,
+but it allows us to connect expected utility and the risk penalty (\ref{eq:rp-def})
+to the risk aversion parameter and the cumulants of the {\bf logarithm} of consumption.
+This parallels the Samuelson expansion (\ref{eq:eu-samuelson}),
+in which we connected expected utility to the derivatives of the utility function
+and the central moments of consumption (not its log!).
+
 
 The first ingredient of the risk penalty is mean consumption:
-$\cbar = E(c) = E (e^x) = h(1) = \exp[k(1)]$.
+$\cbar = E(c) = E (e^x) = \exp[k(1)]$.
 [Are you with me?  Stop and think if you're not.]
 
 The second ingredient is the certainty equivalent.
-Expected utility is connected to the mgf and cgf by
+Expected utility is connected to the cgf by
 \begin{eqnarray*}
-    E (c^{1-\alpha})/(1-\alpha) &=& E (e^{(1-\alpha) x})/(1-\alpha) \\
-        &=&  h(1-\alpha)/(1-\alpha) \;\;=\;\; \exp[k(1-\alpha)]/(1-\alpha)
+    E[u(c)] &=&   E (c^{1-\alpha})/(1-\alpha) \\
+            &=& E (e^{(1-\alpha) x})/(1-\alpha) \\
+            &=&  \exp[k(1-\alpha)]/(1-\alpha) .
 \end{eqnarray*}
 The certainty equivalent follows from equating expected utility to the utility
 of constant consumption equal to $\mu$:
 \begin{eqnarray*}
-    u (\mu) \;\;=\;\; \mu^{1-\alpha}/(1-\alpha)
-            &=& E [u(c)]  \\
-            &=& E \big( c^{1-\alpha} \big)/(1-\alpha)
-                    \;\;=\;\; E \Big( e^{(1-\alpha) \log c} \Big)/(1-\alpha) \\
-            &=& h(1-\alpha)/(1-\alpha) \;\;=\;\; \exp[k(1-\alpha)]/(1-\alpha) .
+    u (\mu) &=& E [u(c)]  \\
+%\Rightarrow \;\;
+    \mu^{1-\alpha}/(1-\alpha)
+            &=& \exp[k(1-\alpha)]/(1-\alpha) .
 \end{eqnarray*}
 That gives us
 \begin{eqnarray*}
-    \mu^{1-\alpha} &=& h(1-\alpha) \;\;=\;\; \exp[k(1-\alpha)] \\
-    \Rightarrow \;\; \mu &=&  h(1-\alpha)^{1/(1-\alpha)} \;\;=\;\; \exp[k(1-\alpha)/(1-\alpha)]  .
+    \mu &=&  \big\{ \exp[k(1-\alpha)] \big\} ^{1/(1-\alpha)}  \;\;=\;\; \exp[k(1-\alpha)/(1-\alpha)]  .
 \end{eqnarray*}
 This is a little mysterious, but it's nice compact notation,
 which is generally a good thing.
 
 Putting our two calculations together gives us the risk penalty (\ref{eq:rp-def}):
 \begin{eqnarray*}
-    \rp &=& \log (\cbar/\mu)  \;\;=\;\; k(1) - (1-\alpha)^{-1} k(1-\alpha) .
+    \rp &=& \log (\cbar/\mu)  \;\;=\;\; k(1) -  k(1-\alpha) / (1-\alpha) .
 \end{eqnarray*}
 We see, for example, that it's zero when $\alpha = 0$:
 someone who does not dislike risk has no risk penalty,
 whatever that risk might be.
-[Think for a minute:  What do we need to show this?]
-If we write down the expansion of the cgf in terms of cumulants,
-we can see the effects of individual cumulants:
+[Think for a minute:  What is the utility function when $\alpha = 0$?]
+
+More useful to us is an analog of Samuelson's expansion.
+Recall that we can express the cgf in terms of its cumulants:
+\begin{eqnarray*}
+    k(s) &=& \kappa_1 s + \kappa_2 s^2/2 + \kappa_3 s^3/3! + \cdots ,
+\end{eqnarray*}
+where $\kappa_j$ is the $j$th cumulant of $x = \log c$.
+That gives us
 \begin{eqnarray}
-    \rp &=& k(1) - (1-\alpha)^{-1} k(1-\alpha) \nonumber \\
+    \rp &=& k(1) -  k(1-\alpha)/(1-\alpha) \nonumber \\
         &=& [1-(1-\alpha)] \kappa_2/2 + [1- (1-\alpha)^2] \kappa_3/3!
             + [1- (1-\alpha)^3] \kappa_4/4! + \cdots ,
         \label{eq:rp-cum-expansion}
 \end{eqnarray}
-where $\kappa_j$ is the $j$th cumulant of $x = \log c$.
-If $\log c$ is normal (and $c$ lognormal), then only the first term appears,
+If $x = \log c$ is normal, then only the first term appears,
 the rest are zero.
 The term says that the risk penalty is the product of risk aversion ($\alpha$)
 and the variance over two ($\kappa_2/2$).
@@ -540,6 +550,55 @@ moment generating function for the log of consumption.
 \section*{Practice problems}
 
 \begin{enumerate}
+\item  {\it Concave and convex functions.\/}
+Consider the following functions defined over positive values of $x$:
+%
+\begin{enumerate}
+\item $f(x) = \log x$
+\item $f(x) = \exp(x) $
+\item $f(x) = x^{\alpha}$ for $\alpha = 2$
+\item $f(x) = - x^{\alpha}$ for $\alpha = 2$
+\item $f(x) = x^{\alpha} $ for $\alpha = 1$
+\end{enumerate}
+For each one:
+\begin{itemize}
+\item State whether it's concave, convex, or something else.
+\item State whether $ E[f(x)]$ is greater or less than $f[E(x)]$.
+\item Verify your previous answer by computing
+ $ E[f(x)]$ and $f[E(x)]$
+ for the Bernoulli random variable
+\begin{eqnarray*}
+    x &=& \left\{
+            \begin{array}{ll}
+            100   & \mbox{with probability } 1/2 \\
+            200 & \mbox{with probability }   1/2 .
+            \end{array}
+            \right.
+\end{eqnarray*}
+\end{itemize}
+
+Answer.  
+This is a check on Jensen's inequality.
+\begin{itemize}
+\item (a) Concave, (b) convex, (c) convex, (d) concave, (e) linear
+(on the edge between concave and convex).
+\item If concave $ E[f(x)] < f[E(x)]$.  If convex the reverse.
+If linear, they're equal.
+\item Summary: \\
+\begin{center}
+\begin{tabular}{lccccc}
+\toprule
+        & (a) & (b) & (c) & (d) & (e) \\
+\midrule
+$E[f(x)]$ & 4.95 & $10^{86}$ & 25,000 & --25,000 & 150 \\
+$f[E(x)]$ & 5.01 & $10^{65}$ & 22,500 & --22,500 & 150 \\
+\bottomrule
+\end{tabular}
+\end{center}
+\end{itemize}
+\bigskip
+
+
 \item {\it Lognormal risks.\/}
 What is the {\it risk penalty\/} when consumption is lognormal
 (the log of consumption is normal)?
@@ -605,7 +664,7 @@ The question is how large the impact is on your attitude toward income risk.
 %
 \begin{enumerate}
 \item What is mean consumption?
-\item If you have power utility with $\alpha = 3$, what is your certainty equivalent?
+\item If you have power utility with $\alpha = 5$, what is your certainty equivalent?
 \item What is your risk penalty?
 \item The question is how important the upside risk is to your risk penalty.
 One way to approach this question is with the cumulant expansion
@@ -627,14 +686,15 @@ This tells us that the rest of the distribution --- the upside risk ---
 lowers the risk penalty from 0.3920 (the variance term) to 0.2999 (the total).
 What's going on?
 Power utility agents like upside risk, including positive skewness,
-even after we take into account its impact on the mean in the risk penalty.
+even after we take into account its impact on the mean in the risk penalty,
+so they're willing to accept a smaller penalty in return.
 \end{enumerate}
 
 Matlab code:
 \begin{verbatim}
 % inputs
 c = [100; 200; 1000];
-omega = 0.5; %0.495;
+omega = 0.495;
 p = [omega; omega; 1-2*omega];
 
 % calculations
@@ -650,14 +710,18 @@ varianceterm = alpha*kappa2/2
 \end{verbatim}
 
 \item {\it Exponential risks.\/}
-Consider risk when when $x = - \log c $ is exponential,
-a tractable nonnormal distribution.
-The minus sign gives us negative skewness, which power utility agents
-dislike.
-The goal is to see how this shows up in the risk penalty.
-
+We know that when $ x = \log $ is normal,
+the risk penalty for power utility agents is
+$ \alpha \kappa_2/2 $,
+where $\kappa_2$ is the variance of $x$.
+What happens when $x = - \log c $ is exponential?
 The connection between $c$ and $x$ implies $c = e^{\log c} = e^{-x}$.
-The pdf is
+The minus sign gives us negative skewness,
+hich power utility agents dislike.
+Our mission is to see how this shows up in the risk penalty.
+[What would you guess?]
+
+The pdf for an exponential random variable $x$ is
 \begin{eqnarray*}
     p(x)  &=& \lambda e^{-\lambda x}
 \end{eqnarray*}
@@ -671,22 +735,38 @@ In terms of $x$, the mean of $c$ is $\bar{c} = E(c) = E (e^{-x})$.
 \begin{enumerate}
 \item Use the cgf to compute the variance, skewness, and excess kurtosis
 of $x$.  How do they compare to those of the normal distribution?
+\item What are the variance, skewness, and excess kurtosis of $-x$?
 \item Use the cgf to compute $\bar{c}$.
 \item Choose the value of $\lambda$ that sets
-the variance equal to $0.02^2$, the number we used earlier.
-\item How does this differ from the lognormal example we did earlier?  Why?
+the variance of $x$ equal to $0.02^2$.
+\item Now consider the risk penalty of a power utility agent.
+If $x$ is normal, this is $\alpha \kappa_2/2 $.
+What is it when $-x$ is exponential?
+Compute both for $\alpha = 2, 10, 20$.
+\item How do the normal and exponential cases differ?  Why?
 \end{enumerate}
+{\it Comment\/}: the minus sign in $ \log c = -x $ introduces
+a subtle change in the problem.
+If you find this confusing, use $ \log c = x$.
+The answer is similar, but the effect is the opposite:
+the risk penalty is smaller than in the normal case, because
+power utility agents like positive skewness.
 %
 \needspace{2\baselineskip}
 Answer.
 \begin{enumerate}
-\item The first four cumulants are
+\item The first four cumulants of $x$ are
 $\kappa_1 = 1/\lambda$,
 $\kappa_2 = 1/\lambda^2$,
 $\kappa_3 = 2/\lambda^3$,
 and $\kappa_4 = 6/\lambda^4$.
 Skewness and excess kurtosis are therefore
 $\gamma_1 = 2$ and $\gamma_2 = 6$.
+
+\item They're the same, except we flip the sign of skewness:
+the minus sign in $- x = \log c $
+makes skewness $\gamma_1 = -2$.
+That's true, by the way of all the odd cumulants.
 
 \item If $k(s)$ is the cgf of $x$,
 then $\log \bar{c} = k(-1)$ ($k$ evaluated at $s=-1$):
@@ -711,8 +791,9 @@ The point is that departures from normality matter, although they're not
 especially large here.
 The numbers suggest that the impact increases with risk aversion $\alpha$.
 This may seem mysterious now,
-but we could elaborate using the power series expansion of the risk penalty.
-Amir Yaron (Wharton prof) refers to this as a ``bazooka,''
+but note the role of $\alpha$ in the cumulant expansion of the risk penalty
+(\ref{eq:rp-cum-expansion}).
+Amir Yaron  refers to this as a ``bazooka,''
 since it allows you to take a little nonnormality
 and generate enormous risk premiums.
 More on this kind of thing later in the course.

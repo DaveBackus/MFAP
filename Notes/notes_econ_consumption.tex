@@ -351,9 +351,9 @@ The bond consists of one unit of each Arrow security.
 Why?  Because Arrow security $z$ pays one in state $z$, nothing in other states.
 So if we have one unit of each Arrow security,
 we have the same payoff in all states as the bond.
-Equity pays one in state 1, two in state 2,
-so we can replicate its payoffs with one unit of the first Arrow security
-and two units of the second.
+Equity pays one in state 1, two in state 2, and three in state 3,
+so we can replicate its payoffs with one unit of the first Arrow security,
+two units of the second, and three of the third.
 
 This replication allows us to compute the prices of the assets from the state prices.
 If $q^1$ is the price of the bond and $q^e$ is the price of equity, we have
@@ -375,7 +375,7 @@ Asset 2 is equity and pays one in state 1, two in state 2, and one in state 3.
 Replication here gives us
 \begin{eqnarray*}
     q^1 &=& Q(1) + Q(2) + Q(3) \\
-    q^e &=& Q(1) + 2 Q(2) + Q(3) .
+    q^e &=& Q(1) + 2 Q(2) + 3 Q(3) .
 \end{eqnarray*}
 Is there a solution?
 Well, we have more unknowns than equations, so there
@@ -628,6 +628,12 @@ Maybe another time.
 If you come up with Merton's formula as some kind of approximation
 of the first-order conditions, let me know.
 
+% ??
+[Albert Zevelev suggests I look into Stein's lemma, but I haven't
+had a chance yet.]
+% see p 150 or so of
+% https://www.dropbox.com/s/j1jq7yie4oo0qff/CLOSED_FORM.pdf?dl=0
+
 \begin{comment}
 Merton derived it in continuous time using a set of tools
 we will diligently avoid.
@@ -676,7 +682,7 @@ Answer.
 \begin{enumerate}
 \item The Lagrangian is
 \begin{eqnarray*}
-    \mathcal{L} &=& x + \log y  + \lambda (7 - x - \log y ).
+    \mathcal{L} &=& x + \log y  + \lambda (7 - x - y ).
 \end{eqnarray*}
 \item The first-order conditions are
 \begin{eqnarray*}
@@ -808,7 +814,7 @@ but we can get a sense of their properties with an example.
 The agent's consumption-saving-portfolio-choice problem is
 \begin{eqnarray*}
    \max_{c_0, a} &&  u(c_0) + \beta \sum_z p(z) u[c_1(z)] \\
-   \mbox{Subject to} &&  c_1(z)\;\;=\;\; (y_0-c_0)[(1-a) r^1 + a r^e(z)] .
+   \mbox{subject to} &&  c_1(z)\;\;=\;\; (y_0-c_0)[(1-a) r^1 + a r^e(z)] .
 \end{eqnarray*}
 The idea is that we have two assets,
 a riskfree asset with gross return $r^1$ (``$1$'' for one-period bond)
@@ -887,10 +893,13 @@ $Q(1) = 0.6818$ and $Q(2) = 0.2273$.
 \end{eqnarray*}
 Written out more completely, the latter becomes
 \begin{eqnarray*}
-    0 &=& \beta \sum_z p(z) (y_0-c_0)^{1-\alpha} [ (1-a)r^1 + a r^e(z)]^{-\alpha} [r^e(z) - r^1 ] \\
+    0 &=& \beta \sum_z p(z) (y_0-c_0)^{-\alpha} [ (1-a)r^1 + a r^e(z)]^{-\alpha} [r^e(z) - r^1 ] \\
     &=&  \sum_z p(z) [ (1-a)r^1 + a r^e(z)]^{-\alpha} [r^e(z) - r^1 ] ,
 \end{eqnarray*}
 which depends on $a$ but not $c_0$.
+This ``separation'' result is another reflection of the scaling property of 
+power utility:  the portfolio choice doesn't depend on the scale of saving, namely 
+$ s = y_0 - c_0 $.  
 
 \item
 We'll talk about numerical methods for solving equations shortly (``root-finding''),
