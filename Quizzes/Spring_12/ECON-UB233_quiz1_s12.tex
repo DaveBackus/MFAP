@@ -88,13 +88,13 @@ So we're all set if $ 0 < \omega < 1$
 
 \part The mgf is
 \begin{eqnarray*}
-    h(s) &=& \omega (e^{-\delta s} + e^{\delta s}) + (1-2p)
+    h(s) &=& \omega (e^{-\delta s} + e^{\delta s}) + (1-2\omega)
 \end{eqnarray*}
 The cgf is $k(s) = \log h(s)$.
 The mean and variance are
 \begin{eqnarray*}
     \kappa_1  &=& 0 \\
-    \kappa_2  &=& 2 \delta^2 p .
+    \kappa_2  &=& 2 \delta^2 \omega .
 \end{eqnarray*}
 One way to find them is from the derivatives of the cgf.
 
@@ -114,7 +114,7 @@ which implies $\gamma_2 = \mu_4 /(\mu_2)^2 - 3  = 1/2\omega - 3 $.
 Evidently $\gamma_2$ is large is $\omega    `$ is small.
 
 \part The normal has $\gamma_1 = \gamma_2 = 0$.
-We get the first automatically, and the second if $p = 1/6$.
+We get the first automatically, and the second if $\omega = 1/6$.
 \end{parts}
 \end{solution}
 
@@ -132,11 +132,11 @@ and utility has the additive form,
 with
 $u(c) = c^{1-\alpha}/(1-\alpha)$.
 \begin{parts}
-\part What is the pricing kernel?
+\part What is the marginal rate of substitution?
 (5~points)
 \part What are the state prices?
 (5~points)
-\part What are the risk-neutral probabilities?
+\part *What are the risk-neutral probabilities?
 How do they vary with risk aversion $\alpha$?
 (5~points)
 \part Which is more valuable, a claim to one unit of the good in state $z=-1$
@@ -144,10 +144,11 @@ or one unit in state $z=+1$?
 Why?
 (5~points)
 \end{parts}
+*Material not covered yet.
 
 \begin{solution}
 \begin{parts}
-\part The pricing kernel is
+\part The mrs is
 \begin{eqnarray*}
     m[x(z)] &=& \beta e^{-\alpha x}
             \;\;=\;\;  \beta e^{-\alpha \delta z} .
@@ -155,7 +156,7 @@ Why?
 It's decreasing in $x$ and $z$.
 \part The state prices are
 \begin{eqnarray*}
-    q(z) &=& p(z) m(z)
+    Q(z) &=& p(z) m(z)
             \;\;=\;\;  p(z) \beta e^{-\alpha \delta z} ,
 \end{eqnarray*}
 with $p(z)$ given in the previous question.
@@ -234,7 +235,7 @@ for $x \geq 0$ and $\lambda > 0$.
 What is the risk-neutral distribution of $x$?
 (10~points)
 \end{parts}
-*Material not covered yet in class.
+*Material not covered yet.
 
 \begin{solution}
 \begin{parts}

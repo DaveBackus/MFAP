@@ -439,7 +439,7 @@ If we expand $e^{sx}$ the same way and take expectations,
 the moments pop out:
 \begin{eqnarray*}
     h(s) &=& E \left[ 1 + (sx) + (sx)^2/2 + (sx)^3/3! + \cdots \right] \\
-            &=&  1 + \mu_1^\prime s + \mu_3^\prime (s^2/2)  + \mu_3^\prime (s^3/3!)  + \cdots .
+            &=&  1 + \mu_1^\prime s + \mu_2^\prime (s^2/2)  + \mu_3^\prime (s^3/3!)  + \cdots .
 \end{eqnarray*}
 With a little more insight, we see that we can recover the moments by differentiating
 $h$ and setting $s=0$.
@@ -920,6 +920,20 @@ Covariances and correlations describe
 relations between random variables.
 We'll use them all --- intensively --- from now on.
 
+\section*{More}
+
+This is basic probability theory, which you can find in lots of places.
+You should think seriously about taking any course with a similar title.
+One thing to keep in mind:
+the level of mathematical sophistication ranges from low to extremely high.
+What we've done is between low and medium, but that's not a bad place to be.
+
+Wikipedia is very good for properties of particular distributions.
+Search for (say) ``Poisson distribution'' and you'll find lots of what we've done here,
+and more.
+Wikipedia's also ok on the underlying mathematics, but you're never sure what
+level you'll get:  too high, too low, or just right.
+
 
 \section*{Practice problems}
 
@@ -1241,9 +1255,9 @@ $ k_y(s) = \log h_y(s) = \log h_1(s) + \log h_2(s) = k_1(s) + k_2(s) $.
 \item Sum the cgf's:
 \begin{eqnarray*}
     k_y(s) &=& k_1(s) + k_2(s) \\
-            &=& (s \kappa_{11} + s^2 \kappa_{21}/2) + (s\kappa_{12} + s^2 \kappa_{22}/2) \\
-            &=& s (\kappa_{11} + \kappa_{12} )
-                + s^2 (\kappa_{21} + \kappa_{22})/2 .
+            &=& (s \kappa_{11} + s^2 \kappa_{12}/2) + (s\kappa_{21} + s^2 \kappa_{22}/2) \\
+            &=& s (\kappa_{11} + \kappa_{21} )
+                + s^2 (\kappa_{12} + \kappa_{22})/2 .
 \end{eqnarray*}
 It's normal because its mgf has the form of a normal random variable:
 quadratic in $s$.
@@ -1307,7 +1321,7 @@ cgf = log(mgf);
 kappa1 = subs(diff(cgf,s,1),s,0)    % mean
 kappa2 = subs(diff(cgf,s,2),s,0)    % variance
 kappa3 = subs(diff(cgf,s,3),s,0)
-factor(kappa3)  % sometimes cleans up the expression
+factor(kappa3)                      % sometimes works
 \end{verbatim}
 \item It's obviously not normal, but the key is the third cumulant $\kappa_3$,
 which is zero for normals
@@ -1372,19 +1386,6 @@ corrxy = covxy/sqrt(varx*vary)
 \end{enumerate}
 
 
-\section*{More}
-
-This is basic probability theory, which you can find in lots of places.
-You should think seriously about taking any course with a similar title.
-One thing to keep in mind:
-the level of mathematical sophistication ranges from low to extremely high.
-What we've done is between low and medium, but that's not a bad place to be.
-
-Wikipedia is very good for properties of particular distributions.
-Search for (say) ``Poisson distribution'' and you'll find lots of what we've done here,
-and more.
-Wikipedia's also ok on the underlying mathematics, but you're never sure what
-level you'll get:  too high, too low, or just right.
 
 \input{../LaTeX/footer.tex}
 

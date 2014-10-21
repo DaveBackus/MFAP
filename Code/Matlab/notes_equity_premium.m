@@ -28,7 +28,7 @@ p = [omega; 1-omega];
 % preferences and asset prices 
 beta = 1
 alpha = 5
-lambda = 1
+lambda = 5
 
 disp(' ')
 disp('Asset prices and returns') 
@@ -39,13 +39,16 @@ q1 = sum(p.*m)
 r1 = 1/q1
 
 qe = sum(p.*m.*d) 
+re = d/qe 
 Ere = sum(p.*d)/qe 
 
 eq_premium = Ere - r1
 
-Var_m = p(1)*m(1)^2 + p(2)*m(2)^2 - q1^2;
-Std_m = sqrt(Var_m)
-Std_m/q1
+std_re = sqrt(sum(p.*(re-Ere).^2))
+
+% Var_m = p(1)*m(1)^2 + p(2)*m(2)^2 - q1^2;
+% Std_m = sqrt(Var_m)
+% Std_m/q1
 
 %% (b) compute for grid of alpha's for figs 
 alphagrid = [0:0.25:50]';
@@ -159,7 +162,7 @@ Sharpe_max = Std_m/E_m
 
 % returns in logs 
 eq_premium_logs = sum(p.*(log(re)-log(r1)))
-H = log(E_0.0152m) - sum(p.*log(m)) 
+H = log(E_m) - sum(p.*log(m)) 
 
 
 

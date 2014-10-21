@@ -229,7 +229,8 @@ Our second result describes the impact of increasing risk.
 It's trickier than you think to describe an increase in risk.
 We say $ x+y$ is riskier than $x$ if $y$ is not constant and has zero mean.
 (You might hear people refer to a {\it mean-preserving spread\/} or
-{\it second-order stochastic dominance\/}.) Then if $f$ is concave,
+{\it second-order stochastic dominance\/}.) 
+Then if $f$ is concave, an increase in risk reduces the expected value of $f(y)$: 
 \begin{eqnarray*}
     E[ f(x + y)] &<& E[f(x)] .
 \end{eqnarray*}
@@ -458,18 +459,29 @@ which we'll do later in the course.
 
 With power utility, there's a close connection between expected
 utility and the distribution of $ x = \log c$.
-Why is that?
+Why?
 Because $c^{1-\alpha} = e^{(1-\alpha) \log c} = e^{(1-\alpha) x }$.
-If $k(s) = \log E (e^{sx})$ is the cumulant generating function of $x$,
+Let's repeat that, it will come up again:
+\begin{eqnarray*}
+    c^{1-\alpha} &=& e^{(1-\alpha) \log c} \;\;=\;\; e^{(1-\alpha) x }
+\end{eqnarray*}
+We're using the fact that $\log$ and $\exp$ are inverse functions,
+so that $ c = e^{\log c} $,
+that that powers take the form $c^a = e^{a \log c} $.
+Load that into memory, we'll use it repeatedly.
+
+Now where were we?
+If $k(s) = \log E (e^{sx})$ is the cumulant generating function of $x = \log c$,
 then $E(c^{1-\alpha})$  is $k$ evaluated at $ s = 1-\alpha$.
 This is simply a convenient byproduct of  power utility,
 but it allows us to connect expected utility and the risk penalty (\ref{eq:rp-def})
 to the risk aversion parameter and the cumulants of the {\bf logarithm} of consumption.
 This parallels the Samuelson expansion (\ref{eq:eu-samuelson}),
 in which we connected expected utility to the derivatives of the utility function
-and the central moments of consumption (not its log!).
+and the central moments of consumption itself.
 
 
+Let's go through the calculation of the risk penalty one step at a time.
 The first ingredient of the risk penalty is mean consumption:
 $\cbar = E(c) = E (e^x) = \exp[k(1)]$.
 [Are you with me?  Stop and think if you're not.]
@@ -577,7 +589,7 @@ For each one:
 \end{eqnarray*}
 \end{itemize}
 
-Answer.  
+Answer.
 This is a check on Jensen's inequality.
 \begin{itemize}
 \item (a) Concave, (b) convex, (c) convex, (d) concave, (e) linear
@@ -598,7 +610,7 @@ $f[E(x)]$ & 5.01 & $10^{65}$ & 22,500 & --22,500 & 150 \\
 \end{itemize}
 \bigskip
 
-
+% -----------------------------------------------------------------------------
 \item {\it Lognormal risks.\/}
 What is the {\it risk penalty\/} when consumption is lognormal
 (the log of consumption is normal)?
@@ -653,6 +665,62 @@ and risk aversion ($\alpha$).
 \end{enumerate}
 
 
+% -----------------------------------------------------------------------------
+\item {\it Option payoffs.\/}
+An option on the random variable $y$ has a payoff of $ f(y) = \max \{ 0, y-k \} $
+for some strike price $k$.
+
+Consider random variables $y$ constructed from these independent inputs:
+\begin{itemize}
+\item $x_1$ takes on the values $\{ 4, 6\} $ with probability one-half each.
+\item $x_2$ takes on the values $\{ -2, +2\} $ with probability one-half each.
+\end{itemize}
+%
+We'll explore the expected payoff of options with strike price $k=5$
+and two versions of $y$:  $y = x_1$ and $y = x_1 + x_2 $.
+
+%
+\begin{enumerate}
+\item What is the expected value of $y = x_1$?
+
+\item What is the expected option payoff --- that is, $E (f(y)]$ --- in this case?
+How does it compare to $f [E(y)]$?
+What mathematical result does this illustrate?
+
+\item What values does $ y = x_1 + x_2$ take on?
+With what probabilities?
+What is its expected value?
+
+\item What is the expected option payoff in this case?
+
+\item How does the option payoff differ when $y = x_1$ and $y = x_1 + x_2$?
+What mathematical result does this illustrate?
+\end{enumerate}
+
+\needspace{3\baselineskip}
+Answer. 
+\begin{enumerate}
+\item $E(y) = (1/2) (4) + (1/2) (6) = 5$.
+\item $E[f(y)] = (1/2) (0) + (1/2) (1) = 1/2 $.
+$f[E(y)] = 0 $.
+The former is greater because $f$ is a convex function:
+Jensen's inequality in action.
+\item $y$ takes on the values $\{2, 4, 6, 8\}$ with probability
+one-fourth each.
+The expected value is $ E(y) = (1/4) (2 + 4 + 6 + 8) = 5$.
+That is:  the mean hasn't changed, we've just spread out the distribution a bit.
+(Draw the two distributions if you like.)
+\item The expected option payoff is
+$ E[f(y)] = (1/2) (0) + (1/4) (1) + (1/4) (3) = 1$.
+\item This is greater than the option payoff with $ y = x_1$ because
+we've spread out the distribution.
+% ?? name 
+We don't have a name for this, 
+but an increase in the variance holding constant
+the mean increases the expected value of a convex function.
+\end{enumerate}
+
+% -----------------------------------------------------------------------------
 \item {\it Risk aversion with upside risk.\/}
 Consider a three-state distribution for your lifetime income.
 The states occur with probabilities $(\omega, \omega, 1-2\omega)$
@@ -799,7 +867,7 @@ and generate enormous risk premiums.
 More on this kind of thing later in the course.
 \end{enumerate}
 
-
+% -----------------------------------------------------------------------------
 \item {\it Exponential utility.\/}
 Another common utility function is $u(c) = -\alpha^{-1} e^{-\alpha c} $,
 with $\alpha > 0$.

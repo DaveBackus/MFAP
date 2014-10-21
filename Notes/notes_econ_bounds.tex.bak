@@ -13,9 +13,10 @@
 \centerline{Revised: \today}
 
 \bigskip
-We return to asset pricing models with macroeconomic foundations ---
-macro-finance, for short ---
-retracing some of the key steps of the last thirty years.
+Our next step is to inject some quantitative content into asset
+pricing models with macroeconomic foundations ---
+macro-finance, for short.
+In doing so, we retrace some of the key steps of the last thirty years.
 The term macro-finance means
 (a)~we're interested in returns on aggregate assets like bonds and equity indexes
 and (b)~we'd like to account for those returns with a macroeconomic model,
@@ -40,7 +41,7 @@ by entropy, something we'll define when we get to it.
 %
 In short, when we observe high excess returns or Sharpe ratios,
 they tell us that there must be a lot of dispersion in the pricing kernel ---
-dispersion being here a suitably vague term that we'll define more precisely later on.
+dispersion being here a suitably vague term for variability that we'll define more precisely later on.
 Any model lacking such dispersion is dead from the start.
 With power utility, that typically means high risk aversion,
 which brings us back to what degree of risk aversion is reasonable.
@@ -77,7 +78,7 @@ Here are some examples to help us think about that:
 That's not a great question.  The only way to resolve it, really,
 is to wait and see what happens.
 Perhaps we could modify it:
-What is our best prediction of next year's GDP growth?
+What is the best method for predicting next year's GDP growth?
 That's a well-defined statistical exercise that we could
 imagine making some progress on.
 Still not wildly interesting, at least to me,
@@ -92,7 +93,7 @@ The Census attempts to come up with an answer every ten years,
 but it's well-known to be an approximation.
 Probably a pretty good one, but an approximation.
 
-One the other hand, thinking about the population could lead us
+On the other hand, thinking about the population could lead us
 to better questions.
 What fraction of the population is above 70?
 What fraction has a college education?
@@ -161,14 +162,15 @@ If logs are more convenient, then we go back (as we did here)
 and compute excess returns in logs.
 
 Here are the numbers, computed both ways.
-In levels, the mean short or riskfree rate is 2\% ($r^1 = 1.02$).
+In levels, the mean short or riskfree rate is  2\% ($r^1 = 1.02$).
 The mean excess return on equity is 5.7\% ($r^e - r^1 = 0.057$).
 For later reference, the {\it Sharpe ratio\/}
 is the mean excess return divided by its standard deviation.
 (That's another definition, also useful in some contexts.)
 For equity, that's $ 0.0571/0.1873 = 0.3049$.
 (That's way too many digits, but I want to be clear about the calculation.)
-These numbers, or something like them, are targets for numerical examples
+These numbers, or numbers like them,
+will serve shortly as targets for numerical examples
 of theoretical models.
 
 
@@ -188,11 +190,11 @@ How would we start?
 The question calls for a model, one capable of producing a similar premium.
 If we find one, then we have an explanation.
 We can then decide whether we find the explanation plausible
-or should continue our search for a better model.
+or should continue our search for a better one.
 
 We'll start in the obvious place: a representative agent economy
 with power utility.
-We then give it a realistic distribution of consumption growth
+We give it a realistic distribution of consumption growth
 and (this is the short cut) tie dividends to consumption growth.
 We can come back later and see if that's a problem.
 We're following our own advice here:
@@ -247,7 +249,7 @@ We set $\beta = 0.99$ to get started.
 If $\alpha = 2$, the riskfree rate $r^1$ is 1.0383, which well above our target of 1.020,
 and the equity premium 0.0025, which is well below our target of 0.057.
 We could fix the riskfree rate by raising $\beta$,
-but this has its limits ($\beta \leq 1$?).
+but this has its limits.
 If we raise $\alpha$ to 5, the riskfree rate is 1.0995,
 which is even higher,
 and the equity premium rises only to 0.0067.
@@ -344,14 +346,14 @@ but we may come back to them if we have time.
 
 If we think of the equity premium as a problem, the question is where its roots lie.
 The answer, in large part, is the pricing kernel.
-In this section and the next we derive two bounds on the variability of the pricing kernel.
-Observed risk premiums give us lower bounds on the variability of the pricing kernel,
+In this section and the next we derive bounds on the dispersion --- or variability --- of the pricing kernel.
+Observed risk premiums give us lower bounds on this dispersion,
 whatever it might be.
-With power utility, the point is that you need lots of risk aversion to get enough
+With power utility, the point is that you need lots of risk aversion to get enough dispersion
 variability.
 
 The first bound comes from Hansen and Jagannathan.
-They note that the return on any asset $j$ satisfies
+They start with the no-arbitrage theorem:  the return $r^j$ on any asset $j$ satisfies
 \begin{eqnarray}
     E \left( m r^j \right) &=& 1 .
     \label{eq:foc}
@@ -363,7 +365,7 @@ then the excess return $x = r^j - r^1$ satisfies
 \end{eqnarray*}
 That's true for any two returns.
 
-Let's see where this leads.
+%Let's see where this leads.
 Expanding terms and applying the definition of the covariance gives us
 \begin{eqnarray*}
     E \left( m x \right) &=& E (m) E(x) + \mbox{Cov}(m,x)
@@ -507,7 +509,7 @@ then
 The first term is the lognormal term.
 The others illustrate the potential benefit of departing from normality,
 since they can increase entropy even when we hold the variance constant.
-Our colleague Stan Zin refers to this as the {\it never-a-dull-moment conjecture\/}:
+Stan Zin refers to this as the {\it never-a-dull-moment conjecture\/}:
 if a model doesn't work, you can in principle fix it up by adding enough
 high-order cumulants.
 Whether that's reasonable is another matter, but it's an interesting
@@ -628,8 +630,9 @@ Evidently there's an asset with a higher return than equity;
 see entropy bound.
 \end{enumerate}
 
+%-----------------------------------------------------------------------
 \item {\it Sharpe ratios.\/}
-We'll look at Sharpe ratios in a two-period representative agent economy.
+Consider Sharpe ratios in a two-period representative agent economy.
 Endowment growth $g$ is Bernoulli,
 \begin{eqnarray*}
     g &=&
@@ -690,6 +693,7 @@ and therefore perfectly correlated with the pricing kernel.
 Don't worry if that seems obscure to you.
 \end{enumerate}
 
+%-----------------------------------------------------------------------
 \item {\it Sharpe ratios and leverage.\/}
 One of the convenient properties of Sharpe ratios is that they're invariant to leverage.
 Consider a portfolio consisting of fraction $a>0$ in asset with return $r^j$ and
@@ -722,6 +726,59 @@ In words:  if we have an asset with a negative Sharpe ratio,
 we simply reverse the trade and short the asset.
 \end{enumerate}
 
+%-----------------------------------------------------------------------
+\question {\it Hansen-Jagannathan bound for lognormal pricing kernel.\/}
+Suppose the pricing kernel is lognormal:
+$ \log m \sim \mathcal{N}(\kappa_1,\kappa_2)$.
+This doesn't fit naturally into the HJ bound, because the bound
+is based on moments of $m$ rather than $\log m$.
+With a little work, however, we can connect the two.
+%
+\begin{enumerate}
+\item What is the mean of $m$?  The variance?
+\item What is the maximum Sharpe ratio attainable from this pricing kernel?
+\item Consider an arbitrary distribution of $\log m$ with
+moment generating function
+$ h(s) = E (e^{s \log m} )$.
+Express the maximum Sharpe ratio as a function of $h$.
+%Or, if you prefer, use the cumulant generating function,
+%$ k(s) = \log h(s)$.
+\end{enumerate}
+
+\needspace{3\baselineskip} 
+Answer. 
+\begin{enumerate}
+We'll attack the general case first and
+do the problem is reverse order.
+\begin{parts}
+\item The mean of $m$ is
+\begin{eqnarray*}
+    E(m) &=& E (e^{\log m}) \;\;=\;\; h(1) .
+\end{eqnarray*}
+Similarly, the variance is
+\begin{eqnarray*}
+    \mbox{Var}(m) \;\;=\;\; E(m^2) - E(m)  &=& h(2) - h(1)^2 .
+\end{eqnarray*}
+\item From the HJ bound, the maximum Sharpe ratio is
+\begin{eqnarray*}
+    \mbox{Var}(m)^{1/2}/E(m) \;\;=\;\; [h(2) - h(1)^2]^{1/2} / h(1)
+        &=& [h(2)/h(1)^2 - 1]^{1/2}  .
+\end{eqnarray*}
+
+\item In the lognormal case,
+$ h(s) = \exp(s \kappa_1 + s^2 \kappa_2 /2 )$,
+so we have
+\begin{eqnarray*}
+    h(2)/h(1)^2 &=& \exp(2 \kappa_1 + 2 \kappa_2) / \exp(2 \kappa_1 + \kappa_2)
+            \;\;=\;\; \exp(\kappa_2) .
+\end{eqnarray*}
+The maximum Sharpe ratio is therefore $ [\exp(\kappa_2) - 1]^{1/2} $.
+For small $\kappa_2$, this is approximately $\kappa_2^{1/2} $,
+the standard deviation of $\log m$.
+\end{enumerate}
+
+
+%-----------------------------------------------------------------------
 \item {\it Entropy bound revisited.\/}
 The goal is to derive the entropy bound from a maximization problem.
 We'll do this in an arbitrary two-period economy with a finite set of states.
@@ -754,7 +811,7 @@ Answer.
 \begin{enumerate}
 \item Entropy is defined by
 \begin{eqnarray*}
-    H(m) &=& \log E(m) - E \log m
+    H(m) &=& \log E(m) - E (\log m)
             \;\;=\;\; \log \sum_z p(z) m(z) - \sum_z p(z) \log m(z) .
 \end{eqnarray*}
 
@@ -797,6 +854,8 @@ That gives us
 (The $E$ in front of $r^1$ is irrelevant here, because $r^1$ is a constant.)
 \end{enumerate}
 
+
+%-----------------------------------------------------------------------
 \item {\it Expected returns in levels and logs.\/}
 We saw that the expected returns in Table 1 satisfy
 \begin{eqnarray*}
@@ -824,7 +883,17 @@ but the terminology always struck me as confusing.
 
 % ----------------------------------------------------------------------
 \pagebreak
-{\large\bf Table 1 \\ Properties of US real asset returns and consumption growth}
+\begin{table}[ht!]
+\caption{Properties of US real asset returns and consumption growth.
+The numbers are from Shiller's
+\href{http://www.econ.yale.edu/~shiller/data.htm}{website}, updated.
+Data covers the period 1889-2009, annual.
+Returns are real:  nominal returns minus inflation.
+Equity is the S\&P 500 and its predecessors.
+Consumption is per capita.
+The calculations are done with the Matlab program
+{\tt Shiller data.m},
+posted on the course website.}
 
 \bigskip
 \tabcolsep=10pt
@@ -846,23 +915,20 @@ Equity return $\log r^e$     &  0.0587  & 0.1795  & --0.6134  &  0.4311 \\
 Excess return $\log r^e - \log r^1$ &  0.0407 & 0.1812 & --0.7157 & 0.9065 \\
 \bottomrule
 \end{tabular}
+\label{fig:Shiller}
+\end{table}
 
-Source:  Shiller's
-\href{http://www.econ.yale.edu/~shiller/data.htm}{website}, updated.
-Data covers the period 1889-2009, annual.
-Returns are real:  nominal returns minus inflation.
-Equity is the S\&P 500 and its predecessors.
-Consumption is per capita.
-The calculations are done with the Matlab program
-{\tt Shiller data.m},
-posted on the course website.
 
+% ----------------------------------------------------------------------
 \pagebreak
-{\large\bf Figure 1 \\ US real asset returns v. consumption growth, 1889-2009}
-
+\begin{figure}[!h]
+\caption{US real asset returns v. consumption growth, 1889-2009.
+Same data as Figure \ref{fig:Shiller}.}
+\centering
 \includegraphics[width=\textwidth]{../Code/Matlab/scatter_gxr.pdf}
+\end{figure}
 
-\vfill \centerline{\it \copyright \ \number\year \
-NYU Stern School of Business}
+
+\input{../LaTeX/footer.tex}
 
 \end{document}

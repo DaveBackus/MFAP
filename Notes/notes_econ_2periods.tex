@@ -256,7 +256,7 @@ Here the budget constraint is
 \begin{eqnarray*}
     q_a c_a + q_b c_b &\leq& q_a y_a + q_b y_b \;\;=\;\; Y.
 \end{eqnarray*}
-(The letter $Y$ is here out of laziness:  it's easier than writing 
+(The letter $Y$ is here out of laziness:  it's easier than writing
 the stuff it's equal to.)
 We saw earlier that this leads to the demand functions
 $ c_a = \beta Y/q_a$ and $c_b = (1-\beta) Y/q_b$.
@@ -324,7 +324,7 @@ dates 0 and 1.
 Then we develop a series of examples of increasing complexity
 to illustrate how the approach works and what it implies for asset pricing.
 The insight is to treat consumption now and consumption next period
-as different commodities, just as we treated apples and bananas 
+as different commodities, just as we treated apples and bananas
 as different commodities above.
 
 If we follow the formalism described above, we have the following ingredients:
@@ -533,7 +533,7 @@ in short-hand notation, $ x \sim \mathcal{N}(\kappa_1,\kappa_2)$.
 Then we say $y = \exp(x) $ is lognormal (its log is normal).
 Result 1:  The mgf of $x$ is
 $h(s) = E(e^{sx}) = e^{\kappa_1 s +\kappa_2 s^2/2}$.
-The cgf, of course, is the log of this.  
+The cgf, of course, is the log of this.
 Result 2:  If $x = \log y$, the mean of
 $y = e^x$ is $E(y) = E(e^x) = e^{\kappa_1 + \kappa_2/2}$.
 This also follows from the mgf of $x$:  evaluate $h$ at $s=1$.
@@ -724,7 +724,7 @@ Among them are:
 \begin{itemize}
 \item Asset prices and returns reflect the marginal rates of substitution
 of the people who buy them.
-Our old favorite, $E(mr) = 1$, is a good example, with $m$ 
+Our old favorite, $E(mr) = 1$, is a good example, with $m$
 the mrs of a representative agent.
 \item %That gives us a connection between returns and dividends.
 Assets that pay off mostly in good states have less value
@@ -790,7 +790,7 @@ Consider a static economy with two goods,
 labelled 1 and 2.
 A representative agent has utility
 \begin{eqnarray*}
-    U(c_1,c_2) &=& c_1^{1-\alpha}/(1-\alpha) + \beta c_1^{1-\alpha}/(1-\alpha).
+    U(c_1,c_2) &=& c_1^{1-\alpha}/(1-\alpha) + \beta c_2^{1-\alpha}/(1-\alpha).
 \end{eqnarray*}
 The endowments are $(y_1, y_2)$.
 \begin{enumerate}
@@ -814,7 +814,7 @@ Answer.
 \end{itemize}
 \item The Lagrangian is
 \begin{eqnarray*}
-    \mathcal{L} &=& c_1^{1-\alpha}/(1-\alpha) + \beta c_1^{1-\alpha}/(1-\alpha)
+    \mathcal{L} &=& c_1^{1-\alpha}/(1-\alpha) + \beta c_2^{1-\alpha}/(1-\alpha)
             + \sum_i q_i (y_i - c_i) .
 \end{eqnarray*}
 \item The first-order conditions are
@@ -880,6 +880,56 @@ It wasn't asked, but this environment gives us prices, too.
 This is a little terse, but we read them from the first-order conditions:
 the price of consumption is $\lambda$, the price of labor is $\lambda a $.
 \end{enumerate}
+
+%-----------------------------------------------------------------------
+\item {\it Pareto problem with production.\/}
+Consider a theoretical economy with these ingredients:
+\begin{itemize}
+\item One agent.
+\item Two goods, apples and bananas.
+\item Utility function: $ \log c_a + \log c_b $.
+\item Endowment:  6 apples, 4 bananas.
+\item Technology:  apples can be converted to bananas one for one.
+\end{itemize}
+
+\begin{enumerate}
+\item What are the resource constraints for this economy? 
+\item What is the Pareto problem?  
+\item What is the solution to the Pareto problem?
+What are the optimal quantities?  What are the implied prices?
+\end{enumerate}
+
+\needspace{2\baselineskip}
+Answer. 
+\begin{enumerate}
+\item If we let $a$ be the number of apples we convert to bananas,
+the resource constraints for apples and bananas are
+\begin{eqnarray*}
+    c_a + a &\leq& y_a \;\;=\;\; 6 \\
+    c_b &\leq& y_b + a \;\;=\;\; 4 + a.
+\end{eqnarray*}
+We might also say $ a\geq 0$ if we're worried about the reverse technology:
+converting bananas to apples.
+We'll ignore that from here on.
+
+\item The Pareto problem is:  maximize utility subject to the resource constraints.
+The Lagrangian is
+\begin{eqnarray*}
+    \mathcal{L} &=& \log c_a + \log c_b + \lambda_a (y_a - c_a - a) + \lambda_b (y_b + a - c_b) .
+\end{eqnarray*}
+The first-order conditions (the derivatives of $\mathcal{L}$) include
+\begin{eqnarray*}
+    c_a:&& 1/c_a - \lambda_ a \;\;=\;\; 0 \\
+    c_b:&& 1/c_b - \lambda_b  \;\;=\;\; 0 \\
+    a:&&    - \lambda_a + \lambda_b \;\;=\;\; 0.
+\end{eqnarray*}
+That gives us $\lambda_a = \lambda_b$ and (therefore) $c_a = c_b$.
+From the resource constraints we have $c_a = a_b = 5$ and $a = 1$.
+The relative price of bananas comes from the Lagrange multipliers:
+$ q_b / q_a = \lambda_b / \lambda_a = 1$.
+
+\end{enumerate}
+
 
 %-----------------------------------------------------------------------
 \item {\it Asset pricing with production and dividends.\/}

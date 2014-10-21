@@ -22,10 +22,10 @@ and find the prices and quantities that clear markets.
 We simplify each of these things as much as we can
 in the interest of clarity.
 The result is a relatively simple environment in which
-we can talk, for the first time, about the sources
-of risk premiums on assets.
-%Later on, we can ask ourselves which of these simplifications
-%was essential, and which were not.
+we can talk, for the first time, about the effects
+of risk on asset prices and returns.
+
+
 
 \section{Keep it simple}
 
@@ -78,14 +78,14 @@ At the same time, it enabled me to find fruitful empirical generalizations.
 
 The theory of Mundell's paper is a long way from anything
 we'll do in this class,
-but you have to like a guy who has the nerve to say
+but you have to love a guy who has the nerve to say
 ``theory is the poetry of science.''
 The substantive point is that our goal isn't realism, it's insight and understanding.
 The art of economics lies in making unrealistic simplifying assumptions that
 deliver clear results that we believe generalize to more complex environments.
 The art lies in making that distinction ---
 in deciding which assumptions are crucial and
-which simply make the analysis easier.
+which simply make the analysis clearer.
 
 
 \section{General equilibrium models}
@@ -195,7 +195,7 @@ In much of macroeconomics, finding the right allocation of endowments is easy
 because we only have one agent, who therefore owns everything.
 
 {\it Example (exchange economy).\/}
-Let's see how this works in an example, a simple one.
+Let's see how this works in an example, a really simple one.
 The ingredients are:
 %
 \begin{itemize}
@@ -229,7 +229,7 @@ The solution is obvious (consume the endowment),
 but we'll solve it by Lagrangean methods using
 multipliers $q_a$ and $q_b$ on the two constraints.
 (This notation suggests we know something about the answer,
-which we do:  the multipliers $q_a$ and $q_b$ are the market prices
+which we do:  the multipliers $q_a$ and $q_b$ turn out to be the market prices
 in the competitive equilibrium associated with this Pareto optimum.)
 The Lagrangean is
 \begin{eqnarray*}
@@ -256,6 +256,8 @@ Here the budget constraint is
 \begin{eqnarray*}
     q_a c_a + q_b c_b &\leq& q_a y_a + q_b y_b \;\;=\;\; Y.
 \end{eqnarray*}
+(The letter $Y$ is here out of laziness:  it's easier than writing
+the stuff it's equal to.)
 We saw earlier that this leads to the demand functions
 $ c_a = \beta Y/q_a$ and $c_b = (1-\beta) Y/q_b$.
 Does demand equal supply when we substitute the prices we derived
@@ -322,7 +324,8 @@ dates 0 and 1.
 Then we develop a series of examples of increasing complexity
 to illustrate how the approach works and what it implies for asset pricing.
 The insight is to treat consumption now and consumption next period
-as different commodities, just as we treated apples and bananas separately above.
+as different commodities, just as we treated apples and bananas
+as different commodities above.
 
 If we follow the formalism described above, we have the following ingredients:
 %
@@ -343,7 +346,7 @@ we have
     c_0 + k &\leq& y_0 \\
     c_1 &\leq&  y_1 + f(k) .
 \end{eqnarray*}
-The idea is that investment $k$ produces future output.
+The idea is that date-0 investment $k$ produces date-1 output $f(k)$.
 \end{itemize}
 That's the physical environment.
 %If we keep track of consumption quantities,
@@ -391,14 +394,14 @@ in $f$, so that $f'(k) = r$ isn't constant.
 
 Where does the interest rate $r$ come from?
 It depends on preferences ($u$ and $\beta$) and technology ($f$).
-A high interest rate is associated with productive capital
-and high date-1 consumption.
+A high interest rate is associated with productive capital (high $f'$)
+and high date-1 consumption [hence low $u'(c_1)$].
 
 
 \section{Two-period stochastic economies:  exchange version}
 
 Now let's add uncertainty to the model, so that we can give a general
-equilibrium interpretation of asset prices.
+equilibrium interpretation to asset prices.
 We deal with uncertainty as we did with consumption and portfolio choice.
 We make decisions at date 0.
 At date 1, any of a number of states $z$ can occur.
@@ -488,7 +491,7 @@ In words: a payoff of one unit is more valuable when output is scarce
 than when output is plentiful.
 Securities that pay off in good states (high endowment) are therefore
 cheaper than those that pay off in bad states (low endowment).
-We'll see later that this provides a basis for risk premiums.
+We'll see later that this provides a basis for positive risk premiums on such assets.
 Securities that pay off mostly in good states have lower prices
 and higher average returns than those that pay off mostly in bad states.
 
@@ -529,7 +532,8 @@ Let us say that $x = \log y$ is normal;
 in short-hand notation, $ x \sim \mathcal{N}(\kappa_1,\kappa_2)$.
 Then we say $y = \exp(x) $ is lognormal (its log is normal).
 Result 1:  The mgf of $x$ is
-$h(s) = E(e^{sx}) = e^{s \kappa_1 + s^2\kappa_2/2}$.
+$h(s) = E(e^{sx}) = e^{\kappa_1 s +\kappa_2 s^2/2}$.
+The cgf, of course, is the log of this.
 Result 2:  If $x = \log y$, the mean of
 $y = e^x$ is $E(y) = E(e^x) = e^{\kappa_1 + \kappa_2/2}$.
 This also follows from the mgf of $x$:  evaluate $h$ at $s=1$.
@@ -671,7 +675,7 @@ The Lagrangean is
                     + \sum_z q_1(z)  [ y_1(z) + a(z) f(k) - c_1(z)]  .
 \end{eqnarray*}
 (As before, we've used $q$'s for the Lagrange multipliers,
-because we know that they'll end up being the same as the market prices.)
+because we know that they'll end up being the same as the equilibrium prices.)
 The first-order conditions are
 \begin{eqnarray*}
     c_0: &&  u'(c_0) - q_0 \;\;=\;\; 0 \\
@@ -715,20 +719,19 @@ General equilibrium models are useful devices for thinking
 about where prices and quantities come from.
 From a macro-finance perspective,
 even simple models give us some insights.
-Among them I'd include:
+Among them are:
 %
 \begin{itemize}
 \item Asset prices and returns reflect the marginal rates of substitution
 of the people who buy them.
-Our old favorite, $E(mr) = 1$, is a good example.
-\item That gives us a connection between returns and dividends.
+Our old favorite, $E(mr) = 1$, is a good example, with $m$
+the mrs of a representative agent.
+\item %That gives us a connection between returns and dividends.
 Assets that pay off mostly in good states have less value
 and higher returns, on average,
 than either a riskfree asset that has the same payoff in all states
 or an asset that pays off mostly in bad states.
 Why?  Because marginal utility is lower in good states than bad.
-%The intuition bears some resemblance to the CAPM,
-%but the mechanics are different.
 \end{itemize}
 
 \section*{Practice problems}
@@ -787,7 +790,7 @@ Consider a static economy with two goods,
 labelled 1 and 2.
 A representative agent has utility
 \begin{eqnarray*}
-    U(c_1,c_2) &=& c_1^{1-\alpha}/(1-\alpha) + \beta c_1^{1-\alpha}/(1-\alpha).
+    U(c_1,c_2) &=& c_1^{1-\alpha}/(1-\alpha) + \beta c_2^{1-\alpha}/(1-\alpha).
 \end{eqnarray*}
 The endowments are $(y_1, y_2)$.
 \begin{enumerate}
@@ -811,7 +814,7 @@ Answer.
 \end{itemize}
 \item The Lagrangian is
 \begin{eqnarray*}
-    \mathcal{L} &=& c_1^{1-\alpha}/(1-\alpha) + \beta c_1^{1-\alpha}/(1-\alpha)
+    \mathcal{L} &=& c_1^{1-\alpha}/(1-\alpha) + \beta c_2^{1-\alpha}/(1-\alpha)
             + \sum_i q_i (y_i - c_i) .
 \end{eqnarray*}
 \item The first-order conditions are
@@ -875,8 +878,11 @@ is no greater than one; for consumption, we have the constraint listed above.
 $ n = 1/(1+\theta) $ and $ c = an = a/(1+\theta) $.  \\
 It wasn't asked, but this environment gives us prices, too.
 This is a little terse, but we read them from the first-order conditions:
-the price of consumption of $\lambda$, the price of labor is $\lambda a $.
+the price of consumption is $\lambda$, the price of labor is $\lambda a $.
 \end{enumerate}
+
+%-----------------------------------------------------------------------
+
 
 %-----------------------------------------------------------------------
 \item {\it Asset pricing with production and dividends.\/}

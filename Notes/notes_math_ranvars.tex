@@ -920,6 +920,30 @@ Covariances and correlations describe
 relations between random variables.
 We'll use them all --- intensively --- from now on.
 
+\section*{More}
+
+This is basic probability theory, which you can find in lots of places.
+You should think seriously about taking any course with a similar title.
+One thing to keep in mind:
+the level of mathematical sophistication ranges from low to extremely high.
+What we've done is between low and medium, but that's not a bad place to be.
+The high end typically uses measure theory, an approach to probability 
+that integrates  discrete and continuous probability distributions.  
+In some sense it's the right way to do things, 
+but it's not one that shows up much in applied work.
+As one wag 
+\href{http://andrewgelman.com/2009/05/27/the_benefits_of/}{quipped}:
+``A theoretical statistician knows all about measure theory 
+but has never seen a measurement whereas the actual use of measure theory by the applied statistician is a set of measure zero.''
+That said, I've run across practical situations in which measure-theoretic concepts
+were helpful. 
+
+Wikipedia is very good for properties of particular distributions.
+Search for (say) ``Poisson distribution'' and you'll find lots of what we've done here,
+and more.
+Wikipedia's also ok on the underlying mathematics, but you're never sure what
+level you'll get:  too high, too low, or just right.
+
 
 \section*{Practice problems}
 
@@ -1241,9 +1265,9 @@ $ k_y(s) = \log h_y(s) = \log h_1(s) + \log h_2(s) = k_1(s) + k_2(s) $.
 \item Sum the cgf's:
 \begin{eqnarray*}
     k_y(s) &=& k_1(s) + k_2(s) \\
-            &=& (s \kappa_{11} + s^2 \kappa_{21}/2) + (s\kappa_{12} + s^2 \kappa_{22}/2) \\
-            &=& s (\kappa_{11} + \kappa_{12} )
-                + s^2 (\kappa_{21} + \kappa_{22})/2 .
+            &=& (s \kappa_{11} + s^2 \kappa_{12}/2) + (s\kappa_{21} + s^2 \kappa_{22}/2) \\
+            &=& s (\kappa_{11} + \kappa_{21} )
+                + s^2 (\kappa_{12} + \kappa_{22})/2 .
 \end{eqnarray*}
 It's normal because its mgf has the form of a normal random variable:
 quadratic in $s$.
@@ -1372,19 +1396,6 @@ corrxy = covxy/sqrt(varx*vary)
 \end{enumerate}
 
 
-\section*{More}
-
-This is basic probability theory, which you can find in lots of places.
-You should think seriously about taking any course with a similar title.
-One thing to keep in mind:
-the level of mathematical sophistication ranges from low to extremely high.
-What we've done is between low and medium, but that's not a bad place to be.
-
-Wikipedia is very good for properties of particular distributions.
-Search for (say) ``Poisson distribution'' and you'll find lots of what we've done here,
-and more.
-Wikipedia's also ok on the underlying mathematics, but you're never sure what
-level you'll get:  too high, too low, or just right.
 
 \input{../LaTeX/footer.tex}
 

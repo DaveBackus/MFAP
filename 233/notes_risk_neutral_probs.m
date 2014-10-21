@@ -1,14 +1,14 @@
 % -------------------------------------------------------------------------
-%  risk_neutral_probs.m
-%  Take arbitrary distribution over a state space and compute 
-%  pricing kernel and risk neutral probabilities for power utility.  
-%  Notation:  c^(1-alpha)/(1-alpha)
-%  Written by:  Dave Backus
+% Take arbitrary distribution over a state space and compute 
+% pricing kernel and risk neutral probabilities for power utility.  
+% Notation:  c^(1-alpha)/(1-alpha)
+% Written by:  Dave Backus @ NYU 
 % -------------------------------------------------------------------------
 format compact 
 format short 
 clear all 
 clf
+
 disp(' ') 
 disp('------------------------------------------------------------------')
 disp('Pricing kernel and risk-neutral probs with power utility')

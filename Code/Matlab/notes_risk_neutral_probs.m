@@ -89,6 +89,13 @@ FontName = 'Helvetica';  % or 'Times'
 LineWidth = 1.5;
 
 figure(1) 
+bar(z, m)
+%line([0 0], [-0.005 0.045])
+%title('True (blue) and Risk-Neutral (red) Probabilities','FontSize',FontSize,'FontName',FontName) 
+xlabel('State z (log growth rate of consumption)','FontSize',FontSize,'FontName',FontName)
+ylabel('Pricing kernel m','FontSize',FontSize,'FontName',FontName)
+
+figure(2) 
 bar(z, [p pstar])
 line([0 0], [-0.005 0.045])
 title('True (blue) and Risk-Neutral (red) Probabilities','FontSize',FontSize,'FontName',FontName) 
