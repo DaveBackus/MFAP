@@ -474,7 +474,7 @@ Now some questions, with answers:
 The pricing kernel is $m = \beta (c_1/c_0)^{-\alpha}$, so
 \begin{eqnarray*}
     \log m(z) &=& \log \beta - \alpha \log (c_1/c_0)
-            \;\;=\;\; \log \beta - \alpha z 
+            \;\;=\;\; \log \beta - \alpha z
             \;\;\sim \;\; \mathcal{N}(\log \beta - \alpha \kappa_1, \alpha^2 \kappa_2) .
 \end{eqnarray*}
 
@@ -578,14 +578,12 @@ the risk premium is proportional to the covariance with the market.
 In the no-arbitrage approach, it's proportional to the covariance with
 the pricing kernel.
 
-
 They're not the same, but they give us some of the same flavor.
 They have, for example, a similar macroeconomic flavor:
 assets that pay off most in good times have positive risk premiums.
 In the CAPM this stems from the connection with the market return:
-the market return (a broad-based stock index, for example) tends ot be high when
-the economy is growing rapidly and low when they economy is growing slowly.
-
+the market return (a broad-based stock index, for example) tends to be high when
+the economy is growing rapidly and low when the economy is growing slowly.
 
 
 \section{Risk-neutral probabilities and the no-arbitrage condition}
@@ -937,6 +935,67 @@ by $p^*(z) = p(z) m(z) / q^1$.
 Here $q^1 = E(m) = 1$ and $p^*(1) = p^*(2) = 1/2$.
 \end{enumerate}
 
+% -----------------------------------------------------------------------------
+\item {\it State prices and related objects.\/}
+Consider an economy with three states.
+State prices and probabilities are
+
+\begin{center}
+\begin{tabular}{cccc}
+\toprule
+        & State Price   & Probability &  Dividend  \\
+State $z$  &  $Q(z)$    & $p(z)$      &   $d(z)$   \\
+\midrule
+1       & 1/2 & 1/3 & 1 \\
+2       & 1/3 & 1/3 & 2 \\
+3       & 1/4 & 1/3 & 3 \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\smallskip
+\begin{enumerate}
+\item What is the pricing kernel in each state?
+\item What is the price of a one-period bond?  What is its return?
+\item What are the risk-neutral probabilities?
+Why are they different from the true probabilities?
+\item Suppose equity is a claim to the dividend in the last column.
+What is its price? What is the return on equity in each state?
+\item What is the expected return on equity?
+The risk premium?
+%What accounts for the sign of the risk premium?
+\end{enumerate}
+
+\needspace{4\baselineskip}
+Answer.
+\begin{center}
+\begin{tabular}{ccccccc}
+\toprule
+        & State Price   & Probability &  Dividend & Pr Kernel & R-n probs & Return \\
+State $z$  &  $Q(z)$    & $p(z)$      &   $d(z)$  &  $m(z)$   &  $p^*(z)$ & $r^e(z)$ \\
+\midrule
+1       & 1/2 & 1/3 & 1 & 3/2 & 0.4615 & 0.5217 \\
+2       & 1/3 & 1/3 & 2 &  1  & 0.3077 & 1.0435 \\
+3       & 1/4 & 1/3 & 3 &  3/4& 0.2308 & 1.5652 \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\begin{enumerate}
+\item See the table.
+\item $q^1 = 1.0833$, $r^1 = 0.9231$.
+\item See table.  They are a combination of the true probabilities $p$
+and the pricing kernel $m$, scaled to sum to one.
+\item The price is $q^e = 1.9167$.  The returns are in the table.
+\item The expected return is $ E(r^e) = 1.0435 $ and the risk
+premium is $ E(r^e - r^1) = 0.1204$.
+Why positive?  You'll note that the asset's dividends are high when the pricing kernel is low,
+which makes the price low.
+That raises returns.
+\end{enumerate}
+
+
+% -----------------------------------------------------------------------------
 \item {\it Returns and risk premiums.\/}
 Consider the asset prices and dividends
 \begin{eqnarray*}

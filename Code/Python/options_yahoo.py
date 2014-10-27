@@ -22,9 +22,8 @@ from pandas.io.data import Options
 import datetime as dt 
 
 # checking versions 
-print(['Matplotlib version ', plt.__version__])
-print(['Pandas version ', pd.__version__])
-! python --version
+#print(['Matplotlib version ', plt.__version__])
+#print(['Pandas version ', pd.__version__])
 
 import matplotlib as mpl
 mpl.rcParams['figure.figsize'] = 6, 4.5  # default is 6, 4
@@ -56,6 +55,7 @@ atm = stock.ix[-1,'Close']      # the -1 takes the last observation
 #%%
 
 # get option prices for same ticker 
+# http://pandas.pydata.org/pandas-docs/stable/remote_data.html#yahoo-finance-options
 option = Options(ticker, 'yahoo')
 expiry = dt.date(2014, 12, 20)
 data_calls = option.get_call_data(expiry=expiry)

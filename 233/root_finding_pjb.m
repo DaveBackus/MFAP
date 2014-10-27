@@ -46,6 +46,7 @@ for it = 1:maxit
     f_new = f(x_new);
     diff_x = max(abs(x_lo - x_hi));
     diff_f = max(abs(f_new));
+    [it x_new]
     
     if max(diff_x,diff_f) < tol, break, end
     
@@ -73,7 +74,7 @@ disp('2. Newtons method')
 disp('---------------------------------------------------------------')
 
 % note vector of a's 
-a = [8; 2; 13];
+a = [2];
 
 % example function and its derivative 
 f = @(x) x.^2 - a;
@@ -95,6 +96,7 @@ for it = 1:maxit
     f_new = f(x_new);
     diff_x = max(abs(x_new - x_now));
     diff_f = max(abs(f_new));
+    [it f_new] 
     
     if max(diff_x,diff_f) < tol, break, end
     
