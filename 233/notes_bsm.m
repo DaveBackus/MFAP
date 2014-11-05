@@ -146,11 +146,11 @@ s = 100.00
 k = [90:2:110]';
 
 sigma = 0.04;
-omega = 0.01;
+omega = 0.01;       % alternate 0.0 (BSM) and 0.01 (mixture) 
 theta = -0.3; 
 delta = 0.15; 
 
-% apply arb condition 
+% apply no-arb condition 
 mu = log(s/q1) - sigma^2/2 - log((1-omega)+omega*exp(theta+delta^2/2))
 
 % branch 1 
@@ -217,6 +217,7 @@ clf
 plot(k, vol, 'b')
 hold on
 plot(k, vol, 'b+')
+axis([90 110 0.035 0.07])
 xlabel('Strike Price') 
 ylabel('Implied Volatility') 
 

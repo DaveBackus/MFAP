@@ -27,7 +27,7 @@
 \renewcommand{\thefootnote}{\fnsymbol{footnote}}
 \newcommand{\var}{\mbox{\it Var\/}}
 
-\printanswers
+%\printanswers
 
 % document starts here
 \begin{document}
@@ -38,7 +38,7 @@
 
 \bigskip\bigskip
 \centerline{\Large \bf Quiz \#2}
-\centerline{(Revised: \today)}
+\centerline{(Spring 2013)}
 
 \bigskip
 {\it Please write your name below.

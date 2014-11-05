@@ -226,13 +226,14 @@ What is the option's value?
 The put price is
 \begin{eqnarray*}
     q^p_t &=& q^1_t E^* (k-s_{t+1})^+  \\
-            &=& q^1_t \int_{0}^{k} (k-x) \lambda e^{-\lambda x } dx
-            \;\;=\;\;  q^1_t \big[ k - ( 1-e^{-\lambda k})/\lambda \big] .
+            &=& q^1_t \int_{0}^{k} (k-x) \lambda_1 e^{-\lambda_1 x } dx
+            \;\;=\;\;  q^1_t \big[ k - ( 1-e^{-\lambda_1 k})/\lambda_1 \big] .
 \end{eqnarray*}
 \item Here we have, by the same logic,
 \begin{eqnarray*}
     q^p_t &=& q^1_t \Big\{
-        (1-\omega) [1-\exp(-\lambda_1 k) + \omega [1-\exp(-\lambda_2 k)]
+        (1-\omega) \big[ k - ( 1-e^{-\lambda_1 k})/\lambda_1 \big]
+        + \omega \big[ k - ( 1-e^{-\lambda_2 k})/\lambda_2 \big]
         \Big\} .
 \end{eqnarray*}
 

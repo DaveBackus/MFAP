@@ -1,47 +1,12 @@
 \documentclass[11pt]{article}
 
-\oddsidemargin=0.25truein \evensidemargin=0.25truein
-\topmargin=-0.5truein \textwidth=6.0truein \textheight=8.75truein
+\input{../LaTeX/preamble.tex}
 
-%\usepackage{graphicx}
-\usepackage{verbatim}
-%\usepackage{booktabs}
-\usepackage{comment}
-\usepackage[small, compact]{titlesec}
-
-\usepackage{hyperref}
-\urlstyle{rm}   % change fonts for url's (from Chad Jones)
-\hypersetup{
-    colorlinks=true,        % kills boxes
-    allcolors=blue,
-    pdfsubject={ECON-UB233, Macroeconomic foundations for asset pricing},
-    pdfauthor={Dave Backus @ NYU},
-    pdfstartview={FitH},
-    pdfpagemode={UseNone},
-%    pdfnewwindow=true,      % links in new window
-%    linkcolor=blue,         % color of internal links
-%    citecolor=blue,         % color of links to bibliography
-%    filecolor=blue,         % color of file links
-%    urlcolor=blue           % color of external links
-% see:  http://www.tug.org/applications/hyperref/manual.html
-}
-
-\renewcommand{\thefootnote}{\fnsymbol{footnote}}
-
-% list spacing
-\usepackage{enumitem}
-\setitemize{leftmargin=*, topsep=0pt}
-\setenumerate{leftmargin=*, topsep=0pt}
-
-\usepackage{needspace}
-% example:  \needspace{4\baselineskip} makes sure we have four lines available before pagebreak
-
-% document starts here
 \begin{document}
 \parskip=\bigskipamount
 \parindent=0.0in
 \thispagestyle{empty}
-{\large ECON-UB 233 \hfill Dave Backus @ NYU}
+\input{../LaTeX/header.tex}
 
 \bigskip\bigskip
 \centerline{\Large \bf Math Tools:  Stochastic Processes}
@@ -55,18 +20,23 @@
 *** Limiting behavior of mean and (esp) variance \\
 *** Law of iterated expectations
 }
-\end{comment}
 
-*** think of this as diff rvs **** \\
+?? *** think of this as diff rvs **** \\
 stationary = time-homogeneous
 
-\bigskip
 Hansen and Sargent:  an economic model is a stochastic process...
 
-We look at some simple examples of {\it stochastic processes\/},
-which combine randomness with dynamics.
-Stochastic processes are a fundamental tool of modern macroeconomics and finance,
-and many other fields as well.
+\end{comment}
+
+
+\bigskip
+All of modern macroeconomics, and most of modern finance,
+is concerned with how randomness unfolds through time.
+Such combinations of randomness and dynamics go by the name
+of {\it stochastic processes\/}.  
+Thus we might say, as Hansen and Sargent often do,
+that a macroeconomic model --- or an asset pricing model ---
+is a stochastic process.  
 
 ** Sargent:  An econmic model is a stoch process ***
 
@@ -1435,7 +1405,9 @@ absolute value.
 
 \end{enumerate}
 
+\input{../LaTeX/footer.tex}
 
+% ------------------------------------------------------------------------------
 \pagebreak
 % *****************************************************************************
 {\large\bf Figure 1}
@@ -1493,8 +1465,5 @@ all possible 2-period histories is therefore $\{ (z_0,1,1),
 nodes'' on the right.
 Not shown are conditional probabilities of particular branches,
 from which we can construct probabilities for each node/history.
-
-\input{../LaTeX/footer.tex}
-
 
 \end{document}

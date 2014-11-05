@@ -43,7 +43,7 @@
 
 % attach files to the pdf
 \usepackage{attachfile}
-    \attachfilesetup{color=0.5 0 0.5}
+    \attachfilesetup{color=0.75 0 0.75}
 
 \usepackage{needspace}
 % \needspace{4\baselineskip} makes sure we have four lines available before a pagebreak

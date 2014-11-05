@@ -71,15 +71,17 @@ then there are positive state prices $Q(z)$ that price the assets:
 \end{eqnarray}
 for all assets $j$.
 
-There are two versions of this wonderful result that are more commonly used.
+There are two versions of this wonderful result that are more commonly used:
+same result, different notation.  
 The first is based on a {\it pricing kernel\/} $m$,
 defined implicitly by $ Q(z) = p(z) m(z)$.
 (Solve for $m$ if you like.)
 The pricing relation (\ref{eq:qj-state-price}) becomes
 \begin{eqnarray}
-    q^j &=& \sum_z p(z) m(z) d^j(z) \;\;=\;\; E (m d^j) .
+    q^j &=& \sum_z p(z) m(z) d^j(z) \;\;=\;\; E (m d^j) 
     \label{eq:q=Emd}
 \end{eqnarray}
+or, if we divide by $q^j$, $ 1 = E(mr^j) $.
 From this, we can show that risk premiums stem from covariances of returns with $m$.
 [Can you show this?]
 There's also has a nice link to representative agent models,
@@ -105,6 +107,25 @@ expectation of $d^j$, not the expectation of the product $m d^j$.
 The reason, of course, is that the product is built into $p^*$.
 This version is useful in pricing derivatives,
 because the risk-neutral distribution is the same for all of them.
+
+The generality of the no-arbitrage theorem is both a strength 
+and a weakness.  
+It's a strength because it requires so little:  frictionless
+markets in which all of the arbitrage opportunities have been driven out.  
+It's a weakness because it tells us so little about the state prices:
+they're positive numbers that ``exist.''
+It's a standard issue with mysterious existence results in mathematics.  
+
+That's led to two different approaches in applied work, 
+which I'll label the macro and finance approaches.  
+In macroeconomics, we try to come up with a theoretical basis for the pricing kernel.
+A representative agent model is a familiar example.
+In finance, the goal instead is to treat $m$ or $p^*$ as a statistical object, 
+and choose models that fit some feature of the data reasonably 
+well.
+We'll see this in action when we value options (shortly) and bond (later on).  
+The two approaches are complementary, in my view, they give us different 
+insights into the behavior of asset prices and returns. 
 
 
 \section{Properties of pricing kernels}
@@ -198,10 +219,23 @@ The notation below isn't self-contained, you may need to go back to the notes.
 Options are the right to buy or sell an asset
 (the ``underlying'')
 at a fixed price $k$ (the ``strike'')
-at (or by) some future date.
+at some future date.
 We'll label the dates $t$ (``now'') and $t+1$ (or $t+\tau$) (``later'').
 The question is what that right is worth now.
 We're going to value it using risk-neutral probabilities.
+
+{\it Option cash flows.\/} 
+A call option on the future value $ s_{t+1} $ at strike price $k$
+generates the cash flow 
+\begin{eqnarray*}
+        d_{t+1} &=& \max \{ 0, s_{t+1} - k \} 
+                \;\;=\;\;  (s_{t+1} - k)^+ ,
+\end{eqnarray*} 
+where the second expression is simply more compact notation for the first.  
+Similarly, put options generate the cash flow $ s_{t+1} = (k - s_{t+1})^+ $. 
+For a given $k$, the cash flows are convex in the underlying $ s_{t+1}$.  
+That means, among other things, that option prices are increasing 
+in the uncertainty of the underlying.  
 
 {\it Put-call parity.\/}
 For European options, there's a connection between prices of put options
@@ -231,6 +265,7 @@ But if we know the price, we can reverse the process and compute what is
 commonly referred to as
 {\it implied volatility\/}:  the value of $\sigma$ for which the formula
 delivers the observed price.
+This works because the price is an increasing function of $\sigma$.
 
 One of the reliable facts about option prices is that volatility varies with the strike.
 The shape of the line in a  graph of volatility against the strike price
@@ -240,7 +275,7 @@ We'll think of it as a convenient way to summarize option prices.
 {\it Risk-neutral pricing.\/}
 We've seen that any cash flow can be valued using (\ref{eq:q=Estar-d}).
 Options are no different.
-The question is generally what the risk-neutral distribution is.
+The question is what the risk-neutral distribution is.
 We need a risk-neutral distribution that prices both the underlying
 and options on the underlying.
 
@@ -254,30 +289,32 @@ Given a risk-neutral distribution, this gives us $s_t$.
 Usually we observe $s_t$, and this gives rise to a restriction
 on the risk-neutral distribution that we call the
 {\it no-arbitrage condition\/}.
-
+%
 The classic example is the lognormal case.
-Suppose $x_{t+1} = \log s_{t+1} \sim \mathcal{N}(\kappa_1, \kappa_2)$
+Suppose $x = \log s_{t+1} \sim \mathcal{N}(\kappa_1, \kappa_2)$
 (remember:  this is the risk-neutral distribution).
 Then the pricing relation implies
 \begin{eqnarray*}
-    s_t &=& q^1_t E^* (e^{x_{t+1}}) \;\;=\;\; q^1_t  e^{\kappa_1 + \kappa_2/2} .
+    s_t &=& q^1_t E^* (e^{x}) \;\;=\;\; q^1_t  e^{\kappa_1 + \kappa_2/2} .
 \end{eqnarray*}
 Usually we choose $\kappa_1$ to satisfy the equation given information
 about the other components.
+The logic is the same with other distributions:
+we evaluate $E^*(e^x)$ and choose the mean of $x$ to satisfy $ s_t = q^1_t E^*(e^x)$.
 
-*****
-{\it Option prices as integrals.\/}
-Show how this works, in general.  ???
+%*****
+%{\it Option prices as integrals.\/}
+%Show how this works, in general.  ???
 
 {\it BSM from lognormal risk-neutral underlying.\/}
 With these ingredients, we can derive the BSM formula using
 a lognormal risk-neutral distribution of the underlying.
 A put price is at strike $k$ is
 \begin{eqnarray*}
-    q^p_t &=& q^1_t  E^* (k-e^{x_{t+1}})^+
+    q^p_t &=& q^1_t  E^* (k-e^{x})^+
           \;\;=\;\;  q^1_t  \int_{-\infty}^{\log k}
-          (k-e^{x_{t+1}}) (2 \pi \kappa_2)^{-1/2}
-          \exp[ - (x_{t+1} - \kappa_1)^2/2 \kappa_2] d x_{t+1} .
+          (k-e^{x}) (2 \pi \kappa_2)^{-1/2}
+          \exp[ - (x - \kappa_1)^2/2 \kappa_2] d x_{t+1} .
 \end{eqnarray*}
 Integrating gives us
 \begin{eqnarray*}
@@ -285,7 +322,7 @@ Integrating gives us
     d &=& (\log k - \kappa_1)/\kappa_2^{1/2} .
 \end{eqnarray*}
 We get the BSM formula for $\tau=1$ by setting $\kappa_2 = \sigma^2$
-and using the no-arbitrage condition.
+and using the no-arbitrage condition to substitute for the mean $\kappa_1$.
 
 
 {\it Beyond BSM.\/}

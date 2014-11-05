@@ -71,7 +71,8 @@ then there are positive state prices $Q(z)$ that price the assets:
 \end{eqnarray}
 for all assets $j$.
 
-There are two versions of this wonderful result that are more commonly used.
+There are two versions of this wonderful result that are more commonly used:
+same result, different notation.  
 The first is based on a {\it pricing kernel\/} $m$,
 defined implicitly by $ Q(z) = p(z) m(z)$.
 (Solve for $m$ if you like.)
@@ -298,6 +299,6 @@ which have some of the analytical convenience of normality
 but more flexibility.
 
 
-\vfill \centerline{\it \copyright \ \number\year \
-NYU Stern School of Business}
+\input{../LaTeX/footer.tex}
+
 \end{document}

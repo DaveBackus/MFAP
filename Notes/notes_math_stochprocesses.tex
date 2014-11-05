@@ -20,73 +20,69 @@
 *** Limiting behavior of mean and (esp) variance \\
 *** Law of iterated expectations
 }
-\end{comment}
 
-*** think of this as diff rvs **** \\
+?? *** think of this as diff rvs **** \\
 stationary = time-homogeneous
 
-\bigskip
 Hansen and Sargent:  an economic model is a stochastic process...
 
-We look at some simple examples of {\it stochastic processes\/},
-which combine randomness with dynamics.
-Stochastic processes are a fundamental tool of modern macroeconomics and finance,
-and many other fields as well.
+\end{comment}
 
-** Sargent:  An econmic model is a stoch process ***
 
-%There's a particularly clear connection to bond pricing,
-%where the prices of bonds of long maturities reflect the
-%evolution of events between now and maturity.
-%That evolution is --- wait for it --- a stochastic process.
-%We introduce this into asset pricing in the usual way:
-%through the pricing kernel.
-%The dynamics of the pricing kernel, reflected by its stochastic process,
-%tells us all we need to characterize bonds of all maturities.
+\bigskip
+All of modern macroeconomics, and most of modern finance,
+is concerned with how randomness unfolds through time.
+Such combinations of randomness and dynamics go by the name
+of {\it stochastic processes\/}.  
+Thus we might say, as Lars Hansen and Tom Sargent often do,
+that a macroeconomic model --- or an asset pricing model ---
+is a stochastic process.  
 
-We start where we left off,  with an event tree,
+Our goal here is to review the theory of stochastic processes 
+in a relatively low-tech way.  
+We start where we left off, with an event tree,
 which we extend to more than two periods.
-This isn't difficult, but we need some new notation to track how
-the uncertainty unfolds with time.
-We then proceed to impose more structure on the process, to simplify it.
+This isn't difficult, but we need new notation to track how
+uncertainty unfolds with time.
+
+We then proceed to impose more structure.
 Typically we'd like uncertainty to have some regularity to it,
 so that behavior at one date is similar to the behavior at another.
 Without something like this, it's hard to know how we'd compare models with data.
-%One kind of structure is limited memory:
-%the probabilities over future events depend only
-%on the current situation, somehow defined.
-%Another is that the dependence of
-%the distribution of next period's events on the current situation
-%has the same form at all dates.
-%And finally, we generally deal with models in which the distribution
-%over events in the distant future ``settle down'' in some well-defined way.
-This is easier to do than say, so let's charge ahead.
+Think, for example, about estimating the mean from time series data.
+If every period has its own distribution, what does this even mean?  
+We focus on linear normal processes, where the analysis if relatively transparent,
+but the same ideas extend to other environments. 
+
+There are some optional sections that use linear algebra.
+Keep in mind:  they're optional. 
+But also keep in mind:  linear algebra is one of the great things in life, 
+something you should think about learning if you want to have more fun in life.
+The optional applications to Markov chains are a good example.  
 
 
 \section{Event trees}
 
-??? Change $p$ to $Prob$ ...
-
-*** Change in perspective:  things are functions of state, and state varies through time.
+%??? Change $p$ to $Prob$ ...
 
 We can expand the concept of an event tree to more than the two
 dates we've used so far.
 An example is Figure 1, but we can imagine extending it further.
 
-An event tree starts with a single event or state that we'll label $z_0$:
-the state $z$ that occurred at date $t=0$.
-At date $t=1$ another state $z_1$ occurs.
-In the figure, there are two possible states, $z_1 = 1$ and $z_1 = 2$,
-each represented by a branch stemming from the initial state $z_0$.
+An event tree starts with a single event that we'll label $z_0$:
+the event $z$ that occurred at date $t=0$.
+At date $t=1$ another event $z_1$ occurs.
+In the figure, there are two possible events, $z_1 = 1$ and $z_1 = 2$,
+each represented by a branch stemming from the initial event $z_0$.
 The probability of each branch, conditional on starting at $z_0$,
-is $p(z_1| z_0)$. These probabilities are all greater than or equal to zero,
-and the sum across states $z_1$ is one.
+is $\p(z_1| z_0)$. These probabilities are all greater than or equal to zero,
+and the sum across events $z_1$ is one.
 
 We can extend the idea to as many periods as we like,
 with the node at any date $t$ giving rise to further branches at $t+1$.
 It's a little cumbersome, but nonetheless helpful,
 to have notation for the various nodes we generate this way.
-We refer to the {\it history\/} of states through date $t$
+We refer to the {\it history\/} of events through date $t$
 as the sequence $(z_0, z_1, \ldots, z_t)$, which we denote by $z^t$.
 Each such history defines a specific node in the tree.
 For example, the node labeled (A) in the figure comes from the history
@@ -99,22 +95,35 @@ which is sufficient but seems like overkill.
 We construct probabilities of nodes by stringing together probabilities
 of the branches that give rise to them.
 Suppose for example, that the probability of
-taking branch $z_1=1$ from $z_0$ is $p(z_1=1| z_0)$,
-and the probability of continuing with $z_2 = 1$ is $p[z_2=1 | z^1 = (z_0, z_1=1) ]$,
+taking branch $z_1=1$ from $z_0$ is $\p(z_1=1| z_0)$,
+and the probability of continuing with $z_2 = 1$ is $\p[z_2=1 | z^1 = (z_0, z_1=1) ]$,
 then the probability at $z_0$ of getting to the upper right node is the product:
 \begin{eqnarray*}
-    p[z_2=1 | z^1 = (z_0, z_1=1) ] &=& p(z_1=1| z_0) p[z_2=1 | z^1 = (z_0, z_1=1) ] .
+    \p[z_2=1 | z^1 = (z_0, z_1=1) ] &=& \p(z_1=1| z_0) \; \p[z_2=1 | z^1 = (z_0, z_1=1) ] .
 \end{eqnarray*}
 In words:  the probability of getting from $z_0$ to (C)
 is the probability of getting from $z_0$ to (A)
 times the probability of getting from (A) to (C).
 
+
+Given a tree, we can then specify things like cash flows at each node 
+and compute their prices at earlier nodes.  
+Prices and cash flows are random here because the nodes are random:  we don't 
+know which ones will occur.  
+It's analogous to what we did earlier with random variables.
+In our two-period settings, cash flows (and other things) 
+were random because they were functions of the state $z$.
+Here the same idea applies but with state $z$ replaced by history $z^t$. 
+In this respect, the appropriate definition of a ``state'' at date $t$ is the complete
+history of events up to then, namely $z^t$.  
+
 All of this works reasonably well, but it's way too cumbersome.
-And without some regularity to how uncertainty works at different dates,
+And without some regularity in how uncertainty works at different dates,
 it's hard to see how we'd be able to connect properties of the tree
 to analogous properties of data.
 What kind of tree, for example, corresponds to the behavior of the short-term
 interest rate?  Or the growth rate of consumption?
+
 
 
 \section{Well-behaved stochastic processes}
@@ -129,37 +138,41 @@ One kind of structure is what is called the {\it Markov property\/}:
 the probabilities of possible outcomes next period
 depend on this period's state, but not the complete history.
 Formally, we would write
-$p(z_{t+1} | z^t ) = p(z_{t+1} | z_t ) $.
+$\p(z_{t+1} | z^t ) = \p(z_{t+1} | z_t ) $.
+as a result, the event $z_t$ tells us everything we need to know
+about the situation at date $t$.
+We will refer to it as the state for that reason.
 In a sense, we're limiting the memory to one period,
-but there are standard tricks to extend it without going back to the complete history.
+but there's a standard trick to extend it without going back to the complete history.
 If we want a two-period memory, for example, we might define the state by
 $y_t = (z_t, z_{t-1})$ and apply the definition to
 $y_t$ rather than $z_t$.
 This works for any finite history, although it undercuts some
 of the simplification we were looking for.
 
-?? change to $Prob$ and $p_n$...
 
 Another kind of structure is to use the same conditional
-probabilities $p(z_{t+1} | z_t)$ at all dates.
+probabilities $\p(z_{t+1} | z_t)$ at all dates.
 We would refer to such a process as {\it stationary\/}
 (it stays the same) or
 {\it time-homogeneous\/} (the same at all times).
-In this case the state $z_t$ tells us everything we need to know
-about the situation at date $t$.
 The date, for example, is irrelevant.
-We have the same process in 2020, for example, as we had in 2010.
-By that we mean that $p(z_{t+1}|z_t)$ has the same form,
-although the current state $z_t$ may be different.
-The point is that any difference between the two dates is captured
-by the difference in their states --- between $z_{2010}$ and $z_{2020}$.
+It doesn't mean that the distribution over future states is always the same.
+It does mean that any variation in the distribution
+works through the current state $z_t$.
+%We have the same process in 2020, for example, as we had in 2010.
+%By that we mean that $\p(z_{t+1}|z_t)$ has the same form,
+%although the current state $z_t$ may be different.
+%The point is that any difference between the two dates is captured
+%by the difference in their states --- between $z_{2010}$ and $z_{2020}$.
 
-The Markov property and stationarity
-are features of the conditional distribution $p(z_{t+1} | z_t) $.
-But what about conditional distributions over multiple periods?
+The Markov property refers to one-period conditional distributions
+ $\p(z_{t+1} | z_t) $, 
+but we can extend these one-period distributions to multiple periods.
+The logic is similar to what we did with event trees:   
 By stringing together one-period conditional distributions
 we can construct multi-period conditional distributions
-$p(z_{t+k} | z_t) $ for any $k \geq 1$.
+$\p(z_{t+k} | z_t) $ for any $k \geq 1$.
 We'll save the details until we have some specific candidates to work
 with, but we can probably imagine doing something of this sort.
 
@@ -167,13 +180,13 @@ What happens as we extend $k$ to longer time horizons?
 The structure we've imposed so far allows a lot of different kinds
 of behavior, but in all the examples we'll use,
 the conditional distribution will ``settle down.''
-By that we mean that the distribution $ p(z_{t+k} = z | z_t)$
-converges as we increase $k$ to a unique distribution $p(z)$
+By that we mean that the distribution $ \p(z_{t+k} = z | z_t) $
+converges as we increase $k$ to a unique distribution $\p(z)$
 that doesn't depend on the current state $z_t$.
 If it does, we say the process is {\it stable\/}.
 There are two conditions here:  that it converges, and that it converges
 to the same thing for every $z_t$.
-Terminology varies, but we will refer to the resulting $p(z)$ as the
+Terminology varies, but we will refer to the resulting $\p(z)$ as the
 {\it equilibrium distribution\/}.
 
 Despite the brevity of this section, it has a lot of content.
@@ -484,7 +497,7 @@ If $\varphi^2 \geq 1$, we don't converge:  there is no equilibrium distribution.
 
 % ?? show this from perspective of t, moving out one period at a time
 The stability property is more obvious if we go through the effort
-of deriving the equilibrium distribution as a limit, as we did with the Markov chain.
+of deriving the equilibrium distribution as a limit.
 Suppose we think of $x_{t+k}$ from the perspective of date $t$.
 If the current state is $x_{t}$, what is the distribution of $x_{t+k}$?
 This is the conditional distribution of $x_{t+k}$:  conditional
@@ -759,30 +772,34 @@ Combining them gives us a wide range of behavior with a small number
 of parameters.
 One of my favorites is the ARMA(1,1):
 \begin{eqnarray*}
-    x_t &=& \varphi_1 x_{t-1} + \theta_0 w_t + \theta_1 w_{t-1} .
+    x_t &=& \varphi_1 x_{t-1} + \sigma \left( \theta_0 w_t + \theta_1 w_{t-1} \right) .
 \end{eqnarray*}
 This is Markov with date $t$ state $z_{t} = (x_t,w_t)$.
+
+%??? note $\sigma$ above, change the rest accordingly.
 
 Its properties are evident from its moving average representation.
 Repeated substitution gives us
 \begin{eqnarray*}
-    x_t &=&  \theta_0 w_t + (\varphi_1\theta_0+ \theta_1) w_{t-1}
-                + (\varphi_1\theta_0+ \theta_1)\varphi_1 w_{t-2}
-                +  (\varphi_1\theta_0+ \theta_1)\varphi_1^2 w_{t-3} + \cdots .
+    x_t &=&  \sigma \theta_0 w_t + \sigma (\varphi_1\theta_0+ \theta_1) w_{t-1}
+                + \sigma (\varphi_1\theta_0+ \theta_1)\varphi_1 w_{t-2}
+                + \sigma (\varphi_1\theta_0+ \theta_1)\varphi_1^2 w_{t-3} + \cdots .
 \end{eqnarray*}
 That is:  the first two moving average coefficients are arbitrary,
 then they decline at rate $\varphi_1$.
 Variants of this model are the basis of the most popular models of bond pricing.
 One useful feature is that its conditional mean is autoregressive:
 \begin{eqnarray*}
-  E_t ( x_{t+1} ) &=&  (\varphi_1\theta_0+ \theta_1) w_{t}
-                + (\varphi_1\theta_0+ \theta_1)\varphi_1 w_{t-1}
-                +  (\varphi_1\theta_0+ \theta_1)\varphi_1^2 w_{t-2} + \cdots .
+  E_t ( x_{t+1} ) &=&  \sigma (\varphi_1\theta_0+ \theta_1) w_{t}
+                + \sigma (\varphi_1\theta_0+ \theta_1)\varphi_1 w_{t-1}
+                + \sigma (\varphi_1\theta_0+ \theta_1)\varphi_1^2 w_{t-2} + \cdots .
 \end{eqnarray*}
 How do we know it's autoregressive?
 Because the moving average coefficients decline at a constant rate.
 
-Comment:  this is simpler if we set $\theta_0 = 1$.
+Comment:  This is simpler if we set $\theta_0 = 1$, a convenient normalization
+as long as $\theta_0 \neq 0$.  
+
 
 \section{Matrix representations (skip)}
 \label{sec:matrix}
@@ -801,6 +818,10 @@ playing the role of $\varphi$ and $B$ the role of $\sigma$.
 It's a stationary Markov process in the state $x_t$.
 It's stable if the eigenvalues of $A$ are all less than one in absolute value:
 if $A^k$ approaches zero as we increase $k$.
+(This last statement will make sense if you have taken a linear algebra course, 
+but not if you haven't.  
+See, for example, Steven Pinker's 
+\href{http://www.nytimes.com/2009/11/15/books/review/Pinker-t.html?pagewanted=all&_r=0}{comment}.) 
 
 Finite ARMA models ---
 ARMA($p$,$q$) for finite $p$ and $q$ ---
@@ -1017,8 +1038,30 @@ Starting at the top and working our way down,
 they are $ \omega^2 $, $ \omega (1-\omega)$, $ (1-\omega)\omega $,
 and $(1-\omega)^2$.
 
+\item {\it Odd and even days.\/} 
+Consider a process that differs on odd and even days.  
+Specifically, let 
+$ x_t = w_t + \theta w_{t-1} $ with 
+\begin{eqnarray*}
+    w_t &\sim& 
+            \left\{
+            \begin{array}{ll} 
+            \mathcal{N}(a,b) & \mbox{ if $t$ is even} \\
+            \mathcal{N}(c,d) & \mbox{ if $t$ is odd}  .
+            \end{array} 
+            \right.
+\end{eqnarray*} 
+Is $x_t$ Markov?  Stationary?  Stable?  
 
-\item {\it Two-state Markov chain.\/}
+Answer.  It's Markov, but not stationary (odd and even days are different) 
+or stable (the conditional distribution of $x_{t+1}$ depends
+on whether $k$ is even or odd.  
+This kind of thing comes up all the time.  
+We either adjust the data (seasonal adjustment) or somehow 
+include it in our model.
+
+
+\item {\it Two-state Markov chain (skip).\/}
 We can get a sense of how Markov chains work with a two-state example.
 A two-state chain is characterized by a 2 by 2 transition matrix $P$.
 Because the rows sum to one, $P$ has (essentially) two parameters.
@@ -1266,7 +1309,7 @@ and variance $(1+\theta)^2)$.
  \end{eqnarray*}
 \end{enumerate}
 
-\item {\it Vector autoregressions.\/}
+\item {\it Vector autoregressions (skip).\/}
 We can write many linear models in the form
 \begin{eqnarray}
     x_{t+1} &=& A x_t + B w_{t+1} .
@@ -1294,7 +1337,7 @@ Under what conditions does this converge as $k$ gets large?
 %
 \needspace{2\baselineskip}
 Answer.
-This course is designed to use linear algebra sparingly.
+This course is designed to avoid linear algebra.
 Nevertheless, in this case you might want to know
 that seemingly complex models can often
 be written simply in matrix form.
