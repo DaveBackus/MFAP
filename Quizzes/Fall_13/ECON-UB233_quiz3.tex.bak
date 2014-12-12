@@ -222,7 +222,7 @@ The expected excess return knocks out the last term.
 If we substitute our solutions, we have
 \begin{eqnarray*}
    E_t \left( \log r^2_{t+1} - \log r^1_{t+1}\right)
-            &=& (\sigma \lambda_0 + \sigma^2/2)  + (\sigma\lambda_1) w_t  .
+            &=& (\sigma \lambda_0 - \sigma^2/2)  + (\sigma\lambda_1) w_t  .
 \end{eqnarray*}
 So the key parameter is $\lambda_1$:  the sensitivity of the ``price of risk''
 to $w_t$.

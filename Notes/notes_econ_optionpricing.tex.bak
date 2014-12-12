@@ -12,13 +12,19 @@
 \centerline{\Large \bf Option Pricing: Black-Scholes-Merton \& Beyond}
 \centerline{Revised: \today}
 
-\bigskip
-Options are one of the most common financial derivatives, and 
-a nice application of asset pricing fundamentals.  
-We derive option prices from risk-neutral probabilities 
-and show how the prices of options depend on our choice of probability distribution.  
+\begin{comment}
+* Figure out graphs v underlying future value and v strike k
+\end{comment}
 
-We have two goals here.
+\bigskip
+Options are one of the most common financial derivatives, and
+a nice application of asset pricing fundamentals.
+We derive option prices from risk-neutral probabilities
+and show how the prices of options depend on our choice of probability distribution.
+There are lots of moving parts, but that's the idea.
+
+
+We have two specific goals.
 The first is to derive the Black-Scholes-Merton (``BSM'') formula from a model
 in which the price of the {\it underlying\/} ---
 the asset the option is based on ---
@@ -36,21 +42,28 @@ The same methods can be --- and have been ---
 applied to other option contracts,
 although the parameter values will be different.
 
-
-We'll continue to use the $t, t+1$ timing,
+%{\it Notation.\/}
+A couple warnings about notation:
+\begin{itemize}
+\item Timing.
+We'll continue to use the $(t, t+1)$ timing,
 with today being $t$ and next period (next year) $t+1$.
-In some cases we'll generalize this to $t,t+\tau$,
+In some cases we'll generalize this to $(t,t+\tau)$,
 where $\tau$ is the length of the time interval,
-so that we can match the observed maturities of options.
+so that we can value options of different maturities.
 
-{\it Warning on notation.\/}
+\item Letters.
 We're going to repurpose some letters, including $s$ and $k$,
 to stick closer to standard usage with options.
-$s$ and $k$ will have nothing to do with the cumulant generating function here,
+Here $s$ and $k$ will have nothing to do with the cumulant generating function here,
 except in a couple instances I was unable to avoid.
+We use the letter $d$ in two ways,
+as the dividend or cash flow and as a component of the BSM formula.
+\end{itemize}
 
 %\begin{comment}
 \section{Review:  risk-neutral asset pricing}
+\label{sec:review}
 
 Recall that one version of the no-arbitrage theorem connects an asset's price $q_t$
 to its cash flows $d_{t+1}$ by
@@ -77,8 +90,9 @@ whether an option or something else.
 
 An asset is defined by its cash flow or dividend, as we've called it.
 Here we buy an asset at $t$ and realize its (generally uncertain) cash flow at $t+\tau$.
+
 An option is a particular kind of cash flow.
-An option gives the owner right to buy or sell another asset at a preset price
+An option gives its owner the right to buy or sell another asset at a preset price
 within a given time period.
 For example, movie producers might have a 5-year option to produce a
 movie based on a book.
@@ -86,7 +100,7 @@ Or a real estate developer might have a 6-month option to purchase
 a piece of property at a preset price.
 After that time, the option expires and
 the seller of the option can do what she wants with the asset.
-In financial markets you see options on lots of things:  stocks, bonds,
+In financial markets we see options on lots of things:  stocks, bonds,
 foreign currencies, pork belly futures, and so on.
 They're the classic ``financial derivative'' and show up all over the place.
 Options are useful to buyers because they give them flexibility.
@@ -119,7 +133,7 @@ Let us say we have a $\tau$-period option.
 If the price of some underlying asset at time $t$ is $s_t$
 then a $\tau$-period call option at strike price $k$
 generates a cash flow at time $t+\tau$ of
-$ ( s_{t+\tau} - k )^+ $,
+$ d_{t + \tau} = ( s_{t+\tau} - k )^+ $,
 where $x^+ \equiv \max(x,0) $.
 Why?  Because you would only exercise the option if the price is above $k$.
 Otherwise you let it expire.
@@ -131,7 +145,8 @@ that it's convex for both puts and calls.
 As a result, the value increases with the amount
 of risk in the underlying.
 The more risk there is, the more valuable they are.
-That's a loose statement, but one we could make tighter if we wanted to.
+That's a loose statement, but one we could make tighter using  logic
+from the chapter on risk.
 More simply:  put and call options give you the upside
 without the downside.
 
@@ -170,9 +185,10 @@ If it does, we need to work that cash flow into the equation.
 
 Recall that if $x$ is normal with mean zero and variance one (``standard normal''),
 its probability density function (pdf) is
-\begin{eqnarray*}
+\begin{eqnarray}
     p(x) &=& (2 \pi)^{-1/2} \exp(-x^2/2)
-\end{eqnarray*}
+    \label{eq:pdf-stdnormal}
+\end{eqnarray}
 for any real number $x$.
 It's positive and integrates to one.
 It's also symmetric:  $p(x) = p(-x)$.
@@ -186,20 +202,21 @@ defined by
 \end{eqnarray*}
 %This is common notation (although some people $\Phi$ instead of $N$).
 There's no simple antiderivative of $p$, but it comes up enough that
-we give it a letter.
-It's also a common function in lots of software.
+we give it the label $N$.
+It's also a common function in software packages.
 The function $N$ corresponds to {\tt normcdf} in Matlab
 and {\tt NORMSDIST} in spreadsheet programs.
 
 We can do the same with other normal random variables.
-If $ y = \mu + \sigma x$,
-then it's normal with mean $\mu$ and variance $\sigma^2$.
+The random variable $ y = \mu + \sigma x$
+is normal with mean $\mu$ and variance $\sigma^2$.
 Since $ x = (y-\mu)/\sigma$ is standard normal,
 we can compute cumulative probabilities for $y$ using
 \begin{eqnarray*}
     \mbox{Prob} (x \leq x^*)  &=& \mbox{Prob} [x \leq (y^*-\mu)/\sigma ]
         \;\;=\;\; N\left[ (y^*-\mu)/\sigma \right].
 \end{eqnarray*}
+[We're using $\sigma > 0$ here, which we take for granted below.]
 Matlab does this calculation for us with the command {\tt normcdf(ystar,mu,sigma)}.
 
 One final property:  since $p$ is symmetric, $N(-x) = 1 - N(x)$.
@@ -285,9 +302,24 @@ And the reverse for calls.
 So-called ``moneyness'' is often measured by $ k-s_t$ or $(k-s_t)/s_t$,
 so that zero represents an at-the-money option.
 
+\section{Derivatives of the BSM formula}
+
+Most treatments go on to list derivatives of the BSM formula
+with respect to its inputs.
+You can look these up in
+\href{http://en.wikipedia.org/wiki/Black-Scholes_model#The_Greeks}{Wikipedia}.
+We'll use one:  the derivative with respect to volatility $\sigma$.
+The so-called ``vega'' is
+\begin{eqnarray*}
+    \partial q^p_t /\partial \sigma &=&
+            s_t N'(d) \tau^{1/2} ,
+\end{eqnarray*}
+where $N'$ is the standard normal pdf, equation (\ref{eq:pdf-stdnormal}).
+We'll use this as an input to Newton's method when we compute
+implied volatilities.
 
 
-\section{The S\& P 500 E-mini futures contract}
+\section{The S\&P 500 E-mini futures contract}
 
 We're interested in options on a broad-based equity index
 like the S\&P 500,
@@ -321,6 +353,7 @@ Options on these contracts are among the most liquid we have.
 
 \section{Risk-neutral option pricing and the no-arbitrage condition}
 
+\begin{comment}
 If you recall our work on the theory of asset pricing,
 the fundamental result is the no-arbitrage theorem.
 With a finite set of states,
@@ -373,19 +406,26 @@ equation (\ref{eq:pricing-relation}), which is where we started.
 %where $r^1_t = 1/q^1_t $ and $r^j_{t+1} = d^j_{t+1} / q^j_t$.
 %In words:  when we use risk-neutral probabilities,
 %every asset has the same expected return.
+\end{comment}
 
-If we know the risk-neutral probabilities, then we can price options.
-Commonly we guess a functional form and infer parameters from observed prices.
+We reminded ourselves in Section \ref{sec:review} that
+if we know the risk-neutral probabilities, then we can price options.
+Commonly we guess a functional form for the probabilities
+and infer parameters from observed prices.
 When we do that, we need to make sure the probabilities satisfy
- (\ref{eq:pricing-relation}) for the underlying.
- We refer to this as the {\it no-arbitrage condition\/},
- because equation  (\ref{eq:pricing-relation}) reflects the no-arbitrage theorem.
-With options, the cash flow of the underlying is its price next period,
-so the condition becomes
+equation (\ref{eq:pricing-relation}) for the underlying.
+We refer to this as the {\it no-arbitrage condition\/},
+because (\ref{eq:pricing-relation}) reflects the no-arbitrage theorem.
+
+
+The cash flow of the underlying is its price next period,
+so the no-arbitrage condition becomes
 \begin{eqnarray}
-    s_t  &=&  q^1_t  E^* s_{t+1} .
+    s_t  &=&  q^1_t  E^* (s_{t+1}) .
     \label{eq:arb-condition}
 \end{eqnarray}
+[We could add a dividend, but this makes things more complicated
+and we end up in a similar place anyway.]
 Without this condition,
 the chosen probabilities violate the no-arbitrage theorem for this asset.
 
@@ -401,13 +441,14 @@ Then (\ref{eq:arb-condition}) implies
 %This says, essentially, that in risk-neutral terms
 %the underlying and the riskfree bond have the same expected return.
 Typically we would choose $\kappa_2$ to match option prices
+(more on this shortly)
 and set $\kappa_1 = \log s_t -\log q_t^1 - \kappa_2/2$.
-We'll see this again, so don't panic if it hasn't sunk in.
+We'll see this again, so don't panic if it hasn't sunk in yet.
 More generally, the no-arbitrage condition can be written
 \begin{eqnarray*}
     s_t &=& q^1_t h(1) , %\;\;=\;\; q^1_t e^{k(1)},
 \end{eqnarray*}
-where $h$ is the moment generating function.
+where $h$ is the moment generating function of $\log s_{t+1}$.
 % and $k(1)$ is the cumulant generating function, both evaluated at $s=1$.
 %(And yes, we're using $s$ and $k$ as we did earlier,
 %not as we have so far with options.)
@@ -421,24 +462,26 @@ Prices of one-period put and call options are therefore
         q^p_t &=&  q_t^1 E^* (k-s_{t+1})^+  \\
         q^c_t &=&  q_t^1 E^* (s_{t+1}-k)^+ .
 \end{eqnarray*}
-%Further progress requires more information about the risk-neutral distribution.
-At this point we have two choices for pricing options.
-One is to get lucky and come up with a distribution that leads to a convenient formula.
-The other is to apply some kind of numerical method.
-In this context, a relatively simply method is to convert the
-risk-neutral distribution into a discrete distribution defined
-over some grid of points.
-This is brute force, but it's reasonably general and easy to program.
-We'll do the other one, because we can handle the challenge,
-and because it highlights the differences
-between BSM and alternatives.
+The expectation $E^*$ is either a sum (if the distribution is discrete)
+or (more commonly) an integral (if the distribution is continuous).
+The problem now becomes a computational one.
+
+There are two common shortcuts.
+One is to approximate a continuous distribution with a discrete grid.
+That's a brute-force approach, but works reasonably well.
+The other is to use distributions that we can solve by hand ---
+distributions that lead to convenient formulas for option prices.
+Either would work.
+We'll do mostly the second because we can handle the challenge,
+and because it highlights the role of the distribution in
+the BSM model and alternatives to it.
 
 
 \section{The Black-Scholes-Merton model}
 
 
 The BSM formula follows directly from using a lognormal risk-neutral distribution
-for the underlying.  Everything else is just integration.
+for the underlying.  Everything else is just calculus.
 We'll revert to a maturity of one, but consider alternatives in the next section.
 
 We'll derive the put formula (\ref{eq:bsm-put})
@@ -522,13 +565,14 @@ we get exactly the BSM put formula, equation (\ref{eq:bsm-put}).
 From a practical perspective, we might ask how well the BSM model
 approximates observed option prices.
 The answer is that it misses the volatility smile.
-In the model, volatility $\sigma$ is a parameter, it's the same
-for all strike prices.
+In the model, volatility $\sigma$ is a parameter,
+the standard deviation of $\log s_{t+1}$,
+and  it's the same for all strike prices.
 In the data, we typically find that the value of volatility that reproduces
 option prices --- what we've called implied volatility ---
 varies with the strike.
 With equity index options, implied volatility declines with the strike.
-This discrepancy between model and data leads naturally to a search
+This discrepancy between model and data lead us to search
 for a better model, one that can reproduce the volatility smile.
 That's the ultimate goal of this chapter,
 but we'll work up to it gradually.
@@ -726,18 +770,17 @@ of the underlying is lognormal.
 It's most useful as a formula that we use to compute implied volatilities.
 The resulting volatility smiles show clearly that the distribution
 isn't lognormal.
-That leaves us looking for alternatives, including the Merton model.
-They're more work,
-but like lots of tools, if we use them enough
-they start to look familiar.
+That's a little weird, because we're using a formula that comes from a model
+that doesn't work very well, but that's what we do.
+That leaves us looking for alternative models, including the Merton model.
 
 This is close to the state of the art in option pricing.
 The one thing most applications add is stochastic volatility:
 something like variation over time in $\sigma$ in the model of
 Section \ref{sec:merton}.
-That generates movements up and down of the volatility smiles,
+That generates movements up and down of volatility smiles,
 which we see all the time in these markets.
-The VIX, for example, is the value of at-the-money volatility.
+The VIX, for example, is (roughly) the value of at-the-money volatility.
 If you're interested, let me know and I'll point you to the standard references.
 If you're really really interested, you might start by taking
 courses in stochastic processes and stochastic calculus.
@@ -754,6 +797,7 @@ from the price of a put (\ref{eq:bsm-put}).
 \needspace{2\baselineskip}
 Answer.  This one's all yours.
 
+%-----------------------------------------------------------------------
 \item {\it The BSM formula.\/}
 Consider the BSM call option formula, equation (\ref{eq:bsm-call})
 with $s_t = 100$, $q^1_t = 0.98$, and $\tau = 1$.
@@ -783,6 +827,7 @@ So if the price is higher, the volatility must be higher.
 If we play around with values, we find $\sigma = 0.2104$ does the trick.
 \end{enumerate}
 
+%-----------------------------------------------------------------------
 \item {\it Digital options.\/}
 A digital or binary option either pays some fixed amount or not.
 Consider, for example, a digital option on the underlying $s_{t+1}$.
@@ -860,7 +905,71 @@ Going beyond the formula, the payoff in this case isn't convex,
 so the impact of volatility is different.
 \end{enumerate}
 
+%-----------------------------------------------------------------------
+\item {\it Option on a uniform underlying.\/}
+We'll explore the logic of option pricing in a setting in which the underlying
+has a uniform distribution.
+More formally, let $ x = s_{t+1} $ (not $x = \log s_{t+1}$!)
+have a uniform distribution over the
+interval $ [\mu-\theta, \mu + \theta]$;
+that is, its probability density function is
+%
+\begin{eqnarray*}
+    p(x) &=& \left\{
+            \begin{array}{ll}
+            (2\theta)^{-1} & \mbox{if } \mu-\theta \leq x \leq \mu + \theta \\
+            0              & \mbox{otherwise}.
+            \end{array}
+            \right.
+\end{eqnarray*}
 
+\smallskip
+\begin{enumerate}
+\item What is the mean of $x$? The variance?
+(10~points)
+\item What is the no-arbitrage condition here?
+(10~points)
+\item What is the cash flow of a put option with strike price $k$?
+What is its value?
+(20~points)
+\item How does the price of a put option change when we increase $\theta$?
+Why?
+(10~points)
+\end{enumerate}
+
+\begin{enumerate}
+\item You might guess the mean and variance.  If not, they follow from
+\begin{eqnarray*}
+    E(x) &=& (2\theta)^{-1} \int_{\mu-\theta}^{\mu+\theta} x \; dx
+            \;\;=\;\; (2\theta)^{-1} [(\mu+\theta)^2 - (\mu-\theta)^2]/2 \;\;=\;\; \mu \\
+    \mbox{Var}(x) &=& (2\theta)^{-1} \int_{\mu-\theta}^{\mu+\theta} (x-\mu)^2 dx
+            \;\;=\;\; (2\theta)^{-1} [\theta^3 - (-\theta)^3]/3 \;\;=\;\; \theta^2/3 .
+\end{eqnarray*}
+So $\mu$ governs the mean and $\theta$ governs the variance.
+
+\item The no-arb condition is
+\begin{eqnarray*}
+    s_t &=& q^1 E^*(s_{t+1}) \;\;=\;\; q^1 \mu .
+\end{eqnarray*}
+
+\item A put option is a claim to the cash flow $ d = (k - x)^+ $.
+If $k$ is in the interval $ [\mu-\theta, \mu + \theta]$ we have
+\begin{eqnarray*}
+    q^p &=& q^1 (2\theta)^{-1} \int_{\mu-\theta}^k (k-x) dx \\
+%        \;\;=\;\;
+        &=&
+            q^1 k \; [k-(\mu-\theta)]/(2\theta)
+            - q^1 [k^2 - (\mu-\theta)^2]/(4\theta).
+\end{eqnarray*}
+
+\item The idea is that option prices increase with risk.
+Here if we increase $\theta$, the parameter that controls the variance,
+put prices seem to go up, but I haven't proven it.
+
+\end{enumerate}
+
+
+%-----------------------------------------------------------------------
 \item {\it Option on an exponential underlying.\/}
 Suppose the risk-neutral distribution of the future value of the underlying
 $s_{t+1} = x$ has pdf
@@ -897,6 +1006,7 @@ Answer.
 \end{eqnarray*}
 \end{enumerate}
 
+%-----------------------------------------------------------------------
 \item {\it Option on a mixture of exponentials.\/}
 Suppose the risk-neutral distribution of the future value of the underlying
 is a Bernoulli mixture of $x_1$ and $x_2$:
@@ -945,10 +1055,11 @@ Answer.
 The logic follows the previous problem.
 \end{enumerate}
 
-
+%-----------------------------------------------------------------------
+\needspace{3\baselineskip}
 \item {\it Divisibility.\/} Explain intuitively why the Bernoulli distribution isn't divisible.
-%
-\needspace{2\baselineskip}
+
+%\needspace{2\baselineskip}
 Answer. A Bernoulli random variable takes on the values zero and one.
 If we repeat it $n$ times, one way to think about it is that
 we have $n$ chances of getting a one.
@@ -964,6 +1075,7 @@ and of the issue
 {in general}.
 
 
+%-----------------------------------------------------------------------
 \item {\it Sums and mixtures (review).\/}
 Let us say that the log-price of the underlying has two components:
 \begin{eqnarray*}
@@ -1048,6 +1160,7 @@ so the mixture introduces skewness and excess kurtosis,
 both of which are absent from normal random variables.
 \end{enumerate}
 
+%-----------------------------------------------------------------------
 \item {\it Merton-like option pricing.\/}
 With the same setup as the previous problem,
 we can illustrate the value of mixtures in
@@ -1231,13 +1344,11 @@ ylabel('Implied Volatility')
 
 \needspace{2\baselineskip}
 \item {\it Today's option prices.\/}
-Look up current prices of E-mini options
-on the CME website:
-
-{\small
-\url{http://www.cmegroup.com/trading/equity-index/us-index/e-mini-sandp500.html}.
-}
-
+Yahoo Finance has an
+\href{http://finance.yahoo.com/options/}{Options Center},
+where you can look up prices of a wide range of equity options.
+Look up options on SPY, the ticker for
+an S\&P 500 exchange traded fund.
 Choose a contract, note the prices, and compute the volatility smile.
 What does it look like?
 %

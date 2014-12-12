@@ -56,106 +56,6 @@ Please include your Matlab code.}
 
 \begin{questions}
 %-----------------------------------------------------------------------
-\question {\it Linear models.\/}
-Consider the models
-\begin{eqnarray*}
-(a) &&  x_t \;\;=\;\; 0.9 x_{t-1} +  w_t \phantom{xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx}\\
-(b) &&  y_t \;\;=\;\; x_t + 2, \mbox{ with $x_t$ defined in (a)} \\
-(c) &&  x_t \;\;=\;\; 0 \cdot w_t + 1 \cdot w_{t-1} \\
-(d) &&  x_t \;\;=\;\; \varphi x_{t-1} + w_t + \theta  w_{t-1} \\
-(e) &&  x_t \;\;=\;\; 1.2 x_{t-1} + 0.1 x_{t-2} +  w_t
-\end{eqnarray*}
-%[The idea behind (b) is to take $x_t$ from (a) and add 2.]
-The disturbances $w_t$ are independent standard normals.
-
-For each model,  answer the questions:
-\begin{enumerate}
-\item [(i)] Is the model Markov?  For what definition of the state? %\\
-\item [(ii)] What is the conditional distribution of $x_{t+1}$ given
-the state at date $t$? %\\
-\item [(iii)] Is the model stable?
-\item [(iv)] If it's stable, what is the equilibrium distribution?
-\end{enumerate}
-
-
-\begin{solution}
-All of these are Markov.
-The state ($z_t$, say) is whatever you need to know at date $t-1$ to
-know the conditional distribution of $x_t$.
-\begin{parts}
-\item This is an AR(1).
-(i)~It's Markov with state $x_{t-1}$.
-(ii)~Conditional distribution:  normal with mean $0.9 x_{t-1}$ and variance one.
-(iii)~Yes, stable, because 0.9 is less than one in absolute value.
-(iv)~The equilibrium distribution is normal with mean zero and variance
-$1/(1-0.9^2) = 5.2632$.
-The autocorrelation function is
-\begin{eqnarray*}
-    \rho(k) &=& 0.9^k .
-\end{eqnarray*}
-This includes $\rho(1) = 0.9$, $\rho(2) = 0.9^2 = 0.81$, and so on.
-
-\item Still an AR(1).
-(i)~Doing the substitution $x_t = y_t - 2$ gives us
-\begin{eqnarray*}
-    y_t &=& (1-0.9) \cdot 2 + 0.9 y_{t-1} + w_t .
-\end{eqnarray*}
-So it's Markov with state $y_{t-1}$.
-(ii)~Conditional distribution:  normal with mean $0.2 + 0.9 y_{t-1}$ and variance one.
-(iii)~Yes, stable, because 0.9 is less than one in absolute value.
-(iv)~The equilibrium distribution is normal with mean two and variance
-$1/(1-0.9^2) = 5.2632$.
-All we've done here is shift the mean up by two.
-The autocorrelation function doesn't depend on the mean, so it's the same
-as before.
-
-\item This is an MA(1).
-(i)~It's Markov with state $w_{t-1}$.
-(ii)~Conditional distribution:  normal with mean $w_{t-1}$ and variance zero.
-(This is an unusual setup:  since the coefficient of $w_t$ is zero,
-we learn $x_t$ one period ahead of time.)
-(iii)~Yes, stable.  For a moving average, all we need is that
-the coefficients are square summable.
-That's always true if there's a finite number of terms.
-(iv)~The equilibrium distribution is normal with mean zero and variance one.
-
-\item This is an ARMA(1,1).
-(i)~It's Markov with state $(x_{t-1}, w_{t-1})$.
-(ii)~Conditional distribution:  normal with mean $\varphi x_{t-1} + \theta w_{t-1}$ and variance one.
-(iii)~It's stable if $|\varphi| < 1$.
-You can see this from the moving average representation, outlined in the notes:
-\begin{eqnarray*}
-    x_t &=&   w_t + (\varphi+ \theta) w_{t-1}
-                + (\varphi+ \theta)\varphi w_{t-2}
-                +  (\varphi+ \theta)\varphi^2 w_{t-3} + \cdots .
-\end{eqnarray*}
-The first two moving average coefficients are arbitrary,
-then they decline at rate $\varphi$.
-(iv)~The equilibrium distribution is normal with mean zero and variance
-equal to the sum of squared moving average coefficients:
-\begin{eqnarray*}
-    \gamma(0) &=& 1 + (\varphi + \theta)^2/(1-\varphi^2) .
-\end{eqnarray*}
-The autocovariances are
-\begin{eqnarray*}
-    \gamma(k) &=& \varphi^{k-1} (\varphi + \theta)
-            \left[1 + (\varphi+\theta)\varphi/(1-\varphi^2) \right].
-\end{eqnarray*}
-The autocorrelations are $\rho(k) = \gamma(k)/\gamma(0)$.
-They decline at rate $\varphi$ after the first one.
-
-\item This is an AR(2).
-(i)~It's Markov with state $(x_{t-1},x_{t-2})$.
-(ii)~The conditional distribution is normal with mean $\varphi x_{t-1} + \varphi x_{t-2}$
-and variance one.
-(iii,iv)~It's not stable.  You can see this by substituting for a few periods and
-seeing how the impact of lagged $x$'s works.  So there's no equilibrium distribution,
-autocorrelation function, and so on.
-
-\end{parts}
-\end{solution}
-
-%-----------------------------------------------------------------------
 \question {\it Combination models.\/}
 Consider the two-equation model
 \begin{eqnarray*}
@@ -175,7 +75,8 @@ What are the moving average coefficients $\theta_j$?
 \item Now express $y$ as an infinite moving average.
 What are its moving average coefficients?
 \item What is the acf of $y$?  How does it depend on $\lambda$?
-\item What kind of ARMA model is $y$?
+\item {\it Extra credit.\/} 
+What kind of ARMA model is $y$?
 \end{parts}
 
 \begin{solution}

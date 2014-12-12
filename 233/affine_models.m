@@ -1,8 +1,8 @@
-%  affine_models.m 
-%  Solve affine models, pick parameter values 
-%  Notation from notes on affine models 
-%  NYU course ECON-UB 233, Macro foundations for asset pricing, Apr 2012.  
-%  Written by:  Dave Backus, April 2012 
+% affine_models.m 
+% Solve affine models, pick parameter values 
+% Notation from notes on affine models 
+% NYU course ECON-UB 233, Macro foundations for asset pricing, Apr 2012.  
+% Written by:  Dave Backus, April 2012 
 format compact
 format long 
 clear all
@@ -28,7 +28,7 @@ disp(' ')
 disp('Parameter values')  
 phi = autocorr_f0
 sigma = sqrt((1-phi^2)*var_f0)    %  note sign convention 
-lambda = 0.125
+lambda = -0.125
 delta = - Ef0 - lambda^2/2; 
 
 % initializations  

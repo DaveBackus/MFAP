@@ -509,7 +509,7 @@ Note that when $\lambda = 0$ we get the one-period bond's dividend and price.
 \item What is the return on equity?  The mean return?
 The return is $r^e(z) = d(z)/q^e$, which satisfies
 \begin{eqnarray*}
-    \log r^e(z) &=& \lambda \log c_1(z) - \log q^e
+    \log r^e(z) &=& \lambda z - \log q^e
             \;\;\sim \;\; \mathcal{N}
             (-\log \beta + \alpha \kappa_1 - (\lambda-\alpha)^2 \kappa_2/2, \lambda^2 \kappa_2) .
 \end{eqnarray*}
@@ -1138,7 +1138,7 @@ The expected dividend is
     E(d^e) &=& E(e^x) \;\;=\;\; \int_{0}^\infty \lambda e^{(1-\lambda) x} dx
             \;\;=\;\; \lambda/(\lambda-1) .
 \end{eqnarray*}
-The expected return is $ E(r^e) = [\lambda/(\lambda-1)] [(\lambda+\alpha)/(\beta \lambda) ]$.
+The expected return is $ E(r^e) = [\lambda/(\lambda-1)] [(\lambda+\alpha-1)/(\beta \lambda) ]$.
 
 \item If $\alpha = 0$, both assets have expected return $1/\beta$.
 But if $\alpha > 0$, the return on equity is greater.

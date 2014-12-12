@@ -24,8 +24,8 @@ What follows is a short informal introduction to the idea and a start
 on the kinds of applications you'll find in economics and finance.
 
 {\it Warning:\/}
-This contains a little linear algebra.
-Skip it if that's not part of your skill set.
+This contains linear algebra.
+Skip it if that's not part of your skill set.  
 
 
 \section{Examples of recursion}
@@ -45,7 +45,7 @@ A ``solution'' to (\ref{eq:recurrence}) is a formula
 that expresses $x_n$ as a function of $n$.
 
 Examples:
-\begin{enumerate}
+\begin{itemize}
 \item {\it Linear difference equation.\/}
 Let
 \begin{eqnarray}
@@ -57,7 +57,7 @@ It converges to zero if $ |a | < 1 $, but it's the solution either way.
 %Problem:  How does it behavior if we add a constant:  eg,
 %$ x_{n+1} = a x_n + b $?
 
-\item {\it Logistic map.\/}
+\item {\it Logistic map.\/} 
 Let
 \begin{eqnarray*}
     x_{n+1} &=& a x_n (1-x_n)
@@ -94,25 +94,26 @@ This is a common example in computer science courses.
 A recursive version of a Matlab program to compute Fibonacci numbers is
 \begin{verbatim}
 function answer = f(n)
+
 if n==0
     answer = 0;
-elseif n==1
+elseif (n==1)
     answer = 1;
 else
-    answer = f(n-1) + f(n-2);
+    answer = f(n-1)+f(n-2);
 end
+
 end
 \end{verbatim}
 Note that the function {\tt f} refers to itself --- it's
 \href{http://en.wikipedia.org/wiki/Recursion_(computer_science)}{recursive}
-in the sense the word is used in computer science.
+in the sense the word us used in computer science.
 In Matlab, we would save this as a file called {\tt f.m}, then
 call it by typing (say) {\tt f(8)} in the command line or as a line in another program.
 (If you enter a fraction, it blows up, so a better function
-would check and generate an error message,
-or perhaps convert {\tt n} to an integer.)
+would check and generate an error message.)
 
-\item {\it Mean and variance.\/}
+\item {\it Mean and variance.\/} 
 \href{http://www.johndcook.com/standard_deviation.html}{John Cook}
 describes the Welford method of computing the mean and variance recursively.
 Consider a sequence of observations:  $ x_1, x_2, \ldots $.
@@ -127,7 +128,7 @@ and $S_n$ is the sum of the squared deviations from the mean.
 The standard estimator of the variance $s^2$ is therefore $ S_n/(n-1)$
 (although I prefer to divide by $n$, always).
 
-\item {\it Natural numbers.\/}
+\item {\it Natural numbers.\/} 
 The natural numbers are the set $ \mathbb{N} = \{0,1,2,\ldots \} $.
 We can  define them recursively with the rules: (i)~0 is in $\mathbb{N}$
 and (ii)~if $n$ is in $\mathbb{N}$ then so is $n+1$.
@@ -140,7 +141,7 @@ asking everyone to move over one.''
 And if we move the person in room $j$ to room $2j$,
 we open up an infinite (countable) number of rooms, all the odd-numbered ones.
 
-\item {\it Combinatorics.\/}
+\item {\it Combinatorics.\/} 
 Computer scientist
 \href{http://www.math.upenn.edu/~wilf/DownldGF.html}{Herbert Wilf}
 notes that many combinatoric identities satisfy recurrences.
@@ -153,26 +154,25 @@ are the solution to
 \begin{eqnarray*}
     f(n,k) &=&  f(n-1,k) + f(n-1,k-1)
 \end{eqnarray*}
-starting with $ f(n,0) = 1$.  %?? for all n
+starting with $ f(n,0) = 1$.  %?? for all n 
 
-\item {\it Functions.\/}
+\item {\it Functions.\/}   
 In economics and finance we often run across recursion with functions.
 Suppose we have a sequence of functions $f_n(x)$ over some
-domain $x$ that satisfy the recurrence
+domain of $x$ defined by
 \begin{eqnarray*}
     f_{n+1}(x) &=& g[f_n(x)]
 \end{eqnarray*}
 for some $g$.
-Even better, suppose the recurrence has a fixed point:
+Or even better, suppose the recurrence has a fixed point:
 \begin{eqnarray*}
     f(x) &=& g[f(x)] .
 \end{eqnarray*}
-%We usually drop the $x$ and write $f = g(f) $.
-Here we have an equation in which the unknown is another function $f$
-rather than a number $x$.
-It's similar to (\ref{eq:recurrence}), but we're dealing with a more complex object.
+We usually drop the $x$ and write $f = g(f) $.
+We're talking about a more complex object here --- a function $f$ rather than a number $x$ ---
+but the idea is similar to (\ref{eq:recurrence}).
 
-\end{enumerate}
+\end{itemize}
 
 
 
@@ -180,43 +180,20 @@ It's similar to (\ref{eq:recurrence}), but we're dealing with a more complex obj
 
 Similar methods show up throughout economics and finance.
 The idea is to string together a series of one-period
-steps --- recurrences --- similar to those we used earlier in the course.
+steps similar to those we used earlier in the course. 
 That allows us to approach the price of (say) an $n$-period bond
-with the same methods we used to price a one-period bond.
+with the same methods we used to price a one-period bond.  
 
-We'll do all this in Markov settings, which require some notation.
-You'll recall that modern asset pricing is based on the no-arbitrage theorem:
-there exists a positive pricing kernel $m$ that satisfies
-$ E(mr) = 1$ for returns $r$ on all assets.
-In a Markov environment, we need to keep track of the current state $z_t$
-and the possible future states $z_{t+1}$.
-The ingredients include:
+Examples:  
 %
-\begin{itemize}
-\item Probabilities.  We have a state variable $z_t$ and conditional probabilities
-$ p(z_{1+1} | z_t) $.
-\item Returns.  One-period returns from date $t$ to $t+1$ depend
-on the state in both periods:  $r(z_,z_{t+1})$.
-\item Asset pricing.  The no-arbitrage theorem becomes:  there exists a positive $m(z_t,z_{t+1})$
-satisfying
-\begin{eqnarray*}
-    E_t \big[ m(z_t,z_{t+1}) r(z_t,z_{t+1}) \big] &=& 1
-\end{eqnarray*}
-for all returns $ r(z_t,z_{t+1} $.
-Here $E_t$ is the expectation conditional on the current state $z_t$
---- the expectation computed from $p(z_{t+1} | z_t)$, in other words.
-\end{itemize}
+\begin{itemize} 
 
-Examples:
-%
-\begin{enumerate}
-
-\begin{comment}
+%\begin{comment}
 \item {\it Discounting cash flows.\/}
 We can represent equity valuation as either an infinite discounted present value or a sequence.
-In the former, we might treat equity at date $t$
+In the former, we might treat equity at date $t$ 
 as a claim to the dividend stream $d_{t+1}, d_{t+2}, \ldots $
-and discount them with the discount factor $\delta$:
+and discount them with the discount factor $\delta$:  
 \begin{eqnarray*}
     v_t &=& \sum_{j=1}^\infty \delta^j d_{t+j} ,
 \end{eqnarray*}
@@ -224,28 +201,47 @@ In a finance course we would typically replace $\delta$ with $1/(1+i)$, but this
 
 Here's a recursive version where we add one dividend at a time.
 Consider the sequence
-\begin{eqnarray}
+\begin{eqnarray*}
     v_t^{n+1} &=& \delta (d_{t+1} + v^n_{t+1} ) ,
-    \label{eq:equity-deterministic}
-\end{eqnarray}
+\end{eqnarray*}
 starting with $v^0_t = 0$.
-That gives us the sequence
+That gives us the sequence 
 \begin{eqnarray*}
     v^1_t &=& \delta (d_{t+1} + v^0_{t+1}) \;\;=\;\; \delta d_{t+1}  \\
     v^2_t &=& \delta (d_{t+1} + v^1_{t+1}) \;\;=\;\; \delta d_{t+1} + \delta^2 d_{t+2} ,
+\end{eqnarray*} 
+and so on.  
+The limit of this sequence is the infinite sum.  
+
+
+\item {\it Asset pricing in Markov settings.\/}
+You may recall that modern asset pricing is based on the no-arbitrage theorem:
+there exists a positive pricing kernel $m$ that satisfies
+$ E(mr) = 1$ for returns $r$ on all assets.
+The basic idea should be familiar from our earlier work,
+but here's how it would look in Markov environment:  
+%
+\begin{itemize}
+\item Probabilities.  We have a state variable $z_t$ and conditional probabilities 
+$ p(z_{1+1} | z_t) $.
+\item Returns.  One-period returns from date $t$ to $t+1$ depend 
+on the state in both periods:  $r(z_,z_{t+1})$.  
+\item Asset pricing.  We apply the no-arbitrage theorem,
+which here becomes 
+\begin{eqnarray*}
+    E_t \big[ m(z_t,z_{t+1}) r(z_t,z_{t+1}) \big] &=& 1 .
 \end{eqnarray*}
-and so on.
-The limit of this sequence is the infinite sum.
-\end{comment}
+Here $E_t$ is the expectation conditional on the current state $z_t$
+--- the expectation computed from $p(z_{t+1} | z_t)$, in other words.
+\end{itemize}
 
-
-\item {\it Bond pricing.\/}
+\item {\it Bond pricing.\/} 
 A bond of maturity $n$ is a claim to a payment of one in $n$ periods.
 In a Markov setting, such bond prices are functions of the state.
-The question is what the functions are.
+The question is what the functions are.  
 %
 We find bond prices recursively, starting with $q^0(z_t) = 1$ for
-all states $z_t$ (a dollar today is worth a dollar).
+all states $z_t$ (a dollar today is worth a dollar).  
 Bonds of longer maturity follow from the recursion
 \begin{eqnarray}
     q^{n+1}(z_t) &=& E_t \big[ m(z_t,z_{t+1}) q^n(z_{t+1})\big] .
@@ -253,63 +249,24 @@ Bonds of longer maturity follow from the recursion
 \end{eqnarray}
 In words:  an $n+1$-period bond is a claim to an $n$-period bond in one period.
 
-We'll spend some time with a loglinear functional form.
-This takes some work, but it's worth doing because we'll be spending
-some time with similar models.
-Despite how it might look at first, this is a user-friendly functional form.
-Suppose the pricing kernel is loglinear:
+We'll spend some time with a loglinear functional form.  
+Suppose 
 \begin{eqnarray*}
     \log m(z_t, z_{t+1} ) &=& \delta + a z_t + b z_{t+1} \\
-            z_{t+1} &=& \varphi z_t + \sigma w_{t+1}
-\end{eqnarray*}
-with $\{ w_t \} $ a sequence of independent standard normal
+            z_{t+1} &=& \varphi z_t + \sigma w_{t+1} 
+\end{eqnarray*} 
+with $\{ w_t \} $ a sequence of independent standard normal 
 random variables and $0 < \varphi < 1$.
 Then bond prices are loglinear functions of the state:
 \begin{eqnarray}
-    \log q^n(z_t) &=& A_n + B_n z_t
+    \log q^n(z_t) &=& A_n + B_n z_t 
     \label{eq:bond-loglin}
-\end{eqnarray}
-for coefficients $(A_n, B_n)$ to be determined.
-
+\end{eqnarray} 
+for coefficients $(A_n, B_n)$ to be determined.  
 The solution follows from applying (\ref{eq:recursion-bond}) to (\ref{eq:bond-loglin}).
-We start with
-\begin{eqnarray*}
-    \log q^{n+1} ( z_t )
-        &=& \log E_t \left\{
-                \exp \left[ \log m(z_t,z_{t+1}) + \log q^{n}(z_{t+1}) \right]
-                \right\} .
-\end{eqnarray*}
-We get the left side from (\ref{eq:bond-loglin}).
-The right side takes some work.
-The inside of the square brackets on the right can be expressed
-\begin{eqnarray*}
-    \log m(z_t,z_{t+1}) + \log q^{n+1}(z_{t+1})
-            &=&  (\delta + a z_t + b z_{t+1} ) +  (A_n + B_n z_{t+1} ) \\
-            &=& \delta + A_n + a z_t + (b + B_n) (\varphi z_t + \sigma w_{t+1}) .
-\end{eqnarray*}
-Conditional on the state $az_t$, this is normal with mean equal
-The usual ``mean plus variance over two'' gives us
-\begin{eqnarray*}
-        \log E_t \left(  m(z_t,z_{t+1}) q^{n+1}(z_{t+1}) \right)
-        &=&     \left\{
-                \exp \left[ \log m(z_t,z_{t+1}) + \log q^{n+1}(z_{t+1}) \right]
-                \right\} \\
-        &=&  \delta + A_n + \big[ a + (b + B_n) \varphi \big] z_t  + (b+B_n)^2 \sigma^2/2 .
-\end{eqnarray*}
-[If this isn't clear, go through it again, it's important.]
-By assumption, this equals $ A_{n+1} + B_{n+1} z_t $ for all values of $z_t$,
-so we must have
-\begin{eqnarray*}
-    A_{n+1} &=& \delta + A_n +  (b+B_n)^2 \sigma^2/2  \\
-    B_{n+1} &=& a + (b + B_n) \varphi .
-\end{eqnarray*}
-Evidently we've converted the recursion in $q^n(z_t)$, equation (\ref{eq:recursion-bond}),
-into recursions in the coefficients $(A_n , B_n) $.
-They're not pretty, but we can easily compute them.
-The initial conditions $A_0 = B_0 = 0 $ correspond to $\log q^0(z_t) = \log (1) = 0$.
+  
 
-
-\begin{comment}
+\begin{comment} 
 We studied examples earlier in which $z_t$ was one-dimensional
 and the bond price was loglinear:  $ \log q^n(z_t) = A_n + B_n z_t$.
 The recursions in the bond price functions in these models translate into recursions
@@ -343,7 +300,7 @@ You should convince yourself that this is (\ref{eq:recursion-bond})
 applied to this environment.
 If we substitute, we see that $q^n = B^n q^0 $, so anything we know
 about powers of positive matrices can be put to work.
-\end{comment}
+\end{comment} 
 
 \item {\it Equity pricing.\/}
 A dividend paying stock is a more complicated object.
@@ -356,14 +313,14 @@ The ex-dividend value of a share might be expressed recursively as
 In words:  equity today is a claim to two things tomorrow,
 a dividend and the same share of equity.
 
-Note that the unknown in this equation is the function $v$.
+Note that this is a functional equation:  the unknown is the function $v$.
 It's also recursive:  you need to know $v$ on the right to compute $v$ on the left.
-You're now as ready as you'll ever be to understand the recursion joke:
+You're now as ready as you'll ever be to understand recursion jokes.
 ``To understand recursion, you need to understand recursion.''
 Or Google ``recursion.'' You get back:  ``Did you mean: recursion?''
 
 One way to think about this is as the limit of a finite horizon.
-Suppose we value next period's dividend by
+Suppose we value next period's dividend.  We might express its value by
 \begin{eqnarray*}
     v^1(z_t) &=& E_t \big\{ m(z_t,z_{t+1}) d(z_{t+1}) \big\} .
 \end{eqnarray*}
@@ -375,14 +332,13 @@ We can value two periods of dividends recursively with
 In general, we can value $n+1$ periods of dividends with the recursion
 \begin{eqnarray*}
     v^{n+1}(z_t) &=& E_t \big\{ m(z_t,z_{t+1}) [d(z_{t+1}) + v^n(z_{t+1})] \big\} ,
-    \label{eq:recursion-equity-n}
 \end{eqnarray*}
 starting with $v^0(z_t) = 0$ (the value of zero dividends is zero).
 As we increase $n$, we have more and more dividends.
 We might imagine, if all goes well, that as $n$ gets larger and larger,
 we approach (\ref{eq:recursion-equity}).
 
-\begin{comment}
+\begin{comment} 
 Unlike bond pricing, loglinear examples don't work.
 There are some popular loglinear approximations, but that's too much work for now.
 We can, however, adapt the Markov chain setup we used with bonds.
@@ -395,7 +351,7 @@ The solution is $ v = (I-B)^{-1} B d$.
 Alternatively, we can substitute repeatedly to get
 $ v = B d + B^2 d + B^3 d + \cdots $,
 the present discounted value version of the equity price.
-\end{comment}
+\end{comment} 
 
 \item {\it Perpetual options.\/}
 Consider the option to buy one share of stock next period for strike price $k$.
@@ -411,13 +367,15 @@ A perpetual option allows us to wait:  if we don't exercise now
 we can hold the option for another period, and do this again, forever.
 Valuation has a recursive form:
 \begin{eqnarray*}
-    q(z_t) &=& \max \big\{ v(z_{t}) - k, E_t \big[ m(z_t,z_{t+1}) q(z_{t+1})\big] \big\} .
+    q(z_t) &=& \max \big\{ v(z_{t}) - k, E_t \big[ m(z_t,z_{t+1}) q(z_{t+1}\big] \big\} .
 \end{eqnarray*}
 That is:  we either exercise now and get $v(z_t)-k$ (the first branch
-of the max) or continue to hold the option and get the current value of the option
+of the max) or continue to hold the option and get the discounted value of the option
 next period (the second branch).
 
-\begin{comment}
+%This problem is similar to the previous one:  the function $q$ is the unknown.
+
+
 \item {\bf Utility.\/}
 In dynamic settings, we often use the additive utility function,
 \begin{eqnarray*}
@@ -440,21 +398,30 @@ As in our other examples, we can envision building this up term by term,
 starting with $U^0(z_t) = 0$.
 If all goes well,
 the unknown function $U(z_t)$ is the limit of the $U^n(z_t)$'s.
-\end{comment}
 
-\end{enumerate}
+\end{itemize} 
 
 
-\section{Bottom line}
+\section{Dynamic optimization:  deterministic problems}
 
-Recursive methods are at the heart of modern macroeconomics and finance.
-We'll use them extensively to value bonds.
+
+Canonical problem, Lagrangian and recursive methods.
+Show they're the same.
+Take limit of finite horizon.
+
+Examples.  LQ, Brock-Mirman.
+
+
+
+\section{Dynamic optimization:  stochastic problems}
+
+Recursive approach with an $E$.
+
 
 
 \section*{Practice problems}
 
 \begin{enumerate}
-%------------------------------------------------------------------------------
 \item {\it Discounted cash flows.\/}
 Our goal here is to simplify the pricing relation (\ref{eq:recursion-equity})
 and derive a more conventional valuation of equity
@@ -463,7 +430,7 @@ as the expected discounted value of future dividends.
 \item Simplify (\ref{eq:recursion-equity}) using $ m(z_t,z_{t+1}) = \delta $
 and replacing dependence on the state $z_t$ with a subscript $t$ ---
 that is, by replacing $v(z_t)$ with $v_t$.
-\item Use this simplification to express equity's value as
+\item Use your simplification to express equity's value as
 \begin{eqnarray*}
     v_t &=& \sum_{j=1}^n \delta^j E_t (d_{t+j}) + \delta^n E_t (v_{t+n}) .
 \end{eqnarray*}
@@ -472,42 +439,6 @@ What happens to the second term on the right above?
 \item What does this example leave out that's present in (\ref{eq:recursion-equity})?
 \end{enumerate}
 
-Answer.
-\begin{enumerate}
-\item Equation (\ref{eq:recursion-equity}) becomes
-\begin{eqnarray*}
-    v_t &=& \delta E_t ( d_{t+1} + v_{t+1} ) .
-\end{eqnarray*}
-
-\item This follows from repeated substitution
-and the law of iterated expectations.
-
-\item We hope that the second term goes to zero.  That leaves us with the infinite sum
-\begin{eqnarray*}
-    v_t &=& \sum_{j=1}^\infty \delta^j E_t (d_{t+j}) .
-\end{eqnarray*}
-
-\item If $ m(z_t,z_{t+1}) = \delta $ there are no risk premiums.
-The price of equity depends only on expected future dividends.
-\end{enumerate}
-
-%------------------------------------------------------------------------------
-\item {\it Consols.\/}
-A consol pays a constant coupon $c$ every period --- forever.
-They have been used by the British as a government financing tool since the 1700s.
-How would you adapt equation (\ref{eq:recursion-equity}) to value such an instrument?
-
-Answer.  We set $d(z_t) = c$, giving us
-\begin{eqnarray*}
-    v(z_t) &=& E_t \big\{ m(z_t,z_{t+1}) [c + v(z_{t+1})] \big\} .
-\end{eqnarray*}
-The variation in price here comes from $m$, which translates roughly
-as variation in interest rates.
-This component is in equity, too, as well as variation in future dividends.
-
-
-\begin{comment}
-%------------------------------------------------------------------------------
 \item {\it Consols.\/}
 A consol is a perpetual bond:  it pays a coupon $c$ every period forever.
 How would we value one in an exponential-affine setting?
@@ -533,7 +464,8 @@ but we (meaning economists in general) often use $m_{t,t+1}$ or $m_{t+1}$
 to mean the same.
 They're less accurate, but easier to write.
 
-%\begin{comment}
+
+
 \item {\it Representative agent asset pricing.\/}
 (Adapted from an exercise in Ljungqvist and Sargent, {\it Recursive Macroeconomic Theory\/}.)
 Consider the representative agent model with additive preferences
@@ -576,7 +508,7 @@ Show how you can value dividends, one at a time, recursively.
 
 \end{enumerate}
 
-%\begin{comment}
+
 \item Bond pricing in a Markov chain.
 Coupon bonds?  Perpetuity?
 
@@ -586,7 +518,6 @@ Coupon bonds?  Perpetuity?
 With Black-Scholes-Merten structure, the price of a perpetual option can be solved by hand.
 See the
 \href{http://pages.stern.nyu.edu/~dbackus/discussions/AlvarezDixit_discussion_ms_Nov_13.pdf}{appendix}.
-\end{comment}
 
 \end{enumerate}
 

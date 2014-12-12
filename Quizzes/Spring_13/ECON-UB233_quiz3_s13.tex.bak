@@ -27,7 +27,7 @@
 \renewcommand{\thefootnote}{\fnsymbol{footnote}}
 \newcommand{\var}{\mbox{\it Var\/}}
 
-%\printanswers
+\printanswers
 
 % document starts here
 \begin{document}

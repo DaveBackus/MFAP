@@ -1050,7 +1050,7 @@ where $p^*$ is lower.
 
 \end{enumerate}
 
-
+%-----------------------------------------------------------------------
 \item {\it Risk-neutral probabilities with exponential risk.\/}
 In our usual two-period setup, suppose the representative agent
 has power utility and
@@ -1084,6 +1084,7 @@ So the risk-neutral distribution has a smaller mean
 and also a smaller standard deviation.
 The former is like the normal distribution, the latter is not.
 
+%-----------------------------------------------------------------------
 \item {\it Exponential risk, cgf version.\/}
 Do the same problem using the cgf and equation (\ref{eq:risk-neutral-cgf}).
 %
@@ -1138,12 +1139,47 @@ The expected dividend is
     E(d^e) &=& E(e^x) \;\;=\;\; \int_{0}^\infty \lambda e^{(1-\lambda) x} dx
             \;\;=\;\; \lambda/(\lambda-1) .
 \end{eqnarray*}
-The expected return is $ E(r^e) = [\lambda/(\lambda-1)] [(\lambda+\alpha)/(\beta \lambda) ]$.
+The expected return is $ E(r^e) = [\lambda/(\lambda-1)] [(\lambda+\alpha-1)/(\beta \lambda) ]$.
 
 \item If $\alpha = 0$, both assets have expected return $1/\beta$.
 But if $\alpha > 0$, the return on equity is greater.
-
 \end{enumerate}
+
+%-----------------------------------------------------------------------
+\item {\it Asset pricing fundamentals.\/}
+A well-known financial economist who spent years in the business world,
+commented on what he had learned as an academic:
+``I learned two basic lessons about financial mathematics
+that I've always found useful.
+One is that risk premiums come from covariances.
+The other is that asset prices come from risk-neutral probabilities.''
+%
+\begin{enumerate}
+\item Write down an equation that illustrates his first lesson.
+\item Write down an equation that illustrates his second lesson.
+\item Where did the covariance go in part (b)?
+\end{enumerate}
+
+\needspace{2\baselineskip}
+Answer. 
+\begin{enumerate}
+\item The first reflects $ E(x) = - \mbox{Cov}(x,m)/E(m) $,
+where $x$ is any excess return.
+
+\item The second is reflected by $ q = q^1 E^*(d) = q^1 \sum_z p^*(z) d(z) $,
+where $q$ is the price of the dividend $d$ and $E^*$ is the expectation based on
+the risk-neutral probabilities.
+
+\item The covariance is embedded in the risk-neutral probabilities.
+Asset prices, for example, can be expressed two ways:
+\begin{eqnarray*}
+    q &=& E (m d) \;\;=\;\; q^1 E(d) + \mbox{Cov}(m,d) \\
+    q &=& q^1 E^*(d) .
+\end{eqnarray*}
+In the first, we have a covariance.
+In the second, that's built into $E^*$.
+\end{enumerate}
+
 \end{enumerate}
 
 

@@ -1,10 +1,10 @@
-%  business_cycles.m 
-%  Properties of macro-finance data:  macro indicators, asset prices/returns
-%  Quarterly data constructed from averages of finer intervals via FRED 
-%  Graph collection in FRED:  MFAP -> quarterly 
-%  DATE, GDPC96, PCECC96, SP500, INDPRO, PAYEMS, FEDFUNDS, GS10, PCECTPI
-%  NYU course ECON-UB 233, Macro foundations for asset pricing.  
-%  Written by:  Dave Backus, March 2012 and after 
+% business_cycles.m 
+% Properties of macro-finance data:  macro indicators, asset prices/returns
+% Quarterly data constructed from averages of finer intervals via FRED 
+% Graph collection in FRED:  MFAP -> quarterly 
+% DATE, GDPC96, PCECC96, SP500, INDPRO, PAYEMS, FEDFUNDS, GS10, PCECTPI
+% NYU course ECON-UB 233, Macro foundations for asset pricing.  
+% Written by:  Dave Backus, March 2012 and after 
 %%
 format compact 
 clear all
@@ -29,7 +29,6 @@ rates = data(:,6:7);
 gq = 400*diff(levels,1);
 gyoy = 100*(levels(5:end,:)-levels(1:end-4,:));
 
-
 %%
 disp(' ')
 disp('1. Autocorrelation functions')
@@ -52,6 +51,7 @@ ylabel('Autocorrelation')
 
 pause  
 
+%{
 clf 
 figure(1) 
 plot([0:nlags]',acf_gdp_yoy,'b','LineWidth',2)
@@ -70,6 +70,7 @@ xlabel('Lag in quarters')
 ylabel('Autocorrelation') 
 
 pause 
+%}
 
 clf
 plot([0:nlags]',acf_rfed,'b','LineWidth',2)

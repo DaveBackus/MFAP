@@ -22,7 +22,7 @@ Here we do two things related to what I'd call the predictability of
 excess returns.  First, we describe the evidence in somewhat greater detail,
 including evidence that expected excess returns vary through time and across assets.
 Second, we return to ``exponential-affine models'' in which we can think
-about similar properties of theoretical asset pricing models.
+about similar properties of asset pricing models.
 The two subjects are to some extent separate,
 but models give us a useful perspective on the evidence.
 This is an active topic of current research in which
@@ -37,7 +37,7 @@ your preferences, and your circumstances (income, expenses, retirement plans, an
 It's not a simple problem, as we've seen, even in much simpler settings.
 We can, however, make some progress on the properties of returns
 on special collections of assets, which we'll refer to as portfolios.
-Not your whole portfolio, but potentially components of it.
+Not your whole portfolio, but potentially a component of it.
 
 We've accumulated lots of evidence on the risk and average returns
 on a large number of such portfolios, which we organize here by asset class.
@@ -87,33 +87,30 @@ currencies makes a positive return on average:  the so-called carry trade.
 Excess returns on long bonds seem not to be constant.
 In particular, excess returns are higher when the yield curve is steeper,
 which is generally when short-term interest rates are low.
-More on this shortly.
+The simplest version comes from the regression
 
-These facts are reasonably robust, but they're not bullet-proof.  
-Momentum, for example, went the other way during the crisis.  
-Ditto the carry trade.  
-Despite this, they're a good place to start in thinking
-about the dynamics of asset returns.  
+All of these features of excess returns have been widely documented.
 
 
-\section{Predicting bond returns}
+\section{Predicting bond returns} 
 
-We're interested in bond returns, but focus on 
-closely related changes in forward rates.
-Recall that bond prices are connected to forward rates by
+
+We're interested in bond returns, but we'll see that 
+they're closely related to changes in forward rates.  
+Recall that bond prices are connected to forward rates by 
 \begin{eqnarray*}
     \log q^{n+1}_t &=& -(f^0_t + f^1_t + \cdots + f^{n}_t) .
-\end{eqnarray*}
-The log excess return on an $(n+1)$-period bond is therefore
+\end{eqnarray*} 
+The log excess return on an $(n+1)$-period bond is therefore 
 \begin{eqnarray*}
-    \log r^{n+1}_{t+1} - \log r^1_{t+1}
+    \log r^{n+1}_{t+1} - \log r^1_{t+1} 
          &=& \log q^n_{t+1} - \log q^{n+1}_t + \log q^1_t \\
-         &=& (f^0_{t+1} - f^1_t) + \cdots + (f^{n-1}_{t+1} - f^n_t)
+         &=& (f^0_{t+1} - f^1_t) + \cdots + (f^{n-1}_{t+1} - f^n_t) 
          \;\;=\;\; \sum_{j=1}^n (f^{j-1}_{t+1} - f^j_t) .
-\end{eqnarray*}
-[This is tedious, but follows from the definitions of returns and forward rates.]
+\end{eqnarray*} 
+(Don't panic; this is tedious, but follows from the definitions of returns and forward rates.) 
 In short, if we account for changes in forward rates then we account for bond returns ---
-and vice versa.
+and vice versa.  
 
 %Now how might we expect forward rates to change?
 %Recall that the forward rate $f^n_t$ is the one-period interest rate
@@ -123,11 +120,11 @@ and vice versa.
 %but the rate applies to the same time period.
 
 
-So how should we think about forward rates?
+So how should we think about forward rates?  
 As always, it's helpful to have a benchmark.
 Our benchmark is the {\it expectations hypothesis\/} (EH):
-that changes in forward rates, suitably defined, are unpredictable.
-More formally, the forward rates
+changes in forward rates, suitably defined, are unpredictable.  
+More formally, the forward rates 
 $(f^n_t, f^{n-1}_{t+1}, ... , f^0_{t+n})$
 form a martingale sequence:
 \begin{eqnarray*}
@@ -140,24 +137,23 @@ The idea is that the rate quoted today is the best predictor of the rate
 quoted next period.
 
 Fifty years ago --- and even today in textbooks --- people thought the EH was a good idea.
-Decades of evidence have convinced us otherwise, but it's still a useful benchmark.
-%Now we know better, but it's still a good starting point for more sophisticated theories.
+Decades of evidence have convinced us otherwise, but it's still a useful benchmark.  
+%Now we know better, but it's still a good starting point for more sophisticated theories. 
 We can get a sense of its weaknesses by running the regression
 \begin{eqnarray*}
     f^{n-1}_{t+1} &=& a_n + b_n f^n_t .
 \end{eqnarray*}
 If the EH is true, we should find that $b_n = 1$.
-(We should also find $a_n=0$, but allowing it to be nonzero
+We should also find $a_n=0$, but allowing it to be nonzero
 takes care of any constant term premiums.
-Can you see why?) 
+[Can you see why?]
 For technical reasons, we typically run the alternative
-\begin{eqnarray}
+\begin{eqnarray*}
     f^{n-1}_{t+1} - f^0_t &=& a_n + b_n (f^n_t - f^0_t) .
-    \label{eq:forward-regressions}
-\end{eqnarray}
+\end{eqnarray*}
 If the EH is true, we should again find that $b_n = 1$.
 
-The evidence suggests otherwise.
+The evidence suggests otherwise.  
 With monthly US data we find (approximately) $b_1 = 0.5$, $b_3 = 0.75$,
 $b_{12} = 0.90$, and $b_{60} = 0.96$.
 As we increase maturity, the EH looks better and better.
@@ -166,105 +162,260 @@ But for short maturities it's not very good.
 So what's going on?
 We'll look at short maturities, since that seems to be where the action is.
 If we raise the forward rate $f^1_t$ (relative to $f^0_t$),
-making the forward rate curve steeper,
+making the forward rate curve steeper, 
 we see that the future short rate $f^0_{t+1}$ goes up by 0.5,
-not the 1.0 implied by the EH.
-Thus a steeper yield curve implies higher returns on long bonds, because the
-increase in the short rate --- and the ensuing capital loss on a two-period bond ---
-is smaller than the EH predicts.  
-% ?? more 
+not the 1.0 implied by the EH. 
+
+
+% ??
+You might also show how this works with excess returns.  Define returns
+in terms of forwards and see what they imply.
+
 
 
 \begin{comment}
 \section{Predictability in the Vasicek model}
 
-You might recall that the Vasicek model consists of the equations
+You might recall that the Vasicek model consists of the equations 
 \begin{eqnarray*}
     \log m(z_t, z_{t+1}) &=& \delta + z_t + \lambda w_{t+1} \\
     z_{t+1} &=& \varphi z_t + \sigma w_{t+1} ,
 \end{eqnarray*}
 where $\{ w_t \}$ is a sequence of independent standard normal random variables.
-Bond prices take the form
+Bond prices take the form 
 \begin{eqnarray*}
     \log q^n_t &=& A_n + B_n x_t
 \end{eqnarray*}
-with coefficients
+with coefficients 
 \begin{eqnarray*}
     A_{n+1} &=& A_n + \delta + (\lambda + B_n\sigma)^2/2 \\
-    B_{n+1} &=& \varphi B_n + 1
+    B_{n+1} &=& \varphi B_n + 1 
 \end{eqnarray*}
-starting with $A_0 = B_0 = 0$.
-The latter implies $ B_n = (1-\varphi^n)/(1-\varphi) $.
+starting with $A_0 = B_0 = 0$.  
+The latter implies $ B_n = (1-\varphi^n)/(1-\varphi) $. 
 
-Now consider returns.
-The log return on an $n+1$-period bond is
+Now consider returns.  
+The log return on an $n+1$-period bond is 
 \begin{eqnarray*}
     \log r^{n+1}_{t+1} &=& \log q^n_{t+1} - \log q^{n+1}_t \\
         &=& (A_{n} + B_n z_{t+1}) - (A_{n+1} + B_{n+1} z_{t}) \\
         &=& (A_{n}- A_{n+1}) + ( B_n z_{t+1} - B_{n+1} z_{t}) \\
         &=& (A_{n}- A_{n+1}) + ( B_n \varphi - B_{n+1}) z_{t} + B_n \sigma w_{t+1} \\
         &=& (A_{n}- A_{n+1}) -  z_{t} + B_n \sigma w_{t+1} .
-\end{eqnarray*}
+\end{eqnarray*} 
 The last line follows from the solution for $B_n$, which implies $B_n \varphi - B_{n+1} = -1$.
-The log return on a one-period bond is
+The log return on a one-period bond is 
 \begin{eqnarray*}
-    \log r^{1}_{t+1} &=& \log q^0_{t+1} - \log q^{1}_t
-            \;\;=\;\; - A_1 - B_1 z_t
+    \log r^{1}_{t+1} &=& \log q^0_{t+1} - \log q^{1}_t 
+            \;\;=\;\; - A_1 - B_1 z_t 
             \;\;=\;\; - A_1 - z_t .
 \end{eqnarray*}
-Putting them together gives us the log excess return
+Putting them together gives us the log excess return 
 \begin{eqnarray*}
     \log r^{n+1}_{t+1} - \log r^1_{t+1}
         &=& (A_{n}- A_{n+1} + A_1) + B_n \sigma w_{t+1} .
 \end{eqnarray*}
 Here we see that the risk in long-period bonds increases with maturity
-(because $B_n$ does).
-But the expected excess return doesn't vary with state $z_t$.
-The model is incapable of generating excess returns that vary with the slope of the yield
-curve.
-\end{comment}
+(because $B_n$ does).  
+But the expected excess return doesn't vary with state $z_t$.  
+The model is incapable of generating excess returns that vary with the slope of the yield 
+curve.  
+\end{comment} 
+
+
+\section{The Cox-Ingersoll-Ross model}
+
+Another popular model does generate excess returns that vary with the state. 
+Let's see how it works.   
+
+{\it Model.\/}
+Here's a popular variant of the Vasicek model
+in which risk and risk premiums move around.
+More on that shortly.
+The model is
+\begin{eqnarray}
+    \log m_{t+1} &=& - (1+\lambda^2/2 ) x_t + \lambda x_t^{1/2} w_{t+1} \nonumber \\
+         x_{t+1} &=& (1-\varphi) \delta + \varphi x_t + \sigma x_t^{1/2} w_{t+1} ,
+         \label{eq:square-root}
+\end{eqnarray}
+with (as usual) independent standard normal innovations $w_t$.
+Here $x_t$ plays two roles:  It governs the conditional mean
+of the pricing kernel, as it did before,
+but it also governs the conditional variance.
+
+The so-called ``square-root'' process (\ref{eq:square-root}) guarantees that
+it remains positive --- at least it does in continuous time.
+The idea is that the variance shrinks as $x_t$ gets close to zero.
+As a result, the change in $x_t$ near zero comes from the mean reversion term,
+\begin{eqnarray*}
+       x_{t+1} - x_t  &\approx& (1-\varphi) \delta  \;\;>\;\; 0.
+\end{eqnarray*}
+As long as $\delta>0$, that pushes $x_t$ away from zero and keeps it positive.
+
+
+Despite the square-root process, $x_t$ is still an AR(1).
+Its mean is
+\begin{eqnarray*}
+    E(x_t) &=& (1-\varphi) \delta + \varphi E(x_{t-1})
+            \;\;\;\Rightarrow\;\;\; E(x) \;\;=\;\; \delta .
+\end{eqnarray*}
+The variance is
+\begin{eqnarray*}
+    \mbox{Var}(x) &=& E (x_t - \delta)^2
+                \;\;=\;\; E \left[ \varphi (x_{t-1} - \delta) + \sigma x_{t-1}^{1/2} w_t \right]^2 \\
+                &=& \varphi^2 \mbox{Var}(x) + E (\sigma^2 x_{t-1})
+                \;\;=\;\;  \varphi^2 \mbox{Var}(x_{t}) + \sigma^2 \delta ,
+\end{eqnarray*}
+or
+\begin{eqnarray*}
+    \mbox{Var}(x) &=&   \sigma^2 \delta / (1-\varphi^2) .
+\end{eqnarray*}
+What about the autocovariance?
+The first autocovariance is
+\begin{eqnarray*}
+    \mbox{Cov}(x_t,x_{t-1}) &=& E [(x_t - \delta)(x_{t-1} - \delta)]  \\
+                &=& E  \left\{ [ \varphi (x_{t-1} - \delta) + \sigma x_{t-1}^{1/2} w_t ] (x_{t-1} - \delta) \right\} \\
+                &=& \varphi \mbox{Var}(x) .
+\end{eqnarray*}
+The first autocorrelation is therefore $\varphi$.
+[For practice, show that the $k$th autocorrelation is $\varphi^k$, \
+the same as an AR(1) with iid disturbances.]
+
+{\it Recursions.\/}
+We follow the same logic as in the Vasicek model,
+starting with the short rate
+\begin{eqnarray*}
+    - f^0_t &=&   \log E_t m_{t+1} .
+\end{eqnarray*}
+The conditional distribution of $\log m_{t+1}$ is
+normal with mean and variance
+\begin{eqnarray*}
+    E_t m_{t+1} &=& - (1+\lambda^2/2) x_t \\
+    \mbox{Var}_t m_{t+1} &=& \lambda^2 x_t .
+\end{eqnarray*}
+The new ingredient is that the variance is now linear in $x_t$.
+The short rate is therefore
+$ f^0_t = x_t $.
+That's why we started with a somewhat odd coefficient of $x_t$
+in the pricing kernel --- so this would work out.
+
+For bonds of arbitrary maturity,
+we use the guess  $ \log q^n_t = A_n + B_n x_t$.
+That gives us
+\begin{eqnarray*}
+    \log m_{t+1} + \log q^{n+1}_t &=&
+            [A_n + (1-\varphi) \delta] + [\varphi B_n -(1+\lambda^2/2)] x_t
+                    + (\lambda + B_n \sigma) x_t^{1/2} w_{t+1} .
+\end{eqnarray*}
+The conditional mean and variance are
+\begin{eqnarray*}
+   E_t \left( \log m_{t+1} + \log q^{n}_{t+1} \right) &=&
+            [A_n + B_n (1-\varphi) \delta] + [\varphi B_n -(1+\lambda^2/2)] x_t \\
+   \mbox{Var}_t \left( \log m_{t+1} + \log q^{n+1}_t \right) &=&
+            (\lambda + B_n \sigma)^2 x_t .
+\end{eqnarray*}
+The ``mean plus variance over two'' formula gives us
+\begin{eqnarray*}
+    \log q^{n+1}_t &=&
+            [A_n + B_n (1-\varphi) \delta] + [\varphi B_n -(1+\lambda^2/2)] x_t
+                    + [(\lambda + B_n \sigma)^2/2]  x_t  \\
+                &=& A_{n+1} + B_{n+1} x_t.
+\end{eqnarray*}
+Lining up terms, we have
+\begin{eqnarray*}
+    A_{n+1} &=& A_n + B_n (1-\varphi) \delta \\
+    B_{n+1} &=& \varphi B_n -(1+\lambda^2/2) + (\lambda + B_n \sigma)^2/2 .
+\end{eqnarray*}
+This is a mess, but it's easy to program, which is what we'll do.
+We start, as always, with $A_0 = B_0 = 0$.
+[Remind yourself why.]
+
+\begin{table}[h]
+%\begin{center}
+\centering
+\caption{Properties of forward rates}
+\begin{tabular}{lrrr}
+\toprule
+Forward rate $f^n_t$    &  Mean  &  Std Dev  &  Autocorr \\
+\midrule
+$f^0_t$                 &  6.683 & 2.703     &  0.959   \\
+$f^{12}_t$              &  7.921 & 2.495     &  0.969   \\
+$f^{120}_t$             &  8.858 & 1.946     &  0.980   \\
+\bottomrule
+\end{tabular}
+\label{tab:forward-moments}
+\end{table}
+
+
+{\it Estimation.\/}
+Now let's estimate parameters from the properties of forward rates
+reported in Table \ref{tab:forward-moments}.
+%
+\begin{itemize}
+\item Autocorrelation.
+We set $\varphi$ equal to the observed autocorrelation of the short rate in the data,
+just as we did before.
+From the table, that gives us $\varphi = 0.959$.
+
+\item Mean.  We set $\delta$ equal to the mean short rate:
+$\delta = 6.683/1200$.
+
+\item Variance.  Similarly, the variance of the short rate is the variance of $x_t$,
+which is $ \sigma^2 \delta/(1-\varphi^2)$.
+Given values for $\varphi$ and $\delta$,
+the variance implies $\sigma = 8.6\times 10^{-3}$.
+
+\item Long forward rates.  Again,
+$\lambda$ controls the mean forward rate curve.
+Recall that forward rates are
+\begin{eqnarray*}
+    f^n_t &=& \log (q^n_t/q^{n+1}_t)
+                \;\;=\;\;  (A_n - A_{n+1}) + (B_n - B_{n+1}) x_t .
+\end{eqnarray*}
+Since $x_t$ has a  mean of $\delta$,  we have
+\begin{eqnarray*}
+    E (f^n - f^0) &=&  [(A_n - A_{n+1}) - (A_0 - A_{1})] +
+        [(B_n - B_{n+1}) - (B_0 - B_{1})] \delta.
+\end{eqnarray*}
+We set $\lambda=1.32$, which gives us the right mean forward spread.
+
+\end{itemize}
+See the Matlab program for details.
+
 
 
 %\end{document}
 
 \section{Predictability in the Vasicek and CIR models}
 
-If the evidence is summarized by (\ref{eq:forward-regressions}), 
-what do our models suggest?  
-We'll review the performance of the Vasicek and Cox-Ingersoll-Ross models
-along this dimension.  
-In both models, bond prices are loglinear functions of the state:
-$ \log q^n_t = A_n + B_n z_t$.  
+We're interested in the equation
+\begin{eqnarray*}
+    f^{0}_{t+1} - f^0_t &=& a_1 + b_1 (f^1_t - f^0_t) .
+\end{eqnarray*}
+With data, we get $b_1 \approx 1/2$.  What do we get in models?
+The idea is that both the lhs variable $f^{0}_{t+1} - f^0_t$
+and the rhs variable $f^1_t - f^0_t$ can be expressed in terms
+of a state variable $x_t$, which allows us to deduce what the regression
+coefficient $b_1$ is.
 
-{\it Vasicek model.\/}
-Consider the model 
+{\it Vasicek.\/}
+Recall that we had $B_1 = -1$ and $B_2 = -(1+\varphi)$.
+The first two forward rates are
 \begin{eqnarray*}
-    \log m_{t+1} &=& - \lambda^2/2 - z_t + \lambda w_{t+1} \\
-         z_{t+1} &=& (1-\varphi) \delta + \varphi z_t + \sigma w_{t+1} .
+    f^0_t &=& \mbox{constants} + x_t \\
+    f^1_t &=& \mbox{constants} + (B_1-B_2) x_t
+            \;\;=\;\; \mbox{constants} + \varphi x_t .
 \end{eqnarray*}
-The no-arbitrage theorem implies the recursions 
-\begin{eqnarray*}
-    A_{n+1} &=& A_n + B_n (1-\varphi) \delta - \lambda^2/2 + (\lambda + B_n \sigma)^2/2 \\
-    B_{n+1} &=& B_n \varphi - 1 .
-\end{eqnarray*}
-The second equation implies 
-$B_1 = -1$ and $B_2 = -(1+\varphi)$.
-The first two forward rates are therefore 
-\begin{eqnarray*}
-    f^0_t &=& \mbox{constants} + z_t \\
-    f^1_t &=& \mbox{constants} + (B_1-B_2) z_t
-            \;\;=\;\; \mbox{constants} + \varphi z_t .
-\end{eqnarray*}
-That gives us a rhs variable $f^1_t - f^0_t = (\varphi-1)z_t$.
+That gives us a rhs variable $f^1_t - f^0_t = (\varphi-1)x_t$.
 The lhs is
 \begin{eqnarray*}
-    f^0_{t+1} - f^0_t &=& \mbox{constants} + z_{t+1} - z_t
-                    \;\;=\;\; \mbox{constants} + (\varphi-1) z_t + \sigma w_{t+1}.
+    f^0_{t+1} - f^0_t &=& \mbox{constants} + x_{t+1} - x_t
+                    \;\;=\;\; \mbox{constants} + (\varphi-1) x_t + \sigma w_{t+1}.
 \end{eqnarray*}
 Since $w_{t+1}$ is independent of the rhs (in fact of anything dated $t$ or before),
-we're effectively regressing $(\varphi-1) z_t$
+we're effectively regressing $(\varphi-1) x_t$
 on itself.
-The coefficient is therefore $b_1 = 1$, not the $b_1 \approx 0.5$ that we see in the data.
+The coefficient is therefore $b_1 = 1$.
 
 This model, in short, fails to account for the evidence against the expectations
 hypothesis.
@@ -273,46 +424,31 @@ there's no variation in either risk or the price of risk,
 so premiums are constant.
 We need something else.
 
-[Exercise.  
-What is the log excess return on an $n$-period bond in this model?
-Show that it doesn't depend on $z_t$.] 
 
-{\it CIR model.\/}
+{\it CIR.\/}
 This model has variation in risk at its core,
 so we have a chance of doing better.
-The model, you may recall, 
-is 
-\begin{eqnarray*}
-    \log m_{t+1} &=& - (1+\lambda^2/2 ) z_t + \lambda z_t^{1/2} w_{t+1} \nonumber \\
-         z_{t+1} &=& (1-\varphi) \delta + \varphi z_t + \sigma z_t^{1/2} w_{t+1} .
-         \label{eq:square-root}
-\end{eqnarray*}
-It leads to the recursions 
-\begin{eqnarray*}
-    A_{n+1} &=& A_n + B_n (1-\varphi) \delta \\
-    B_{n+1} &=& \varphi B_n -(1+\lambda^2/2) + (\lambda + B_n \sigma)^2/2 .
-\end{eqnarray*}
-From this, we see that $B_1 = -1$ and $B_2 = -(1+\varphi) + \sigma(\lambda + \sigma/2)$.
+Note that $B_1 = -1$ and $B_2 = -(1+\varphi) + \sigma(\lambda + \sigma/2)$.
 That implies
 \begin{eqnarray*}
-    f^0_t &=& z_t \\
-    f^1_t &=& \mbox{constants} + (B_1-B_2) z_t
-            \;\;=\;\; \mbox{constants} + [\varphi-\sigma(\lambda+\sigma/2)] z_t ,
+    f^0_t &=& x_t \\
+    f^1_t &=& \mbox{constants} + (B_1-B_2) x_t
+            \;\;=\;\; \mbox{constants} + [\varphi-\sigma(\lambda+\sigma/2)] x_t ,
 \end{eqnarray*}
 which gives us the rhs variable
 \begin{eqnarray*}
-    f^1_t - f^0_t &=& \mbox{constants} + [\varphi-1-\sigma(\lambda+\sigma/2)] z_t .
+    f^1_t - f^0_t &=& \mbox{constants} + [\varphi-1-\sigma(\lambda+\sigma/2)] x_t .
 \end{eqnarray*}
 The lhs variable is
 \begin{eqnarray*}
-    f^0_{t+1} - f^0_t &=&  \mbox{constants} + (\varphi-1) z_t + \sigma z_t^{1/2} w_{t+1}.
+    f^0_{t+1} - f^0_t &=&  \mbox{constants} + (\varphi-1) x_t + \sigma x_t^{1/2} w_{t+1}.
 \end{eqnarray*}
 The regression coefficient is therefore
 \begin{eqnarray*}
     b_1 &=& \frac{\varphi-1}{\varphi-1-\sigma(\lambda+\sigma/2)} .
 \end{eqnarray*}
 This can deliver lots of values of $b_1$, including our preferred value $b_1 = 1/2$.
-But with the parameter values we chose earlier, we get $b_1 = 1.384$.
+But with the parameter value we chose earlier, we get $b_1 = 1.384$.
 So we've deviated from the EH, but in the wrong direction.
 
 The issue is $\lambda$.  We can choose $\lambda$ to get $b_1 = 1/2$:
@@ -328,40 +464,26 @@ it slopes the wrong way.
 
 \section{Another exponential-affine model}
 
-You might think otherwise, but the CIR model makes some progress in generating
-predictable changes in forward rates.
-It's just that the variation goes the wrong way.  
-What can we do?
-If we look at the model, perhaps with an unreasonable amount
-of insight,
-we might notice that there are two things
-that generate predictability in forward rate changes:
-variation in risk (the term that includes $\sigma$)
-and variation in the price of risk (the term that includes $\lambda$).
-We had both in the CIR model.
-The next model focuses on the latter, 
-our third and last example of an exponential-affine model.  
 
-
+We'll take one last shot at predictability.
 The model is
 \begin{eqnarray*}
-    \log m_{t+1} &=& - (\lambda_0 + \lambda_1 z_t)^2/2 + \delta - z_t
+    \log m_{t+1} &=& - (\lambda_0 + \lambda_1 x_t)^2/2 + \delta - x_t
             + (\lambda_0 + \lambda_1 x_t) w_{t+1} \\
-            z_{t+1} &=& \varphi z_t + \sigma w_{t+1} .
+            x_{t+1} &=& \varphi x_t + \sigma w_{t+1} .
 \end{eqnarray*}
 This structure is cleverly rigged to deliver loglinear bond prices.
 If $\lambda_1 = 0$, we're back to Vasicek.
-Otherwise the price of risk depends on the state $z_t$. 
 
 We solve it the usual way.
-We guess  $ \log q^n_t = A_n + B_n z_t$ and substitute into the
+We guess  $ \log q^n_t = A_n + B_n x_t$ and substitute into the
 pricing relation.
 The conditional mean and variance are
 \begin{eqnarray*}
    E_t \left( \log m_{t+1} + \log q^{n}_{t+1} \right) &=&
-            - (\lambda_0 + \lambda_1 z_t)^2/2 + \delta + (\varphi B_n -1) z_t  \\
+            - (\lambda_0 + \lambda_1 x_t)^2/2 + \delta + (\varphi B_n -1) x_t  \\
    \mbox{Var}_t \left( \log m_{t+1} + \log q^{n+1}_t \right) &=&
-            \left[B_n \sigma + (\lambda_0 + \lambda_1 z_t)\right]^2  .
+            \left[B_n \sigma + (\lambda_0 + \lambda_1 x_t)\right]^2  .
 \end{eqnarray*}
 The ``mean plus variance over two'' formula gives us, eventually,
 the recursions
@@ -407,105 +529,33 @@ something we might comment on in class.
 
 \section*{Bottom line}
 
-We now know that risk premiums differ across asset classes
-and time.
-The evidence for this is clear, the reasons for it less so.
-If you trust the evidence, you can start your own hedge fund.
-Or you can write a research paper trying to explain it.
-Either way, good luck!
+We now know that risk premiums differ across asset classes 
+and time.  
 
 
 \section*{Practice problems}
 
 
 \begin{enumerate}
-%-----------------------------------------------------------------------
-\item  {\it Expected returns on bonds.\/}
-Consider the bond pricing model
-\begin{eqnarray*}
-    \log m_{t+1} &=& - (\lambda_0 + \lambda_1 w_t)^2/2 + \delta - x_t
-            + (\lambda_0 + \lambda_1 w_t) w_{t+1} \\
-            x_{t} &=& \delta + \sigma (w_t + \theta w_{t-1}) ,
-\end{eqnarray*}
-where the $w_t$'s are independent standard normal random variables.
-%
-\begin{enumerate}
-\item Suppose bond prices take the form
-\begin{eqnarray*}
-    \log q^n_t &=& A_n + B_n w_t + C_n w_{t-1} .
-\end{eqnarray*}
-How is $(A_{n+1},B_{n+1},C_{n+1})$ connected to $(A_{n},B_{n},C_{n})$?
-What are the values of $(A_{n},B_{n},C_{n})$ for $n=0,1,2$?
-\item Express the expected log excess return on a two-period bond as a function
-of the coefficients $(A_{n},B_{n},C_{n})$ for $n=1,2$.
-Use your solution for the coefficients to describe how expected log excess returns vary with the
-interest rate innovation $w_t$.
-\end{enumerate}
-%
-\needspace{2\baselineskip}
-Answer.
-\begin{enumerate}
-\item We use the usual formula,
-$ q^{n+1}_t = E_t (m_{t+1} q^n_{t+1})$.
-Then with substitutions,
-\begin{eqnarray*}
-    \log (m_{t+1} q^n_{t+1}) &=& A_n - \delta + (C_n-\sigma) w_t - \sigma\theta w_{t-1}
-            - (\lambda_0 + \lambda_1 w_t)^2/2 \\
-            && + \; [B_n + (\lambda_0 + \lambda_1 w_t)] w_{t+1} .
-\end{eqnarray*}
-The first line on the rhs gives us the conditional mean, the second line gives us the variance.
-Some intensive algebra gives us
-\begin{eqnarray*}
-    A_{n+1} &=& A_n - \delta + B_n^2/2 + B_n \lambda_0 \\
-    B_{n+1} &=& C_n - \sigma + B_n \lambda_1 \\
-    C_{n+1} &=& - \sigma \theta .
-\end{eqnarray*}
-That gives us
-\begin{center}
-\begin{tabular}{cccc}
-$n$ & $A_n$ & $B_n$ & $C_n$ \\
-\midrule
-0 & 0 & 0 & 0 \\
-1 & $-\delta$ & $-\sigma$ & $-\sigma \theta$ \\
-2 & $- 2\delta -\lambda_0 \sigma + \sigma^2/2$ & $- \sigma (1+\theta+\lambda_1)$ & $-\sigma\theta$
-\end{tabular}
-\end{center}
-
-\item The log excess return is
-\begin{eqnarray*}
-    \log r^2_{t+1} - \log r^1_{t+1} &=& \log q^1_{t+1} - \log q^2_t + \log q^1_t \\
-            &=& (2 A_1 - A_2) + (C_1 + B_1 - B_2) w_t + (C_1 - C_2) w_{t-1} \\
-            &&        + \; B_1 w_{t+1} .
-\end{eqnarray*}
-The expected excess return knocks out the last term.
-
-If we substitute our solutions, we have
-\begin{eqnarray*}
-   E_t \left( \log r^2_{t+1} - \log r^1_{t+1}\right)
-            &=& (\sigma \lambda_0 + \sigma^2/2)  + (\sigma\lambda_1) w_t  .
-\end{eqnarray*}
-So the key parameter is $\lambda_1$:  the sensitivity of the ``price of risk''
-to $w_t$.
-\end{enumerate}
 
 %-----------------------------------------------------------------------
 \item  {\it Stochastic volatility and equity pricing.\/}
 The Cox-Ingersoll-Ross model of bond pricing consists of the equations
 \begin{eqnarray*}
-    \log m_{t+1} &=& -(1+\lambda^2/2) z_{t} + \lambda z_t^{1/2} w_{t+1} \\
-        z_{t+1}  &=& (1-\varphi)\delta + \varphi z_t + \sigma z_t^{1/2} w_{t+1} ,
+    \log m_{t+1} &=& -(1+\lambda^2/2) x_{t} + \lambda x_t^{1/2} w_{t+1} \\
+        x_{t+1}  &=& (1-\varphi)\delta + \varphi x_t + \sigma x_t^{1/2} w_{t+1} ,
 \end{eqnarray*}
 with the usual independent standard normal disturbances $w_t$.
 We add to it an equation governing the dividend $d_t$ paid by a one-period
 equity-like claim:
 \begin{eqnarray*}
-    \log d_{t+1} &=& \alpha + \beta z_t + \gamma z_t^{1/2} w_{t+1} .
+    \log d_{t+1} &=& \alpha + \beta x_t + \gamma x_t^{1/2} w_{t+1} .
 \end{eqnarray*}
-Here $z_t$ plays the role of the state:  if we know $z_t$, we know the conditional
-distributions of $ (m_{t+1}, z_{t+1}, d_{t+1})$.
+Here $x_t$ plays the role of the state:  if we know $x_t$, we know the conditional
+distributions of $ (m_{t+1}, x_{t+1}, d_{t+1})$.
 
 \begin{enumerate}
-\item  Conditional on $z_t$,
+\item  Conditional on $x_t$,
 what are the mean and variance of $\log m_{t+1}$?
 What is its distribution?
 \item  What is the price $q^1_t$ of a one-period bond?
@@ -513,42 +563,42 @@ What is its return $ r^1_{t+1} = 1/q^1_t$?
 \item  What is the price $q^e_t$ of equity, a claim to the dividend
 $d_{t+1}$?
 What is its return $r^e_{t+1}$?
-\item  Conditional on $z_t$, what is the expected log excess return on equity,
+\item  Conditional on $x_t$, what is the expected log excess return on equity,
 $E_t (\log r^e_{t+1} - \log r^1_{t+1})$?
 \end{enumerate}
 %
 \needspace{2\baselineskip}
 Answer.
 \begin{enumerate}
-\item  Conditional on $z_t$, $\log m_{t+1}$ is normal with mean and variance
+\item  Conditional on $x_t$, $\log m_{t+1}$ is normal with mean and variance
 \begin{eqnarray*}
-    E_t (\log m_{t+1}) &=& -(1+\lambda^2/2) z_{t} \\
-    \mbox{Var}_t (\log m_{t+1}) &=& \lambda^2 z_t .
+    E_t (\log m_{t+1}) &=& -(1+\lambda^2/2) x_{t} \\
+    \mbox{Var}_t (\log m_{t+1}) &=& \lambda^2 x_t .
 \end{eqnarray*}
 
 \item  The price uses the ``mean plus variance over two'' formula:
 \begin{eqnarray*}
-    \log q^1_t  &=& - z_{t} .
+    \log q^1_t  &=& - x_{t} .
 \end{eqnarray*}
-The log return is $\log r^1_{t+1} = z_t$.
+The log return is $\log r^1_{t+1} = x_t$.
 
 \item  The price of equity is
 \begin{eqnarray*}
     \log q^e_t &=& \log E_t (m_{t+1} d_{t+1} ) \\
-            &=& \alpha + [\beta - (1+\lambda^2/2)] z_t
-                + [(\gamma+\lambda)^2/2 ]  z_t \\
-            &=& \alpha + (\beta - 1 + \gamma^2/2 + \gamma\lambda) z_t .
+            &=& \alpha + [\beta - (1+\lambda^2/2)] x_t
+                + [(\gamma+\lambda)^2/2 ]  x_t \\
+            &=& \alpha + (\beta - 1 + \gamma^2/2 + \gamma\lambda) x_t .
 \end{eqnarray*}
 The return is
 \begin{eqnarray*}
     \log r^e_{t+1} &=& \log d_{t+1} - \log q^e_t
-            \;\;=\;\; (1 - \gamma^2/2 - \gamma\lambda) z_t
-                + \gamma z_t^{1/2} w_{t+1} .
+            \;\;=\;\; (1 - \gamma^2/2 - \gamma\lambda) x_t
+                + \gamma x_t^{1/2} w_{t+1} .
 \end{eqnarray*}
-\item  Conditional on $z_t$, the expected excess return is
+\item  Conditional on $x_t$, the expected excess return is
 \begin{eqnarray*}
     E_t (\log r^e_{t+1} - \log r^1_{t+1} )
-            &=& - (\gamma^2/2 + \gamma\lambda) z_t .
+            &=& - (\gamma^2/2 + \gamma\lambda) x_t .
 \end{eqnarray*}
 \end{enumerate}
 
@@ -566,18 +616,18 @@ and less when they're low.
 
 Here's the model.  The pricing kernel is
 \begin{eqnarray*}
-    \log m_{t+1} &=& - (\lambda_0 + \lambda_1 z_t)^2/2 - z_t
-                + (\lambda_0 + \lambda_1 z_t) w_{t+1} \\
-        z_{t+1} &=& (1-\varphi) \delta + \varphi z_t + \sigma w_{t+1} ,
+    \log m_{t+1} &=& - (\lambda_0 + \lambda_1 x_t)^2/2 - x_t
+                + (\lambda_0 + \lambda_1 x_t) w_{t+1} \\
+        x_{t+1} &=& (1-\varphi) \delta + \varphi x_t + \sigma w_{t+1} ,
 \end{eqnarray*}
 where $\{ w_t \}$ is (as usual) a sequence of independent standard normal random variables.
 This model differs from Vasicek in having a price of risk $\lambda$ that
-depends on the state $z_t$.
+depends on the state $x_t$.
 The dependence is carefully designed to deliver loglinear (``exponential-affine'')
 bond prices.
 %
 \begin{enumerate}
-\item  What is the (stationary) mean of $z_t$?  The variance?
+\item  What is the (stationary) mean of $x_t$?  The variance?
 \item  What is the price $q^1_t$ of a one-period bond?
 What is its (gross) return $r^1_{t+1}$?
 \item  What is the mean log return $E (\log r^1_{t+1})$?
@@ -588,7 +638,7 @@ What parameter(s) govern its value in the model?
 \end{eqnarray*}
 What is its price $q^e_t$?
 Its (gross) return $r^e_{t+1}$?
-\item  What is the expected excess log return $ E_t (\log r^e_{t+1} - \log r^1_{t+1})$ in state $z_t$?
+\item  What is the expected excess log return $ E_t (\log r^e_{t+1} - \log r^1_{t+1})$ in state $x_t$?
 In what states is it high?  In what states low?
 \item  Which equation is responsible for the predictability of the expected return?
 \end{enumerate}
@@ -598,32 +648,36 @@ Answer.
 The point is that we can generate predictable excess
 returns for equity just as we did for bonds.
 \begin{enumerate}
-\item  $z_t$ is an AR(1).
+\item  $x_t$ is an AR(1).
 The mean is $\delta$ and the variance is $\sigma^2/(1-\varphi^2)$.
 \item   The model is set up to deliver
 \begin{eqnarray*}
-    \log q^1_t &=& \log E_t (m_{t+1}) \;\;=\;\; - z_t \\
-    \log r^1_{t+1} &=& - \log q^1_t \;\;=\;\; z_t .
+    \log q^1_t &=& \log E_t (m_{t+1}) \;\;=\;\; - x_t \\
+    \log r^1_{t+1} &=& - \log q^1_t \;\;=\;\; x_t .
 \end{eqnarray*}
-\item  The mean log return is the mean of $z_t$, namely $\delta$.
+\item  The mean log return is the mean of $x_t$, namely $\delta$.
 \item  The price is
 \begin{eqnarray*}
     \log q^e_t &=& \log E_t (m_{t+1} d_{t+1})
-            \;\;=\;\; \alpha - z_t + \beta^2/2 + \beta ( \lambda_0+ \lambda_1 z_t) .
+            \;\;=\;\; \alpha - x_t + \beta^2/2 + \beta ( \lambda_0+ \lambda_1 x_t) .
 \end{eqnarray*}
 The return is
 \begin{eqnarray*}
     \log r^e_{t+1} &=& \log d_{t+1} - \log q^e_t
-            \;\;=\;\;  z_t - \beta^2/2  -
-                \beta (\lambda_0 + \lambda_1 z_t) + \beta w_{t+1}.
+            \;\;=\;\;  x_t - \beta^2/2  -
+                \beta (\lambda_0 + \lambda_1 x_t) + \beta w_{t+1}.
 \end{eqnarray*}
 \item  The expected excess return is
 \begin{eqnarray*}
    E_t ( \log r^e_{t+1}- \log r^1_{t+1}) &=&
-             - \beta^2/2  -  \beta (\lambda_0 + \lambda_1 z_t)
+             - \beta^2/2  -  \beta (\lambda_0 + \lambda_1 x_t)
 \end{eqnarray*}
-The second term is predictable through $z_t$.
+The second term is predictable through $x_t$.
 \end{enumerate}
+
+\item {\it Bond pricing with nonnormal innovations.\/}
+????
+
 
 \end{enumerate}
 
