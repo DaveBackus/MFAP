@@ -1,0 +1,251 @@
+\documentclass[11pt]{exam}
+
+\input{../../LaTeX/preamble.tex}
+
+%\printanswers
+
+% document starts here
+\begin{document}
+\parskip=\bigskipamount
+\parindent=0.0in
+\thispagestyle{empty}
+\input{../../LaTeX/header.tex}
+
+\bigskip\bigskip
+\centerline{\Large \bf Lab Report \#2: Sums, Mixtures, \& Certainty Equivalents}
+\centerline{Revised: \today}
+
+\bigskip
+{\it Due at the start of class.
+You may speak to others, but whatever you hand in should be your own work.
+Use Matlab where possible and attach your code to your answer.}
+
+\begin{questions}
+
+\begin{solution}
+Brief answers follow,
+but see also the attached Matlab program;
+download the pdf, open, click on pushpin:
+%\attachfile{../Matlab/hw/hw2_f13.m}
+\end{solution}
+
+
+%-----------------------------------------------------------------------
+\question {\it Properties of US equity returns.\/}
+Gene Fama is one of the giants of modern finance. 
+His coauthor over the past twenty years or so has been Ken French.  
+In this problem, we'll compute sample properties of US equity returns using
+one of the so-called Fama-French datasets, which French kindly posts on his website.
+Go to French's website and download the files labelled ``Fama/French factors''
+at
+\href{http://mba.tuck.dartmouth.edu/pages/faculty/ken.french/ftp/F-F_Research_Data_Factors.zip}
+{this link}.
+Then follow these instructions:
+\begin{itemize}
+\item Read the enclosed txt file into a spreadsheet program.
+\item Strip off the header (the three lines at the top).
+\item Label the columns {\tt date xs smb hml rf}.
+\item Delete the annual data at the bottom.
+\item Save in a convenient format (xls?).
+\end{itemize}
+When you're done, read the whole thing into Matlab using {\tt xlsread}
+or other command appropriate to the format of your file.
+%(If you type {\tt help xlsread} you'll get a list of related commands at the bottom.)
+You now have  monthly data going back to 1926 on various equity portfolios, expressed as percentages.
+They haven't been annualized: a monthly return of 1.0 in the data
+corresponds to roughly 12\% annually.
+We'll focus on {\tt xs}, the excess return on a broad-based equity portfolio.
+Excess return means, in this context, the return minus that on the riskfree bond, {\tt rf}.
+Also there but not needed for now:  {\tt smb} is the return on small firms minus big firms
+and {\tt hml} is the return on firms with high book-to-market minus
+those with low book-to-market.
+%
+\begin{parts}
+\item Use the command {\tt hist} to plot a histogram for {\tt xs}.
+\item Compute the mean, standard deviation, skewness, and excess kurtosis
+for the excess return series.
+\item Does the mean look high or low to you?
+\item  In what respects do these excess returns look normal?  In what respects not?
+\end{parts}
+
+
+%-----------------------------------------------------------------------
+\question {\it Sums and mixtures.\/}
+More fun with cumulant generating functions (cgfs).
+The ingredients include two independent normal random variables:
+$ x_1 \sim \mathcal{N}(0,1)$ and $ x_2 \sim \mathcal{N}(\theta,1)$.
+Do the calculations in Matlab and submit your code with your answer.
+%
+\begin{parts}
+\part Consider the random variable $y = x_1 + x_2$.
+What is its cgf?  Its first four cumulants?
+What are its measures of skewness and excess kurtosis, $\gamma_1$ and $\gamma_2$?
+
+\part Now consider the mixture $z$:
+\begin{eqnarray*}
+    z &=& \left\{
+            \begin{array}{ll}
+            x_1   & \mbox{with probability } 1-\omega \\
+            x_2 & \mbox{with probability } \omega .
+            \end{array}
+            \right.
+\end{eqnarray*}
+What is its cgf?
+What are its first four cumulants?
+\item {\it Mixture, continued.\/}
+What are $z$'s skewness and kurtosis, $\gamma_1$ and $\gamma_2$?
+What determines the sign of $\gamma_1$? 
+\item In what ways does $z$ differ from a standard normal random variable?
+\end{parts}
+
+\begin{solution}
+\begin{parts}
+\item The cgf of the sum is the sum of the cgf's:
+\begin{eqnarray*}
+     k_y(s) &=& k_1(s) + k_2(s)
+        \;\;=\;\; s (0 + 0) + s^2 (1 + \delta)/2 .
+\end{eqnarray*}
+The form of the cgf should be familiar, we derived it in class.
+See the notes if you have questions.
+
+The cumulants follow from differentiating:
+$\kappa_1 = 0 $ (the mean),
+$\kappa_2 = 1 + \delta $ (the variance),
+$\kappa_3 = 0$,
+and $\kappa_4 = 0$.
+The last two are zero, because the cgf is quadratic in $s$,
+so all the derivatives after the second one are zero.
+Therefore $\gamma_1 = \gamma_2 = 0$ as well.
+
+\item Mixtures are a little different.
+The mgf is the weighted average of the mgf's of the components:
+\begin{eqnarray*}
+    h_y(s) &=& (1-\omega)h_1(s)  + \omega h_2(s)
+        \;\;=\;\; (1-\omega)e^{s^2/2} + \omega e^{s^2 \delta/2} .
+\end{eqnarray*}
+The cgf is the log of this.
+The first four cumulants are
+$\kappa_1 = 0 $ (the mean),
+$\kappa_2 = 1-\omega  + \omega \delta $ (the variance),
+$\kappa_3 = 0$,
+and $\kappa_4 = 3 (1-\omega) \omega (\delta-1)^2$.
+So now we're getting excess kurtosis.
+
+\item Skewness $\gamma_1 = 0$ but $\gamma_2 = \kappa_4/(\kappa_2)^2$
+(it doesn't simplify much further).
+If we set $\omega = 0.05$ and $\delta = 4.05$, we set $\gamma_2 = 0.9980$,
+which is pretty close to our target.
+\end{parts}
+\end{solution}
+
+
+%-----------------------------------------------------------------------
+\question {\it Concave and convex functions.\/}
+Consider the following functions:  
+%
+\begin{parts}
+\item $f(x) = \log x$
+\item $f(x) = \exp(x) $
+\item $f(x) = x^{\alpha}$ for $\alpha = 2$
+\item $f(x) = - x^{\alpha}$ for $\alpha = 2$
+\item $f(x) = x^{\alpha} $ for $\alpha = 1$
+\end{parts}
+For each one:  
+\begin{itemize}
+\item State whether it's concave, convex, or something else. 
+\item State whether $ E[f(x)]$ is greater or less than $f[E(x)]$.  
+\item Verify your previous answer by computing 
+ $ E[f(x)]$ and $f[E(x)]$ 
+ for the Bernoulli random variable
+\begin{eqnarray*}
+    x &=& \left\{
+            \begin{array}{ll}
+            100   & \mbox{with probability } 1/2 \\
+            200 & \mbox{with probability }   1/2 .
+            \end{array}
+            \right.
+\end{eqnarray*}
+\end{itemize}
+
+
+\begin{solution}
+\begin{parts}
+\item The mgf has two parts, one corresponding to $x=0$, the
+other to $x=1$:
+\begin{eqnarray*}
+    h(s) &=& (1-\omega) e^{\beta s} + \omega e^{(\beta + \delta)s} .
+\end{eqnarray*}
+The cgf is its log:  $k(s) = \log h(s)$.
+\item The first four cumulants are
+\begin{eqnarray*}
+    \kappa_1 &=& \beta + \omega \delta \\
+    \kappa_2 &=& \omega (1-\omega) \delta^2 \\
+    \kappa_3 &=& \omega (1-\omega) (1-2\omega) \delta^3 \\
+    \kappa_4 &=& \omega (1-\omega) [1-6 \omega (1-\omega)] .
+\end{eqnarray*}
+Skewness and kurtosis are
+$ \gamma_1 = \kappa_3/(\kappa_2)^{3/2}$ and
+$ \gamma_2 = \kappa_4/(\kappa_2)^{2}$, but do not simplify much further.
+
+\item The idea is to vary $\omega$ but adjust $(\beta,\delta)$ to keep the mean
+and variance fixed.
+Here we set $\omega = 0.25$.
+To get the right mean and standard deviation, we set
+\begin{eqnarray*}
+    \delta &=& 2.5/[\omega (1-\omega)]^{1/2} \;\;=\;\; 0.5774 \\
+    \beta  &=& 100 - \beta \delta \;\;=\;\; 0.8557 .
+\end{eqnarray*}
+
+\item Now consumption and utility.  Mean consumption is
+$h(1) = (1-\omega) e^\beta + \omega e^{\beta + \delta} = 2.8125 $.
+Expected utility is (this is a trick, see the notes for why it works)
+$ h(1-\alpha)/(1-\alpha) = 0.0253/(1-\alpha)$.
+The certainty equivalent is the constant consumption that gives the same
+utility:
+\begin{eqnarray*}
+    \mu^{1-\alpha} &=& 0.0253 \;\;\;\Rightarrow\;\;\; \mu \;\;=\;\; 2.5079.
+\end{eqnarray*}
+
+Ok, where does that leave us?
+Mean consumption is 2.81.
+The certainty equivalent is 2.51, so there's a penalty for risk:
+we'd take 0.30 less, on average, to eliminate the risk.
+The risk penalty is $ \mbox{\it rp\/} = \log (\bar{c}/\mu) = 0.1146$ ---
+and 11\% penalty for risk.
+
+\item Since $\omega < 1/2$, skewness is positive above.
+(See the expression for $\kappa_3$.)
+Suppose we reversed it, making $ \omega = 0.75 > 1/2$ and introducing
+negative skewness.
+What happens?
+We might guess that the risk penalty rises, because power utility agents
+don't like negative skewness.
+If you go through the calculations (preferably in Matlab),
+you find that the risk penalty becomes 0.1798, so it goes up quite a bit.
+
+\end{parts}
+\end{solution}
+
+%-----------------------------------------------------------------------
+\question {\it Certainty equivalents for quadratic utility.\/}
+There's a long lost history of risk preference with quadratic utility: 
+\begin{eqnarray*}
+    u(c) &=& c - c^2 .
+\end{eqnarray*} 
+Suppose $c$ is random with mean $\mu$ and variance $\sigma^2$. 
+%
+\begin{parts}
+\item What is expected utility?  
+How does it depend on the distribution of consumption outcomes?
+\item What is the certainty equivalent?  
+\item How does the certainty equivalent compare to expected consumption?  
+\end{parts}
+
+
+\end{questions}
+
+\vfill \centerline{\it \copyright \ \number\year \
+NYU Stern School of Business}
+
+\end{document}
+

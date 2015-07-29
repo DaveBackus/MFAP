@@ -22,7 +22,7 @@ Here we do two things related to what I'd call the predictability of
 excess returns.  First, we describe the evidence in somewhat greater detail,
 including evidence that expected excess returns vary through time and across assets.
 Second, we return to ``exponential-affine models'' in which we can think
-about similar properties of asset pricing models.
+about similar properties of theoretical asset pricing models.
 The two subjects are to some extent separate,
 but models give us a useful perspective on the evidence.
 This is an active topic of current research in which
@@ -37,7 +37,7 @@ your preferences, and your circumstances (income, expenses, retirement plans, an
 It's not a simple problem, as we've seen, even in much simpler settings.
 We can, however, make some progress on the properties of returns
 on special collections of assets, which we'll refer to as portfolios.
-Not your whole portfolio, but potentially a component of it.
+Not your whole portfolio, but potentially components of it.
 
 We've accumulated lots of evidence on the risk and average returns
 on a large number of such portfolios, which we organize here by asset class.
@@ -89,14 +89,17 @@ In particular, excess returns are higher when the yield curve is steeper,
 which is generally when short-term interest rates are low.
 More on this shortly.
 
-All of these features of excess returns have been widely documented.
+These facts are reasonably robust, but they're not bullet-proof.  
+Momentum, for example, went the other way during the crisis.  
+Ditto the carry trade.  
+Despite this, they're a good place to start in thinking
+about the dynamics of asset returns.  
 
 
 \section{Predicting bond returns}
 
-
-We're interested in bond returns, but we'll see that
-they're closely related to changes in forward rates.
+We're interested in bond returns, but focus on 
+closely related changes in forward rates.
 Recall that bond prices are connected to forward rates by
 \begin{eqnarray*}
     \log q^{n+1}_t &=& -(f^0_t + f^1_t + \cdots + f^{n}_t) .
@@ -108,7 +111,7 @@ The log excess return on an $(n+1)$-period bond is therefore
          &=& (f^0_{t+1} - f^1_t) + \cdots + (f^{n-1}_{t+1} - f^n_t)
          \;\;=\;\; \sum_{j=1}^n (f^{j-1}_{t+1} - f^j_t) .
 \end{eqnarray*}
-(Don't panic; this is tedious, but follows from the definitions of returns and forward rates.)
+[This is tedious, but follows from the definitions of returns and forward rates.]
 In short, if we account for changes in forward rates then we account for bond returns ---
 and vice versa.
 
@@ -123,7 +126,7 @@ and vice versa.
 So how should we think about forward rates?
 As always, it's helpful to have a benchmark.
 Our benchmark is the {\it expectations hypothesis\/} (EH):
-changes in forward rates, suitably defined, are unpredictable.
+that changes in forward rates, suitably defined, are unpredictable.
 More formally, the forward rates
 $(f^n_t, f^{n-1}_{t+1}, ... , f^0_{t+n})$
 form a martingale sequence:
@@ -144,13 +147,14 @@ We can get a sense of its weaknesses by running the regression
     f^{n-1}_{t+1} &=& a_n + b_n f^n_t .
 \end{eqnarray*}
 If the EH is true, we should find that $b_n = 1$.
-We should also find $a_n=0$, but allowing it to be nonzero
+(We should also find $a_n=0$, but allowing it to be nonzero
 takes care of any constant term premiums.
-[Can you see why?]
+Can you see why?) 
 For technical reasons, we typically run the alternative
-\begin{eqnarray*}
+\begin{eqnarray}
     f^{n-1}_{t+1} - f^0_t &=& a_n + b_n (f^n_t - f^0_t) .
-\end{eqnarray*}
+    \label{eq:forward-regressions}
+\end{eqnarray}
 If the EH is true, we should again find that $b_n = 1$.
 
 The evidence suggests otherwise.
@@ -165,12 +169,10 @@ If we raise the forward rate $f^1_t$ (relative to $f^0_t$),
 making the forward rate curve steeper,
 we see that the future short rate $f^0_{t+1}$ goes up by 0.5,
 not the 1.0 implied by the EH.
-
-
-% ??
-You might also show how this works with excess returns.  Define returns
-in terms of forwards and see what they imply.
-
+Thus a steeper yield curve implies higher returns on long bonds, because the
+increase in the short rate --- and the ensuing capital loss on a two-period bond ---
+is smaller than the EH predicts.  
+% ?? more 
 
 
 \begin{comment}
@@ -227,21 +229,27 @@ curve.
 
 \section{Predictability in the Vasicek and CIR models}
 
-??? List models and recursions...
+If the evidence is summarized by (\ref{eq:forward-regressions}), 
+what do our models suggest?  
+We'll review the performance of the Vasicek and Cox-Ingersoll-Ross models
+along this dimension.  
+In both models, bond prices are loglinear functions of the state:
+$ \log q^n_t = A_n + B_n z_t$.  
 
-We're interested in the equation
+{\it Vasicek model.\/}
+Consider the model 
 \begin{eqnarray*}
-    f^{0}_{t+1} - f^0_t &=& a_1 + b_1 (f^1_t - f^0_t) .
+    \log m_{t+1} &=& - \lambda^2/2 - z_t + \lambda w_{t+1} \\
+         z_{t+1} &=& (1-\varphi) \delta + \varphi z_t + \sigma w_{t+1} .
 \end{eqnarray*}
-With data, we get $b_1 \approx 1/2$.  What do we get in models?
-The idea is that both the lhs variable $f^{0}_{t+1} - f^0_t$
-and the rhs variable $f^1_t - f^0_t$ can be expressed in terms
-of a state variable $z_t$, which allows us to deduce what the regression
-coefficient $b_1$ is.
-
-{\it Vasicek.\/}
-Recall that we had $B_1 = -1$ and $B_2 = -(1+\varphi)$.
-The first two forward rates are
+The no-arbitrage theorem implies the recursions 
+\begin{eqnarray*}
+    A_{n+1} &=& A_n + B_n (1-\varphi) \delta - \lambda^2/2 + (\lambda + B_n \sigma)^2/2 \\
+    B_{n+1} &=& B_n \varphi - 1 .
+\end{eqnarray*}
+The second equation implies 
+$B_1 = -1$ and $B_2 = -(1+\varphi)$.
+The first two forward rates are therefore 
 \begin{eqnarray*}
     f^0_t &=& \mbox{constants} + z_t \\
     f^1_t &=& \mbox{constants} + (B_1-B_2) z_t
@@ -256,7 +264,7 @@ The lhs is
 Since $w_{t+1}$ is independent of the rhs (in fact of anything dated $t$ or before),
 we're effectively regressing $(\varphi-1) z_t$
 on itself.
-The coefficient is therefore $b_1 = 1$.
+The coefficient is therefore $b_1 = 1$, not the $b_1 \approx 0.5$ that we see in the data.
 
 This model, in short, fails to account for the evidence against the expectations
 hypothesis.
@@ -265,11 +273,26 @@ there's no variation in either risk or the price of risk,
 so premiums are constant.
 We need something else.
 
+[Exercise.  
+What is the log excess return on an $n$-period bond in this model?
+Show that it doesn't depend on $z_t$.] 
 
-{\it CIR.\/}
+{\it CIR model.\/}
 This model has variation in risk at its core,
 so we have a chance of doing better.
-Note that $B_1 = -1$ and $B_2 = -(1+\varphi) + \sigma(\lambda + \sigma/2)$.
+The model, you may recall, 
+is 
+\begin{eqnarray*}
+    \log m_{t+1} &=& - (1+\lambda^2/2 ) z_t + \lambda z_t^{1/2} w_{t+1} \nonumber \\
+         z_{t+1} &=& (1-\varphi) \delta + \varphi z_t + \sigma z_t^{1/2} w_{t+1} .
+         \label{eq:square-root}
+\end{eqnarray*}
+It leads to the recursions 
+\begin{eqnarray*}
+    A_{n+1} &=& A_n + B_n (1-\varphi) \delta \\
+    B_{n+1} &=& \varphi B_n -(1+\lambda^2/2) + (\lambda + B_n \sigma)^2/2 .
+\end{eqnarray*}
+From this, we see that $B_1 = -1$ and $B_2 = -(1+\varphi) + \sigma(\lambda + \sigma/2)$.
 That implies
 \begin{eqnarray*}
     f^0_t &=& z_t \\
@@ -289,7 +312,7 @@ The regression coefficient is therefore
     b_1 &=& \frac{\varphi-1}{\varphi-1-\sigma(\lambda+\sigma/2)} .
 \end{eqnarray*}
 This can deliver lots of values of $b_1$, including our preferred value $b_1 = 1/2$.
-But with the parameter value we chose earlier, we get $b_1 = 1.384$.
+But with the parameter values we chose earlier, we get $b_1 = 1.384$.
 So we've deviated from the EH, but in the wrong direction.
 
 The issue is $\lambda$.  We can choose $\lambda$ to get $b_1 = 1/2$:
@@ -305,8 +328,21 @@ it slopes the wrong way.
 
 \section{Another exponential-affine model}
 
+You might think otherwise, but the CIR model makes some progress in generating
+predictable changes in forward rates.
+It's just that the variation goes the wrong way.  
+What can we do?
+If we look at the model, perhaps with an unreasonable amount
+of insight,
+we might notice that there are two things
+that generate predictability in forward rate changes:
+variation in risk (the term that includes $\sigma$)
+and variation in the price of risk (the term that includes $\lambda$).
+We had both in the CIR model.
+The next model focuses on the latter, 
+our third and last example of an exponential-affine model.  
 
-We'll take one last shot at predictability.
+
 The model is
 \begin{eqnarray*}
     \log m_{t+1} &=& - (\lambda_0 + \lambda_1 z_t)^2/2 + \delta - z_t
@@ -315,6 +351,7 @@ The model is
 \end{eqnarray*}
 This structure is cleverly rigged to deliver loglinear bond prices.
 If $\lambda_1 = 0$, we're back to Vasicek.
+Otherwise the price of risk depends on the state $z_t$. 
 
 We solve it the usual way.
 We guess  $ \log q^n_t = A_n + B_n z_t$ and substitute into the

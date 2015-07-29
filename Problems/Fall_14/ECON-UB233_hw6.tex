@@ -1,0 +1,392 @@
+\documentclass[11pt]{exam}
+
+\input{../../LaTeX/preamble.tex}
+
+\printanswers
+
+% document starts here
+\begin{document}
+\parskip=\bigskipamount
+\parindent=0.0in
+\thispagestyle{empty}
+{\large ECON-UB 233 \hfill Dave Backus @ NYU}
+
+\bigskip\bigskip
+\centerline{\Large \bf Lab Report \#6: Options \& Volatility}
+\centerline{Revised: \today}
+
+\bigskip
+{\it Due at the start of class.
+You may speak to others, but whatever you hand in should be your own work.
+Please include your Matlab code.
+}
+
+\begin{solution}
+Brief answers follow,
+but see also the attached Matlab program;
+download the pdf, open, click on pushpin:
+\attachfile{hw6_f14.m}
+\end{solution}
+
+
+\begin{questions}
+%-----------------------------------------------------------------------
+\question {\it Root-finding.\/}
+% http://www.math.colostate.edu/~gerhard/classes/331/lab/newton.html
+Consider the function $f(x) = \sin(x) + x \cos(x) $.
+Our mission is to find values of $x$ in the interval $[0.5, 2.5]$ for which $f(x) = 0$.
+%
+\begin{parts}
+\item Plot $f$ against  a grid of points $x$ between 0.5 and 2.5.
+How many solutions do you see?
+\item Write or adapt a bisection or Newton's method program to find a solution.
+What is it?
+\item Change the function to $f(x) = sin(x) + x \cos(x) - c$.
+Modify your program to find solutions in the same interval
+for $ c = \{ 1/2, 0, -1/2 \} $.
+What are they?
+Can you get your program to find them all at once?
+\end{parts}
+{\it Comment: See the
+Matlab guide to
+\href{http://www.mathworks.com/help/matlab/matlab_prog/anonymous-functions.html}{anonymous functions}
+or the
+\href{http://pages.stern.nyu.edu/~dbackus/233/root_finding_pjb.m}{root-finding code}
+posted on the course outline for examples.
+}
+
+\begin{solution}
+\begin{parts}
+\item The function is monotonic in this interval
+and crosses the axis once.
+\item The solution is 2.0288.
+\item For the vector of values for $c$,
+the solutions are $( 1.8289, 2.0288, 2.2047)$.
+\end{parts}
+\end{solution}
+
+%-----------------------------------------------------------------------
+\question {\it Black-Scholes-Merton formula.\/}
+Our mission here is to examine the role in the BSM formula of the
+mysterious volatility parameter  $\sigma$.
+The calculations refer to call options on the S\&P 500 exchange-traded fund,
+ticker symbol {\tt SPY}.
+On October 27, 20014 (today), the price of the underlying is $ s_t = 197.07$.
+We'll consider prices of call options with maturities of
+5 months or $ \tau = 5/12 $ years.
+On the same date, the price of a bond of similar maturity was
+$ q_t^\tau = 1.0000$ (yes, the interest rate is essentially zero).
+\begin{parts}
+\item  Consider a call option with strike price $k = 197$
+(``at the money'').
+If volatility $\sigma = 0.10$,
+what is the price of the option?  If $\sigma = 0.20$?
+\item Plot the call option price against volatility for  $\sigma$ between 0.01 and 0.30.
+\item On the same graph, do the same for options with strikes of
+180 and 220.
+\item Consider call prices of
+19.68 ($k=180$),
+7.28 ($k=197$),
+and 0.32 ($k=220$).
+Use your graph to estimate the values of $\sigma$ that deliver these prices.
+How do they compare?
+If $\sigma$ is a ``parameter,'' why are they different?
+\end{parts}
+
+\begin{solution}
+\begin{parts}
+\item Call prices are 5.11 and 10.18.  
+\item [(b,c)] See Matlab program.
+\item [d] The vols are 0.1728, 0.1428, and 0.1057. 
+\end{parts}
+\end{solution}
+
+
+%-----------------------------------------------------------------------
+\question {\it Volatilities for S\&P 500 options.\/}
+We continue our examination of option prices and volatility:
+same date and underlying as the previous question.
+
+Yahoo finance reports the following quotes:
+%
+\begin{center}
+\tabcolsep=0.15in
+\begin{tabular}{lrrrr}
+\toprule
+      &  \multicolumn{2}{c}{\phantom{x}Call Price} &  \multicolumn{2}{c}{\phantom{xx}Put Price}  \\
+Strike    &  Bid & Ask &  Bid & Ask  \\
+\midrule
+%140 &  57.12  &  57.45 &  0.43  &  0.48 \\
+150 &  47.25  &  47.62 &  0.73  &  0.79 \\
+160 &  37.61  &  37.95 &  1.26  &  1.32 \\
+170 &  28.28  &  28.60 &  2.15  &  2.22 \\
+180 &  19.56  &  19.80 &  3.63  &  3.69 \\
+190 &  11.83  &  11.93 &  5.96  &  6.07 \\
+200 &   5.57  &   5.66 &  9.87  &  9.99 \\
+210 &   1.69  &   1.76 & 16.03  & 16.37 \\
+220 &   0.29  &   0.34 & 24.70  & 25.11 \\
+230 &   0.04  &   0.08 & 34.46  & 34.93 \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\begin{parts}
+\item Compute ``mid'' quotes as averages of bid and ask.
+Plot these mid-market put and call prices against the strike price.
+
+\item Use put-call parity to compute call prices from mid puts.
+Plot call prices --- bid, ask, and implied by puts ---
+against the strike.
+How do they compare?
+
+\item Write a bisection or Newton's method program
+to compute implied volatilities for mid quotes of call options.
+Graph them against the strike.
+What shape does the resulting ``smile'' have?
+\end{parts}
+{\it Comments:
+\begin{itemize}
+\item I use this two-step definition of the BSM formula:
+\begin{verbatim}
+d = @(sigma,k) (log(s./(q_tau.*k))+tau*sigma.^2/2)./(sqrt(tau)*sigma);
+f = @(sigma,k) s*normcdf(d(sigma,k)) - ...
+        q_tau.*k.*normcdf(d(sigma,k)-sqrt(tau)*sigma) - call_mid;
+\end{verbatim}
+Here I've subtracted the call price from the formula to give us a
+function {\tt f} whose value is zero when we find the right volatility.
+
+\item If you're lazy like me, you can look up the derivative in Wikipedia,
+where they refer to it as the ``vega,'' a nonexistent Greek letter.
+Or you could use bisection and skip the whole thing.
+We can calculate the derivative with an anonymous function, too:
+\begin{verbatim}
+fp = @(d) s*sqrt(tau)*exp(-d.^2/2)/sqrt(2*pi);
+\end{verbatim}
+
+\end{itemize}
+}
+
+\begin{solution}
+\begin{parts}
+\item See Matlab program. 
+\item Ditto.  The call prices implied by puts are above the bid and ask of the calls.  
+\item See Matlab program. The ``smile'' is downward sloping, with a little curvature
+to the right.  
+\end{parts}
+\end{solution}
+
+\end{questions}
+
+\vfill \centerline{\it \copyright \ \number\year \ NYU Stern School of Business}
+
+\end{document}
+
+
+%-----------------------------------------------------------------------
+\question {\it Sums and mixtures (review).\/}
+Let us say that the log-price of the underlying has two components:
+\begin{eqnarray*}
+    \log s_{t+1} &=& y_{t+1} \;\;=\;\; x_{1t+1} + x_{2t+1},
+\end{eqnarray*}
+with $( x_{1t+1}, x_{2t+1})$ independent.
+The first component is normal:
+$ x_{1t+1} \sim \mathcal{N}(\mu,\sigma^2)$.
+The second component, the ``jump,'' is a mixture:
+with probability $1-\omega$, $ x_{2t+1} = 0$,
+and with probability $\omega$,
+$ x_{2t+1} \sim \mathcal{N}(\theta,\delta^2)$.
+
+With these inputs, the pdf for $y$ is a weighted average of normals:
+\begin{eqnarray}
+    p(y) &=& (1-\omega) \cdot ( 2 \pi \sigma^2)^{-1/2} \exp[ - (y-\mu)^2/2\sigma^2]
+            \nonumber \\
+    && + \; \omega \cdot [ 2 \pi (\sigma^2+\delta^2)]^{-1/2}
+            \exp[ - [y-(\mu+\theta)]^2/2(\sigma^2 + \delta^2)] .
+            \label{eq:bernoulli-mixture}
+\end{eqnarray}
+If $\omega = 0$, the second component drops out.
+Otherwise, we have a weighted average of two normal densities.
+
+\begin{parts}
+\item  Show that the cumulant generating function for $x_{1t+1}$ is
+\begin{eqnarray*}
+    k (s; x_1) &=&  \mu s + \sigma^2 s^2 / 2 .
+\end{eqnarray*}
+
+\item  Show that the cumulant generating function for $x_{2t+1}$ is
+\begin{eqnarray*}
+    k (s; x_2) &=& \log \left[ (1-\omega) + \omega e^{ \theta s + \delta^2 s^2 / 2 }
+            \right] .
+\end{eqnarray*}
+
+\item  What is the cgf for $y_{t+1}$?
+What are its mean, variance, skewness, and excess kurtosis?
+What parameters determine the sign of skewness?
+\end{parts}
+
+\begin{solution}
+The overall idea here is that this construction
+can give us useful departures from a normal distribution.
+Details follow from applying the usual methods.
+\begin{parts}
+\item   The usual normal cgf.
+\item  This is a Bernoulli mixture with one twist:
+the ``$\omega$ branch'' has a normal mgf in it.
+If $\delta = 0$, it's just like the Bernoulli we looked at in
+Lab Report \#1.
+Otherwise, we get some additional terms.
+
+\item  The cgf of the sum is the sum of the cgfs:
+\begin{eqnarray*}
+        k (s; y) &=& k (s; x_1) + k (s; x_2) \\
+             &=& ( \mu s + \sigma^2 s^2 / 2 ) +
+              \log \left[ (1-\omega) + \omega e^{ \theta s + \delta^2 s^2 / 2 }
+            \right] .
+\end{eqnarray*}
+We find it cumulants from derivatives, which are conveniently
+computed by Matlab.
+The mean and variance are
+\begin{eqnarray*}
+    \kappa_1 &=& \mu + \omega \theta \\
+    \kappa_2 &=& \sigma^2 + \omega (1-\omega) \theta^2 + \omega \delta^2 .
+\end{eqnarray*}
+Each has terms from each component.
+The third and fourth cumulants come only from $x_2$, because the normal
+component has zero cumulants beyond the first two.
+The third one is
+\begin{eqnarray*}
+    \kappa_3 &=& \omega (1-\omega) \theta [ 3 \delta^2 + (1-2\omega) \theta^2]  \\
+    \kappa_4 &=& \omega (1-\omega)
+        \{  \theta^4 [1 - 6 \omega(1-\omega)] + 3 \delta^4 + (1-2 \omega) 6 \delta^2 \theta^2
+        \}
+\end{eqnarray*}
+This is a bit of a mess, but for $\omega$ small,
+$\kappa_3$ depends on the sign of $\theta$
+and $\kappa_4 >0 $,
+so the mixture introduces skewness and excess kurtosis,
+both of which are absent from normal random variables.
+
+\item  We know normal pfd's integrate to one.
+The is a weighted average of normal pdf's, so it must
+integrate to one as well.
+\end{parts}
+\end{solution}
+
+
+%-----------------------------------------------------------------------
+\question {\it Merton-like option pricing.\/}
+With the same setup, we can illustrate the value of mixtures in
+generating nonnormal distributions and
+their impact on option prices and volatility smiles.
+
+\begin{parts}
+\item  Risk-neutral asset pricing tells us, in general, that
+\begin{eqnarray*}
+    s_t &=& q^1_t E^* (s_{t+1} )
+            \;\;=\;\; q^1_t E^* \left( e^{y_{t+1}}\right)
+            \;\;=\;\; q^1_t  e^{k(1; y)}  .
+\end{eqnarray*}
+We refer to this as the no-arbitrage condition.
+What is the no-arbitrage condition for our example?
+
+We'll use this condition to set $\mu$:
+given values for everything else, we'll choose $\mu$ to satisfy this condition.
+
+\item  Recall that if the risk-neutral distribution is
+ $\log s_{t+1} = y_{t+1} \sim \mathcal{N}(\kappa_1,\kappa_2)$,
+ then the put price at strike $k$ is
+\begin{eqnarray*}
+    f(k; \kappa_1, \kappa_2) &=& q^1_t k N(d) - q^1_t e^{\kappa_1 + \kappa_2/2}
+            N(d-\kappa_2^{1/2}) \\
+            d&=& (\log k - \kappa_1)/\kappa_2^{1/2} .
+\end{eqnarray*}
+(Note:  this isn't quite the usual $d$.)
+What is the call price?
+
+\item
+Use (b) to show that the put price in the mixture model is a weighted average:
+\begin{eqnarray*}
+    q^p_t &=& (1-\omega) \cdot f(k; \mu, \sigma^2) +
+        \omega \cdot f(k; \mu+\theta, \sigma^2 + \delta^2) .
+\end{eqnarray*}
+
+\item  Consider these inputs:
+$\sigma = 0.04$, $\omega = 0.01$,
+$\theta = -0.3$, $\delta = 0.15$,
+$s_t = 100$, and $q^1_t = 1$.
+What is $\mu$?
+What are the prices of put options with strikes
+$ k = (80, 90, 100, 110, 120)$?
+(Use a finer grid if you have this automated.)
+What are the implied volatilities?
+
+\item  What happens to the volatility smile when you set
+\begin{itemize}
+\item $\theta = 0$?
+\item $\theta = + 0.3$?
+\item $\delta = 0.25$?
+\end{itemize}
+Make sure you adjust $\mu$ in each case.
+\end{parts}
+
+\begin{solution}
+\begin{parts}
+\item  The condition is
+\begin{eqnarray*}
+    s_t &=& q^1_t \exp( \mu + \sigma^2 / 2 )
+            \left[ (1-\omega) + \omega e^{ \theta + \delta^2 / 2 } \right] .
+\end{eqnarray*}
+It's not pretty, but given values of the other inputs we can use it to set $\mu$.
+
+\item  This is a question of integrating over the distribution,
+as we did in class.
+We find the call price from put-call parity.
+
+\item  If the pdf is a sum, then when we integrate we can integrate
+over each term separately:  the integral of a sum is the sum of the integrals.
+Each integral gives us a BSM-like formula, but with different mean and variance.
+The put price is the weighted average of the two formulas, as stated.
+
+\item  Now we can put all this to work.
+With these inputs, the arbitrage condition gives us $ \mu = 4.6069$.
+The put prices are (I chose a slightly different range):
+
+\begin{center}
+\tabcolsep=0.15in
+\begin{tabular}{rr}
+\toprule
+Strike    &  Put Price  \\
+\midrule
+  90   & 0.1606   \\
+   94  &  0.2806  \\
+   98  &  0.9285  \\
+  102  &  2.8801  \\
+  106  &  6.1523  \\
+  110  & 10.0147 \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+It may be asking too much to compute the implied vols, too,
+but they give us a clearer picture.
+The Matlab code is a little quirky, you need to play with the
+starting values to get it to work.
+But you'll find that there's a distinct downward slope to the smile.
+That disappears if we set $\theta = 0$, since $\theta$ is the source
+of skewness in the model.
+Instead we get a u-shape.
+When we increase $\delta$, the u is more pronounced.
+
+In short, the Bernoulli mixture is capable of giving us a wide range of shapes
+for the smile.
+
+\end{parts}
+\end{solution}
+
+\end{questions}
+
+\input{../../LaTeX/footer.tex}
+
+\end{document}
+
+

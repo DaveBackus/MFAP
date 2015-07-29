@@ -1,0 +1,271 @@
+\documentclass[11pt]{exam}
+
+\input{../../LaTeX/preamble.tex}
+
+\printanswers
+
+% document starts here
+\begin{document}
+\parskip=\bigskipamount
+\parindent=0.0in
+\thispagestyle{empty}
+{\large ECON-UB 233 \hfill Dave Backus @ NYU}
+
+\bigskip\bigskip
+\centerline{\Large \bf Lab Report \#4: Asset Pricing Fundamentals}
+\centerline{Revised: \today}
+
+\bigskip
+{\it Due at the start of class.
+You may speak to others, but whatever you hand in should be your own work.
+Please include your Matlab code.}
+
+\begin{solution}
+Brief answers follow,
+but see also the attached Matlab program.
+Download this document as a pdf, open it, and click on the pushpin:
+\attachfile{hw4_f14.m}
+\end{solution}
+
+
+\begin{questions}
+% -----------------------------------------------------------------------------
+\question {\it State prices and related objects.\/}
+Consider an economy with three states.
+State prices and probabilities are
+
+\begin{center}
+\begin{tabular}{cccc}
+\toprule
+        & State Price   & Probability &  Dividend  \\
+State $z$  &  $Q(z)$    & $p(z)$      &   $d(z)$   \\
+\midrule
+1       & 1/2 & 1/3 & 1 \\
+2       & 1/3 & 1/3 & 2 \\
+3       & 1/4 & 1/3 & 3 \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\smallskip
+\begin{parts}
+\item What is the pricing kernel in each state?
+\item What is the price of a one-period bond?  What is its return?
+\item What are the risk-neutral probabilities?
+Why are they different from the true probabilities?
+\item Suppose equity is a claim to the dividend in the last column.
+What is its price? What is the return on equity in each state?
+\item What is the expected return on equity?
+The risk premium?
+%What accounts for the sign of the risk premium?
+\end{parts}
+
+\begin{solution}
+\vspace*{-0.2in}
+\begin{center}
+\begin{tabular}{ccccccc}
+\toprule
+        & State Price   & Probability &  Dividend & Pr Kernel & R-n probs & Return \\
+State $z$  &  $Q(z)$    & $p(z)$      &   $d(z)$  &  $m(z)$   &  $p^*(z)$ & $r^e(z)$ \\
+\midrule
+1       & 1/2 & 1/3 & 1 & 3/2 & 0.4615 & 0.5217 \\
+2       & 1/3 & 1/3 & 2 &  1  & 0.3077 & 1.0435 \\
+3       & 1/4 & 1/3 & 3 &  3/4& 0.2308 & 1.5652 \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\begin{parts}
+\item See the table.
+\item $q^1 = 1.0833$, $r^1 = 0.9231$.
+\item See table.  They are a combination of the true probabilities $p$
+and the pricing kernel $m$, scaled to sum to one.
+\item The price is $q^e = 1.9167$.  The returns are in the table.
+\item The expected return is $ E(r^e) = 1.0435 $ and the risk
+premium is $ E(r^e - r^1) = 0.1204$.
+Why positive?  You'll note that the asset's dividends are high when the pricing kernel is low,
+which makes the price low.
+That raises returns.
+\end{parts}
+\end{solution}
+
+
+% -----------------------------------------------------------------------------
+\question {\it Pricing kernels and risk-neutral probabilities with Poisson risk.\/}
+Consider a representative agent economy with a power utility agent facing ``Poisson risk.''
+Utility is $u(c) = c^{1-\alpha}/(1-\alpha) $ with risk aversion
+parameter $\alpha > 0$.
+Log consumption growth is $ z = \log g = \log c_1 - \log c_0 $
+for $ z = 0,1,2, \ldots$ with probabilities
+$ p(z) = e^{-\omega} \omega^z/z! $ for some parameter $\omega>0$.
+
+You may want to use the power series expansion
+\begin{eqnarray*}
+    e^x &=& 1 + x + x^2/2! + x^3/3! + \cdots
+            \;\;=\;\; \sum_{j=0}^\infty x^j/j! ,
+\end{eqnarray*}
+which is sometimes used to define the exponential function $e^x$.
+%
+\begin{parts}
+\item What is the pricing kernel $m(z)$ in each state $z$?
+\item What are the state prices $Q(z)$?
+\item What are the risk-neutral probabilities $p^*(z)$?
+\item Show that the risk-neutral distribution is Poisson.
+\item How do the risk-neutral probabilities $p^*(z)$
+differ from the true probabilities $p(z)$?
+\item Set $\omega = 4$ and $ \alpha = 1$
+and plot $p(z)$ and $p^*(z)$ for $z$ between zero and 10.
+How do they differ?  Why?
+\end{parts}
+{\it Matlab mini-tutorial on bar charts.\/}
+Suppose we have vectors {\tt z}, {\tt p}, and {\tt pstar}.
+We can plot probabilities against {\tt z} with the commands
+\begin{verbatim}
+bar(z, p)           % just p
+bar(z, [p pstar])   % p and pstar together
+\end{verbatim}
+The order of inputs in Matlab plot commands is
+x variable first (horizontal axis), then the y variable (vertical axis):
+{\tt plot(x,y)}, {\tt bar(x,y)}, etc.
+
+\begin{solution}
+\begin{parts}
+\item The pricing kernel is $ m(z) = \beta e^{-\alpha x} $.
+\item State prices are
+\begin{eqnarray*}
+    Q(z) &=& p(z) m(z) \;\;=\;\; e^{-\omega} (\omega^z/z!) \beta e^{-\alpha z}
+            \;\;=\;\; e^{-\omega} \beta (\omega e^{-\alpha})^z /z!.
+\end{eqnarray*}
+\item Risk-neutral probabilities are $ p^*(z) = Q(z)/q^1 = p(z) m(z) / q^1 $.
+Here we have
+\begin{eqnarray*}
+    q^1 &=&  \sum_{z=0}^\infty Q(z)
+            \;\;=\;\; e^{-\omega} \beta \; \sum_{z=0}^\infty (\omega e^{-\alpha})^z /z!
+            \;\;=\;\; e^{-\omega} \beta e^{\omega e^{-\alpha}} .
+\end{eqnarray*}
+%$q^1 = E(m) = (1-\omega) \beta /(1-\omega e^{-\alpha}) $.
+Risk-neutral probabilities are therefore
+\begin{eqnarray*}
+    p^*(z) &=&  Q(z) / q^1
+            \;\;=\;\;  e^{-\omega e^{-\alpha}} (\omega e^{-\alpha})^z /z!.
+\end{eqnarray*}
+
+\item We can write this as
+$ p^*(z) = e^{-\omega^*} (\omega^*)^z /z! $
+with $ \omega^* = \omega e^{-\alpha} $, so it has the form of a Poisson distribution.
+
+\item The difference lies in a comparison of $\omega$ and $\omega^*$.
+If $\alpha = 0$ (zero risk aversion), the two are the same.
+Otherwise, this has the usual flavor of representative agent economies:
+the risk-neutral probabilities place more weight on bad states.
+
+\item We see exactly this in the figure generated by the Matlab program.
+\end{parts}
+\end{solution}
+
+
+% -----------------------------------------------------------------------------
+\question {\it Option prices.\/}
+We're going to explore the risk-neutral approach to valuing options.
+A call option gives the owner the right to purchase an asset one period from now
+at a price $k$ --- the so-called {\it strike price\/} --- determined now.
+If the future price is $s(z)$, the owner will {exercise}
+the option and purchase the stock only if $s$ is greater than (or equal to?) $k$.
+That gives rise to the option cash flow
+\begin{eqnarray*}
+        d(z) &=&  \max \{0, s(z) - k \} .
+\end{eqnarray*}
+Given this cash flow, we value the option as we would any other asset.
+We'll use specifically the risk-neutral valuation equation
+\begin{eqnarray*}
+        q^c &=&  q^1 \sum_z p^*(z) d(z)
+                \;\;=\;\; q^1 \sum_z p^*(z)  \max \{0, s(z) - k \} ,
+\end{eqnarray*}
+where $q^c$ is the price of the call option and $q^1$ is the price
+of a one-period riskfree bond.
+
+The risk-neutral environment we'll work with is lognormal.
+A state $z$ has a standard normal risk-neutral distribution.
+The log of the future price is connected to the state (again, in risk-neutral terms)
+by $ \log s(z) = \mu + \sigma z $.
+
+One last thing:
+we're going to use a discrete approximation to the distribution of $z$,
+which is easier to work with than the real thing
+(numerical integration is neither pretty nor efficient).
+In Matlab terms, set up a grid of points for $z$ and assign probabilities
+to them from the standard normal pdf:
+\begin{verbatim}
+zmax = 4;
+dz = 0.5;
+z = [-zmax:dz:zmax]';
+pstar = exp(-z.^2/2)*dz/sqrt(2*pi);
+\end{verbatim}
+We can make this approximation as close to the original as we want
+by shrinking {\tt dz}.
+
+\begin{parts}
+\item One check on the approximation is the sum of the probabilities.
+Do they sum to one here?
+
+\item Set up a similar grid of values for $s(z)$.
+Use $q^1 = 0.95$, $\sigma = 0.1$, and
+\begin{eqnarray*}
+    \mu &=&  \log(100/q1) - \sigma^2/2 .
+\end{eqnarray*}
+More on this later.
+What value of $\mu$ do you get?
+
+\item Compute the cash flows $d(z)$ for an option
+with strike price $k=110$.
+Use the risk-neutral pricing equation to compute its value.
+
+You may find these Matlab commands helpful:
+\begin{verbatim}
+d_positive = s >= k
+d = d_positive.*(s-k);
+\end{verbatim}
+The first line generates a vector that equals one if $ s \geq k$ and zero otherwise.
+
+\item We usually require the risk-neutral probabilities to value the underlying
+asset correctly, a requirement we call the {\it no-arbitrage condition\/}.
+With this in mind, apply the risk-neutral pricing equation to the asset itself,
+a claim (so to speak) to the value of the asset one period from now:
+$d(z) = s(z)$.
+What is the value of this asset?
+Can you connect it to the condition we used to derive $\mu$?
+\end{parts}
+
+\begin{solution}
+\begin{parts}
+\item To four digits:  1.0000. 
+
+\item $\mu = 4.6515$. 
+
+\item The cash flows are $ d(z) = \max \{ 0, s(z) - k \} $.
+Its value is the usual:  
+\begin{eqnarray*}
+    q &=& q^1 \sum_z p^*(z) d(z) .
+\end{eqnarray*} 
+In this case we have $ q = 2.1417 $. 
+
+\item If the future price is $s(z)$, 
+then the current price follows from the usual pricing formula.
+Here we find the price is 99.9981.  
+If we were to do this exactly, we'd get 100.
+The next part is a little obscure, but we've seen it before and will see it again.
+The idea is to choose the risk-neutral distribution so that it's consistent
+with the (known) price of the underlying asset.  
+If the price is 100, the formula in part (b) sets $\mu$ to reproduce
+this value:  what we have called the no-arbitrage condition.
+See the discussion in the notes.  
+\end{parts} 
+\end{solution}
+
+\end{questions}
+
+\input{../../LaTeX/footer.tex}
+
+\end{document}
+
+

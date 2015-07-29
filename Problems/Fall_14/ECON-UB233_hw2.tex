@@ -1,0 +1,296 @@
+\documentclass[11pt]{exam}
+
+\input{../../LaTeX/preamble.tex}
+
+\printanswers
+
+% document starts here
+\begin{document}
+\parskip=\bigskipamount
+\parindent=0.0in
+\thispagestyle{empty}
+\input{../../LaTeX/header.tex}
+
+\bigskip\bigskip
+\centerline{\Large \bf Lab Report \#2: Sums, Mixtures, \& Certainty Equivalents}
+\centerline{Revised: \today}
+
+\bigskip
+{\it Due at the start of class.
+You may speak to others, but whatever you hand in should be your own work.
+Use Matlab where possible and attach your code to your answer.}
+
+\begin{questions}
+
+\begin{solution}
+Brief answers follow,
+but see also the attached Matlab program;
+download the pdf, open, click on pushpin:
+\attachfile{hw2_f14.m}
+\end{solution}
+
+
+%-----------------------------------------------------------------------
+\question {\it Properties of US equity returns.\/}
+Gene Fama is one of the giants of modern finance.
+His coauthor over the past twenty years or so has been Ken French.
+In this problem, we'll compute sample properties of US equity returns using
+one of the so-called Fama-French datasets, which French kindly posts on his website.
+Go to French's website and download the files labelled ``Fama/French factors''
+at
+\href{http://mba.tuck.dartmouth.edu/pages/faculty/ken.french/ftp/F-F_Research_Data_Factors.zip}
+{this link}.
+Then follow these instructions:
+\begin{itemize}
+\item Read the enclosed txt file into a spreadsheet program.
+\item Strip off the header (the three lines at the top).
+\item Label the columns {\tt date xs smb hml rf}.
+\item Delete the annual data at the bottom.
+\item Save in a convenient format (xls?).
+\end{itemize}
+When you're done, read the whole thing into Matlab using {\tt xlsread}
+or other command appropriate to the format of your file.
+
+You now have  monthly data going back to 1926 on various equity portfolios,
+each in its own column.
+Returns are expressed as percentages.
+They haven't been annualized: a monthly return of 1.0 in the data
+corresponds to roughly 12\% annually.
+We'll focus on {\tt xs}, the excess return on a broad-based equity portfolio.
+Excess return means, in this context, the return minus that on the riskfree bond, {\tt rf}.
+Also there but not needed for now:  {\tt smb} is the return on small firms minus big firms
+and {\tt hml} is the return on firms with high book-to-market minus
+those with low book-to-market.
+%
+\begin{parts}
+\item Use the command {\tt hist} to plot a histogram for {\tt xs}.
+\item Compute the mean, standard deviation, skewness, and excess kurtosis
+for the excess return series.
+\item Does the mean look high or low to you?
+\item  In what respects do these excess returns look normal?  In what respects not?
+\end{parts}
+
+\begin{solution}
+I did this in Python, partly because it's something new, but mostly
+because it allows me to load the data in two lines:
+\begin{verbatim}
+import pandas.io.data as web
+ff = web.DataReader('F-F_Research_Data_Factors', 'famafrench')[0]
+\end{verbatim}
+More at
+\href{https://www.wakari.io/sharing/bundle/DaveBackus/Bootcamp_1_Examples}{this link}, 
+Including histograms, box plots. and summary statistics.  See Example 2.
+
+\begin{parts}
+\item See the link above.  I especially like the boxplots.  The box gives us the median
+and the (25,75)th percentiles.
+The points outside the box are what you might call outliers:  extremes in one direction or the other.  
+\item The numbers are
+%
+\begin{center}
+\begin{tabular}{lrrrr}
+\toprule
+Series  &  Mean & Std Dev & Skewness & Ex Kurtosis \\
+\midrule
+Market  & 0.649 & 5.40 & 0.16 & 4.48 \\
+SMB     & 0.224 & 3.23 & 2.05  & 17.57 \\
+HML     & 0.394 & 3.51 & 1.93  & 12.87 \\
+\bottomrule
+\end{tabular}
+\end{center}
+%
+Note that you have to subtract 3 to get excess kurtosis from the kurtosis command in Matlab.  
+
+\item Hard to say what's high or low, it depends on your perspective.
+But if we multiply by 12 to get a rough annual number,
+the excess return on the market is about 7.7\%, which seems large to me.
+The other portfolios have smaller means, but they also have smaller standard deviations.
+
+\item It's clear that these returns are a long way from normal.
+There's some evidence of positive skewness (hmmm),
+but more of excess kurtosis,
+especially in the SMB and HML portfolios.
+Both would be close to zero if returns were normal.
+The histograms look normal-ish, but that's a sign of how hard it is
+to tell this way.
+
+\end{parts}
+\end{solution}
+
+
+%-----------------------------------------------------------------------
+\question {\it Sums and mixtures.\/}
+More fun with cumulant generating functions (cgfs).
+The ingredients include two independent normal random variables,
+$ x_1 \sim \mathcal{N}(0,1)$ and $ x_2 \sim \mathcal{N}(\theta,1)$.
+Do the calculations in Matlab and submit your code with your answer.
+%
+\begin{parts}
+\part Consider the sum $y = x_1 + x_2$.
+What is its cgf?  Its first four cumulants?
+What are its measures of skewness and excess kurtosis, $\gamma_1$ and $\gamma_2$?
+
+\part Now consider the mixture $z$:
+\begin{eqnarray*}
+    z &=& \left\{
+            \begin{array}{ll}
+            x_1   & \mbox{with probability } 1-\omega \\
+            x_2 & \mbox{with probability } \omega .
+            \end{array}
+            \right.
+\end{eqnarray*}
+What is its cgf?  Its first four cumulants?
+What are its measures of skewness and excess kurtosis, $\gamma_1$ and $\gamma_2$?
+What determines the sign of $\gamma_1$?
+\item In what ways does $z$ differ from a normal random variable?
+\end{parts}
+
+\begin{solution}
+\begin{parts}
+\item The cgf of the sum is the sum of the cgf's:
+\begin{eqnarray*}
+     k_y(s) &=& k_1(s) + k_2(s)
+        \;\;=\;\; s (0 + \theta) + s^2 (1 + 1)/2 .
+\end{eqnarray*}
+The form of the cgf should be familiar, we derived it in class.
+Since it's quadratic, $y$ must be normal.
+
+The cumulants follow from differentiating (or just looking, really):
+$\kappa_1 = \theta $ (the mean),
+$\kappa_2 = 2 $ (the variance),
+$\kappa_3 = 0$,
+and $\kappa_4 = 0$.
+The last two are zero, because the cgf is quadratic in $s$,
+so all the derivatives after the second one are zero.
+Therefore $\gamma_1 = \gamma_2 = 0$ as well.
+
+\item Mixtures are a little different.
+The mgf is the weighted average of the mgf's of the components:
+\begin{eqnarray*}
+    h_y(s) &=& (1-\omega)h_1(s)  + \omega h_2(s)
+        \;\;=\;\; (1-\omega)e^{s^2/2} + \omega e^{\theta s + s^2/ 2} .
+\end{eqnarray*}
+The cgf is the log of this.
+The first four cumulants are
+$\kappa_1 = \omega \theta $ (the mean),
+$\kappa_2 = 1 + \omega (1-\omega)\theta^2  $ (the variance),
+$\kappa_3 = \omega \theta^3 (1 - 3 \omega + 2 \omega^2)$,
+and
+$\kappa_4 = 3 \omega (1-\omega) \theta^4 [1 - 6\omega (1-\omega) ]$.
+
+The striking thing here is that we're getting nonzero third and fourth
+cumulants from normal components.
+The details are a mess so I'll skip them.
+The sign of $\gamma_1$ (skewness) is the same as $\theta$
+if $\omega$ is small.
+
+\item Skewness and excess kurtosis are a sign that $ z$ is not normal.
+\end{parts}
+\end{solution}
+
+
+%-----------------------------------------------------------------------
+\question {\it Concave and convex functions.\/}
+Consider the following functions defined over positive values of $x$:
+%
+\begin{parts}
+\item $f(x) = \log x$
+\item $f(x) = \exp(x) $
+\item $f(x) = x^{\alpha}$ for $\alpha = 2$
+\item $f(x) = - x^{\alpha}$ for $\alpha = 2$
+\item $f(x) = x^{\alpha} $ for $\alpha = 1$
+\end{parts}
+For each one:
+\begin{itemize}
+\item State whether it's concave, convex, or something else.
+\item State whether $ E[f(x)]$ is greater or less than $f[E(x)]$.
+\item Verify your previous answer by computing
+ $ E[f(x)]$ and $f[E(x)]$
+ for the Bernoulli random variable
+\begin{eqnarray*}
+    x &=& \left\{
+            \begin{array}{ll}
+            100   & \mbox{with probability } 1/2 \\
+            200 & \mbox{with probability }   1/2 .
+            \end{array}
+            \right.
+\end{eqnarray*}
+\end{itemize}
+
+\begin{solution}
+This is a check on Jensen's inequality.
+\begin{itemize}
+\item (a) Concave, (b) convex, (c) convex, (d) concave, (e) linear
+(on the edge between concave and convex).
+\item If concave $ E[f(x)] < f[E(x)]$.  If convex the reverse.
+If linear, they're equal.
+\item Summary:
+\begin{center}
+\begin{tabular}{lccccc}
+\toprule
+        & (a) & (b) & (c) & (d) & (e) \\
+\midrule
+$E[f(x)]$ & 4.95 & $10^{86}$ & 25,000 & --25,000 & 150 \\
+$f[E(x)]$ & 5.01 & $10^{65}$ & 22,500 & --22,500 & 150 \\
+\bottomrule
+\end{tabular}
+\end{center}
+\end{itemize}
+\end{solution}
+
+%-----------------------------------------------------------------------
+\question {\it Certainty equivalents for quadratic utility.\/}
+There's a long history of risk preference with quadratic utility:
+\begin{eqnarray*}
+    u(c) &=& c - c^2 .
+\end{eqnarray*}
+It's seldom used these days, but is a convenient starting point
+for thinking about risk.
+Let us say, to be concrete, that
+$c$ is random with mean $\mu$ and variance $\sigma^2$.
+%
+\begin{parts}
+\item What is expected utility?
+How does it depend on the distribution of consumption outcomes?
+\item What is the certainty equivalent?
+\item How does the certainty equivalent compare to expected consumption?
+%\item Why do you think we don't use quadratic utility much any more?
+\end{parts}
+
+\begin{solution}
+I'm going to change the notation so that consumption has 
+a mean of $\kappa_1$ and a variance of $\kappa_2$.
+That way I can use $\mu$ for the certainty equivalent.  
+\begin{parts}
+\item If we take the expectation, we get
+\begin{eqnarray*}
+    E[u(c)] &=& E(c) - E(c^2) \;\;=\;\; \kappa_1 - ( \kappa_1^2 +  \kappa_2) .
+\end{eqnarray*}
+The point is that only the mean and variance matter.
+That was thought to be a strength when people first started doing things like this, 
+but is now thought to be a severe limitation.
+It's far more common now to see power utility.  
+
+It wasn't mentioned, but this is only sensible for a range of $c$'s:
+we want $u$ increasing, which requires $1-2c > 0$ or $c < 1/2 $.
+This makes the rest of the problem tricky.  
+
+\item The certainty equivalent $\mu$ is the solution to 
+\begin{eqnarray*}
+    u(\mu) \;\;=\;\; \mu - \mu^2  \;\;=\;\; \kappa_1 - ( \kappa_1^2 +  \kappa_2)  .
+\end{eqnarray*}
+This is quadratic, so it has two solutions. 
+It takes more effort than it's worth to explain which one we want, 
+so skip it.   
+
+\item Skip this.
+
+\end{parts}
+\end{solution}
+
+\end{questions}
+
+\input{../../LaTeX/footer.tex}
+
+\end{document}
+

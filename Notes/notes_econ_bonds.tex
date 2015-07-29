@@ -160,6 +160,12 @@ bonds are claims to dollars, prices are measured in dollars,
 and returns are dollars later per dollar now.
 We could use other units, but those are the standard one.
 
+\section{What would we like to explain?}
+
+********************************
+
+Report facts we'd like to account for....  ???
+
 
 \section{Pricing kernels and bond prices}
 
@@ -397,14 +403,14 @@ then apply the ``mean plus variance over two'' formula for
 lognormal random variables.
 Taking logs gives us
 \begin{eqnarray*}
-    \log m_{t+1} + \log q^{n+1}_t &=&
+    \log m_{t+1} + \log q^{n}_{t+1} &=&
             (\delta + A_n) + (\varphi B_n +1) z_t + (\lambda + B_n \sigma) w_{t+1} .
 \end{eqnarray*}
 The conditional mean and variance are
 \begin{eqnarray*}
    E_t \big( \log m_{t+1} + \log q^{n}_{t+1} \big) &=&
             (\delta + A_n) + (\varphi B_n + 1) z_t \\
-   \mbox{Var}_t \big( \log m_{t+1} + \log q^{n+1}_t \big) &=&
+   \mbox{Var}_t \big( \log m_{t+1} + \log q^{n}_{t+1} \big) &=&
             (\lambda + B_n \sigma)^2 .
 \end{eqnarray*}
 Now apply the formula:
@@ -517,19 +523,19 @@ the observed mean short rate.
 If any of this seems mysterious, see the Matlab program.
 %{\tt affine.m}.
 
-Let's go back to the dynamics of the log pricing kernel, 
-specifically the moving average representation (\ref{eq:vasicek-ma}).  
-If $\sigma = 0$ the model is iid, which we've seen means a 
-constant and flat forward rate curve. 
-How does our estimated version differ from this?  
-If you plot the moving average coefficients, 
-you'll see that there's a big one ($\lambda$) at the start, 
-then small ones of the opposite sign afterwards.  
-The small ones represent variation in the short rate 
-(also other rates, but that's enough for now).  
-Their rate of decay represents the short rate's autocorrelation.  
+Let's go back to the dynamics of the log pricing kernel,
+specifically the moving average representation (\ref{eq:vasicek-ma}).
+If $\sigma = 0$ the model is iid, which we've seen means a
+constant and flat forward rate curve.
+How does our estimated version differ from this?
+If you plot the moving average coefficients,
+you'll see that there's a big one ($\lambda$) at the start,
+then small ones of the opposite sign afterwards.
+The small ones represent variation in the short rate
+(also other rates, but that's enough for now).
+Their rate of decay represents the short rate's autocorrelation.
 The initial coefficient controls the slope of the mean forward rate
-curve.  
+curve.
 
 
 {\it Alternative parameterization (optional).\/}
@@ -576,8 +582,8 @@ As long as $\delta>0$, that pushes $z_t$ away from zero and keeps it positive.
 Despite the square-root process, $z_t$ is still an AR(1).
 Its mean is
 \begin{eqnarray*}
-    E(z_t) &=& (1-\varphi) \delta + \varphi E(z_{t-1})
-            \;\;\;\Rightarrow\;\;\; E(x) \;\;=\;\; \delta .
+    E(z) &=& (1-\varphi) \delta + \varphi E(z)
+            \;\;\;\Rightarrow\;\;\; E(z) \;\;=\;\; \delta .
 \end{eqnarray*}
 The variance is
 \begin{eqnarray*}
@@ -624,7 +630,7 @@ For bonds of arbitrary maturity,
 we use the guess  $ \log q^n_t = A_n + B_n z_t$.
 That gives us
 \begin{eqnarray*}
-    \log m_{t+1} + \log q^{n+1}_t &=&
+    \log m_{t+1} + \log q^{n}_t &=&
             [A_n + (1-\varphi) \delta] + [\varphi B_n -(1+\lambda^2/2)] z_t
                     + (\lambda + B_n \sigma) z_t^{1/2} w_{t+1} .
 \end{eqnarray*}
@@ -632,7 +638,7 @@ The conditional mean and variance are
 \begin{eqnarray*}
    E_t \left( \log m_{t+1} + \log q^{n}_{t+1} \right) &=&
             [A_n + B_n (1-\varphi) \delta] + [\varphi B_n -(1+\lambda^2/2)] z_t \\
-   \mbox{Var}_t \left( \log m_{t+1} + \log q^{n+1}_t \right) &=&
+   \mbox{Var}_t \left( \log m_{t+1} + \log q^{n}_{t+1} \right) &=&
             (\lambda + B_n \sigma)^2 z_t .
 \end{eqnarray*}
 The ``mean plus variance over two'' formula gives us

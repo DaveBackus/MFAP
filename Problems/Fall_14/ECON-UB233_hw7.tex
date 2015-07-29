@@ -1,0 +1,218 @@
+\documentclass[11pt]{exam}
+
+\input{../../LaTeX/preamble.tex}
+
+\printanswers
+
+% document starts here
+\begin{document}
+\parskip=\bigskipamount
+\parindent=0.0in
+\thispagestyle{empty}
+{\large ECON-UB 233 \hfill Dave Backus @ NYU}
+
+\bigskip\bigskip
+%\centerline{\Large \bf Lab Report \#7:  Stochastic Processes}
+\centerline{\Large \bf Lab Report \#7:  Dynamics in Theory and Data}
+\centerline{Revised: \today}
+
+\bigskip
+{\it Due at the start of class.
+You may speak to others, but whatever you hand in should be your own work.
+%Please include your Matlab code.
+}
+
+%\begin{solution}
+%Brief answers follow,
+%but see also the attached Matlab program;
+%download the pdf, open, click on pushpin:
+%%\attachfile{../Matlab/hw/hw7_f14.m}
+%\end{solution}
+
+\begin{questions}
+%-----------------------------------------------------------------------
+\question {\it ARMA(1,1) models.\/}
+Consider the models
+\begin{eqnarray*}
+    x_t &=& \sum_{j=0}^\infty a_j w_{t-j}
+\end{eqnarray*}
+with iid standard normal innovations $w_t$
+and coefficients $a_0$, $a_1$, and $a_{j+1} = \varphi a_j $
+for $j \geq 1$ and parameter $0 < \varphi < 1$.
+\begin{parts}
+\item What is the variance of $x$?
+\item What is the covariance of $x_t$ and $x_{t-1}$?
+\item What is the autocovariance function?
+The autocorrelation function?
+\item What configuration of parameter values gives us negative autocorrelations?
+\item {\it Extra credit.\/}
+Show that the model can be expressed in traditional ARMA(1,1)
+form,
+\begin{eqnarray*}
+    x_t &=& \varphi x_{t-1} + \sigma (w_t + \theta w_{t-1} ) .
+\end{eqnarray*}
+
+\end{parts}
+
+
+\begin{solution}
+\begin{parts}
+\item This follows most naturally from the moving average formula.
+Because the $w$'s are independent, the cross terms are zero and we're left with the squares:  
+\begin{eqnarray*}
+    \mbox{Var}(x) &=& E \Big[ \Big( \sum_{j=0}^\infty a_j w_{t-j}\Big)^2 \Big] 
+                \;\;=\;\; \sum_{j=0}^\infty  E \big(  a_j w_{t-j}\big)^2  \\
+                &=& \sum_{j=0}^\infty  a_j^2 
+                \;\;=\;\; a_0^2 + a_1^2 /(1-\varphi^2) .
+\end{eqnarray*}
+\item The covariance is similar
+\begin{eqnarray*}
+    \mbox{Cov}(x_t, x_{t-1}) &=& E \Big[ \Big( \sum_{j=0}^\infty a_j w_{t-j}\Big)
+                    \Big( \sum_{j=0}^\infty a_j w_{t-j-1}\Big) \Big] \\
+                &=& \sum_{j=0}^\infty  a_j a_{j+1} 
+                \;\;=\;\; a_0 a_1 + a_1 \varphi/(1-\varphi^2) .
+\end{eqnarray*}
+\item The autocovariance function is 
+\begin{eqnarray*}
+    \gamma(0) &=& a_0^2 + a_1^2 /(1-\varphi^2)  \\
+    \gamma(1) &=& a_0 a_1 + a_1 \varphi/(1-\varphi^2)  \\
+    \gamma(k+1) &=& \varphi \gamma(k) \mbox{ for } j\geq 1.  
+\end{eqnarray*}
+The autocorrelation function is $ \rho(k) = \gamma(k)/\gamma(0)$.  
+Like the moving average coefficients, the first two are arbitrary, then they decay at rate $\varphi$. 
+
+\item Autocorrelations and autocovariances have the same sign.
+Looking at $\gamma(0) = \mbox{Cov}(x_t,x_{t-1})$, we see that 
+it's sufficient to have $a_0 > 0$ and $a_1 < 0$.  
+
+\item If we subtract $\varphi x_{t-1}$ from $x_t$ we get
+\begin{eqnarray*}
+    x_t - \varphi x_{t-1}  &=& \sum_{j=0}^\infty a_j w_{t-j} - \varphi \sum_{j=0}^\infty a_j w_{t-j-1} \\
+            &=& a_0 w_t + (a_1 - \varphi a_0) w_{t-1} + (a_2 - \varphi a_1) w_{t-2} + \cdots \\
+            &=& a_0 w_t + (a_1 - \varphi a_0) w_{t-1} ,
+\end{eqnarray*}
+which is an ARMA(1,1).  
+
+\end{parts}
+\end{solution}
+
+%-----------------------------------------------------------------------
+\question {\it Forward-looking equity prices.\/}
+Suppose equity prices are given by the forward-looking difference equation
+\begin{eqnarray*}
+    q_{t}   &=&  d_t + \delta E_t (q_{t+1})
+\end{eqnarray*}
+where $E_t$ means the expectation conditional on the state at date $t$.
+%
+\begin{parts}
+\item How is the price related to future dividends?
+(Ignore bubbles here.)
+\item Take the AR(1) state variable
+\begin{eqnarray*}
+    x_t &=& \varphi x_{t-1} + \sigma w_t ,
+\end{eqnarray*}
+with the usual iid standard normal $w's$.
+What is the price of equity if $d_t = x_t$?
+
+\item What is the price of equity if $d_t = x_{t-1}$?
+\end{parts}
+
+\begin{solution}
+\begin{parts}
+\item Repeated substitution gives us 
+\begin{eqnarray*}
+    q_{t}   &=&  d_t + \delta E_t (d_{t+1}) + \delta E_t (d_{t+2}) + \cdots 
+            \;\;=\;\; \sum_{j=0}^\infty \delta^j E_t (d_{t+j}) .
+\end{eqnarray*}
+In words:  the price is the discounted value of expected future dividends.  
+
+\item Here expected future dividends are 
+\begin{eqnarray*} 
+    E_t (d_{t+j}) &=& E_t (x_{t+j}) \;\;=\;\; \varphi^j x_t , 
+\end{eqnarray*} 
+which implies the equity price $q_t = x_t /(1-\delta \varphi) $.
+
+\item The one-period lag is a rough approximation to observed corporate dividend policy, 
+which tends to lag performance.  
+In that case, we have 
+\begin{eqnarray*}
+    q_t  &=& x_{t-1} + \delta x_t + \delta \varphi x_t + \cdots 
+            \;\;=\;\; x_{t-1} + \delta x_t /(1-\delta \varphi) .
+\end{eqnarray*}
+
+\end{parts}
+\end{solution}
+
+%-----------------------------------------------------------------------
+\begin{table}[h]
+\centering
+\tabcolsep=0.1in
+\begin{tabular}{lr}
+\toprule
+Maturity $n$   & \phantom{xx} Price $q^n$ \\ %& \phantom{xx} Yield $y^n$ & Forward $f^{n-1}$ \\
+\midrule
+%0           &    1.0000   \\
+1 year      &    0.9800   \\
+2 years     &    0.9600   \\
+3 years     &    0.9400   \\
+4 years     &    0.9200   \\
+5 years     &    0.9000   \\
+\bottomrule
+\end{tabular}
+\caption{Bond prices.}
+\label{tab:bonds}
+\end{table}
+
+%\pagebreak
+\item {\it Bond basics.\/}
+Consider the bond prices in Table \ref{tab:bonds}.
+%
+\begin{parts}
+\item What are the yields $y^n$?
+\item What are the forward rates $f^{n-1}$?
+\item How are the yields and forward rates related?  Verify for $y^3$.
+\end{parts}
+
+\begin{solution}
+\begin{center}
+\tabcolsep=0.1in
+\begin{tabular}{lrrr}
+\toprule
+Maturity $n$   & \phantom{xx} Price $q^n$ & Forward $f^{n-1}$ & \phantom{xx} Yield $y^n$ \\
+\midrule
+0           &    1.0000  \\
+1 year      &    0.9800  & 0.0202 & 0.0202 \\
+2 years     &    0.9600  & 0.0206 & 0.0204 \\
+3 years     &    0.9400  & 0.0211 & 0.0206 \\
+4 years     &    0.9200  & 0.0215 & 0.0208 \\
+5 years     &    0.9000  & 0.0220 & 0.0211 \\
+\bottomrule
+\end{tabular}
+\end{center}
+%\medskip
+See the attached Matlab program;
+download the pdf, open, click on pushpin:
+\attachfile{hw7_f14.m}
+
+\begin{parts}
+\item [(a,b)] Yields and forward rates are connected to bond prices by 
+\begin{eqnarray*}
+    y^n_t &=& - n^{-1} \log q^n_t \\
+    f^n_t &=& \log (q^{n}_t/q^{n+1}_t) .
+\end{eqnarray*} 
+See the table for the numbers.  
+\item [(c)] Yields are averages of forward rates:
+\begin{eqnarray*}
+    y^n_t &=& n^{-1} \sum_{j=1}^n f^{j-1}_t .
+\end{eqnarray*}
+Thus $y^3 = (0.0202 + 0.0206 +  0.0211)/3 = 0.0206$.
+\end{parts}
+\end{solution}
+
+
+\end{questions}
+
+\input{../../LaTeX/footer.tex}
+
+\end{document}
+

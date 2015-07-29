@@ -1,0 +1,152 @@
+\documentclass[11pt]{exam}
+
+\oddsidemargin=0.25truein \evensidemargin=0.25truein
+\topmargin=-0.5truein \textwidth=6.0truein \textheight=8.75truein
+
+%\RequirePackage{graphicx}
+\usepackage{comment}
+\usepackage{verbatim}
+\usepackage{booktabs}
+\usepackage{hyperref}
+\urlstyle{rm}   % change fonts for url's (from Chad Jones)
+\hypersetup{
+    colorlinks=true,        % kills boxes
+    allcolors=blue,
+    pdfsubject={ECON-UB233, Macroeconomic foundations for asset pricing},
+    pdfauthor={Dave Backus @ NYU},
+    pdfstartview={FitH},
+    pdfpagemode={UseNone},
+%    pdfnewwindow=true,      % links in new window
+%    linkcolor=blue,         % color of internal links
+%    citecolor=blue,         % color of links to bibliography
+%    filecolor=blue,         % color of file links
+%    urlcolor=blue           % color of external links
+% see:  http://www.tug.org/applications/hyperref/manual.html
+}
+
+\usepackage{attachfile}
+    \attachfilesetup{color=0.5 0 0.5}
+
+\renewcommand{\thefootnote}{\fnsymbol{footnote}}
+\newcommand{\var}{\mbox{\it Var\/}}
+
+%\printanswers
+
+% document starts here
+\begin{document}
+\parskip=\bigskipamount
+\parindent=0.0in
+\thispagestyle{empty}
+{\large ECON-UB 233 \hfill Dave Backus @ NYU}
+
+\bigskip\bigskip
+\centerline{\Large \bf Lab Report \#4: Asset Pricing Fundamentals}
+\centerline{Revised: \today}
+
+\bigskip
+{\it Due at the start of class.
+You may speak to others, but whatever you hand in should be your own work.
+Please include your Matlab code.}
+
+\begin{solution}
+Brief answers follow,
+but see also the attached Matlab program;
+download the pdf, open, click on pushpins:
+%\attachfile{../Matlab/hw/hw4_f13.m}
+%\attachfile{../Matlab/hw/FamaFrench_returns.xlsx} \\
+{\it Warning:  If you don't see a pushpin above, my guess is you have a Mac.
+The pushpin doesn't appear in Preview,
+but you can use the Adobe Reader or the equivalent.}
+\end{solution}
+
+
+\begin{questions}
+%-----------------------------------------------------------------------
+\question {\it State prices and related objects.\/}
+Consider an economy with three states and the following 
+state prices and probabilities:  
+
+\begin{center}
+\begin{tabular}{cccc}
+\toprule 
+        & State Price   & Probability &  Dividend  \\
+State $z$  &  $Q(z)$    & $p(z)$      &   $d(z)$   \\
+\midrule
+1       & 1/2 & 1/3 & 1 \\
+2       & 1/3 & 1/3 & 2 \\
+3       & 1/4 & 1/3 & 3 \\
+\bottomrule 
+\end{tabular}
+\end{center}
+
+\begin{parts}
+\item What is the pricing kernel in each state?
+\item What is the price of a one-period bond?  
+\item What are the risk-neutral probabilities?
+Why are they different from the true probabilities?  
+\item Suppose equity is a claim to the dividends in the last column.
+What is its price?  
+\item What is the return on equity in each state?
+\item What is the expected return on equity?  
+The risk premium?  
+\end{parts} 
+
+
+
+\question {\it Pricing kernels and risk-neutral probabilities with Poisson risk.\/}
+Consider a representative agent economy with a power utility agent facing ``Poisson risk.''
+Utility is $u(c) = c^{1-\alpha}/(1-\alpha) $ with risk aversion
+parameter $\alpha > 0$.
+Log consumption growth is $ z = \log g = \log c_1 - \log c_0 $
+for $ z = 0,1,2, \ldots$ with probabilities
+$ p(z) = e^{-\omega} \omega^z/z! $ for some parameter $\omega>0$.
+%
+\begin{parts}
+\item What is the pricing kernel in each state $z$?  
+\item What are the state prices?
+\item What are the risk-neutral probabilities $p^*(x)$?
+How do they differ from the true probabilities $p(x)$?
+\item 
+\item Show that the risk-neutral probability distribution is Poisson.
+\end{parts}
+
+\begin{solution}
+\begin{parts}
+\item The pricing kernel is
+\begin{eqnarray*}
+    m(x) &=& \beta e^{-\alpha x} .
+\end{eqnarray*}
+\item State prices are
+\begin{eqnarray*}
+    Q(x) &=& p(x) m(x) \;\;=\;\; (1-\omega) \omega^x \beta e^{-\alpha x} .
+\end{eqnarray*}
+\item Risk-neutral probabilities are $ p^*(x) = p(x) m(x) / q^1 $.
+Here $q^1 = E(m) = (1-\omega) \beta /(1-\omega e^{-\alpha}) $.
+Risk-neutral probabilities are therefore
+\begin{eqnarray*}
+    p^*(x) &=&  \omega^x  e^{-\alpha x}(1-\omega e^{-\alpha}) .
+\end{eqnarray*}
+If $\alpha = 0$ (zero risk aversion), then $p^*(x) = p(x)$.
+Otherwise $p^*$ is lower than $p$ for large $x$,
+and the reverse for small $x$.
+As usual, ``good states'' have lower value, which here is reflected
+in the risk-neutral probability.
+In (a) it was reflected in the pricing kernel.
+\end{parts}
+\end{solution}
+
+
+\question {\it Poisson risk.\/} 
+
+
+\question {\it Probabilities, two flavors.\/}
+
+
+
+\end{questions}
+
+\input{../../LaTeX/footer.tex}
+
+\end{document}
+
+

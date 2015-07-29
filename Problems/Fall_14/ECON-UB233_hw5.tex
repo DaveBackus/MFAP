@@ -1,0 +1,266 @@
+\documentclass[11pt]{exam}
+
+\input{../../LaTeX/preamble.tex}
+
+\printanswers
+
+% document starts here
+\begin{document}
+\parskip=\bigskipamount
+\parindent=0.0in
+\thispagestyle{empty}
+{\large ECON-UB 233 \hfill Dave Backus @ NYU}
+
+\bigskip\bigskip
+\centerline{\Large \bf Lab Report \#5: Returns \& Risk Premiums}
+\centerline{Revised: \today}
+
+\bigskip
+{\it Due at the start of class.
+You may speak to others, but whatever you hand in should be your own work.
+Please include your Matlab code.}
+
+\begin{solution}
+Brief answers follow,
+but see also the attached Matlab program.
+Download the pdf, open, and click on the pushpin:
+\attachfile{hw5_f14.m} \\
+\end{solution}
+
+\begin{questions}
+%-----------------------------------------------------------------------
+\question {\it Disaster risk and the equity premium.\/}
+We add a ``disaster'' state to our analysis of the equity premium
+and see how it changes our perspective.
+We know power utility agents dislike negative skewness,
+so we conjecture that an asset with a disaster outcome will
+have a large risk premium.
+The key input is the distribution of log consumption growth,
+\begin{eqnarray*}
+    \log g &=& \left\{
+                \begin{array}{ll}
+                \mu - \sigma & \mbox{with probability } (1-\omega)/2 \\
+                \mu + \sigma & \mbox{with probability } (1-\omega)/2 \\
+                \mu - \theta & \mbox{with probability } \omega .
+                \end{array}
+                \right.
+\end{eqnarray*}
+If $\omega = 0$, we're back to our symmetric two-state distribution.
+But if we choose a small positive value of $\omega$ and a ``largish'' $\theta>0$,
+we have a ``disaster'' state that changes the distribution dramatically.
+
+We'll define equity as a claim to consumption growth $g$
+and explore the impact of a disaster state on the equity premium.
+Suppose, as usual, that we have a representative agent with power utility.
+Preference parameters are $\beta = 0.99$ and $\alpha = 10$ throughout.
+
+\begin{parts}
+\item Verify that the mean and variance of log consumption growth are
+\begin{eqnarray*}
+    E (\log g)   &=&  \mu - \omega \theta \\
+    \mbox{Var}(\log g) &=& (1-\omega) (\sigma^2 + \omega \theta^2) .
+\end{eqnarray*}
+
+\item If $\omega = 0$, what values of $\mu$ and $\sigma$ deliver
+the observed mean and variance of log consumption growth, namely
+0.0200 and $0.0350^2$?
+
+\item With these parameter values, compute the equity premium and its inputs.
+
+\item Now consider $\omega = 0.01$ and $\theta = 0.30$.
+(These numbers are based on a series of studies by Robert Barro and his coauthors.)
+With these numbers, what values of $\mu$ and $\sigma$ reproduce
+the observed mean and variance of log consumption growth?
+
+\item Compute the equity premium and its components
+with these parameter values.
+How does it compare to your previous calculation?
+
+\item
+What are the maximum Sharpe ratios when $\omega = 0$ and when $\omega = 0.01$?
+How do they compare to the Sharpe ratio we observe for equity in US data?
+
+\item
+What is entropy when $\omega = 0$ and when $\omega = 0.01$?
+
+\item Summarize what you've found.
+How does a disaster state affect the magnitude of risk premiums
+in this economy?
+\end{parts}
+
+\begin{solution}
+The idea is to show how changing the distribution
+in ways that produce negative skewness can increase risk
+premiums even if we keep the standard deviation of log consumption
+growth the same.
+
+\begin{parts}
+\item I did this using the cgf; see the Matlab code.
+
+\item The expressions for the mean and variance give us
+\begin{eqnarray*}
+    0.0200  &=&  \mu - \omega \theta  \\
+    0.0350^2 &=& (1-\omega) \sigma^2 + \omega (1-\omega) \theta^2 ,
+\end{eqnarray*}
+When $\omega = 0$, the mean is $\mu = 0.0200$ and the standard
+deviation is $\sigma = 0.0350$.
+
+\item With these values, we have
+$q^1 = 0.8607$, $r^1 = 1.1618$,
+$ E(r^e) = 1.1757$,
+and the equity premium $ E(r^e-r^1) = 0.0138$.
+As we've come to expect, the equity premium is smaller than we see in the data
+(0.0571 was our estimate).
+
+\item With $\omega = 0.01$, we set
+$ \mu = 0.0230$ and $\sigma = 0.0183$.
+
+
+\item The disaster calculations give us
+$r^1 = 1.0529$,
+$ E(r^e) = 1.1007$, and $ E(r^e-r^1) = 0.0478$.
+This is much closer to what we see in the data.
+In this respect at least, the disaster state is pushing us in the right direction.
+
+\item
+The maximum Sharpe ratio $ \mbox{Std}(m)/E(m)$ rises from 0.3364 to 1.3717.
+What we see in the data is 0.3049, so even the first one would have done it.
+Here even the first calculation would have worked.
+That's largely because risk aversion is so large.
+
+\item Entropy is an upper bound on the equity premium computed from log returns.
+Here it rises from 0.0600 to 0.1585.
+Even the first one is above what we need.
+
+\item Evidently a disaster state gives us a better chance to
+explain observed risk premiums.
+It's not part of the question, but this probably overstates the case:
+risk aversion is pretty high here, and the disaster state is pretty bad.
+\end{parts}
+\end{solution}
+
+
+%-----------------------------------------------------------------------
+\item {\it Valuing put options .\/}
+We can value options the same way we value any other asset,
+it's simply a matter of getting the cash flows right.
+With future topics in mind,
+we use a discrete approximation to a normal mixture,
+which we use to produce departures from normality: skewness, excess kurtosis, and so on.
+(No, that's not an oxymoron; see the notes on random variables.)
+
+To be specific, we'll use two normal distributions as inputs.
+The first one has mean zero and variance one,
+the second has mean $\theta$ and variance $\delta$.
+We denote their pdf's by $p_1$ and $p_2$, respectively.
+The pdf of our state variable $z$ is
+\begin{eqnarray*}
+    p(z) &=& (1-\omega) p_1(z) + \omega p_2(z)
+\end{eqnarray*}
+for some mixing parameter $\omega$ between zero and one.
+Roughly speaking, $\theta$ governs skewness and $\delta$ governs excess kurtosis.
+We'll set $\omega = 0.2$, $\theta = -1$, and $\delta = 2$.
+%
+We construct a discrete approximation with the Matlab commands
+\begin{verbatim}
+% grid
+zmax = 6;
+dz = 0.1;
+z = [-zmax:dz:zmax]';
+% mixture
+omega = 0.2; theta = -1; delta = 2;
+p1 = exp(-z.^2/2)*dz/sqrt(2*pi);
+p2 = exp(-(z-theta).^2/(2*delta))*dz/sqrt(2*pi*delta);
+p  = (1-omega)*p1 + omega*p2;
+\end{verbatim}
+
+
+We'll use the usual representative agent setup.
+Log consumption growth is
+\begin{eqnarray*}
+    \log g(z) &=& \mu + \sigma z .
+\end{eqnarray*}
+The mean and variance are then
+\begin{eqnarray*}
+    E (\log g) &=& \mu + \omega \theta  \\
+    \mbox{Var}(\log g) &=& \sigma^2 [(1-\omega) + \omega (\theta^2 + \delta)] .
+\end{eqnarray*}
+With power utility, the pricing kernel is
+\begin{eqnarray*}
+    m(z) &=& \beta \exp(-\alpha \log g)
+            \;\;=\;\; \beta \exp[-\alpha (\mu + \sigma z) ] .
+\end{eqnarray*}
+We'll set $\beta = 0.99$ and $\alpha = 1$.
+
+
+\begin{parts}
+\item Plot $p$ (the mixture) and $p_1$ (the standard normal).
+How do they differ?
+
+\item Use the commands
+\begin{verbatim}
+meanz = sum(p.*z)
+stdz  = sqrt(sum(p.*(z-meanz).^2))
+skewz = sum(p.*(z-meanz).^3)/stdz^3
+xkurz = sum(p.*(z-meanz).^4)/stdz^4 - 3
+\end{verbatim}
+to compute properties of the mixture distribution.
+What indications do they give us that the distribution is not normal?
+What are the skewness and excess kurtosis of $\log g$?
+
+\item Choose values of $\mu$ and $\sigma$ to reproduce
+the mean (0.0200) and standard deviation (0.0350) of $\log g$.
+
+\item Define equity as a claim to the dividend $d(z) = 100 \ g(z) $.
+What is its price?
+Its expected return?
+
+
+\item A put option with  ``strike price'' $k$ gives the owner the right to sell the
+dividend $d(z)$ at date 1 for price $k$.
+The owner of the option will only do this if $ d(z) < k$,
+which gives rise to the cash flow
+\begin{eqnarray*}
+    f(z) &=& \max \{ 0, k-d(z) \} .
+\end{eqnarray*}
+You can compute this in Matlab with the commands
+\begin{verbatim}
+k = 125;
+f = (k-d).*(k>d);
+\end{verbatim}
+(Ask yourself what {\tt (k>d)} does.  Try it if you're not sure.)
+Graph the cash flow $f(z)$ versus the dividend $d(z)$ for $k = 125$.
+
+
+\item What is the price (at date 0) of the option?
+(Note:  This is a claim to the cash flow $f$ and priced
+as we would any other cash flow.)
+What is its expected return?
+\end{parts}
+
+\begin{solution}
+This is a warmup for our next topic:  options.
+\begin{parts}
+\item Run the Matlab code.
+You'll see that the mixture is skewed left.
+
+\item The mixture has negative skewness (evident in the figure)
+and positive excess kurtosis.
+
+\item We need $\mu = 0.2200$ and $\sigma = 0.0296$.
+
+\item Its price is $q^e = 98.9965$ and its expected return is $ E(r^e) = 1.2520 $.
+
+\item The cash flow has a slope of minus one until $d=k = 125$,
+and is zero after that.
+
+\item The option's price is 1.8611.
+Its expected return is 1.1998, which is below equity.
+
+\end{parts}
+\end{solution}
+
+\end{questions}
+
+\input{../../LaTeX/footer.tex}
+\end{document}

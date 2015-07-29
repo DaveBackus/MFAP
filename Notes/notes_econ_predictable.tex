@@ -89,16 +89,16 @@ In particular, excess returns are higher when the yield curve is steeper,
 which is generally when short-term interest rates are low.
 More on this shortly.
 
-These facts are reasonably robust, but they're not bullet-proof.  
-Momentum, for example, went the other way during the crisis.  
-Ditto the carry trade.  
+These facts are reasonably robust, but they're not bullet-proof.
+Momentum, for example, went the other way during the crisis.
+Ditto the carry trade.
 Despite this, they're a good place to start in thinking
-about the dynamics of asset returns.  
+about the dynamics of asset returns.
 
 
 \section{Predicting bond returns}
 
-We're interested in bond returns, but focus on 
+We're interested in bond returns, but focus on
 closely related changes in forward rates.
 Recall that bond prices are connected to forward rates by
 \begin{eqnarray*}
@@ -149,7 +149,7 @@ We can get a sense of its weaknesses by running the regression
 If the EH is true, we should find that $b_n = 1$.
 (We should also find $a_n=0$, but allowing it to be nonzero
 takes care of any constant term premiums.
-Can you see why?) 
+Can you see why?)
 For technical reasons, we typically run the alternative
 \begin{eqnarray}
     f^{n-1}_{t+1} - f^0_t &=& a_n + b_n (f^n_t - f^0_t) .
@@ -171,8 +171,8 @@ we see that the future short rate $f^0_{t+1}$ goes up by 0.5,
 not the 1.0 implied by the EH.
 Thus a steeper yield curve implies higher returns on long bonds, because the
 increase in the short rate --- and the ensuing capital loss on a two-period bond ---
-is smaller than the EH predicts.  
-% ?? more 
+is smaller than the EH predicts.
+% ?? more
 
 
 \begin{comment}
@@ -229,27 +229,27 @@ curve.
 
 \section{Predictability in the Vasicek and CIR models}
 
-If the evidence is summarized by (\ref{eq:forward-regressions}), 
-what do our models suggest?  
+If the evidence is summarized by (\ref{eq:forward-regressions}),
+what do our models suggest?
 We'll review the performance of the Vasicek and Cox-Ingersoll-Ross models
-along this dimension.  
+along this dimension.
 In both models, bond prices are loglinear functions of the state:
-$ \log q^n_t = A_n + B_n z_t$.  
+$ \log q^n_t = A_n + B_n z_t$.
 
 {\it Vasicek model.\/}
-Consider the model 
+Consider the model
 \begin{eqnarray*}
     \log m_{t+1} &=& - \lambda^2/2 - z_t + \lambda w_{t+1} \\
          z_{t+1} &=& (1-\varphi) \delta + \varphi z_t + \sigma w_{t+1} .
 \end{eqnarray*}
-The no-arbitrage theorem implies the recursions 
+The no-arbitrage theorem implies the recursions
 \begin{eqnarray*}
     A_{n+1} &=& A_n + B_n (1-\varphi) \delta - \lambda^2/2 + (\lambda + B_n \sigma)^2/2 \\
     B_{n+1} &=& B_n \varphi - 1 .
 \end{eqnarray*}
-The second equation implies 
+The second equation implies
 $B_1 = -1$ and $B_2 = -(1+\varphi)$.
-The first two forward rates are therefore 
+The first two forward rates are therefore
 \begin{eqnarray*}
     f^0_t &=& \mbox{constants} + z_t \\
     f^1_t &=& \mbox{constants} + (B_1-B_2) z_t
@@ -273,21 +273,21 @@ there's no variation in either risk or the price of risk,
 so premiums are constant.
 We need something else.
 
-[Exercise.  
+[Exercise.
 What is the log excess return on an $n$-period bond in this model?
-Show that it doesn't depend on $z_t$.] 
+Show that it doesn't depend on $z_t$.]
 
 {\it CIR model.\/}
 This model has variation in risk at its core,
 so we have a chance of doing better.
-The model, you may recall, 
-is 
+The model, you may recall,
+is
 \begin{eqnarray*}
     \log m_{t+1} &=& - (1+\lambda^2/2 ) z_t + \lambda z_t^{1/2} w_{t+1} \nonumber \\
          z_{t+1} &=& (1-\varphi) \delta + \varphi z_t + \sigma z_t^{1/2} w_{t+1} .
          \label{eq:square-root}
 \end{eqnarray*}
-It leads to the recursions 
+It leads to the recursions
 \begin{eqnarray*}
     A_{n+1} &=& A_n + B_n (1-\varphi) \delta \\
     B_{n+1} &=& \varphi B_n -(1+\lambda^2/2) + (\lambda + B_n \sigma)^2/2 .
@@ -330,7 +330,7 @@ it slopes the wrong way.
 
 You might think otherwise, but the CIR model makes some progress in generating
 predictable changes in forward rates.
-It's just that the variation goes the wrong way.  
+It's just that the variation goes the wrong way.
 What can we do?
 If we look at the model, perhaps with an unreasonable amount
 of insight,
@@ -339,8 +339,8 @@ that generate predictability in forward rate changes:
 variation in risk (the term that includes $\sigma$)
 and variation in the price of risk (the term that includes $\lambda$).
 We had both in the CIR model.
-The next model focuses on the latter, 
-our third and last example of an exponential-affine model.  
+The next model focuses on the latter,
+our third and last example of an exponential-affine model.
 
 
 The model is
@@ -351,7 +351,7 @@ The model is
 \end{eqnarray*}
 This structure is cleverly rigged to deliver loglinear bond prices.
 If $\lambda_1 = 0$, we're back to Vasicek.
-Otherwise the price of risk depends on the state $z_t$. 
+Otherwise the price of risk depends on the state $z_t$.
 
 We solve it the usual way.
 We guess  $ \log q^n_t = A_n + B_n z_t$ and substitute into the
@@ -360,7 +360,7 @@ The conditional mean and variance are
 \begin{eqnarray*}
    E_t \left( \log m_{t+1} + \log q^{n}_{t+1} \right) &=&
             - (\lambda_0 + \lambda_1 z_t)^2/2 + \delta + (\varphi B_n -1) z_t  \\
-   \mbox{Var}_t \left( \log m_{t+1} + \log q^{n+1}_t \right) &=&
+   \mbox{Var}_t \left( \log m_{t+1} + \log q^{n}_{t+1} \right) &=&
             \left[B_n \sigma + (\lambda_0 + \lambda_1 z_t)\right]^2  .
 \end{eqnarray*}
 The ``mean plus variance over two'' formula gives us, eventually,

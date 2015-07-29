@@ -16,6 +16,9 @@
 * Figure out graphs v underlying future value and v strike k
 \end{comment}
 
+*** Focus on how we explain smile *** 
+Outline:  fact, explanation 
+
 \bigskip
 Options are one of the most common financial derivatives, and
 a nice application of asset pricing fundamentals.
@@ -926,17 +929,15 @@ that is, its probability density function is
 \smallskip
 \begin{enumerate}
 \item What is the mean of $x$? The variance?
-(10~points)
 \item What is the no-arbitrage condition here?
-(10~points)
 \item What is the cash flow of a put option with strike price $k$?
 What is its value?
-(20~points)
 \item How does the price of a put option change when we increase $\theta$?
 Why?
-(10~points)
 \end{enumerate}
 
+\needspace{2\baselineskip}
+Answer.
 \begin{enumerate}
 \item You might guess the mean and variance.  If not, they follow from
 \begin{eqnarray*}
@@ -1270,6 +1271,7 @@ in the smile,
 and $\delta$ generates kurtosis and convexity in the smile.
 
 Here's the code:
+{\small
 \begin{verbatim}
 disp('Inputs')
 tau = 1;
@@ -1340,6 +1342,7 @@ plot(k, vol, 'b+')
 xlabel('Strike Price')
 ylabel('Implied Volatility')
 \end{verbatim}
+}
 \end{enumerate}
 
 \needspace{2\baselineskip}
