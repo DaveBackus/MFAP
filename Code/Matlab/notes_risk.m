@@ -1,24 +1,23 @@
-%  notes_risk.m
-%  notes_math_rvs 
-%  Calculations to accompany notes on risk and risk aversion 
-%  For:  "Macro-foundations for asset prices"
-%  Written by:  Dave Backus, NYU, August 2013 and after 
+% Calculations to accompany notes on risk and risk aversion 
+% For:  "Macro-foundations for asset prices"
+% Written by:  Dave Backus, NYU, August 2013 
 clear all 
 format compact
 
-%%
 disp('Find your risk aversion') 
-c = [100; 200];
+c = [30; 60];
 p = [1/2; 1/2]; 
 cbar = sum(p.*c)
 
-alpha = 1.5;
+%mu = 35 
+alpha = 2;
+eu  = sum(p.*c.^(1-alpha))/(1-alpha) 
 mu = sum(p.*c.^(1-alpha)).^(1/(1-alpha)) 
+%eumu = mu^(1-alpha)/(1-alpha)
 
-%plot(alphagrid, rp)
 
 %%
-disp('Find your risk aversion -- upside risk version') 
+disp('Find your risk aversion (variant with upside risk)') 
 % inputs 
 c = [100; 200; 1000];
 omega = 0.495;
@@ -46,7 +45,7 @@ mgf = exp(omega*(exp(s*delta)-1))       % Poisson
 cbar = subs(diff(mgf,s,1),s,0) 
 
 %%
-% playing 
+% playing around 
 
 alpha = 0.5;
 c = [0.1:0.1:5];
@@ -54,9 +53,5 @@ c = [0.1:0.1:5];
 u = c.^(1-alpha)/(1-alpha);
 
 plot(c,u)
-
-
-
-
 
 

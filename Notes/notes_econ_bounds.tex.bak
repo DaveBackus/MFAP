@@ -615,7 +615,7 @@ $ m(-1) = 1.0671$ and $m(1) = 0.7520 $.
 \item The price of a bond is $q^1 = 0.9095$, making the riskfree rate
 $ r^1 = 1.0995 $.
 \item The price of equity is $ q^e =  0.9229$, making
-the returns $r^e(1) =   1.0675 $ and $ r^e(2) =  1.1449 $.
+the returns $r^e(-1) =   1.0675 $ and $ r^e(1) =  1.1449 $.
 \item The equity premium is $ E(r^e-r^1) =  0.0067$.
 The Sharpe ratio is the excess return's mean divided by its standard deviation:
 $ 0.0067/0.0387 = 0.1732$.
@@ -994,6 +994,12 @@ which might be reflected in negative cumulants of all orders above the first one
 \end{enumerate}
 
 \end{enumerate}
+
+\section*{Matlab code}
+
+To access related Matlab code, download this document as a pdf, open it in Adobe Reader or the equivalent, and click on the pushpin:
+\attachfile{../Code/Matlab/notes_equity_premium.m}
+
 
 
 

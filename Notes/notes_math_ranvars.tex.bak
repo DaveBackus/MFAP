@@ -207,6 +207,18 @@ I like looking at the whole distribution,
 or even better a picture of it,
 but summary numbers can be useful, too.
 
+We look at four such summary numbers.  Their precise definition will have to wait,
+but here's the list:
+\begin{itemize}
+\item The {\it mean\/} is a measure of {\it location\/} that tells us roughly where the
+distribution is.
+\item The {\it variance\/} and {\it standard deviation\/}are
+measures of dispersion that describe how spread out (``dispersed'') the distribution is.
+\item {\it Skewness\/} is a measure of how asymmetric the distribution is around its mean.
+\item {\it Kurtosis\/} we'll return to.
+\end{itemize}
+%These four numbers give us a rough sense of the distribution.
+
 We start with the concept of an {\it expectation\/}.
 If $x$ is a random variable with probabilities $p$,
 its expectation is the weighted average value of $x$
@@ -219,8 +231,7 @@ For a continuous random variable,
 we replace the sum with an integral.
 The notation is a little cumbersome, which is why
 we just write $E(x)$ most of the time.
-
-We can extend this concept to any function of $x$:
+The same concept applies to any function $f$ of $x$:
 \begin{eqnarray}
     E [f(x)] &=& \sum_z  f[x(z)] p[x(z)] .
     \label{eq:expectation}
@@ -229,18 +240,21 @@ There may be cases where the sum (or integral) doesn't converge,
 but we won't worry about that now --- or ever, really.
 
 We see from the definition (\ref{eq:expectation}) that expectations are linear,
-which means they satisfy these two properties.
-(i)~If $f$ is a sum, so that $f(x) = g_1(x) + g_1(x)$ for two functions $g_1$ and $g_2$,
+which means they satisfy these two properties:
+\begin{itemize}
+\item If $f$ is a sum, so that $f(x) = g_1(x) + g_1(x)$ for two functions $g_1$ and $g_2$,
 then its expectation is the sum of the expectations of its components.
 In short-hand notation,
 \begin{eqnarray*}
     E[f(x)] &=& E[g_1(x)] + E[g_2(x)] .
 \end{eqnarray*}
-(ii)~If we multiply $f$ by a constant $c$, then its expectation is $c$ times
+\item If we multiply $f$ by a constant $c$, then its expectation is $c$ times
 the expectation of the original function:
 \begin{eqnarray*}
     E[cf(x)] &=& c E[f(x)] .
 \end{eqnarray*}
+\end{itemize}
+Both follow from properties of sums or integrals.
 Together they imply that the expectation of a linear function of $x$
 is the same linear function of its expectation:
 \begin{eqnarray*}
@@ -257,13 +271,14 @@ A {\it moment\/} is the expectation of a power of $x$:
 for $j$ a positive integer.
 The first one ($\mu_1^\prime$) is known as the {\it mean\/}.
 It's a measure of the ``location'' of the probability distribution.
-If we change the mean,  the probability distribution shifts left or right.
+%If we change the mean,  the probability distribution shifts left or right.
 Think about graphing the probability distribution
 of $x+a$ for different values of $a$.
+If $a$ is positive, we shift the distribution to the right.
+If $a$ is negative, we shift it to the left.
+Both changes are reflected in the mean.
 If the mean of $x$ is $\mu^\prime_1$, then the mean of $x+a$ is
-$\mu^\prime_1 + a$,
-so when we move the distribution back and forth by changing $a$,
-that's reflected in the mean.
+$\mu^\prime_1 + a$.
 
 We often use {\it central moments\/} instead, meaning we look at powers
 of $x$ minus its mean:
@@ -301,15 +316,15 @@ better (by which I mean easier) way.
 The {\it standard deviation\/} is the (positive) square root of the variance
 and is often used the same way.
 
-Let's see how the mean and standard deviation reflect
-location and scale, respectively.
-Suppose $x$ has given mean and standard deviation.
-What are the mean and standard deviation of $y = a + b x$?
+Linear transformations of random variables change their location
+and (what we'll call) scale:  roughly, the units in which the variable is measured in.
+Consider the linear transformation $ y = a + b x$.
+How do the  mean and standard deviation of $y$ relate to those of $x$?
 The mean is $ E(y) = a + b E(x)$,
 so $a$ moves it up and down.
 The variance is
 \begin{eqnarray*}
-    \mbox{Var}(x) &=& E \left\{ [y - E(y)]^2 \right\}
+    \mbox{Var}(y) &=& E \left\{ [y - E(y)]^2 \right\}
         \;\;=\;\; E \left\{ [a + b x - a - b E(x)]^2 \right\} \\
         &=& E \left\{  [ b x - b E(x)]^2 \right\}
         \;\;=\;\; b^2 E \left\{ [ x - E(x)]^2 \right\}
@@ -320,6 +335,10 @@ If $\sigma$ is the standard deviation of $x$,
 then $|b| \sigma$ is the standard deviation of $y$.
 (Why absolute value?  The standard deviation is the positive square root of the variance.)
 Note that all of this follows from applying definitions.
+
+{\bf Exercise.\/} Suppose $x$ is the daily temperature in Central Park at noon in Celsius
+and $y$ is the temperature in Fahrenheit.
+We are given the mean and variance of $x$.  What are the mean and variance of $y$?
 
 %It measures the ``scale'' of a random variable
 %in the following sense:
@@ -378,7 +397,7 @@ I'll surrender now and come back to fight another day.
 
 
 \item {\it Normal.\/}
-We'll postpone this one, too.
+We'll postpone this one, too, for the same reason.
 \end{itemize}
 
 Our last topic here is {\it sample moments\/}:
@@ -432,7 +451,7 @@ Note that $h(0) = 1$.
 % ?? [You might also run across references to the characteristic function
 %$ h(is) = E ( e^{is x} ) $, where $i$ is the square root of $-1$. Ignore them.]
 
-The mgf is a tool, like a hammer, and we hammer things with it.
+The mgf is a tool, like a hammer, and we go around and hammer things with it.
 If we hammer probability distributions, we get moments as a byproduct.
 Recall the Taylor series expansion (\ref{eq:eofx-powerseries}) of the exponential function.
 If we expand $e^{sx}$ the same way and take expectations,
@@ -910,15 +929,16 @@ for example, use Poisson mixtures of normals.
 
 We have seen how to formalize the idea of random variables,
 aka things that are random.
-We also have some summary measures that describe it.
+We also have some summary measures that describe them. 
 The mean and variance describe location and dispersion.
-Skewness and excess kurtosis describe the shape of the distribution
-and are independent of scale and location.
+Skewness and excess kurtosis describe the shape of the distribution;
+by construction, they are independent of location and scale.
 They are useful in identifying departures from normality,
 the first focusing on asymmetry, the second on the tails.
-Covariances and correlations describe
-relations between random variables.
-We'll use them all --- intensively --- from now on.
+Covariances and correlations describe relations between random variables.
+We'll use them all to describe the risks faced by individuals
+facing uncertain incomes and asset returns.  
+
 
 \section*{More}
 
@@ -926,9 +946,19 @@ This is basic probability theory, which you can find in lots of places.
 You should think seriously about taking any course with a similar title.
 One thing to keep in mind:
 the level of mathematical sophistication ranges from low to extremely high.
-What we've done is between low and medium, but that's not a bad place to be.
+What we've done is between low and medium, which isn't a bad place to be.
+The high end typically uses measure theory, an approach to probability
+that integrates  discrete and continuous probability distributions.
+In some sense it's the right way to do things,
+but it's not one that shows up much in applied work.
+As one wag
+\href{http://andrewgelman.com/2009/05/27/the_benefits_of/}{quipped}:
+``A theoretical statistician knows all about measure theory
+but has never seen a measurement whereas the actual use of measure theory by the applied statistician is a set of measure zero.''
+That said, I've run across practical situations (mixtures) in which measure-theoretic concepts
+were helpful.
 
-Wikipedia is very good for properties of particular distributions.
+Wikipedia is a good source for properties of particular distributions.
 Search for (say) ``Poisson distribution'' and you'll find lots of what we've done here,
 and more.
 Wikipedia's also ok on the underlying mathematics, but you're never sure what
@@ -979,7 +1009,7 @@ Consider the following observations of a random variable $x$:
 \end{enumerate}
 %
 Answer.
-Here's a script:
+Here's a Matlab script:
 \begin{verbatim}
 x = [2,-1,4,3]'
 mu1p = sum(x)/4
@@ -1049,7 +1079,7 @@ kappa2 = subs(diff(cgf_y,s,2),s,0)  % variance
 Moments are clearly defined as expectations of powers of random variables, $E(x^j)$.
 But what are cumulants?
 That's less clear, but we can connect them to moments using the relation
-between the mgf $h(s)$ and cgf $k = \log h(s)$.
+between the mgf $h(s)$ and cgf $k(s) = \log h(s)$.
 \begin{enumerate}
 \item What is the $j$th derivative of $h(s)$ evaluated at $s=0$?
 \item How are derivatives of $k(s)$ connected to derivatives of $h(s)$?
@@ -1368,8 +1398,6 @@ Answer.
             \;\;=\;\; \frac{ 5.25} {3.5^{1/2} 29.5^{1/2}}
             \;\;=\;\; 0.5167 .
 \end{eqnarray*}
-We noted earlier that correlations are independent of scale.
-You can verify that by replacing $y$ with $ 3y+17$ and redoing the calculations.
 Sample Matlab code:
 \begin{verbatim}
 x = [2,-1,4,3]'
@@ -1381,9 +1409,17 @@ vary = mean((y-ybar).^2)
 covxy = mean((x-xbar).*(y-ybar))
 corrxy = covxy/sqrt(varx*vary)
 \end{verbatim}
+We noted earlier that correlations are independent of scale.
+You can verify that by replacing $y$ with $ 3y+17$ and redoing the calculations.
 \end{enumerate}
 
 \end{enumerate}
+
+
+\section*{Matlab code}
+
+To access related Matlab code, download this document as a pdf, open it in Adobe Reader or the equivalent, and click on the pushpin:
+\attachfile{../Code/Matlab/notes_math_rvs.m}
 
 
 

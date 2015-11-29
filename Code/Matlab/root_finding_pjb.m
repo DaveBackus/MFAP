@@ -42,7 +42,7 @@ if sign(f_lo)==sign(f_hi), disp('*** Error: solution not bracketed'), end
 % find root
 t0 = cputime;
 for it = 1:maxit      
-    x_new = (x_lo + x_hi)/2;      % cut interval in half 
+    x_new = (x_lo + x_hi)/2      % cut interval in half 
     f_new = f(x_new);
     diff_x = max(abs(x_lo - x_hi));
     diff_f = max(abs(f_new));
@@ -73,7 +73,7 @@ disp('2. Newton''s method')
 disp('---------------------------------------------------------------')
 
 % note vector of a's 
-a = [8; 2; 13];
+a = [2];
 
 % example function and its derivative 
 f = @(x) x.^2 - a;
@@ -91,7 +91,7 @@ f_now = f(x_now);
 t0 = cputime; 
 for it = 1:maxit
     fp_now = fprime(x_now);
-    x_new = x_now - f_now./fp_now;
+    x_new = x_now - f_now./fp_now
     f_new = f(x_new);
     diff_x = max(abs(x_new - x_now));
     diff_f = max(abs(f_new));

@@ -13,27 +13,13 @@
 \centerline{Revised: \today}
 
 
-{\it Not quite kosher...} 
-
 \begin{comment}
+
+%?? Stress diff betw conditional and "unconditional" distributions
 
 *** big picture overview:  about conditional probs, hard to do in one dimension...
 
-*** clean up practice problems, start simpler
-
-*** Think about recursifying, defining conditional probs
-
-{\bf
-*** Meyn and Tweedie re stability \\
-*** Recursive approach \\
-*** Limiting behavior of mean and (esp) variance \\
-*** Law of iterated expectations
-}
-
 ?? *** think of this as diff rvs **** \\
-stationary = time-homogeneous
-
-Hansen and Sargent:  an economic model is a stochastic process...
 
 \end{comment}
 
@@ -60,14 +46,14 @@ so that behavior at one date is similar to the behavior at another.
 Without something like this, it's hard to know how we'd compare models with data.
 Think, for example, about estimating the mean from time series data.
 If every period has its own distribution, what does this even mean?
-We focus on linear normal processes, where the analysis if relatively transparent,
+We focus on linear normal processes, where the analysis is relatively transparent,
 but the same ideas extend to other environments.
 
 There are some optional sections that use linear algebra.
 Keep in mind:  they're optional.
 But also keep in mind:  linear algebra is one of the great things in life,
 something you should think about learning if you want to have more fun in life.
-The optional applications to Markov chains are a good example.
+The applications to Markov chains are a good example.
 
 
 \section{Event trees}
@@ -99,16 +85,17 @@ $z^1 = (z_0, z_1 = 1)$.
 The node in the upper right labeled (C)
 comes from the history $z^2 = (z_0, z_1 = 1, z_2 = 1)$.
 We're defining nodes by listing every step we followed to get there,
-which is sufficient but seems like overkill.
+which is sufficient but seems a little excessive.
 
-*** NB:  two kinds of probs:  conditional on start, conditional on previous
-
-We construct probabilities of nodes by stringing together probabilities
-of the branches that give rise to them.
+You may notice that we have two kinds of probabilities here for
+a node like (C):  the probability conditional on being at (B)
+and the probability from the starting point $z_0$.
+Typically we construct the latter from the former; that is, from
+probabilities from one period to the next.
 Suppose for example, that the probability of
 taking branch $z_1=1$ from $z_0$ is $\p(z_1=1| z_0)$,
-and the probability of continuing with $z_2 = 1$ is $\p[z_2=1 | z^1 = (z_0, z_1=1) ]$,
-then the probability at $z_0$ of getting to the upper right node is the product:
+and the probability of continuing with $z_2 = 1$ is $\p[z_2=1 | z^1 = (z_0, z_1=1) ]$.
+Then the probability at $z_0$ of getting to (C) is the product:
 \begin{eqnarray*}
     \p[z_2=1 | z^1 = (z_0, z_1=1) ] &=& \p(z_1=1| z_0) \; \p[z_2=1 | z^1 = (z_0, z_1=1) ] .
 \end{eqnarray*}
@@ -116,6 +103,10 @@ In words:  the probability of getting from $z_0$ to (C)
 is the probability of getting from $z_0$ to (A)
 times the probability of getting from (A) to (C).
 
+That gives us two ways of constructing probabilities over the tree.
+We can start with one-period probabilities and multiply.
+Or we can start with multi-period probabilities
+--- the probabilities of every node in the tree as of date zero --- and divide.
 
 Given a tree, we can then specify things like cash flows at each node
 and compute their prices at earlier nodes.
@@ -125,10 +116,10 @@ It's analogous to what we did earlier with random variables.
 In our two-period settings, cash flows (and other things)
 were random because they were functions of the state $z$.
 Here the same idea applies but with state $z$ replaced by history $z^t$.
-In this respect, the appropriate definition of a ``state'' at date $t$ is the complete
-history of events up to then, namely $z^t$.
+In this respect, the appropriate definition of a ``state'' at date $t$ is
+the history $z^t$.
 
-All of this works reasonably well, but it's way too cumbersome.
+All of this works reasonably well, but it's way too complicated.
 And without some regularity in how uncertainty works at different dates,
 it's hard to see how we'd be able to connect properties of the tree
 to analogous properties of data.
@@ -138,45 +129,51 @@ interest rate?  Or the growth rate of consumption?
 
 
 \section{Well-behaved stochastic processes}
+\label{sec:markov}
 
 
 We will use stochastic processes with a lot more structure
-on them than this.
-Why?  Lots of reasons, but mainly because they're simpler,
-a give us a clear link between models and evidence.
+than this.
+Why?  Lots of reasons, but mainly because they're simpler
+--- remember, simple is good ---
+and they give us a clear link between models and evidence.
 
-One kind of structure is what is called the {\it Markov property\/}:
-the probabilities of possible outcomes next period
-depend on this period's state, but not the complete history.
+We impose three kinds of structure:
+%
+\begin{itemize}
+\item {\it Markov.\/}  One kind of structure is named after the Russian
+mathematician Andrey Markov:
+the probabilities over states next period
+depend on this period's state, but not past states.
 Formally, we would write
 $\p(z_{t+1} | z^t ) = \p(z_{t+1} | z_t ) $.
-as a result, the event $z_t$ tells us everything we need to know
+That means we don't need the complete history $z^t$;
+the event $z_t$ tells us everything we need to know
 about the situation at date $t$.
 We will refer to it as the state for that reason.
-In a sense, we're limiting the memory to one period,
-but there's a standard trick to extend it without going back to the complete history.
-If we want a two-period memory, for example, we might define the state by
-$y_t = (z_t, z_{t-1})$ and apply the definition to
-$y_t$ rather than $z_t$.
-This works for any finite history, although it undercuts some
-of the simplification we were looking for.
+We'll see that clever definitions of the state allow us to make this
+more flexible than it looks.
 
-
-Another kind of structure is to use the same conditional
-probabilities $\p(z_{t+1} | z_t)$ at all dates.
-We would refer to such a process as {\it stationary\/}
-(it stays the same) or
-{\it time-homogeneous\/} (the same at all times).
-The date, for example, is irrelevant.
-It doesn't mean that the distribution over future states is always the same.
-It does mean that any variation in the distribution
+\item {\it Stationary.\/}
+The next example of structure is that the model is the same at all dates.
+Specifically,  the form of the probabilities $\p(z_{t+1} | z_t) = p(z_{t+1} | z_t) $
+doesn't vary with time $t$.
+The word stationary here means the function $p$ doesn't change.
+It doesn't mean that the distribution over future events is always the same.
+It does mean that any variation in their distribution
 works through the current state $z_t$.
+Terminology varies.  Some call this {\it time-homogeneous\/}:
+the same structure at all times.
 %We have the same process in 2020, for example, as we had in 2010.
 %By that we mean that $\p(z_{t+1}|z_t)$ has the same form,
 %although the current state $z_t$ may be different.
 %The point is that any difference between the two dates is captured
 %by the difference in their states --- between $z_{2010}$ and $z_{2020}$.
 
+
+\item {\it Stable.\/}
+Our final example of structure has to do with the behavior of probabilities
+over long time horizons.
 The Markov property refers to one-period conditional distributions
  $\p(z_{t+1} | z_t) $,
 but we can extend these one-period distributions to multiple periods.
@@ -184,8 +181,9 @@ The logic is similar to what we did with event trees:
 By stringing together one-period conditional distributions
 we can construct multi-period conditional distributions
 $\p(z_{t+k} | z_t) $ for any $k \geq 1$.
-We'll save the details until we have some specific candidates to work
-with, but we can probably imagine doing something of this sort.
+We'll save the details until we have specific candidates to work
+with, but you can probably imagine doing something of this sort.
+
 
 What happens as we extend $k$ to longer time horizons?
 The structure we've imposed so far allows a lot of different kinds
@@ -194,15 +192,74 @@ the conditional distribution will ``settle down.''
 By that we mean that the distribution $ \p(z_{t+k} = z | z_t) $
 converges as we increase $k$ to a unique distribution $\p(z)$
 that doesn't depend on the current state $z_t$.
-If it does, we say the process is {\it stable\/}.
+If it does, we say the process is {\it stable\/}
+and refer to the resulting $\p(z)$ as the
+{\it equilibrium distribution\/}.
 There are two conditions here:  that it converges, and that it converges
 to the same thing for every $z_t$.
-Terminology varies, but we will refer to the resulting $\p(z)$ as the
-{\it equilibrium distribution\/}.
 The concept of convergence here involves functions, something we'll do our best to finesse.
 
-Despite the brevity of this section, it has a lot of content.
-We'll see how it all works when we apply it.
+Terminology varies here, too.
+Some use the exotic term {\it ergodic\/}.
+Others, in a successful attempt to spread confusion, refer to such processes
+as {\it stationary\/}.
+\end{itemize}
+
+
+{\it Example.\/} I got this one from \href{http://www.hairer.org/notes/Markov.pdf}{Martin Hairer}.
+We have a light switch that can be on or off,
+which we represent with a state variable $z$ that equals one if the light is one, zero if it's off.
+Between any two dates, the state stays the same with probability $\pi = (1+\varphi)/2$
+and changes with probability $1- \pi = (1-\varphi)/2$, with $ - 1 < \varphi < 1 $.
+[Draw diagram.]
+This strange-looking notation turns out to be fortuitous.
+If $\varphi = 0$ this gives us 50-50 draws every period.
+If $ \varphi = 1$, the light stays in the same state forever.
+If $0 < \varphi < 1$ it's more likely the light will stay in the same state with greater
+probability than not.
+%That means knowing the current state is helpful in predicting the future state.
+%If the light is on now
+
+Does this stochastic process have the properties we mentioned?
+Let's check:
+\begin{itemize}
+\item Markov.  Yes, the probabilities of (on, off) next period depend on the current state,
+but not on the past.
+\item Stationary.  Yes, the probabilities are the same at all dates.
+(Hairer uses the term ``time-homogeneous.'')
+
+\item Stable.  This one we have to think about.
+What is the distribution over future lights being on or off?
+If the light is on at date $t$, the probability of it being on at $t+1$ is $(1+\varphi)/2 $.
+
+Over longer periods, we can compute probabilities recursively, meaning one period at a time.
+Suppose we have already computed the probability
+\begin{eqnarray*}
+    p_k  &=& \mbox{Prob}(z_{t+k} = 1 | z_t = 1 ) .
+\end{eqnarray*}
+That is:  the probability that the light is still on $k$ periods from now given that it's on now.
+Then the probability that it's on the following period is
+\begin{eqnarray*}
+    p_{k+1}  &=& p_k (1+\varphi)/2  + (1-p_k) (1-\varphi)/2
+            \;\;=\;\;  1/2 + \varphi (p_k - 1/2).
+\end{eqnarray*}
+Stringing these together, we have
+\begin{eqnarray*}
+    p_{k}  - 1/2 &=& \varphi^k (p_0 - 1/2).
+\end{eqnarray*}
+%If we start off with the light on, then $p_0 = 1$ and we see
+%that the probability that the light is on declines with the time horizon.
+As we increase $k$, the probability $p_k$ approaches one-half.
+That's true whatever initial probability $p_0$ we start with.
+
+So yes, the model is stable.
+
+One more thing. 
+Our approach to this example illustrates something we'll see more of:
+we computed the conditional distribution one period at a time. 
+Recursively, so to speak.  
+
+\end{itemize}
 
 
 \section{Digression:  matrix multiplication (skip)}
@@ -268,12 +325,11 @@ for illustrating the concepts of stationarity and stability.
 Both are relatively simple if you're comfortable with linear algebra
 and matrix multiplication.
 
-
-Here's the structure.
+Here's the idea.
 The state $z_t$ takes on a finite set of values, the same at all dates,
 which we label with the integers $i$ and $j$.
 The probability of state $j$ next period depends only on today's state $i$
-(the Markov property) and is the the same at all dates (stationary):
+(Markov) and is the the same at all dates (stationary):
 \begin{eqnarray*}
     p_{ij} &=& \mbox{Prob} (z_{t+1} = j | z_t = i) .
 \end{eqnarray*}
@@ -282,7 +338,19 @@ where $p_{ij}$ is the element in the $i$th row and $j$th column.
 Thus  row $i$ gives us the probabilities of moving to any state $j$
 next period from state $i$ now.
 
-Here's an example.  Suppose
+{\it Examples.\/}
+The example in Section \ref{sec:markov},
+with the light on an off, has this form with
+\begin{eqnarray*}
+    P &=& \left[
+            \begin{array}{cc}
+            (1+\varphi)/2 & (1-\varphi)/2 \\  (1-\varphi)/2 & (1+\varphi)/2
+            \end{array}
+            \right] .
+\end{eqnarray*}
+The rows here represent the current state, the columns next period's state.
+
+Here's another one:
 \begin{eqnarray*}
     P &=& \left[
             \begin{array}{cc}
@@ -336,7 +404,7 @@ and sometimes we don't.
 Here are some examples to help us think about how this works.
 (i)~In the example above, show that the equilibrium distribution is $ (0.6, 0.4)$.
 [How?  Keep taking higher powers of $P$.
-You should see that every row is $(0.6, 0.4)$.]
+You should see that every row converges to $(0.6, 0.4)$.]
 (ii)~For each of these choices of $P$, describe what happens as we compute
 $P^k$ for larger values of $k$.
 \begin{eqnarray*}
@@ -397,6 +465,25 @@ Equation (\ref{eq:ar1}) is referred to as an
 autoregression because $x_{t}$ is regressed on a lag of itself (``auto'' = ``same'')
 and first-order because one lag of $x_{t}$ appears on the right.
 
+We'll deal extensively with the $w$'s, so let's be clear about their properties.
+First, the mean is zero:  $E(w_t) = 0 $ for all $t$.
+Second, the variance is one.  That means
+\begin{eqnarray*}
+    \mbox{Var}(w_t) &=& E \big\{ [ w_t - E(w_t)]^2 \big\}
+        \;\;=\;\; E ( w_t^2 )  \;\;=\;\; 1.
+\end{eqnarray*}
+Third, their independent.  For dates $t$ and $s\neq t$ we have
+\begin{eqnarray*}
+    E(w_t w_s ) &=& E (w_t) E(w_s)  \;\;=\;\; 0.
+\end{eqnarray*}
+The first equality follows because they're independent, so the expectation
+of the product is the product of the expectations.
+
+One more thing:  the timing of information.
+We'll say that at any date $t$, we know the current and past values of $x$ and $w$,
+but not the future values.
+
+\begin{comment}
 Note that we've switched from $z_t$ to $x_t$ here.
 In this case we use the letter $x$ to refer to both
 the state and a specific random variable that depends on the state.
@@ -432,24 +519,24 @@ These conditions define the $w_t$'s as having no dynamics:
 what happens at one date is independent of all other dates.
 Therefore any dynamics must come from the rest of the equation ---
 in this case the $x_t$ terms.
-
+\end{comment}
 
 Let's go back to the autoregression, equation (\ref{eq:ar1})
-and ask ourselves:  (i)~Is it Markov?
+and ask ourselves:  (i)~Is it Markov?  If so, for what definition of the state?
 (ii)~Is it stationary?
 (iii)~Does it have a unique equilibrium distribution?
 We'll consider each in turn.
 
-On question (i): Yes, it's Markov.
+On question (i): Let's guess it's Markov with state $z_t = x_t$ and see how that works.
 If we take equation (\ref{eq:ar1}) updated one period,
 we see that the conditional distribution of $x_{t+1}$ depends only in the state $x_t$.
 What is the distribution?  Well, since
 it comes from $w_{t+1}$, which is normal, it's also normal.
-So once we know the mean and variance we're done.
+And since it's normal, once we know the mean and variance we're done.
 The conditional mean is
 \begin{eqnarray*}
-    E ( x_{t+1} | x_t )
-            &=& E (\varphi x_t + \sigma w_{t+1} | x_t )
+    E ( x_{t+1} | z_t )
+            &=& E (\varphi x_t + \sigma w_{t+1} | z_t )
                 \;\;=\;\; \varphi x_t .
 \end{eqnarray*}
 Why?  Because we know $x_t$ (that's what we meant by conditional on $x_t$)
@@ -460,14 +547,13 @@ The variance, as we know,
  is the expected squared difference between the random variable and its mean.
 The conditional variance is therefore
 \begin{eqnarray*}
-    \mbox{Var}(x_{t+1} | x_t ) \;\;=\;\;
-    E \left[(x_{t+1} - \varphi x_t)^2 | x_t \right]
-            &=& E \left[(\sigma w_{t+1})^2 | x_t \right]
+    \mbox{Var}(x_{t+1} | z_t ) \;\;=\;\;
+    E \left[(x_{t+1} - \varphi x_t)^2 | z_t \right]
+            &=& E \left[(\sigma w_{t+1})^2 | z_t \right]
                 \;\;=\;\; \sigma^2 .
 \end{eqnarray*}
-Thus we have:  $x_{t+1} | x_t \sim \mathcal{N} (\varphi x_t, \sigma^2)$.
-This conditional distribution is the analog of a row
-of the transition matrix in a Markov chain.
+Thus we have:  $x_{t+1} | z_t \sim \mathcal{N} (\varphi x_t, \sigma^2)$.
+Since the distribution depends only on $x_t$, that's evidently sufficient to define the state.
 
 On question (ii):  Yes, it's stationary.
 Nothing in (\ref{eq:ar1}) depends on the date, including the distribution
@@ -488,9 +574,9 @@ so it has the same mean at both dates:
     E( x ) &=& \varphi E(x) \;\;\;\;\Rightarrow\;\;\;\; E(x)
         \;\;=\;\; 0/(1-\varphi) \;\;=\;\; 0 .
 \end{eqnarray*}
-If we added an intercept to (\ref{eq:ar1}) we would get something else.
-[Try it. The simplest approach is to define $y_t = x_t + \mu$
-and see how $\mu$ changes our calculations.]
+%If we added an intercept to (\ref{eq:ar1}) we would get something else.
+%[Try it. The simplest approach is to define $y_t = x_t + \mu$
+%and see how $\mu$ changes our calculations.]
 What about the variance?
 Again, the distributions of $x_t$ and $x_{t+1}$ are the same,
 so we have
@@ -534,7 +620,7 @@ Does this settle down as we increase $k$?
 Yes, as long as $\varphi^2 < 1$.
 The conditional mean converges to zero and
 the conditional variance converges to $\sigma^2/(1-\varphi^2)$,
-the same answers we had before.
+the same answer we had before.
 %This approach has the advantage of describing how we approach the
 %equilibrium distribution.
 
@@ -560,18 +646,34 @@ Examples include
     \mbox{AR($p$)}:   &&  x_t \;\;=\;\; \varphi_1 x_{t-1} + \varphi_2 x_{t-2}
                     + \cdots + \varphi_p x_{t-p} + \sigma w_t   .
 \end{eqnarray*}
-These models are stationary by construction.
+These models are stationary by construction:  the equations don't change with $t$.
 They're Markov if we define the state at $t-1$ by
-$ y_{t-1} = (x_{t-1}, \ldots, x_{t-p})$.
-And they're stable under some conditions on the $\varphi$'s that we'll leave alone
-for now.
-We mention it briefly in Section \ref{sec:matrix}.
+$ z_{t-1} = (x_{t-1}, \ldots, x_{t-p})$.
+And they're stable under some conditions on the $\varphi$'s that we'll
+touch on briefly in Section \ref{sec:matrix}.
 
 
-\section{Digression: components of variance (skip)}
+\section{Digression: the value of information}
 
-The AR(1) is a good example for illustrating the behavior of the variance
-over different time horizons.
+% ?? needs work
+
+Generally our ability to forecast gets worse as the time horizon grows.
+Forecasting two years into the future is harder than forecasting 2 months into the future.
+Weather forecasting, for example, only works out to about ten days.  Beyond ten days,
+we're simply taking a draw from the equilibrium distribution.
+If on average it rains 20\% of the time, then our best forecast for ten days from now
+is that the probability of rain is 20\%.
+
+The issue here is the amount of variation in, respectively,
+the conditional mean and the forecast error.
+The conditional mean is our forecast.
+Its variance represents our ability to forecast;
+if the variance is zero, we're forecasting the same thing in all states, which is pretty much useless.
+The conditional variance is the variance of our forecast error.
+It represents the error of our forecast.
+
+
+Let's look more closely at these two components of variance.
 Consider the behavior of $x_{t+k}$ from the perspective of date $t$.
 We can write
 \begin{eqnarray*}
@@ -589,7 +691,7 @@ which we might think of as a forecast.
 The second component is the forecast error.
 The components are independent,
 because the first one depends on $w$'s that happened at $t$ or before
-and the second one depends on $w'$ that happened after.
+and the second one depends on $w$'s that happened after.
 [Use the expressions in the previous section to remind yourself of this.]
 
 The variance of $x_{t+k}$ can be broken into similar
@@ -599,6 +701,9 @@ Since the two terms are independent, we have
     \mbox{Var}(x_{t+k}) &=& E \left\{ E_t (x_{t+k}) + \big[ x_{t+k} - E_t (x_{t+k})\big]\right\}^2 \\
         &=& E \big[ E_t (x_{t+k}) \big]^2 + E \big[ x_{t+k} - E_t (x_{t+k})\big]^2 .
 \end{eqnarray*}
+Thus we have that the variance of the random variable $x$ consists of two components:
+the variance of the forecast and the variance of the forecast error.
+
 This seems a little mysterious, so let's substitute the expressions
 for the AR(1).
 That gives us
@@ -929,7 +1034,12 @@ but you get the same for positive and negative values of $k$.
 
 
 {\it Example 1.\/}
-An MA(1) has autocovariances
+Consider the MA(1),
+\begin{eqnarray*}
+    x_t &=& \theta_0 w_t + \theta_1 w_{t-1} .
+\end{eqnarray*}
+We've set $\sigma = 1$ here to keep things simple.
+It has autocovariances
 \begin{eqnarray*}
     \gamma_x(k) &=&
             \left\{
@@ -1035,9 +1145,7 @@ the time horizon.
 \end{itemize}
 We'll put all of them to work.
 
-\begin{comment}
-?? Stress diff betw conditional and "unconditional" distributions
-\end{comment}
+% ?? add code link?
 
 
 \section*{Practice problems}

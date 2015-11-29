@@ -12,6 +12,11 @@
 \centerline{\Large \bf Predicting Returns}
 \centerline{Revised: \today}
 
+\begin{comment}
+Can we convert bond models to returns? 
+
+\end{comment} 
+
 \bigskip
 We've seen that assets differ in their average excess returns,
 evidently reflecting differences in risk premiums.
@@ -26,7 +31,7 @@ about similar properties of theoretical asset pricing models.
 The two subjects are to some extent separate,
 but models give us a useful perspective on the evidence.
 This is an active topic of current research in which
-the evidence is currently at a more advanced stage than the theory.
+the evidence is currently at a more advanced stage than the theory that might explain it.
 
 
 \section{Predictable returns}
@@ -175,57 +180,6 @@ is smaller than the EH predicts.
 % ?? more
 
 
-\begin{comment}
-\section{Predictability in the Vasicek model}
-
-You might recall that the Vasicek model consists of the equations
-\begin{eqnarray*}
-    \log m(z_t, z_{t+1}) &=& \delta + z_t + \lambda w_{t+1} \\
-    z_{t+1} &=& \varphi z_t + \sigma w_{t+1} ,
-\end{eqnarray*}
-where $\{ w_t \}$ is a sequence of independent standard normal random variables.
-Bond prices take the form
-\begin{eqnarray*}
-    \log q^n_t &=& A_n + B_n x_t
-\end{eqnarray*}
-with coefficients
-\begin{eqnarray*}
-    A_{n+1} &=& A_n + \delta + (\lambda + B_n\sigma)^2/2 \\
-    B_{n+1} &=& \varphi B_n + 1
-\end{eqnarray*}
-starting with $A_0 = B_0 = 0$.
-The latter implies $ B_n = (1-\varphi^n)/(1-\varphi) $.
-
-Now consider returns.
-The log return on an $n+1$-period bond is
-\begin{eqnarray*}
-    \log r^{n+1}_{t+1} &=& \log q^n_{t+1} - \log q^{n+1}_t \\
-        &=& (A_{n} + B_n z_{t+1}) - (A_{n+1} + B_{n+1} z_{t}) \\
-        &=& (A_{n}- A_{n+1}) + ( B_n z_{t+1} - B_{n+1} z_{t}) \\
-        &=& (A_{n}- A_{n+1}) + ( B_n \varphi - B_{n+1}) z_{t} + B_n \sigma w_{t+1} \\
-        &=& (A_{n}- A_{n+1}) -  z_{t} + B_n \sigma w_{t+1} .
-\end{eqnarray*}
-The last line follows from the solution for $B_n$, which implies $B_n \varphi - B_{n+1} = -1$.
-The log return on a one-period bond is
-\begin{eqnarray*}
-    \log r^{1}_{t+1} &=& \log q^0_{t+1} - \log q^{1}_t
-            \;\;=\;\; - A_1 - B_1 z_t
-            \;\;=\;\; - A_1 - z_t .
-\end{eqnarray*}
-Putting them together gives us the log excess return
-\begin{eqnarray*}
-    \log r^{n+1}_{t+1} - \log r^1_{t+1}
-        &=& (A_{n}- A_{n+1} + A_1) + B_n \sigma w_{t+1} .
-\end{eqnarray*}
-Here we see that the risk in long-period bonds increases with maturity
-(because $B_n$ does).
-But the expected excess return doesn't vary with state $z_t$.
-The model is incapable of generating excess returns that vary with the slope of the yield
-curve.
-\end{comment}
-
-
-%\end{document}
 
 \section{Predictability in the Vasicek and CIR models}
 
@@ -235,6 +189,13 @@ We'll review the performance of the Vasicek and Cox-Ingersoll-Ross models
 along this dimension.
 In both models, bond prices are loglinear functions of the state:
 $ \log q^n_t = A_n + B_n z_t$.
+Excess returns, therefore, are 
+\begin{eqnarray*}
+    \log r^{n+1}_{t+1} - \log r^{1}_{t+1} &=& \log q^n_{t+1} - \log q^{n+1}_t + \log q^1_t \\ 
+            &=&  (A_n - A_{n+1}+A_1) + (B_n - B_{n+1} + B_1) z_t  .
+\end{eqnarray*} 
+The first term (the $A$'s) are constant, 
+so any predictability must come from the second term.  
 
 {\it Vasicek model.\/}
 Consider the model

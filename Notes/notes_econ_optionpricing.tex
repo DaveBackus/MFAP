@@ -14,42 +14,64 @@
 
 \begin{comment}
 * Figure out graphs v underlying future value and v strike k
-\end{comment}
 
 *** Focus on how we explain smile *** \\
-Outline:  fact, explanation 
+*** Also use discrete grid approx method ** \\
+Outline:  fact, explanation
+\end{comment}
 
 \bigskip
 Options are one of the most common financial derivatives, and
-a nice application of asset pricing fundamentals.
-We derive option prices from risk-neutral probabilities
-and show how the prices of options depend on our choice of probability distribution.
-There are lots of moving parts, but that's the idea.
+a classic application of asset pricing fundamentals.
+Note well:  the fundamentals don't change, we use the no-arbitrage theorem
+just as we do with other assets.
 
+There's a lot of content here, and more than a little jargon,
+so let's go through the outline:
+\begin{itemize}
+\item Option cash flows.  An asset for our purposes is defined by its cash flows.
+We describe the cash flows of options to buy ({\it call\/} option) and sell ({\it put\/} option)
+at a preset {\it strike price\/}.
+These cash flows are derived from the price of some underlying asset --- what is
+cleverly referred to simply as the {\it underlying\/}.
+\item Put-call parity.  We show how we can compute put prices from call prices ---
+and vice versa.  This is an arbitrage relation; it requires no theory other than
+lining up cash flows.
+\item Black-Scholes-Merton formula.
+The well-known BSM formula expresses option prices as a function of the strike price,
+the current price of the asset the option refers to (the underlying),
+the price of a riskfree bond with the same maturity as the option,
+and a mysterious parameter $\sigma$ we refer to as {\it volatility\/}.
+\item Implied volatility.  In practice, we typically use the BSM formula in reverse:
+we find the {\it (implied) volatility\/} for which the formula reproduces the observed option price.
+Higher volatility is associated with higher option prices.
+As with bond yields, implied volatility is a way of expressing the price.
+\item BSM model.  We derive the BSM formula from the no-arbitrage theorem,
+the risk-neutral probability version.
+If the log of the underlying asset price is normal, then the BSM formula is the result.
+Volatility $\sigma$ is the standard deviation.
 
-We have two specific goals.
-The first is to derive the Black-Scholes-Merton (``BSM'') formula from a model
-in which the price of the {\it underlying\/} ---
-the asset the option is based on ---
-has a lognormal risk-neutral distribution.
-This is expressed most simply in terms of a flat {\it volatility smile\/},
-something we'll define shortly.
-The second is to show how other distributions can generate other
-shapes for the smile, including shapes similar to those
-we observe for real-world options.
-The focus is on options on S\&P 500 index futures,
-a popular and convenient contract.
-%The index has a macro flavor:  its ups and downs
-%are closely connected to the ups and downs in the economy.
-The same methods can be --- and have been ---
-applied to other option contracts,
-although the parameter values will be different.
+\item Implied volatility smile/skew.
+When we compute implied volatility, we find that it varies with the strike price.
+Depending on the shape, we refer to it as a {\it volatility smile\/} or skew.
+Such variation is inconsistent with the lognormal distribution we used to derive the formula
+where volatility is a parameter, hence constant.
+As you might expect, we view this problem with the BSM model
+as more interesting than disappointing.
+
+\item Merton's mixture model.  Evidently we need a distribution other than lognormal.
+There are lots of ways to do this.
+A popular one is to use a mixture of normals, which has enough flexibility to account for the
+observed shape of the volatility smile.
+
+\end{itemize}
+That will be enough to keep us busy for a while.
 
 %{\it Notation.\/}
 A couple warnings about notation:
 \begin{itemize}
 \item Timing.
-We'll continue to use the $(t, t+1)$ timing,
+We'll shift from our $(t=0, t=1)$ timing to $(t, t+1)$,
 with today being $t$ and next period (next year) $t+1$.
 In some cases we'll generalize this to $(t,t+\tau)$,
 where $\tau$ is the length of the time interval,
@@ -68,20 +90,24 @@ as the dividend or cash flow and as a component of the BSM formula.
 \section{Review:  risk-neutral asset pricing}
 \label{sec:review}
 
-Recall that one version of the no-arbitrage theorem connects an asset's price $q_t$
-to its cash flows $d_{t+1}$ by
+[Draw tree, note timing]
+
+Recall that one version of the no-arbitrage theorem connects an asset's price
+(current) $q_t$ to its (future) cash flows $d_{t+1}$ by
 \begin{eqnarray}
-    q_t &=& q^1_t E^* \left( d_{t+1} \right) ,
+    q_t \;\;=\;\; q^1_t \; \sum_z p^*(z) d_{t+1}(z)
+        &=& q^1_t E^* \left( d_{t+1} \right)  ,
     \label{eq:pricing-relation}
 \end{eqnarray}
-where $q^1_t$ is the price of a one-period riskfree bond
-and $E^*$ means the expectation using the risk-neutral distribution
-of $d_{t+1}$.
+where $q^1_t$ is the price of a one-period riskfree bond,
+$p^*(z)$ is the risk-neutral probability of state $z$ at date $t+1$,
+and $E^*$ is the expectation using risk-neutral probabilities.
+As usual, we convert the sum to an integral if we have a continuum of states.
 
 We have then the following steps to price an asset:
 \begin{itemize}
-\item Identify the cash flows $d_{t+1}$.
-\item Specify the risk-neutral distribution.
+\item Identify the cash flows $d$.
+\item Specify the risk-neutral probabilities $p^*$.
 \item Use equation (\ref{eq:pricing-relation}) to price the asset.
 \end{itemize}
 This is the basic idea for any asset,
@@ -91,7 +117,7 @@ whether an option or something else.
 
 \section{Option cash flows}
 
-An asset is defined by its cash flow or dividend, as we've called it.
+An asset is defined by its cash flow.
 Here we buy an asset at $t$ and realize its (generally uncertain) cash flow at $t+\tau$.
 
 An option is a particular kind of cash flow.
@@ -156,6 +182,7 @@ without the downside.
 
 \section{Put-call parity}
 
+% ?? stock or underlying?
 
 There's a useful connection between European put and call prices
 that tells us, in effect, that if you know the price of one you can
@@ -238,7 +265,7 @@ It's easy to show in a picture:
 graph the pdf and its tail integrals.
 
 
-\section{The BSM formula and the volatility smile}
+\section{The Black-Scholes-Merton formula and the volatility smile}
 
 
 We refer to this as a {\it formula\/} because that's what it is:
@@ -305,6 +332,7 @@ And the reverse for calls.
 So-called ``moneyness'' is often measured by $ k-s_t$ or $(k-s_t)/s_t$,
 so that zero represents an at-the-money option.
 
+\begin{comment}
 \section{Derivatives of the BSM formula}
 
 Most treatments go on to list derivatives of the BSM formula
@@ -320,38 +348,23 @@ The so-called ``vega'' is
 where $N'$ is the standard normal pdf, equation (\ref{eq:pdf-stdnormal}).
 We'll use this as an input to Newton's method when we compute
 implied volatilities.
+\end{comment}
 
 
-\section{The S\&P 500 E-mini futures contract}
+\section{S\&P 500 options}
 
-We're interested in options on a broad-based equity index
-like the S\&P 500,
-which we've seen is closed related to the state of the economy.
-(I have in mind here the scatterplot of equity returns against
-consumption growth.)
-As it happens, it's common to use options on the futures contract on the index,
-rather than the index itself.
-This is more information than we need,
-but if you're interested, this is the contract,
-as described in
-\href{http://en.wikipedia.org/wiki/E-mini_S&P}{Wikipedia}
-(lightly edited):
-%
-\begin{quote}
-The E-mini S\&P futures contract,
-often called simply the ``E-mini,''
-is a stock market index futures contract traded
-on the Chicago Mercantile Exchange's Globex electronic trading platform.
-The notional value of one contract is US\$50 times the value of the S\&P 500 stock index.
-It was introduced by the CME on September 9th, 1997,
-after the value of the existing S\&P contract became too large for many small traders.
-The E-mini quickly became the most popular equity index futures contract in the world.
-\end{quote}
+There are two common ways to trade options on the S\&P 500 stock market index.
+One is the Spyder exchange-traded fund (ticker {\tt SPY}).
+We can get price quotes for a broad range of strike price and maturities
+from
+\href{http://finance.yahoo.com/q/op?s=SPY+Options}{Yahoo Finance}.
+The other is options on S\&P 500 futures contracts,
+especially the popular ``E-mini'' contract.
+We can get quotes on Bloomberg machines, possible other places as well.
+Here's the \href{http://en.wikipedia.org/wiki/E-mini_S&P}{Wikipedia} writeup.
 
-Options on these contracts are among the most liquid we have.
-%Most work on equity index options therefore starts with
-%options on index futures.
-
+Implied volatility smiles for all of these contracts have a skew shape, sloping
+down as we increase the strike price with notable convexity (especially) at short maturities.
 
 
 \section{Risk-neutral option pricing and the no-arbitrage condition}
@@ -548,9 +561,10 @@ with
     f &=&  (\log k - \kappa_1)/\kappa_2^{1/2} .
 \end{eqnarray*}
 This is a useful formula, and we'll come back to it later.
+We'll call it the {\it lognormal option formula\/}.
 But it's not the BSM formula --- yet.
 
-All that's left to derive the BSM formula (\ref{eq:bsm-put})
+What's left to derive the BSM formula (\ref{eq:bsm-put})
 is to apply the no-arbitrage condition (\ref{eq:bsm-no-arb})
 to (\ref{eq:bsm-put-kappas}).
 That gives us
@@ -670,12 +684,12 @@ That's one of the reasons the Poisson distribution is preferred in applications
 to finance:  it scales more nicely to different time intervals.
 
 
-\section{The Merton model}
+\section{Merton's mixture model}
 \label{sec:merton}
 
 Let's return to our problem:  accounting for the
 shape of the volatility smile in equity index options.
-A lognormal risk-neutral distribution gives is a flat smile,
+A lognormal risk-neutral distribution gives us a flat smile,
 so that doesn't work ---
 evidently we need something else.
 But what?
@@ -704,14 +718,15 @@ we may get 0, 1, 2, or more jumps, each of which is normal
 with mean $\theta$ and variance $\delta^2$.
 If there are $j$ jumps, then $x_2$ is
 a normal random variable with $j\theta$ and variance $j\delta^2$.
-When we compute the pdf for $x_2$,
-we take each of these normal pdfs and compute the sum weighted
-by the Poisson probabilities $e^{-\omega} \omega^j / j!$.
+The pdf for $x_2$ is the sum weighted
+by Poisson probabilities $e^{-\omega} \omega^j / j!$.
+In other words, it's a mixture of normals.
 
 The beauty of this approach is that we have, essentially, a weighted average
 of BSM formulas.
 The density function is a weighted average of normal pdf's, one for each $j$.
-We know how to compute the put price for normals, namely equation (\ref{eq:bsm-put-kappas})
+We know how to compute the put price for normals,
+namely the lognormal option pricing formula (\ref{eq:bsm-put-kappas})
 with the appropriate choices of $\kappa_1$ and $\kappa_2$.
 Then the price is the weighted average of the put prices for each $j$.
 This takes patience, but hang in there.
@@ -763,7 +778,8 @@ It's a common starting point for serious work on option pricing.
 [Talk about role of $\delta$ (generates curvature)
 and $\omega$ (generates slope).]
 A lot of this can be illustrated more simply with a Bernoulli mixture (one jump),
-but that model doesn't divide well into smaller time intervals.
+but that model doesn't divide well into smaller time intervals ---
+it's not divisible.
 
 
 \section*{Bottom line}
@@ -801,7 +817,7 @@ from the price of a put (\ref{eq:bsm-put}).
 Answer.  This one's all yours.
 
 %-----------------------------------------------------------------------
-\item {\it The BSM formula.\/}
+\item {\it BSM formula.\/}
 Consider the BSM call option formula, equation (\ref{eq:bsm-call})
 with $s_t = 100$, $q^1_t = 0.98$, and $\tau = 1$.
 %
@@ -912,6 +928,8 @@ so the impact of volatility is different.
 \item {\it Option on a uniform underlying.\/}
 We'll explore the logic of option pricing in a setting in which the underlying
 has a uniform distribution.
+This isn't remotely realistic, but it gives us a chance to illustrate the logic with somewhat
+simpler math.
 More formally, let $ x = s_{t+1} $ (not $x = \log s_{t+1}$!)
 have a uniform distribution over the
 interval $ [\mu-\theta, \mu + \theta]$;
@@ -953,7 +971,7 @@ So $\mu$ governs the mean and $\theta$ governs the variance.
     s_t &=& q^1 E^*(s_{t+1}) \;\;=\;\; q^1 \mu .
 \end{eqnarray*}
 
-\item A put option is a claim to the cash flow $ d = (k - x)^+ $.
+\item A put option is a claim to the cash flow $ d_{t+1} = (k - x)^+ $.
 If $k$ is in the interval $ [\mu-\theta, \mu + \theta]$ we have
 \begin{eqnarray*}
     q^p &=& q^1 (2\theta)^{-1} \int_{\mu-\theta}^k (k-x) dx \\
@@ -963,7 +981,7 @@ If $k$ is in the interval $ [\mu-\theta, \mu + \theta]$ we have
             - q^1 [k^2 - (\mu-\theta)^2]/(4\theta).
 \end{eqnarray*}
 
-\item The idea is that option prices increase with risk.
+\item The idea is that options have convex payoffs, so their prices increase with risk.
 Here if we increase $\theta$, the parameter that controls the variance,
 put prices seem to go up, but I haven't proven it.
 
@@ -1069,7 +1087,7 @@ If $n=1$, for example, we can get zero ones, or one one.
 If $n=2$, we can get zero ones, one one, or two ones.
 But what if $n=1/2$?
 It's not possible to get half a one, it just doesn't work.
-Wikipedia has a more formal treat of
+Wikipedia has a more formal treatment of
 \href{http://en.wikipedia.org/wiki/Indecomposable_distribution}{this example}
 and of the issue
 \href{http://en.wikipedia.org/wiki/Infinite_divisibility_(probability)}
@@ -1354,11 +1372,19 @@ Look up options on SPY, the ticker for
 an S\&P 500 exchange traded fund.
 Choose a contract, note the prices, and compute the volatility smile.
 What does it look like?
-%
-\needspace{2\baselineskip}
+
+%\needspace{\baselineskip}
 Answer.  This one's all yours, too.
 
 \end{enumerate}
+
+
+\section*{Matlab code}
+
+To access related Matlab code, download this document as a pdf, open it in Adobe Reader or the equivalent, and click on the pushpins:
+%\attachfile{../Code/Matlab/notes_bsm.m}
+%\attachfile{../Code/Matlab/merton.m}
+\attachfile{../Code/Matlab/notes_options.m}
 
 
 \input{../LaTeX/footer.tex}

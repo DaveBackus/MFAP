@@ -72,13 +72,13 @@ then there are positive state prices $Q(z)$ that price the assets:
 for all assets $j$.
 
 There are two versions of this wonderful result that are more commonly used:
-same result, different notation.  
+same result, different notation.
 The first is based on a {\it pricing kernel\/} $m$,
 defined implicitly by $ Q(z) = p(z) m(z)$.
 (Solve for $m$ if you like.)
 The pricing relation (\ref{eq:qj-state-price}) becomes
 \begin{eqnarray}
-    q^j &=& \sum_z p(z) m(z) d^j(z) \;\;=\;\; E (m d^j) 
+    q^j &=& \sum_z p(z) m(z) d^j(z) \;\;=\;\; E (m d^j)
     \label{eq:q=Emd}
 \end{eqnarray}
 or, if we divide by $q^j$, $ 1 = E(mr^j) $.
@@ -108,24 +108,23 @@ The reason, of course, is that the product is built into $p^*$.
 This version is useful in pricing derivatives,
 because the risk-neutral distribution is the same for all of them.
 
-The generality of the no-arbitrage theorem is both a strength 
-and a weakness.  
+The generality of the no-arbitrage theorem is both a strength
+and a weakness.
 It's a strength because it requires so little:  frictionless
-markets in which all of the arbitrage opportunities have been driven out.  
+markets in which all of the arbitrage opportunities have been driven out.
 It's a weakness because it tells us so little about the state prices:
 they're positive numbers that ``exist.''
-It's a standard issue with mysterious existence results in mathematics.  
+It's a standard issue with mysterious existence results in mathematics.
 
-That's led to two different approaches in applied work, 
-which I'll label the macro and finance approaches.  
+That's led to two different approaches in applied work. 
 In macroeconomics, we try to come up with a theoretical basis for the pricing kernel.
 A representative agent model is a familiar example.
-In finance, the goal instead is to treat $m$ or $p^*$ as a statistical object, 
-and choose models that fit some feature of the data reasonably 
+In finance, the goal instead is to treat $m$ or $p^*$ as a statistical object,
+and choose models that fit some feature of the data reasonably
 well.
-We'll see this in action when we value options (shortly) and bond (later on).  
-The two approaches are complementary, in my view, they give us different 
-insights into the behavior of asset prices and returns. 
+We'll see this in action when we value options (shortly) and bonds (later on).
+The two approaches are complementary, in my view; they give us different
+insights into the behavior of asset prices and returns.
 
 
 \section{Properties of pricing kernels}
@@ -224,18 +223,18 @@ We'll label the dates $t$ (``now'') and $t+1$ (or $t+\tau$) (``later'').
 The question is what that right is worth now.
 We're going to value it using risk-neutral probabilities.
 
-{\it Option cash flows.\/} 
+{\it Option cash flows.\/}
 A call option on the future value $ s_{t+1} $ at strike price $k$
-generates the cash flow 
+generates the cash flow
 \begin{eqnarray*}
-        d_{t+1} &=& \max \{ 0, s_{t+1} - k \} 
+        d_{t+1} &=& \max \{ 0, s_{t+1} - k \}
                 \;\;=\;\;  (s_{t+1} - k)^+ ,
-\end{eqnarray*} 
-where the second expression is simply more compact notation for the first.  
-Similarly, put options generate the cash flow $ s_{t+1} = (k - s_{t+1})^+ $. 
-For a given $k$, the cash flows are convex in the underlying $ s_{t+1}$.  
-That means, among other things, that option prices are increasing 
-in the uncertainty of the underlying.  
+\end{eqnarray*}
+where the second expression is simply more compact notation for the first.
+Similarly, put options generate the cash flow $ s_{t+1} = (k - s_{t+1})^+ $.
+For a given $k$, the cash flows are convex in the underlying $ s_{t+1}$.
+That means, among other things, that option prices are increasing
+in the uncertainty of the underlying.
 
 {\it Put-call parity.\/}
 For European options, there's a connection between prices of put options

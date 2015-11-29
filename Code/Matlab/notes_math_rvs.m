@@ -1,7 +1,6 @@
-%  notes_math_rvs 
-%  Calculations to accompany notes on random variables
-%  For:  "Macro-foundations for asset prices"
-%  Written by:  Dave Backus, NYU, August 2013 
+% Calculations to accompany notes on random variables.
+% For:  "Macro-foundations for asset prices"
+% Written by:  Dave Backus, NYU, August 2013 
 clear all 
 format compact
 
@@ -23,13 +22,13 @@ cmap = [0 0 1; 1 0 1];          % sets colors as blue and magenta ("rgb")
 colormap(cmap) 
 % add title and axis labels 
 title('Poisson probabilities', 'FontSize', 12)  % title, large font 
-xlabel('Value of random variable j') 
+xlabel('Value j of random variable') 
 ylabel('Probability p(j)') 
 
 
 %%
 disp('Normal density functions')
-x = [-4:0.1:4]';
+x = [-6:0.1:6]';
 
 mu = 0;
 sigma = 1;
@@ -42,6 +41,7 @@ p2 = exp(-(x-mu).^2/(2*sigma^2))./sqrt(2*pi*sigma^2);
 clf 
 plot(x, p1, 'b', 'LineWidth', 2)
 hold on
+pause(2)
 plot(x, p2, 'm', 'LineWidth', 2)
 xlabel('Value of random variable x') 
 ylabel('Density function p(x)') 
@@ -61,6 +61,10 @@ mu1p = subs(diff(mgf,s,1),s,0)      % mean
 mu2p = subs(diff(mgf,s,2),s,0)      % second moment (why not variance?) 
 mu3p = subs(diff(mgf,s,3),s,0)
 mu4p = subs(diff(mgf,s,4),s,0)
+
+% break this into two pieces 
+diff1 = diff(mgf,s,1)
+mu1p = subs(diff1,s,0)              % mean
 
 disp('cumulants ')
 % differentiate cumulant generating function 
@@ -187,10 +191,34 @@ subplot(3,1,3), bar(z,p3,'b')
 title('kurtosis')
 
 
-%% 
+%%
+disp(' ') 
+disp('Normal mixture generating functions and cumulants')
+syms s mu sigma theta delta omega 
+mu = 0;
+sigma = 1;
+theta = 0;
+delta = 1.5;
+
+% normal mgf 
+mgf1 = exp(s*mu + (s*sigma)^2/2);
+mgf2 = exp(s*theta + (s*delta)^2/2);
+mgf = (1-omega)*mgf1 + omega*mgf2
+cgf = log(mgf);
+
+disp(' ')
+disp('cumulants ')
+% differentiate cumulant generating function 
+kappa1 = subs(diff(cgf,s,1),s,0)    % mean
+kappa2 = subs(diff(cgf,s,2),s,0)    % variance 
+kappa3 = subs(diff(cgf,s,3),s,0)
+kappa4 = subs(diff(cgf,s,4),s,0)
+
+
+%%
 disp('Normal mixture pictures')
 % arbitrary state grid 
-zmax = 4; dz = 0.1; 
+zmax = 5; dz = 0.1; 
 z = [-zmax:dz:zmax]';
 
 % standard normal N(0,1)
@@ -198,7 +226,7 @@ p1 = exp(-z.^2/2)*dz/sqrt(2*pi);
 checksump = sum(p1)
 p1 = p1/sum(p1);
 
-% different normal N(theta,delta)
+% different normal N(theta,delta)  [not delta^2!] 
 theta = -1
 delta = 2 
 p2 = exp(-(z-theta).^2/(2*delta))*dz/sqrt(2*pi*delta);
@@ -211,9 +239,10 @@ p = (1-omega)*p1 + omega*p2;
 
 figure(1)
 subplot(3,1,1), bar(z,p1,'b')
+title('Two normal distributions and their mixture')
 subplot(3,1,2), bar(z,p2,'r')
 subplot(3,1,3), bar(z,p,'m')
-title('Two Normal distributions and their mixture')
+
 
 
 %%

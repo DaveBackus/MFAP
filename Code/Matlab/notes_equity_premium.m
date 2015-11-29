@@ -28,8 +28,7 @@ p = [omega; 1-omega];
 % preferences and asset prices 
 beta = 1
 alpha = 5
-lambda = 5
-
+lambda = 3
 disp(' ')
 disp('Asset prices and returns') 
 m = beta*g.^(-alpha);

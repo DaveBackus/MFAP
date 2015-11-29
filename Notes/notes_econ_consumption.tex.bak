@@ -19,9 +19,13 @@ how an individual might decide between current consumption
 and saving for future consumption,
 and how that saving is allocated across assets.
 We'll see how this works in a two-period setting,
-which captures the essential ideas in a relatively simple way.
+which captures the essential ideas in a relatively simple setting.
+The solutions, however, are not simple.
+This is disappointing, but it's not insurmountable:
+we can compute solutions numerically (see the problems) or use Merton's convenient
+formula as an approximation.
 
-This gives us our first glimpse of the central equation in this course,
+The more important issue is that we get our first glimpse of the central equation in this course,
 \begin{eqnarray}
     E (mr) &=& 1 .
     \label{eq:E(mr)=1}
@@ -33,7 +37,7 @@ Don't bother to memorize it,
 you'll soon find that it's impossible to forget.
 
 
-\section{Kuhn-Tucker conditions}
+\section{Kuhn-Tucker conditions for constrained optimization}
 
 The KT conditions are a solution method for a common class of optimization problems.
 In the standard treatment, optimization means minimization.
@@ -67,11 +71,18 @@ Typically it's sufficient for $f$ and $g$ to be concave.
 
 The Lagrange multiplier is the value, in units of $f$,
 of loosening the constraint $g$ a little.
+Suppose we're at an optimum $x^*$.
+Then the value of our function is $f(x^*) = f(x^*) + \lambda g(x^*)$.
+That works because of the second condition:  $\lambda g(x^*) = 0 $.
+Now suppose we loosen the constraint a little to $g(x^*) + \varepsilon$,
+where $\varepsilon$ is a small positive number.
+Then the value of the function rises to $ f(x^*) + \lambda \varepsilon$.
 Economists refer to it as a ``shadow price,''
 the price of the constraint.
 In some economic applications the analogy goes further:
 the multipliers are the prices of the goods to which the constraint applies.
 We'll see that in the next chapter.
+% ?? loose!!
 
 What we've done here is add an extra variable $\lambda$
 and an extra equation to the usual unconstrained maximization problem.
@@ -375,7 +386,7 @@ Asset 2 is equity and pays one in state 1, two in state 2, and one in state 3.
 Replication here gives us
 \begin{eqnarray*}
     q^1 &=& Q(1) + Q(2) + Q(3) \\
-    q^e &=& Q(1) + 2 Q(2) + 3 Q(3) .
+    q^e &=& Q(1) + 2 Q(2) + 1 Q(3) .
 \end{eqnarray*}
 Is there a solution?
 Well, we have more unknowns than equations, so there
@@ -516,9 +527,10 @@ The first-order conditions include
 \begin{eqnarray*}
   c_0: &        0 \;\;=& u'(c_0) - \lambda_0 \\
   c_1(z): &     0 \;\;=& \beta p(z) u'[c_1(z)] - \lambda_1(z) \\
-  a^j: &        0 \;\;=& - q^j \lambda_0 + \sum_z \lambda_1(z) d_j(z) .
+  a^j: &        0 \;\;=& - q^j \lambda_0 + \sum_z \lambda_1(z) d^j(z) .
 \end{eqnarray*}
-The ratio of the second to the first gives us, for each state $z$,
+There are lots of the second equation, one for each state $z$.
+The ratio of the second to the first gives us, for each $z$,
 \begin{eqnarray*}
     \beta p(z) u'[c_1(z)] / u'(c_0) &=& \lambda(z)/\lambda_0 .
 \end{eqnarray*}
@@ -541,10 +553,10 @@ Finally, we can write the solution in the form of
 our asset pricing relation (\ref{eq:E(mr)=1}).
 If we substitute
 $ Q(z) = \beta p(z) u'[c_1(z)] / u'(c_0) = p(z) m(z)$
-and $r^j(z) = d^(z)/q^j $,
+and $r^j(z) = d^j(z)/q^j $,
 we have
 \begin{eqnarray*}
-    1 &=& \sum_z Q(z) r(z) \;\;=\;\; \sum_z p(z) m(z) r(z) \;\;=\;\; E (mr) ,
+    1 &=& \sum_z Q(z) r^j(z) \;\;=\;\; \sum_z p(z) m(z) r^j(z) \;\;=\;\; E (mr^j) ,
 \end{eqnarray*}
 the equation we promised at the start.
 Here the asset price and return are given,
@@ -656,10 +668,13 @@ Here it's the first-order condition for a consumer's portfolio choice
 problem.
 Later on it will show up as an asset pricing relation.
 We also defined Arrow securities and state prices,
-two theoretical concepts that reappear even in practical
-situations.
+two theoretical concepts that reappear even in practical applications.
 
+\section*{More}
 
+Wikipedia has a nice
+\href{http://en.wikipedia.org/wiki/Merton's_portfolio_problem}{entry}
+on Merton's portfolio problem.
 
 
 \section*{Practice problems}
@@ -895,7 +910,7 @@ $Q(1) = 0.6818$ and $Q(2) = 0.2273$.
 \end{eqnarray*}
 Written out more completely, the latter becomes
 \begin{eqnarray*}
-    0 &=& \beta \sum_z p(z) (y_0-c_0)^{-\alpha} [ (1-a)r^1 + a r^e(z)]^{-\alpha} [r^e(z) - r^1 ] \\
+    0 &=& \beta \sum_z p(z) (y_0-c_0)^{1-\alpha} [ (1-a)r^1 + a r^e(z)]^{-\alpha} [r^e(z) - r^1 ] \\
     &=&  \sum_z p(z) [ (1-a)r^1 + a r^e(z)]^{-\alpha} [r^e(z) - r^1 ] ,
 \end{eqnarray*}
 which depends on $a$ but not $c_0$.
@@ -1007,6 +1022,12 @@ amerton5 = E_rx/(5*var_re)
 \end{verbatim}
 
 \end{enumerate}
+
+\section*{Matlab code}
+
+To access related Matlab code, download this document as a pdf, open it in Adobe Reader or the equivalent, and click on the pushpin:
+\attachfile{../Code/Matlab/notes_cons.m}
+
 
 \input{../LaTeX/footer.tex}
 

@@ -1,9 +1,9 @@
 % -------------------------------------------------------------------------
-%  notes_risk_neutral_probs.m
-%  Take arbitrary distribution over a state space and compute 
-%  pricing kernel and risk neutral probabilities for power utility.  
-%  Notation:  c^(1-alpha)/(1-alpha)
-%  Written by:  Dave Backus
+% Take arbitrary distribution over a state space and compute 
+% pricing kernel and risk neutral probabilities for power utility.  
+% Notation:  c^(1-alpha)/(1-alpha)
+% For the course, "Macroeconomic Foundations for Asset Prices," NYU Stern.
+% Written by:  Dave Backus @ NYU 
 % -------------------------------------------------------------------------
 format compact 
 format short 
@@ -23,7 +23,7 @@ zmax = 4; dz = 0.1;
 z = [-zmax:dz:zmax]';
 %nz = length(z);
 % skewness and (excess) kurtosis
-gamma1 = -1 
+gamma1 = 0 
 gamma2 = 0.0     
 % Gram-Charlier distribution (normal if gamma1 = gamma2 = 0) 
 p = exp(-z.^2/2).*(1 + gamma1*(z.^3-3*z)/6 + gamma2*(z.^4-6*z.^2+3)/24);       

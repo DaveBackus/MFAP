@@ -39,10 +39,15 @@ Some people find the apparent lack of realism of economic models puzzling,
 but it's often necessary to gain sharp insights.
 The idea is to focus on the things that matter,
 and simplify or ignore the things that don't.
+It's an art, of course, to be able to tell the difference.
 The artist Georgia O'Keeffe said something similar:
 ``Nothing is less real than realism. Details are confusing. It is only by
 selection, by elimination, by emphasis that we get to the real meaning of
 things.''
+
+% See Borges ref
+% https://www.project-syndicate.org/commentary/economists-versus-economics-by-dani-rodrik-2015-09
+% http://genius.com/Jorge-luis-borges-on-exactitude-in-science-annotated
 
 Here's another version of the same sentiment,
 an exchange between economist Robert Mundell and banker Alex McLeod.
@@ -180,7 +185,7 @@ The first is the modern version of Adam Smith's invisible hand.
 The second is (among other things) a useful shortcut for computing
 a competitive equilibrium:  we compute a Pareto optimum instead.
 
-All of this might seem like excess formalism.
+All of this might seem like excessive formalism.
 On the contrary, I find it extremely helpful to keep track
 of the ingredients and how they fit together.
 
@@ -228,10 +233,14 @@ to the resource constraints:
 The solution is obvious (consume the endowment),
 but we'll solve it by Lagrangean methods using
 multipliers $q_a$ and $q_b$ on the two constraints.
-(This notation suggests we know something about the answer,
-which we do:  the multipliers $q_a$ and $q_b$ turn out to be the market prices
-in the competitive equilibrium associated with this Pareto optimum.)
-The Lagrangean is
+If you're more comfortable use $\lambda_a$ and $\lambda_b$, you're welcome
+to do that.
+We use $q$'s because we know something about the answer:
+the multipliers turn out to be the market prices
+in the competitive equilibrium associated with this Pareto optimum.
+
+
+The Lagrangean for this problem is
 \begin{eqnarray*}
     \mathcal{L} &=&  \beta \log c_a + (1-\beta) \log c_b
                 + q_a (y_a - c_a) + q_b (y_b - c_b) .
@@ -248,6 +257,8 @@ $ q_a = \beta /y_a$ and $q_b = (1-\beta)/ y_b$.
 
 The nice thing about this approach is that
 we get the prices from the Lagrange multipliers.
+(You might recall that the multipliers give us the cost, in utility terms,
+of the constraints.)
 It's not hard to show that these are, in fact,
 the competitive equilibrium prices.
 The first condition for a competitive equilibrium is that agents maximize
@@ -435,7 +446,7 @@ The problem is
 \begin{eqnarray*}
     \max_{c_0,c_1(z)} && u(c_0) + \beta \sum_z p(z) u[c_1(z)] \\
     \mbox{s.t.}   &&  c_0  \;\;\leq\;\; y_0 \\
-                  &&  c_1(z) \;\;\leq\;\; y_1(z) .
+                  &&  c_1(z) \;\;\leq\;\; y_1(z) \mbox{ for each } z.
 \end{eqnarray*}
 The Lagrangean is
 \begin{eqnarray*}
@@ -449,6 +460,7 @@ The first-order conditions are
     c_0: &&  u'(c_0) - q_0 \;\;=\;\; 0 \\
     c_1(z): &&  \beta p(z) u'[c_1(z)] - q_1(z) \;\;=\;\; 0 .
 \end{eqnarray*}
+(We have one of the second equation for each state $z$.)
 The solution, of course, is to consume the endowment in all states,
 but this gives us the prices too.
 
@@ -499,6 +511,7 @@ and higher average returns than those that pay off mostly in bad states.
 
 
 \section{Asset pricing in the exchange economy: an example}
+
 
 We can be more specific about asset prices and returns
 if we put more structure on the economy.
@@ -643,8 +656,17 @@ which is positive if $\alpha > 1/2$.
 
 \section{Two-period stochastic economies 2:  production version}
 
-We can do the same thing with production, which here means
-we allow investment at date 0 to increase output and consumption
+We'll use the exchange economy repeatedly, not because it's realistic
+but because it's simple.
+If we expand the economy to include production, we get the same relation
+between asset returns and consumption.
+Why consumption and not output?  Because it's consumption that shows
+up in the portfolio choice problem.
+Production is useful, but for another reason:  it gives us a source
+of dividends paid by firms.
+
+Let's consider production then.
+We allow investment at date 0 to increase output and consumption
 at date 1.
 The standard version
 is the same as above, except:
@@ -663,7 +685,7 @@ of an additional unit of capital is $a(z) f'(k)$,
 which depends on the date-1 state $z$.
 
 
-With these changes, the Pareto problem is
+With these changes, the Pareto problem becomes
 \begin{eqnarray*}
     \max_{c_0,k, c_1(z)} && u(c_0) + \beta \sum_z p(z) u[c_1(z)] \\
     \mbox{s.t.}   &&  c_0  + k \;\;\leq\;\; y_0 \\
@@ -675,7 +697,7 @@ The Lagrangean is
                     + \sum_z q_1(z)  [ y_1(z) + a(z) f(k) - c_1(z)]  .
 \end{eqnarray*}
 (As before, we've used $q$'s for the Lagrange multipliers,
-because we know that they'll end up being the same as the equilibrium prices.)
+because we know that they'll end up being the equilibrium prices.)
 The first-order conditions are
 \begin{eqnarray*}
     c_0: &&  u'(c_0) - q_0 \;\;=\;\; 0 \\
@@ -708,7 +730,7 @@ What's useful about this model is that we can say where
 aggregate dividends come from:
 they're payments to capital.
 At the margin,
-an increase in $k$ at date 0 generates $z f'(k)$ units of
+an increase in $k$ at date 0 generates $a(z) f'(k)$ units of
 output at date 1 in state $z$.
 Since $z$ is uncertain, so is the dividend.
 
@@ -882,6 +904,53 @@ the price of consumption is $\lambda$, the price of labor is $\lambda a $.
 \end{enumerate}
 
 %-----------------------------------------------------------------------
+\item {\it Pareto problem with production.\/}
+Consider a theoretical economy with these ingredients:
+\begin{itemize}
+\item One agent.
+\item Two goods, apples and bananas.
+\item Utility function: $ \log c_a + \log c_b $.
+\item Endowment:  6 apples, 4 bananas.
+\item Technology:  apples can be converted to bananas one for one.
+\end{itemize}
+
+\begin{enumerate}
+\item What are the resource constraints for this economy?
+\item What is the Pareto problem?
+\item What is the solution to the Pareto problem?
+What are the optimal quantities?  What are the implied prices?
+\end{enumerate}
+
+\needspace{2\baselineskip}
+Answer.
+\begin{enumerate}
+\item If we let $a$ be the number of apples we convert to bananas,
+the resource constraints for apples and bananas are
+\begin{eqnarray*}
+    c_a + a &\leq& y_a \;\;=\;\; 6 \\
+    c_b &\leq& y_b + a \;\;=\;\; 4 + a.
+\end{eqnarray*}
+We might also say $ a\geq 0$ if we're worried about the reverse technology:
+converting bananas to apples.
+We'll ignore that from here on.
+
+\item The Pareto problem is:  maximize utility subject to the resource constraints.
+The Lagrangian is
+\begin{eqnarray*}
+    \mathcal{L} &=& \log c_a + \log c_b + \lambda_a (y_a - c_a - a) + \lambda_b (y_b + a - c_b) .
+\end{eqnarray*}
+The first-order conditions (the derivatives of $\mathcal{L}$) include
+\begin{eqnarray*}
+    c_a:&& 1/c_a - \lambda_ a \;\;=\;\; 0 \\
+    c_b:&& 1/c_b - \lambda_b  \;\;=\;\; 0 \\
+    a:&&    - \lambda_a + \lambda_b \;\;=\;\; 0.
+\end{eqnarray*}
+That gives us $\lambda_a = \lambda_b$ and (therefore) $c_a = c_b$.
+From the resource constraints we have $c_a = a_b = 5$ and $a = 1$.
+The relative price of bananas comes from the Lagrange multipliers:
+$ q_b / q_a = \lambda_b / \lambda_a = 1$.
+
+\end{enumerate}
 
 
 %-----------------------------------------------------------------------
@@ -1095,6 +1164,12 @@ More on this another time.
 \end{comment}
 
 \end{enumerate}
+
+\section*{Matlab code}
+
+To access related Matlab code, download this document as a pdf, open it in Adobe Reader or the equivalent, and click on the pushpin:
+\attachfile{../Code/Matlab/notes_2period.m}
+
 
 \input{../LaTeX/footer.tex}
 

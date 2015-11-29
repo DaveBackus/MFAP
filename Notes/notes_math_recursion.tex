@@ -199,9 +199,10 @@ $ p(z_{1+1} | z_t) $.
 on the state in both periods:  $r(z_,z_{t+1})$.
 \item Asset pricing.  The no-arbitrage theorem becomes:  there exists a positive $m(z_t,z_{t+1})$
 satisfying
-\begin{eqnarray*}
+\begin{eqnarray}
     E_t \big[ m(z_t,z_{t+1}) r(z_t,z_{t+1}) \big] &=& 1
-\end{eqnarray*}
+    \label{eq:foc} 
+\end{eqnarray}
 for all returns $ r(z_t,z_{t+1} $.
 Here $E_t$ is the expectation conditional on the current state $z_t$
 --- the expectation computed from $p(z_{t+1} | z_t)$, in other words.
@@ -246,7 +247,11 @@ The question is what the functions are.
 %
 We find bond prices recursively, starting with $q^0(z_t) = 1$ for
 all states $z_t$ (a dollar today is worth a dollar).
-Bonds of longer maturity follow from the recursion
+Bonds of longer maturity have returns 
+\begin{eqnarray*}
+    r^{n+1}(z_t, z_{t+1}) &=& q^{n}(z_{t+1}) / q^{n+1}(z_{t}) .
+\end{eqnarray*} 
+The no-arb theorem (\ref{eq:foc}) then gives us the recursion 
 \begin{eqnarray}
     q^{n+1}(z_t) &=& E_t \big[ m(z_t,z_{t+1}) q^n(z_{t+1})\big] .
     \label{eq:recursion-bond}
@@ -287,11 +292,11 @@ The inside of the square brackets on the right can be expressed
             &=&  (\delta + a z_t + b z_{t+1} ) +  (A_n + B_n z_{t+1} ) \\
             &=& \delta + A_n + a z_t + (b + B_n) (\varphi z_t + \sigma w_{t+1}) .
 \end{eqnarray*}
-Conditional on the state $z_t$, this is normal with mean and variance 
+Conditional on the state $z_t$, this is normal with mean and variance
 \begin{eqnarray*}
-    E_t \left[ \log m(z_t,z_{t+1}) + \log q^{n}(z_{t+1}) \right] 
+    E_t \left[ \log m(z_t,z_{t+1}) + \log q^{n}(z_{t+1}) \right]
             &=&  \delta + A_n + [a + (b + B_n) \varphi] z_t \\
-    \mbox{Var}_t  \left[ \log m(z_t,z_{t+1}) + \log q^{n}(z_{t+1}) \right] 
+    \mbox{Var}_t  \left[ \log m(z_t,z_{t+1}) + \log q^{n}(z_{t+1}) \right]
             &=& (b + B_n)^2 \sigma^2 .
 \end{eqnarray*}
 The usual ``mean plus variance over two'' gives us
@@ -364,7 +369,7 @@ a dividend and the same share of equity.
 
 Note that the unknown in this equation is the function $v$.
 It's also recursive:  you need to know $v$ on the right to compute $v$ on the left.
-You're now as ready as you'll ever be to understand the recursion joke:
+You're now as ready as you'll ever be for the recursion joke:
 ``To understand recursion, you need to understand recursion.''
 Or Google ``recursion.'' You get back:  ``Did you mean: recursion?''
 
@@ -403,7 +408,7 @@ $ v = B d + B^2 d + B^3 d + \cdots $,
 the present discounted value version of the equity price.
 \end{comment}
 
-\item {\it Perpetual options.\/}
+\item {\it Perpetual American options.\/}
 Consider the option to buy one share of stock next period for strike price $k$.
 The value today in state $z_t$ is
 \begin{eqnarray*}
@@ -413,8 +418,9 @@ where $x^+ = \max \{0, x \} $.
 Evidently we exercise in states where $ v(z_{t+1}) - k$ is positive
 and not in other states.
 
-A perpetual option allows us to wait:  if we don't exercise now
-we can hold the option for another period, and do this again, forever.
+A perpetual option allows us to wait.
+If we don't exercise now, 
+we can hold the option for another period.
 Valuation has a recursive form:
 \begin{eqnarray*}
     q(z_t) &=& \max \big\{ v(z_{t}) - k, E_t \big[ m(z_t,z_{t+1}) q(z_{t+1})\big] \big\} .
@@ -509,7 +515,6 @@ Answer.  We set $d(z_t) = c$, giving us
 \end{eqnarray*}
 The variation in price here comes from $m$, which translates roughly
 as variation in interest rates.
-This component is in equity, too, as well as variation in future dividends.
 
 
 \begin{comment}

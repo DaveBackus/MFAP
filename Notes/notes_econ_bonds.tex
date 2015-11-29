@@ -29,7 +29,7 @@ Consider a Markov environment with state variable $z_t$.
 The no-arbitrage theorem might be stated:
 there exists a positive pricing kernel $m$ that satisfies
 \begin{eqnarray}
-    E_t \big[ m(z_t, z_{t+1}) r(z_t, z_{t+1})^j \big] &=&
+    E_t \big[ m(z_t, z_{t+1}) r^j(z_t, z_{t+1}) \big] &=&
     E_t \big( m_{t+1} r_{t+1}^j \big) \;\;=\;\; 1
     \label{eq:E(mr)=1}
 \end{eqnarray}
@@ -43,7 +43,7 @@ and use observed properties interest rates
 to infer parameter values for some popular models.
 Our examples are loglinear; they're what have come to be
 called {\it exponential-affine\/} models.
-This has the great advantage of tractability:
+They have the great advantage of tractability:
 the solutions are generally clear enough that we can make some
 sense of them.
 %The convenience of linearity should be clear from our earlier work.
@@ -65,10 +65,10 @@ of the $q^1_t$ we've used since the start of the course.
 {\it Yields and forward rates.\/}
 We typically report prices as yields.
 Like implied volatilities, they represent prices in a more user-friendly form.
-But even a casual look at yields gives us a range of options.
+But even a casual look at yields gives us a range of choices.
 Some bonds compute compound yields annually, some semi-annually,
 and some monthly (mortgages, for example).
-We'll use ``continuous'' compounding, but any such choice is a matter of convenience, not substance.
+We'll use ``continuous'' compounding, but the choice is a matter of convenience, not substance.
 
 Consider the compounding of interest over one period.
 If we compound $k$ times, the {\it yield\/} $y_t$ is the solution to
@@ -121,7 +121,7 @@ We'll refer to $f^0_t = y^1_t$ as the {\it short rate\/}.
 
 
 {\it Digression on forward contracts.\/}
-Another approach to forward rates is via forward contracts.
+Another way to think about forward rates is with forward contracts.
 All of our assets to date have been purchases at some date $t$
 of claims to cash flows at futures dates $t+n$.
 A forward contract involves the agreement to purchase an asset in the future
@@ -156,15 +156,18 @@ Forwards are mathematically simpler, as we'll see, but yields are more common.
 
 One last thing:  bond prices and returns have units.
 Typically the units are dollars (or other currency):
-bonds are claims to dollars, prices are measured in dollars,
+a bond is a claim to dollars, prices are measured in dollars,
 and returns are dollars later per dollar now.
-We could use other units, but those are the standard one.
+We could use other units, but those are standard.
 
+
+\begin{comment}
 \section{What would we like to explain?}
 
 ********************************
 
 Report facts we'd like to account for....  ???
+\end{comment} 
 
 
 \section{Pricing kernels and bond prices}
@@ -549,6 +552,81 @@ The model is equivalent to the previous one,
 we've simply moved the mean to a different part of the model.
 
 
+\section{Interest rate risk and duration}
+
+We can use the Vasicek model as a laboratory for thinking about interest rate risk.
+If we were in a world where the model generated interest rates,
+how should we think about interest rate risk?
+Risk in this model stems entirely from variation in the state variable $z_t$.
+The log bond price is a linear function of $z_t$:
+\begin{eqnarray*}
+    \log q^n_t &=& A_n + B_n z_t .
+\end{eqnarray*}
+Variation in bond prices is driven by the state $z_t$, period.
+Since $z_t$ is (except for a constant) the short rate,
+the coefficient $B_n$ summarizes sensitivity to interest rate risk.
+We'll use the alternative parameterization so that movements in $z$
+correspond to movements in the short rate.
+
+We can be more specific if we look at $B_n$.
+The recursion $B_{n+1} = \varphi B_n + 1$ starts with $B_0 = 0$,
+which gives us
+\begin{eqnarray*}
+    B_n &=& (1 + \varphi + \varphi^2 + \cdots + \varphi^{n-1})
+            \;\;=\;\; (1-\varphi^n)/(1-\varphi) .
+\end{eqnarray*}
+This increases with $n$, so long bonds are more sensitive to interest rate risk.
+The yield is $y^n_t = -n^{-1} \log q^n_t = - A_n/n - (B_n/n) z_t$.
+If $0 < \varphi < 1$,
+$B_n/n$ will decline with maturity.
+
+Let's compare this to {\it duration\/}.
+Prices of zeros are connected to yields by
+\begin{eqnarray*}
+    q^n_t &=& \exp( - n y^n_t ).
+\end{eqnarray*}
+Duration is defined by
+\begin{eqnarray*}
+    D &=& - \frac{\partial \log q^n_t}{\partial y^n_t} \;\;=\;\; n.
+\end{eqnarray*}
+This is particularly clean with continuous compounding,
+but you get something similar with other kinds of compounding.
+
+All of this is fine, but think about how duration is used.
+We typically ignore the superscript $n$ in the yield and consider
+an increase in yields at all maturities.
+This is clear when we compute duration for coupon bonds from the
+relation between the price and the yield to maturity.
+In principle we should discount coupons with the rate appropriate
+to the dates they're paid, but we use the yield to maturity
+of the bond to discount all payments.
+We then interpret $D$ as sensitivity to generalized interest rate risk.
+
+In the real world, interest rates aren't locked together.
+Ten-year interest rate risk isn't the same as one-year interest rate risk.
+In the Vasicek model, there's only one kind of risk --- risk to $z_t$ ---
+but sensitivity varies by maturity.
+But note that sensitivity $B_n$ isn't proportional to maturity,
+as it is with duration.
+With mean reversion ($0 < \varphi < 1$), sensitivity $B_n$ increases more slowly than $n$.
+We get $B_n = n$ only in the limiting case $\varphi = 1$.
+Otherwise, mean reversion moderates the sensitivity of long rates to movements in
+the short rate.
+Where did we go wrong?
+We really need sensitivity to $z_t$,
+\begin{eqnarray*}
+     - \frac{\partial \log q^n_t}{\partial y^n_t}
+      \cdot \frac{\partial \log y^n_t}{\partial z_t} &=& n \cdot (B_n/n) \;\;=\;\; B_n.
+\end{eqnarray*}
+This is an indication that duration isn't really the right tool for the job.
+It's a shortcut that has been used for decades,
+but it's not really a measure of interest rate sensitivity.
+
+%A problem to think about:  Do the same analysis for the Cox-Ingersoll-Ross model.
+%The coefficient $B_n$ doesn't have a simple solution, but you can do the same thing
+%numerically.
+
+
 \section{The Cox-Ingersoll-Ross model}
 
 Another popular model does generate excess returns that vary with the state.
@@ -710,81 +788,6 @@ We set $\lambda=1.32$, which gives us the right mean forward spread.
 \end{itemize}
 See the Matlab program for details.
 
-
-
-\section{Interest rate risk and duration}
-
-We can use the Vasicek model as a laboratory for thinking about interest rate risk.
-If we were in a world where the model generated interest rates,
-how should we think about interest rate risk?
-Risk in this model stems entirely from variation in the state variable $z_t$.
-The log bond price is a linear function of $z_t$:
-\begin{eqnarray*}
-    \log q^n_t &=& A_n + B_n z_t .
-\end{eqnarray*}
-Variation in bond prices is driven by the state $z_t$, period.
-Since $z_t$ is (except for a constant) the short rate,
-the coefficient $B_n$ summarizes sensitivity to interest rate risk.
-We'll use the alternative parameterization so that movements in $z$
-correspond to movements in the short rate.
-
-We can be more specific if we look at $B_n$.
-The recursion $B_{n+1} = \varphi B_n + 1$ starts with $B_0 = 0$,
-which gives us
-\begin{eqnarray*}
-    B_n &=& (1 + \varphi + \varphi^2 + \cdots + \varphi^{n-1})
-            \;\;=\;\; (1-\varphi^n)/(1-\varphi) .
-\end{eqnarray*}
-This increases with $n$, so long bonds are more sensitive to interest rate risk.
-The yield is $y^n_t = -n^{-1} \log q^n_t = - A_n/n - (B_n/n) z_t$.
-If $0 < \varphi < 1$,
-$B_n/n$ will decline with maturity.
-
-Let's compare this to {\it duration\/}.
-Prices of zeros are connected to yields by
-\begin{eqnarray*}
-    q^n_t &=& \exp( - n y^n_t ).
-\end{eqnarray*}
-Duration is defined by
-\begin{eqnarray*}
-    D &=& - \frac{\partial \log q^n_t}{\partial y^n_t} \;\;=\;\; n.
-\end{eqnarray*}
-This is particularly clean with continuous compounding,
-but you get something similar with other kinds of compounding.
-
-All of this is fine, but think about how duration is used.
-We typically ignore the superscript $n$ in the yield and consider
-an increase in yields at all maturities.
-This is clear when we compute duration for coupon bonds from the
-relation between the price and the yield to maturity.
-In principle we should discount coupons with the rate appropriate
-to the dates they're paid, but we use the yield to maturity
-of the bond to discount all payments.
-We then interpret $D$ as sensitivity to generalized interest rate risk.
-
-In the real world, interest rates aren't locked together.
-Ten-year interest rate risk isn't the same as one-year interest rate risk.
-In the Vasicek model, there's only one kind of risk --- risk to $z_t$ ---
-but sensitivity varies by maturity.
-But note that sensitivity $B_n$ isn't proportional to maturity,
-as it is with duration.
-With mean reversion ($0 < \varphi < 1$), sensitivity $B_n$ increases more slowly than $n$.
-We get $B_n = n$ only in the limiting case $\varphi = 1$.
-Otherwise, mean reversion moderates the sensitivity of long rates to movements in
-the short rate.
-Where did we go wrong?
-We really need sensitivity to $z_t$,
-\begin{eqnarray*}
-     - \frac{\partial \log q^n_t}{\partial y^n_t}
-      \cdot \frac{\partial \log y^n_t}{\partial z_t} &=& n \cdot (B_n/n) \;\;=\;\; B_n.
-\end{eqnarray*}
-This is an indication that duration isn't really the right tool for the job.
-It's a shortcut that has been used for decades,
-but it's not really a measure of interest rate sensitivity.
-
-A problem to think about:  Do the same analysis for the Cox-Ingersoll-Ross model.
-The coefficient $B_n$ doesn't have a simple solution, but you can do the same thing
-numerically.
 
 \begin{comment}
 \section{The theory of long rates}
@@ -974,6 +977,13 @@ so a necessary condition is that $\lambda$ and $\sigma$ have the same sign.
 
 \begin{comment}
 %-----------------------------------------------------------------------
+\item {\it Update facts and parameters.\/}
+
+\end{comment}
+
+
+\begin{comment}
+%-----------------------------------------------------------------------
 \item  {\it Expected returns on bonds.\/}
 Consider the bond pricing model
 \begin{eqnarray*}
@@ -1049,7 +1059,15 @@ to $w_t$.
 \end{enumerate}
 
 
+
+\section*{Matlab code}
+
+To access related Matlab code, download this document as a pdf, open it in Adobe Reader or the equivalent, and click on the pushpin:
+\attachfile{../Code/Matlab/notes_bonds.m}
+
+
 \input{../LaTeX/footer.tex}
+
 
 \end{document}
 

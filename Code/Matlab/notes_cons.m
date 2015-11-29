@@ -1,8 +1,6 @@
-%  notes_consumption.m
-%  notes_econ_consumption 
-%  Calculations to accompany notes on consumption and portfolioo choice  
-%  For:  "Macro-foundations for asset prices"
-%  Written by:  Dave Backus, NYU, August 2013 and after 
+% Calculations to accompany notes on consumption and portfolio choice  
+% For:  "Macro-foundations for asset prices"
+% Written by:  Dave Backus, NYU, August 2013 and after 
 clear all 
 format compact
 
@@ -67,7 +65,6 @@ amerton5 = E_rx/(5*var_re)
 
 % variant a la Campbell 
 var_logre = 0.5*(log(re_1)-E_logre)^2 + 0.5*(log(re_2)-E_logre)^2
-E_rx_approx = E_logrx + var_logre/2
 
 amerton5 = (0.1+var_re/2)/(alpha*var_re)
 amerton2 = (0.1+var_re/2)/(2*var_re)

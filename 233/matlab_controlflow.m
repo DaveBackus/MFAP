@@ -18,7 +18,7 @@ disp('--------------------------------------------------------------')
 
 disp(' ')
 disp('brute force abs value') 
-x = 4;
+x = -4;
 if x <= 0
     x = -x;
 end
@@ -27,7 +27,7 @@ x
 %%
 disp(' ')
 disp('the else option') 
-x = 7;
+x = -7;
 if x <= 0
     x = -x;
 else 
@@ -54,11 +54,11 @@ disp('--------------------------------------------------------------')
 disp(' ')
 disp('factorials') 
 
-maxit = 8;
+maxit = 20;
 total = 1;
-for it = 2:2:maxit 
+for it = 2:maxit 
     total = total*it;
-    if total >= 10, break, end     
+%    if total >= 10, break, end     
     [it total] 
 end 
 

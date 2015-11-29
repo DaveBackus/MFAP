@@ -29,7 +29,7 @@ Consider a Markov environment with state variable $z_t$.
 The no-arbitrage theorem might be stated:
 there exists a positive pricing kernel $m$ that satisfies
 \begin{eqnarray}
-    E_t \big[ m(z_t, z_{t+1}) r(z_t, z_{t+1})^j \big] &=&
+    E_t \big[ m(z_t, z_{t+1}) r^j(z_t, z_{t+1}) \big] &=&
     E_t \big( m_{t+1} r_{t+1}^j \big) \;\;=\;\; 1
     \label{eq:E(mr)=1}
 \end{eqnarray}
@@ -162,7 +162,9 @@ We could use other units, but those are the standard one.
 
 \section{What would we like to explain?}
 
-Report facts we'd like to account for....  
+********************************
+
+Report facts we'd like to account for....  ???
 
 
 \section{Pricing kernels and bond prices}

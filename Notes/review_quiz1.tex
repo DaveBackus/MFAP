@@ -44,7 +44,7 @@ All are commonly used in economics and finance.
 
 Connections between random variables.
 If we have two or more random variables, we need ways to describe
-their connection, if any.
+the connections among them --- what is formally referred to as dependence.  
 If there's no connection, we say they're independent.
 More formally, two random variables are independent if the pdf factors:
 $ p_{12}(x_1, x_2) = p_1(x_1) p_2(x_2) $.
@@ -103,7 +103,7 @@ We denote the prices of these securities, in units of the date-0 good, by
 $Q(z)$, which we call the {\it state prices\/}.
 The first-order conditions of a utility-maximizing agent  imply
 \begin{eqnarray}
-    Q(z) &=& p(z) \beta u'[c_1(z)]/u'(c_0) .
+    Q(z) &=& p(z) \frac{\beta u'[c_1(z)]}{u'(c_0) }.
     \label{eq:state-prices=mrs}
 \end{eqnarray}
 Here the equation is interpreted as a demand function: given a price $Q(z)$,
@@ -139,7 +139,7 @@ The first-order conditions also imply
         \label{eq:Emr}
 \end{eqnarray}
 for all traded assets $j$.
-This equation determines consumptions:  given returns $r^j(z)$, 
+This equation determines consumptions:  given returns $r^j(z)$,
 choose consumptions to make it hold.
 Later on the same equation will reappear as an asset pricing relation:
 given $m$, find the price and return of an asset.
@@ -207,7 +207,7 @@ unit is worth to us.
 In that sense, assets that pay off mostly in good times will have less value
 than assets that pay off mostly in bad times.
 
-\section*{Notation guide} 
+\section*{Notation guide}
 
 %\bigskip
 %\begin{center}
@@ -217,7 +217,7 @@ than assets that pay off mostly in bad times.
 Object    &  Definition    \\
 \midrule
 \multicolumn{2}{l}{\it Random variables}   \\
-\midrule 
+\midrule
 $z$ \hspace*{5em}& state \\
 $p$ & probability \\
 $x$ & random variable \\
@@ -231,9 +231,9 @@ $\kappa_j$      & cumulant:  $j$th derivative of $k$ evaluated at $s=0$ \\
 $\gamma_1$ & skewness:  $\kappa_3 /(\kappa_2)^{3/2} = \mu_3 /(\mu_2)^{3/2}$ \\
 $\gamma_2$ & excess kurtosis:  $\kappa_3 /(\kappa_2)^{2} = \mu_4 /(\mu_2)^{2} - 3$ \\
 
-\midrule 
+\midrule
 \multicolumn{2}{l}{\it Risk and risk aversion}   \\
-\midrule 
+\midrule
 $\alpha$    &  risk aversion parameter \\
 $c$         & consumption \\
 $U$         & overall utility \\
@@ -241,7 +241,7 @@ $u$         & utility in each state:  $ U = E [u(c)] $ \\
 
 \midrule
 \multicolumn{2}{l}{\it Asset prices and returns}   \\
-\midrule 
+\midrule
 $\beta$     & discount factor in utility \\
 $a^j$       & position or share invested in asset $j$ \\
 $d^j$       & dividend paid by asset $j$ \\

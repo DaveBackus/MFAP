@@ -15,9 +15,6 @@
 \begin{comment}
 *** work in digression:  change of measure and Girsanov formula ***
 \url{http://www.math.nyu.edu/faculty/goodman/teaching/StochCalc2012/notes/Week10.pdf}
-
-*** also mention CAPM \\
-Check Duffie re projections...
 \end{comment}
 
 \bigskip
@@ -105,9 +102,6 @@ equation (\ref{eq:state-prices}) becomes
     \label{eq:pricing-kernel}
 \end{eqnarray}
 Dividing by $q^j$ gives us the familiar $E(mr^j) = 1$.
-%Here $m$ plays the same role the market plays in the CAPM:
-%the return on an asset depends on the relation between the return and the pricing kernel.
-%More on that shortly.
 
 One of the assets we'll see repeatedly is the one-period ``riskfree'' bond.
 This asset is a claim to sure payoff of one:  $d^1(z) = 1$ in all states $z$.
@@ -166,22 +160,24 @@ in the late 1970s.
 The focus on arbitrage wasn't completely new ---
 Fischer Black and Myron Scholes used similar methods to value options ---
 but it was a sharp break from the mean-variance approach to asset pricing
-that dominated finance at the time ---
+that dominated finance at the time,
 and that still plays a central role in textbooks.
 
-We won't prove the theorem, but we'll show how it works with some examples.
+%We won't prove the theorem, but we'll show how it works with some examples.
 The central ingredient is arbitrage.
-An arbitrage here is defined as getting something for nothing,
+An arbitrage here is defined as getting something for nothing:
 getting a positive payoff in one or more states for free.
 The condition of the no-arbitrage theorem is that the economy has no
 arbitrage possibilities:  you can't get something for nothing.
 Think of an arbitrage as a portfolio position.
 ``Get something'' means (in this context) that the payoff is greater than
-equal zero in all states and positive in at least one.
+or equal to zero in all states and positive in at least one.
 ``For nothing'' means that the cost of this position is zero or less.
 The condition of the theorem is that such possibilities don't exist.
-The rationale should be familiar if you've even taken an economics course.
+The rationale should be familiar if you've ever taken an economics course.
 If such an opportunity existed, then prices should adjust to eliminate them.
+In the general equilibrium model, they're ruled out by consumer maximization,
+but the theorem applies to other environments as well.
 
 Formally, let $q$ be a vector that contains all of the asset prices.
 The typical element is $q^j$.
@@ -203,11 +199,11 @@ Dividends on the portfolio as a whole are then
 %We ``get something'' if this is nonnegative in all states $z$ and strictly positive for at least one.
 The cost of the portfolio is
 \begin{eqnarray*}
-    \sum_j a_j q^j &=& a^\top q .
+    \sum_j a^j q^j &=& a^\top q .
 \end{eqnarray*}
 We say there's an arbitrage opportunity if there's a portfolio $a$
-whose (i) payoffs are greater than equal to zero in all states and positive in at least one
-and (ii) cost is nonnegative:  something for nothing, in other words.
+whose (i) payoffs are greater than or equal to zero in all states and positive in at least one
+and (ii) cost is non-positive:  something for nothing, in other words.
 Conversely, we say $(q,D)$ is {\it arbitrage free\/} if there are no such portfolios $a$.
 
 {\it Examples.\/}
@@ -250,7 +246,7 @@ Which of these price-dividend combinations are arbitrage free?
 Do any of these assets have arbitrage possibilities?
 We'll come back to this, but (a) and (b) are arbitrage-free.
 But take a closer look at (c):
-if we sells two units of asset 1 and buy one unit of asset 2,
+if we sell two units of asset 1 and buy one unit of asset 2,
 the cost is zero and the payoff is $(0, 0, 1)$ in the three states.
 This is an arbitrage, so this example is not arbitrage free.
 
@@ -276,7 +272,7 @@ The answer is yes:
 consistent with (\ref{eq:state-prices})
 if and only if the economy is arbitrage free.\/}
 
-Draw a box around this, it's the central result of asset pricing.
+Draw a box around this, it's the central result in the theory of asset pricing.
 What's remarkable about it is that it's so general.
 Arbitrage is ruled out in general equilibrium models
 because it's inconsistent with equilibrium,
@@ -367,9 +363,6 @@ It's an illustration of the generality of the theory.
 Here we shift from state prices to a pricing kernel
 and describe the theoretical foundation of risk premiums.
 We'll see that risk premiums are tied to the covariance of returns with the pricing kernel.
-%This has some of the same flavor as the textbook favorite, the CAPM,
-%but a different logical foundation.
-%More shortly.
 
 When we define the pricing kernel $m(z)$ from state prices by $Q(z) = p(z) m(z)$
 [or $ m(z) = Q(z)/p(z) $, if you prefer],
@@ -432,7 +425,72 @@ whose properties are chosen to reproduce observed asset prices.
 We'll see examples of this sort when we look at models to value options and bonds.
 In macroeconomics, it's common to think of $m$ as connected to
 the state of the economy, whether it's growing rapidly or slowly.
-We give an example of that next.
+We give an example of that shortly.
+
+
+\section{Digression: The Capital Asset Pricing Model}
+
+The no-arbitrage theorem has been the foundation of asset pricing since
+the late 1970s.
+It's a general framework for thinking about asset prices that can, in principle,
+be applied to any financial asset:  stocks, bonds, currencies,
+or derivatives of any of these broad categories.
+The Capital Asset Pricing Model or CAPM is a precursor from the 1960s that
+we still teach to undergrads and MBAs.
+It's used in the business world, I'm told,
+to value equity and to assess the riskiness of equity portfolios.
+
+\begin{comment}
+On Sun, Oct 5, 2014 at 2:17 PM, David Backus <dbackus@stern.nyu.edu> wrote:
+Does anyone in finance use it these days?
+
+Okun:
+Sure.  It is a used in firm valuation applications (M\&A, tax appraisal, private equity investing).  It is also useful in valuation of public equities (implied growth rate).
+
+For connection to E(mr) = 1, see Cochrane Section .
+\end{comment}
+
+The model consists of the equation
+\begin{eqnarray}
+    E (r^j - r^1) &=& \beta_j E (r^m - r^1) ,
+    \label{eq:capm}
+\end{eqnarray}
+where $r^m$ is the return on the ``market'' and
+$\beta_j = \mbox{Cov}(r^j - r^1 , r^m - r^1)/ \mbox{Var}(r^m - r^1)$.
+In practice, the market is generally a broad-based stock index.
+If you look carefully, you might recognize $\beta_j$ as a regression coefficient.
+The variance in the denominator simply scales the covariance:
+when $r^j = r^m$, $\beta^m = 1$ and the two sides of the equation are equal.
+
+There's an  analogy, which we can make precise, with the no-arbitrage theorem.
+The central issue is the covariance in $\beta_j$:
+the risk premium is proportional to the covariance with the market return.
+In the no-arbitrage approach, it's proportional to the covariance with
+the pricing kernel.
+They also have a similar macroeconomic flavor:
+assets that pay off most in good times have positive risk premiums.
+In the CAPM this stems from the connection with the market return,
+which tends to be high when
+the economy is growing rapidly and low when the economy is growing slowly or shrinking.
+
+The challenge with applying asset pricing models, this one and others,
+is coming up with a practical version of the pricing kernel $m$.
+Here the issue is what to use for the market return $r^m$.
+They're the same issue, as we see next.
+
+%  ?? alpha ?
+
+
+{\it Further digression.\/}
+We can derive the CAPM from the pricing kernel,
+\begin{eqnarray*}
+    m(z) &=& a + b r^m(z) .
+\end{eqnarray*}
+The proof involves using $E(mr)= 1$ for $r = r^1, r^m$ to nail down
+the coefficients $a$ and $b$.  It's tedious.
+If you decide to take it on, keep in mind that
+$ \mbox{Var}(x) = E(x^2) - E(x)^2$
+and $ \mbox{Cov}(x, y) = E(xy) - E(x) E(y)$.
 
 
 \section{Macrofoundations of the pricing kernel}
@@ -536,54 +594,6 @@ assets that pay off more in good times ($\lambda>0$) have positive risk premiums
 We also verify that the risk premium is  zero
 if either risk aversion ($\alpha$) or risk ($\kappa_2$) is zero.
 
-
-\section{Digression: the Capital Asset Pricing Model}
-
-The no-arbitrage theorem has been the foundation of asset pricing since
-the late 1970s.
-It's a general framework for thinking about asset prices that can, in principle,
-be applied to any financial asset:  stocks, bonds, currencies,
-or derivatives of any of these broad categories.
-The Capital Asset Pricing Model or CAPM is a precursor from the 1960s that
-we still teach to undergrads and MBAs.
-It's still used in the business world, I'm told,
-to value equity and to assess the riskiness of equity portfolios.
-
-\begin{comment}
-On Sun, Oct 5, 2014 at 2:17 PM, David Backus <dbackus@stern.nyu.edu> wrote:
-Does anyone in finance use it these days?
-
-Okun:
-Sure.  It is a used in firm valuation applications (M\&A, tax appraisal, private equity investing).  It is also useful in valuation of public equities (implied growth rate).
-
-For connection to E(mr) = 1, see Cochrane Section 8.3.
-\end{comment}
-
-The model consists of the equation
-\begin{eqnarray}
-    E (r^j - r^1) &=& \beta_j E (r^m - r^1) ,
-    \label{eq:capm}
-\end{eqnarray}
-where $r^m$ is the return on the ``market'' and
-$\beta_j = \mbox{Cov}(r^j - r^1 , r^m - r^1)/ \mbox{Var}(r^m - r^1)$.
-If you look carefully, you might recognize $\beta_j$ as a regression coefficient.
-The variance in the denominator simply scales the covariance:
-when $r^j = r^m$, $\beta^m = 1$ and the two sides of the equation are equal.
-
-
-There's a rough analogy with the no-arbitrage theorem, but it's hard work to make
-it more than that.
-The central issue is the covariance in $\beta_j$:
-the risk premium is proportional to the covariance with the market.
-In the no-arbitrage approach, it's proportional to the covariance with
-the pricing kernel.
-
-They're not the same, but they give us some of the same flavor.
-They have, for example, a similar macroeconomic flavor:
-assets that pay off most in good times have positive risk premiums.
-In the CAPM this stems from the connection with the market return:
-the market return (a broad-based stock index, for example) tends to be high when
-the economy is growing rapidly and low when the economy is growing slowly.
 
 
 \section{Risk-neutral probabilities and the no-arbitrage condition}
@@ -760,7 +770,7 @@ with nonzero skewness and excess kurtosis.
 If skewness and excess kurtosis are $\gamma_1$ and $\gamma_2$,
 then the density is
 \begin{eqnarray*}
-    p(z) &=& p = (2 \pi)^{-1/2} \exp(-z.^2/2)[1 + \gamma_1(z^3-3z)/3! + \gamma_2(z^4-6z^2+3)/4!] .
+    p(z) &=& p = (2 \pi)^{-1/2} \exp(-z^2/2)[1 + \gamma_1(z^3-3z)/3! + \gamma_2(z^4-6z^2+3)/4!] .
 \end{eqnarray*}
 Our discrete approximation is therefore
 \begin{verbatim}
@@ -864,12 +874,13 @@ we can value assets with state prices.
 State prices, pricing kernels, and risk-neutral probabilities all represent
 the same idea.
 
+
 \section*{More}
 
 The material is standard.
 The best textbook reference is Duffie, {\it Dynamic Asset Pricing Theory\/}, any edition.
 (Earlier editions are cheaper, and just as good for our purposes.)
-It's a PhD book, but well written and well worth a look.
+It's a PhD book, but well written and worth a look.
 See esp Chapters 1 and 2.
 Ross's classic paper is also a good read, esp Section 9.3.
 I scanned and posted it at
@@ -1147,6 +1158,7 @@ But if $\alpha > 0$, the return on equity is greater.
 
 %-----------------------------------------------------------------------
 \item {\it Asset pricing fundamentals.\/}
+% Scott Richard
 A well-known financial economist who spent years in the business world,
 commented on what he had learned as an academic:
 ``I learned two basic lessons about financial mathematics
@@ -1161,7 +1173,7 @@ The other is that asset prices come from risk-neutral probabilities.''
 \end{enumerate}
 
 \needspace{2\baselineskip}
-Answer. 
+Answer.
 \begin{enumerate}
 \item The first reflects $ E(x) = - \mbox{Cov}(x,m)/E(m) $,
 where $x$ is any excess return.
@@ -1181,6 +1193,12 @@ In the second, that's built into $E^*$.
 \end{enumerate}
 
 \end{enumerate}
+
+
+\section*{Matlab code}
+
+To access related Matlab code, download this document as a pdf, open it in Adobe Reader or the equivalent, and click on the pushpin:
+\attachfile{../Code/Matlab/notes_risk_neutral_probs.m}
 
 
 \input{../LaTeX/footer.tex}

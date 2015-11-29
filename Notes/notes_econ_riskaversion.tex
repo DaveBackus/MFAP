@@ -18,7 +18,7 @@ for thinking about how risk is priced in markets.
 We say people are {\it risk averse\/} if they
 prefer a sure thing to a risky outcome with the same mean.
 The question is what form this risk aversion takes --- what kinds of risks matter?
-We'll see that the entire distribution matters.
+We'll see instead that the entire distribution generally matters.
 If we think about this in terms of moments and cumulants,
 it's not just the variance that's relevant,
 but skewness and kurtosis, too.
@@ -54,7 +54,7 @@ What risks would we prefer to avoid?
 That depends on our preferences, which we turn to next.
 
 
-\section{Utility functions and certainty equivalents}
+\section{Basic concepts:  utility functions and certainty equivalents}
 
 {\it Utility functions\/} are mathematical devices that we use
 to describe the preferences of an ``economic agent,''
@@ -154,16 +154,16 @@ relative to the mean to have riskless consumption.
 %It combines the amount of risk and how much we dislike it.
 The log form is arbitrary, but it will be convenient later on.
 
-Here's an example.
+{\it Example.\/}
 Let's say there are two states with probabilities
 $p(1) = p(2) = 1/2$.
 Suppose $c(1) = 2$ and $c(2) = 8$.
 Then $\cbar = 5$.
 What is the certainty equivalent $\mu$?
-You need to know your preferences to do this,
-but let's say $\mu = 4$:  you get the same utility
+We need to know our preferences to do this,
+but let's say $\mu = 4$:  we get the same utility
 from the consumption outcomes $(2,8)$ and $(4,4)$,
-even though the latter gives you less, on average.
+even though the latter gives us less, on average.
 The risk penalty is therefore
 $ \rp = \log (\cbar/\mu) = \log(5/4) = 0.2231$.
 In words: You'd accept a 22\% reduction in average consumption to eliminate the risk.
@@ -171,8 +171,8 @@ In words: You'd accept a 22\% reduction in average consumption to eliminate the 
 
 \section{Concave functions, Jensen's inequality, and increasing risk}
 
-Here's some terminology we'll use shortly --- it comes up a lot
-in economics and finance.
+Here are some mathematical concepts that we'll use shortly,
+they come up a lot in economics and finance.
 We say a function $f(x)$ is {\it concave\/}
 if, for any two points $x_1$ and $x_2$,
 a weighted average of the function at the two points
@@ -193,7 +193,7 @@ between strict and weak concavity/convexity, but we generally won't.
 {\it Examples.\/}
 Which of the following are concave?  Convex?
 \begin{eqnarray*}
-    (a) \;\; f(x) &=& x - x^2 \\
+    (a) \;\; f(x) &=& 27 - x^2 \\
     (b) \;\; f(x) &=& \log x  \\
     (c) \;\; f(x) &=& e^x \\
     (d) \;\; f(x) &=& x^{1-\alpha}/(1-\alpha) \\
@@ -204,8 +204,6 @@ Which of the following are concave?  Convex?
 Think about these, maybe draw them to see what they look like.
 Item (e) you might recognize as the payoff from
 a call option on $x$ with strike price $k$.
-Item (f) demonstrates that the variance must be positive.
-[Why?  Because $\mbox{Var}(x) = E(x^2) - [E(x)]^2$.]
 
 
 We'll use two results about concave (convex) functions $f$
@@ -225,12 +223,19 @@ The difference between the left and right sides of (\ref{eq:jensen}) reflects
 the impact of risk, so you can see that this might be
 an essential tool in thinking about risk aversion.
 
+We can use Jensen's inequality to show that the variance must be positive.
+The variance is $\mbox{Var}(x) = E(x^2) - [E(x)]^2$.
+Recall from item (f) above that $f(x) = x^2$ is convex.
+What does that imply for the relation between $E[f(x)]$ and $f[E(x)]$?
+Use it to show the variance is positive.
+
 Our second result describes the impact of increasing risk.
-It's trickier than you think to describe an increase in risk.
-We say $ x+y$ is riskier than $x$ if $y$ is not constant and has zero mean.
+It's trickier than you think to describe an increase in risk ---
+we can increase risk in lots of potentially different ways.
+We will say that $ x+y$ is (unambiguously) riskier than $x$ if $y$ is not constant and has zero mean.
 (You might hear people refer to a {\it mean-preserving spread\/} or
-{\it second-order stochastic dominance\/}.) 
-Then if $f$ is concave, an increase in risk reduces the expected value of $f(y)$: 
+{\it second-order stochastic dominance\/}.)
+Then if $f$ is concave, an increase in risk reduces the expected value of $f(y)$:
 \begin{eqnarray*}
     E[ f(x + y)] &<& E[f(x)] .
 \end{eqnarray*}
@@ -288,6 +293,7 @@ There's been no end of debate about this,
 but it's incredibly useful when we implement
 expected utility and compare its predictions with evidence.
 
+[Talk about Ellsberg paradox, ambiguity over the probabilities.]
 
 The action in expected utility is in the function $u$.
 It controls the certainty equivalent, which here is the solution to
@@ -326,6 +332,11 @@ By Jensen's inequality, this is true if the function $u$ is concave.
 So if $u'' < 0$, we have $E[u(c)] = u(\mu) < u(\cbar)$ (risk aversion).
 And if we take $u^{-1}$ of both sides, we have
 $\mu < \cbar$.
+
+\begin{comment}
+ambiguity
+Ellsberg:  1/3 1/3 1/3
+\end{comment}
 
 [As usual, it's easier if you draw a picture.
 Plot $u(c)$ v $c$.
@@ -698,7 +709,7 @@ What mathematical result does this illustrate?
 \end{enumerate}
 
 \needspace{3\baselineskip}
-Answer. 
+Answer.
 \begin{enumerate}
 \item $E(y) = (1/2) (4) + (1/2) (6) = 5$.
 \item $E[f(y)] = (1/2) (0) + (1/2) (1) = 1/2 $.
@@ -714,8 +725,8 @@ That is:  the mean hasn't changed, we've just spread out the distribution a bit.
 $ E[f(y)] = (1/2) (0) + (1/4) (1) + (1/4) (3) = 1$.
 \item This is greater than the option payoff with $ y = x_1$ because
 we've spread out the distribution.
-% ?? name 
-We don't have a name for this, 
+% ?? name
+We don't have a name for this,
 but an increase in the variance holding constant
 the mean increases the expected value of a convex function.
 \end{enumerate}
@@ -922,6 +933,13 @@ In a sense, the lognormal case misleads us into thinking this has to be simple.
 % ?? \item {\it Gamma risks.  (or normal mixture?).\/}
 
 \end{enumerate}
+
+
+\section*{Matlab code}
+
+To access related Matlab code, download this document as a pdf, open it in Adobe Reader or the equivalent, and click on the pushpin:
+\attachfile{../Code/Matlab/notes_risk.m}
+
 
 
 \input{../LaTeX/footer.tex}
