@@ -28,7 +28,7 @@ disp(' ')
 disp('Parameter values')  
 phi = autocorr_f0
 sigma = sqrt((1-phi^2)*var_f0)    %  note sign convention 
-lambda = -0.125
+lambda = 0.125
 delta = - Ef0 - lambda^2/2; 
 
 % initializations  

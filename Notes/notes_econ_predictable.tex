@@ -13,9 +13,9 @@
 \centerline{Revised: \today}
 
 \begin{comment}
-Can we convert bond models to returns? 
+Can we convert bond models to returns?
 
-\end{comment} 
+\end{comment}
 
 \bigskip
 We've seen that assets differ in their average excess returns,
@@ -189,13 +189,13 @@ We'll review the performance of the Vasicek and Cox-Ingersoll-Ross models
 along this dimension.
 In both models, bond prices are loglinear functions of the state:
 $ \log q^n_t = A_n + B_n z_t$.
-Excess returns, therefore, are 
+Excess returns, therefore, are
 \begin{eqnarray*}
-    \log r^{n+1}_{t+1} - \log r^{1}_{t+1} &=& \log q^n_{t+1} - \log q^{n+1}_t + \log q^1_t \\ 
-            &=&  (A_n - A_{n+1}+A_1) + (B_n - B_{n+1} + B_1) z_t  .
-\end{eqnarray*} 
-The first term (the $A$'s) are constant, 
-so any predictability must come from the second term.  
+    \log r^{n+1}_{t+1} - \log r^{1}_{t+1} &=& \log q^n_{t+1} - \log q^{n+1}_t + \log q^1_t \\
+            &=&  (A_n - A_{n+1}+A_1) + B_{n} z_{t+1} + (B_1 - B_{n+1} ) z_t   .
+\end{eqnarray*}
+The first term (the $A$'s) are constant;
+any predictability must come from the others.
 
 {\it Vasicek model.\/}
 Consider the model
